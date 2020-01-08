@@ -3,8 +3,9 @@ package frc.robot.subsystems.turret;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.Turret.*;
@@ -20,6 +21,7 @@ import static frc.robot.Constants.Turret.*;
  */
 public class Turret extends SubsystemBase {
     private TalonSRX master = new TalonSRX(MASTER);
+    private NetworkTable turretTable = NetworkTableInstance.getDefault().getTable("turret");
 
     /**
      * configures the encoder and PID constants.
@@ -46,17 +48,17 @@ public class Turret extends SubsystemBase {
     }
 
     public void updateConstants() {
-        if (KP != getConstant("kp", KP) || KI != getConstant("kI", KI) || getConstant("kD", KD) != KD || getConstant("kF", KF) != KF) {
-            KP = getConstant("kp", KP);
-            KI = getConstant("kI", KI);
-            KD = getConstant("kD", KD);
-            KF = getConstant("kF", KF);
-            master.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
-            master.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
-            master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
-            master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
-        }
+        KP = getConstant("kp", KP);
+        KI = getConstant("kI", KI);
+        KD = getConstant("kD", KD);
+        KF = getConstant("kF", KF);
+        master.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
+        master.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
+        master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
+        master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
     }
+
+
 
     @Override
     public void periodic() {
