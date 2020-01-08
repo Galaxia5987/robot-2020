@@ -18,13 +18,6 @@ public class Intake extends SubsystemBase {
         masterMotor.setInverted(MASTER_INVERTED);
     }
 
-    public void togglePosition() {
-        if (intake.getPosition() == Value.kForward) {
-            setPosition(Value.kReverse);
-        } else if (intake.getPosition() == Value.kReverse)
-            setPosition(Value.kForward);
-    }
-
     public Value getPosition() {
         return solenoid.get();
     }
@@ -36,6 +29,13 @@ public class Intake extends SubsystemBase {
      */
     public void setPosition(Value direction) {
         solenoid.set(direction);
+    }
+
+    public void togglePosition() {
+        if (intake.getPosition() == Value.kForward) {
+            setPosition(Value.kReverse);
+        } else if (intake.getPosition() == Value.kReverse)
+            setPosition(Value.kForward);
     }
 
     public void applyPowerOnWheels(double speed) {
