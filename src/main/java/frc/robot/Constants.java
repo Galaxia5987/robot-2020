@@ -72,6 +72,7 @@ public class Constants {
         public static final boolean RIGHT_IS_REVERSED = false;
         public static final boolean LEFT_SENSOR_PHASE = false;
         public static final boolean RIGHT_SENSOR_PHASE = false;
+        public static final double CLIMB_TOLERANCE = 0;
     }
 
 }
