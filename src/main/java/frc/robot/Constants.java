@@ -21,16 +21,16 @@ public final class Constants {
         public static final int TALON_TIMEOUT = 10;
         public static final int TALON_PID_SLOT = 0;
         public static final int MAX_CURRENT = 35;
-        public static final double TICKS_PER_DEGREE = 260.7/180;
-        public static double KP = 15;
+        public static final double TICKS_PER_DEGREE = 0;
+        public static double KP = 0;
         public static double KI = 0;
-        public static double KD = 0.5;
+        public static double KD = 0;
         public static double KF = 0;
-        public static final int CRUISE_VELOCITY= (int) (200 * TICKS_PER_DEGREE) / 10;
-        public static final int CRUISE_ACCELERATION = (int) (250 * TICKS_PER_DEGREE) / 10;
-        public static final double HALL_EFFECT_POSITION = 180; // in degrees
+        public static final int CRUISE_VELOCITY= 0;
+        public static final int CRUISE_ACCELERATION = 0;
+        public static final double HALL_EFFECT_POSITION = 0; // in degrees
         public static final double ANGLE_THRESHOLD = 5;
-        public static final double MAXIMUM_ANGLE = 350;
+        public static final double MAXIMUM_ANGLE = 0;
         public static final double MINIMUM_ANGLE = 0;
 
     }
