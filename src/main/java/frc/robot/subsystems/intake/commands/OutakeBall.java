@@ -6,18 +6,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static frc.robot.Robot.intake;
 
-public class ShootBall extends CommandBase {
+public class OutakeBall extends CommandBase {
     private Timer timer = new Timer();
     private double speed;
     private double timeout;
 
-    public ShootBall(double speed, double timeout) {
+    public OutakeBall(double speed, double timeout) {
         addRequirements(intake);
         this.speed = -speed;
         this.timeout = timeout;
     }
 
-    public ShootBall(double speed) {
+    public OutakeBall(double speed) {
         this(speed, 0);
     }
 
