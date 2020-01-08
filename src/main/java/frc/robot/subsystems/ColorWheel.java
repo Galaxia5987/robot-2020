@@ -29,6 +29,10 @@ public class ColorWheel extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
   public ColorWheel() {
+    colorMatcher.addColorMatch(BlueTarget);
+    colorMatcher.addColorMatch(GreenTarget);
+    colorMatcher.addColorMatch(RedTarget);
+    colorMatcher.addColorMatch(YellowTarget);
 
   }
 
