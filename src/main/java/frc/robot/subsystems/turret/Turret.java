@@ -50,19 +50,14 @@ public class Turret extends SubsystemBase {
         master.setSelectedSensorPosition((int) HALL_EFFECT_POSITION, 0, TALON_TIMEOUT);
     }
 
-    private double getConstant(String key, double value) {
-        turretAngle.setDouble(value);
-        return turretAngle.getDouble(value);
-    }
-
     /**
      * updates the turret PID constants and configures the controller PID
      */
     public void updateConstants() {
-        KP = getConstant("kp", KP);
-        KI = getConstant("kI", KI);
-        KD = getConstant("kD", KD);
-        KF = getConstant("kF", KF);
+        Utils.setValue(kPentry, KP);
+        Utils.setValue(kIentry, KP);
+        Utils.setValue(kDentry, KP);
+        Utils.setValue(kFentry, KP);
         master.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
         master.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
