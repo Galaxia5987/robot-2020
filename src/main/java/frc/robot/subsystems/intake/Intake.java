@@ -23,7 +23,7 @@ public class Intake extends SubsystemBase {
             solenoid.set(false);
     }
 
-    public void changePositionAutomatically() {
+    public void togglePosition() {
         if (getPosition() == Direction.UP) {
             setPosition(Direction.DOWN);
             return;
