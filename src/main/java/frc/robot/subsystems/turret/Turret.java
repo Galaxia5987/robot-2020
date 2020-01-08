@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,6 +23,7 @@ import static frc.robot.Constants.Turret.*;
 public class Turret extends SubsystemBase {
     private TalonSRX master = new TalonSRX(MASTER);
     private NetworkTable turretTable = NetworkTableInstance.getDefault().getTable("turret");
+    private NetworkTableEntry turretAngle = turretTable.getEntry("angle");
 
     /**
      * configures the encoder and PID constants.
@@ -43,8 +45,8 @@ public class Turret extends SubsystemBase {
     }
 
     private double getConstant(String key, double value) {
-        SmartDashboard.putNumber(key, SmartDashboard.getNumber(key, value));
-        return SmartDashboard.getNumber(key, value);
+        turretAngle.setDouble(value);
+        return turretAngle.getDouble(value);
     }
 
     public void updateConstants() {
