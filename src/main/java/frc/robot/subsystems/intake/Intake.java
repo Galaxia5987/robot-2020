@@ -14,4 +14,7 @@ public class Intake extends SubsystemBase {
     public Intake() {
         master.setInverted(MASTER_INVERTED);
     }
+    public enum Direction {
+        UP, DOWN
+    }
 }
