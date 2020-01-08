@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems.climb;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -64,6 +65,23 @@ public class Climb extends SubsystemBase {
     public int convertMetersToTicks(double meters){
         return (int)(meters*Constants.Climb.TICKS_PER_METER);
     }
+
+    public void setLeftHeight(double height){
+        leftClimbMaster.set(ControlMode.MotionMagic, convertMetersToTicks(height));//add arbitrary feedforward
+    }
+
+    public void setRightHeight(double height){
+        rightClimbMaster.set(ControlMode.MotionMagic, convertMetersToTicks(height));//add arbitrary feedforward
+    }
+
+    public double getLeftHeight(){
+        return convertTicksToMeters(leftClimbMaster.getSelectedSensorPosition());
+    }
+
+    public double getRightHeight(){
+        return convertTicksToMeters(rightClimbMaster.getSelectedSensorPosition());
+    }
+    
 
     @Override
     public void periodic() {
