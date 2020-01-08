@@ -9,6 +9,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.Intake.MASTER_INVERTED;
 import static frc.robot.Ports.Intake.*;
 
+/**
+ * @author Barel
+ * @version 1.0.0
+ * <p>
+ * this class defining methods to the intake subsystem to apply in the commands.
+ * {@using VictorSPX}
+ * {@using DoubleSolenoid}
+ */
 public class Intake extends SubsystemBase {
     private VictorSPX masterMotor = new VictorSPX(MASTER);
     private DoubleSolenoid solenoid = new DoubleSolenoid(SOLENOID_FORWARD_CHANNEL, SOLENOID_BACKWARD_CHANNEL);
