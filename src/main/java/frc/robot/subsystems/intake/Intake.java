@@ -14,6 +14,28 @@ public class Intake extends SubsystemBase {
     public Intake() {
         master.setInverted(MASTER_INVERTED);
     }
+
+    public void setPosition(Direction direction) {
+        if (direction == Direction.UP)
+            solenoid.set(true);
+        else
+            solenoid.set(false);
+    }
+
+    public void setPositionAutomatically() {
+        if (getCurrentPosition() == Direction.UP) {
+            setPosition(Direction.DOWN);
+            return;
+        }
+        setPosition(Direction.UP);
+    }
+
+    public Direction getCurrentPosition() {
+        if (solenoid.get())
+            return Direction.UP;
+        return Direction.DOWN;
+    }
+
     public enum Direction {
         UP, DOWN
     }
