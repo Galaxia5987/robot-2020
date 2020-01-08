@@ -17,27 +17,42 @@ public class Intake extends SubsystemBase {
         masterMotor.setInverted(MASTER_INVERTED);
     }
 
+    /**
+     * get the current position of the solenoid
+     *
+     * @return the position of the solenoid as a Value class instance
+     */
     public Value getPosition() {
         return solenoid.get();
     }
 
     /**
-     * set
+     * set the new position of the solenoid.
+     * can be either Forward (Up) or Reverse (Down).
      *
-     * @param direction
+     * @param direction the desired direction for the solenoid
      */
     public void setPosition(Value direction) {
         solenoid.set(direction);
     }
 
+    /**
+     * change the position of the intake automatically,
+     * based on the current position.
+     * if you want to choose manually use {@see setPosition(Value)} instead.
+     */
     public void togglePosition() {
         if (getPosition() == Value.kForward) {
             setPosition(Value.kReverse);
         } else if (getPosition() == Value.kReverse)
             setPosition(Value.kForward);
-
     }
 
+    /**
+     * apply power on the wheel to spin them based on the speed you insert.
+     *
+     * @param speed the speed to apply on the intake's wheels (in percents)
+     */
     public void applyPowerOnWheels(double speed) {
         masterMotor.set(ControlMode.PercentOutput, speed);
     }
