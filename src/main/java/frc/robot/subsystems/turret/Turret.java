@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.Turret.*;
 
@@ -17,7 +18,7 @@ import static frc.robot.Constants.Turret.*;
  * {@using Relative Encoder}
  * {@using Hall Effect}
  */
-public class Turret implements Subsystem {
+public class Turret extends SubsystemBase {
     private TalonSRX master = new TalonSRX(MASTER);
 
     /**
@@ -37,11 +38,6 @@ public class Turret implements Subsystem {
         master.configPeakCurrentLimit(MAX_CURRENT);
 //        master.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
         master.setSelectedSensorPosition((int) HALL_EFFECT_POSITION, 0, TALON_TIMEOUT);
-    }
-
-    @Override
-    public void initDefaultCommand() {
-
     }
 
     private double getConstant(String key, double value) {
@@ -64,8 +60,8 @@ public class Turret implements Subsystem {
 
     @Override
     public void periodic() {
-        System.out.println("the current angle is " + getAngle());
         SmartDashboard.putNumber("ANGLE", getAngle());
+        updateConstants();
     }
 
     /**
