@@ -49,6 +49,9 @@ public class Turret extends SubsystemBase {
         return turretAngle.getDouble(value);
     }
 
+    /**
+     * updates the turret PID constants and configures the controller PID
+     */
     public void updateConstants() {
         KP = getConstant("kp", KP);
         KI = getConstant("kI", KI);
@@ -59,14 +62,15 @@ public class Turret extends SubsystemBase {
         master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
         master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
     }
-
-
-
+    
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("ANGLE", getAngle());
         updateConstants();
+        if(getHallEffect()) {
+            adjustEncoderPosition();
+        }
     }
+
 
     /**
      * get the current angle from the controller
@@ -79,10 +83,10 @@ public class Turret extends SubsystemBase {
 
     /**
      * change the angle to the desired angle,
-     * if you would like to use the same Direction.
      * the value can be between 0 to 360 degrees.
      *
      * @param targetAngle the desired angle.
+     * @return return the target angle in ticks.
      */
     private double setTargetAngle(double targetAngle) {
         targetAngle = (targetAngle + 720) % 360; //To insure that the targetAngle is between 0-360, we add 720 to prevent negative modulo operations.
@@ -92,7 +96,7 @@ public class Turret extends SubsystemBase {
 
 
     /**
-     * applying power to the controller for moving the turret.
+     * apply power to the controller to move the turret.
      *
      * @param angle the desired angle
      */
@@ -100,6 +104,9 @@ public class Turret extends SubsystemBase {
         master.set(ControlMode.MotionMagic, setTargetAngle(angle));
     }
 
+    /**
+     * set the speed of the motor to 0.
+     */
     public void stop() {
         master.set(ControlMode.PercentOutput, 0);
     }
@@ -108,7 +115,7 @@ public class Turret extends SubsystemBase {
      * @return return if the state of the Hall Effect sensor is Closed.
      */
     public boolean getHallEffect() {
-        return !master.getSensorCollection().isRevLimitSwitchClosed();
+        return master.getSensorCollection().isRevLimitSwitchClosed();
     }
 
     /**
@@ -118,6 +125,12 @@ public class Turret extends SubsystemBase {
         master.setSelectedSensorPosition(convertDegreesToTicks(HALL_EFFECT_POSITION), 0, TALON_TIMEOUT);
     }
 
+    /**
+     * @param minimum the minimum angle the turret can turn
+     * @param angle the target angle
+     * @param maximum the maximum angle that the turret can turn
+     * @return an angle that satisfies the constrain
+     */
     private double constrain(double minimum, double angle, double maximum) {
         return Math.min(maximum, Math.max(minimum, angle));
     }
@@ -142,6 +155,9 @@ public class Turret extends SubsystemBase {
         return ticks / TICKS_PER_DEGREE;
     }
 
+    /**
+     * resets the encoder position to 0
+     */
     public void reset() {
         master.setSelectedSensorPosition(0);
     }
