@@ -23,15 +23,15 @@ public class Intake extends SubsystemBase {
             solenoid.set(false);
     }
 
-    public void setPositionAutomatically() {
-        if (getCurrentPosition() == Direction.UP) {
+    public void changePositionAutomatically() {
+        if (getPosition() == Direction.UP) {
             setPosition(Direction.DOWN);
             return;
         }
         setPosition(Direction.UP);
     }
 
-    public Direction getCurrentPosition() {
+    public Direction getPosition() {
         if (solenoid.get())
             return Direction.UP;
         return Direction.DOWN;
