@@ -3,6 +3,7 @@ package frc.robot.subsystems.intake;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.Intake.*;
@@ -16,25 +17,16 @@ public class Intake extends SubsystemBase {
         masterMotor.setInverted(MASTER_INVERTED);
     }
 
-    public void setPosition(Direction direction) {
-        if (direction == Direction.UP)
-            solenoid.set(true);
-        else
-            solenoid.set(false);
+    public void setPosition(Value direction) {
+        solenoid.set(direction);
     }
 
     public void togglePosition() {
-        if (getPosition() == Direction.UP) {
-            setPosition(Direction.DOWN);
-            return;
-        }
-        setPosition(Direction.UP);
+        setPosition(getPosition());
     }
 
-    public Direction getPosition() {
-        if (solenoid.get())
-            return Direction.UP;
-        return Direction.DOWN;
+    public Value getPosition() {
+        return solenoid.get();
     }
 
     public void applyPowerOnWheels(double speed) {
