@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.Intake.MASTER_INVERTED;
 import static frc.robot.Ports.Intake.*;
-import static frc.robot.Robot.intake;
 
 public class Intake extends SubsystemBase {
     private VictorSPX masterMotor = new VictorSPX(MASTER);
@@ -32,10 +31,11 @@ public class Intake extends SubsystemBase {
     }
 
     public void togglePosition() {
-        if (intake.getPosition() == Value.kForward) {
+        if (getPosition() == Value.kForward) {
             setPosition(Value.kReverse);
-        } else if (intake.getPosition() == Value.kReverse)
+        } else if (getPosition() == Value.kReverse)
             setPosition(Value.kForward);
+
     }
 
     public void applyPowerOnWheels(double speed) {
