@@ -49,6 +49,15 @@ public class Climb extends SubsystemBase {
       rightClimbMaster.setSensorPhase(Constants.Climb.RIGHT_SENSOR_PHASE);
     }
 
+    public void releaseStopper(){
+        stopper.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void engageStopper(){
+        stopper.set(DoubleSolenoid.Value.kForward);
+    }
+    
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
