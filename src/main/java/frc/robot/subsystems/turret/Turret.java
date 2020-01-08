@@ -2,14 +2,16 @@ package frc.robot.subsystems.turret;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.Turret.*;
+import static frc.robot.Ports.Turret.*;
 
 /**
  * @author Adam & Barel
@@ -30,17 +32,17 @@ public class Turret extends SubsystemBase {
      */
     public Turret() {
         master.configFactoryDefault();
+        master.setInverted(IS_MASTER_INVERTED);
+        master.setSensorPhase(IS_ENCODER_INVERTED);
         master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         master.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
         master.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
         master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
-        master.configMotionCruiseVelocity(CRUISE_VELOCITY);
         master.configMotionAcceleration(CRUISE_ACCELERATION);
-        master.setInverted(IS_MASTER_INVERTED);
-        master.setSensorPhase(IS_SENSOR_PHASED);
+        master.configMotionCruiseVelocity(CRUISE_VELOCITY);
         master.configPeakCurrentLimit(MAX_CURRENT);
-//        master.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+        master.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
         master.setSelectedSensorPosition((int) HALL_EFFECT_POSITION, 0, TALON_TIMEOUT);
     }
 
@@ -62,7 +64,7 @@ public class Turret extends SubsystemBase {
         master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
         master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
     }
-    
+
     @Override
     public void periodic() {
         updateConstants();
