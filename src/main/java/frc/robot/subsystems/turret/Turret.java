@@ -84,9 +84,10 @@ public class Turret implements Subsystem {
      *
      * @param targetAngle the desired angle.
      */
-    public void setTargetAngle(double targetAngle) {
+    private double setTargetAngle(double targetAngle) {
         targetAngle = (targetAngle + 720) % 360; //To insure that the targetAngle is between 0-360, we add 720 to prevent negative modulo operations.
         targetAngle = constrain(MINIMUM_ANGLE, targetAngle, MAXIMUM_ANGLE);
+        return convertDegreesToTicks(targetAngle);
     }
 
 
@@ -95,8 +96,8 @@ public class Turret implements Subsystem {
      *
      * @param angle the desired angle
      */
-    private void moveTurret(double angle) {
-        master.set(ControlMode.MotionMagic, convertDegreesToTicks(angle));
+    public void moveTurret(double angle) {
+        master.set(ControlMode.MotionMagic, setTargetAngle(angle));
     }
 
     public void stop() {
