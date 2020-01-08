@@ -6,8 +6,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import static frc.robot.Constants.Intake.*;
+import static frc.robot.Constants.Intake.MASTER_INVERTED;
 import static frc.robot.Ports.Intake.*;
+import static frc.robot.Robot.intake;
 
 public class Intake extends SubsystemBase {
     private VictorSPX masterMotor = new VictorSPX(MASTER);
@@ -17,16 +18,24 @@ public class Intake extends SubsystemBase {
         masterMotor.setInverted(MASTER_INVERTED);
     }
 
-    public void setPosition(Value direction) {
-        solenoid.set(direction);
-    }
-
     public void togglePosition() {
-        setPosition(getPosition());
+        if (intake.getPosition() == Value.kForward) {
+            setPosition(Value.kReverse);
+        } else if (intake.getPosition() == Value.kReverse)
+            setPosition(Value.kForward);
     }
 
     public Value getPosition() {
         return solenoid.get();
+    }
+
+    /**
+     * set
+     *
+     * @param direction
+     */
+    public void setPosition(Value direction) {
+        solenoid.set(direction);
     }
 
     public void applyPowerOnWheels(double speed) {
