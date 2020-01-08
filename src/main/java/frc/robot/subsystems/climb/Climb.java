@@ -56,7 +56,14 @@ public class Climb extends SubsystemBase {
     public void engageStopper(){
         stopper.set(DoubleSolenoid.Value.kForward);
     }
-    
+
+    public double convertTicksToMeters(int ticks){
+        return ticks/Constants.Climb.TICKS_PER_METER;
+    }
+
+    public int convertMetersToTicks(double meters){
+        return (int)(meters*Constants.Climb.TICKS_PER_METER);
+    }
 
     @Override
     public void periodic() {
