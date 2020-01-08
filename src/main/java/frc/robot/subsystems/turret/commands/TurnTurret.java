@@ -7,7 +7,7 @@ import static frc.robot.Constants.Turret.*;
 import static frc.robot.Robot.turret;
 
 /**
- *
+ * this command turns the turret until it reaches a certain threshold.
  */
 public class TurnTurret extends CommandBase {
 
