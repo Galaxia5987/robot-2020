@@ -25,6 +25,9 @@ public class ColorWheel extends SubsystemBase {
   private final Color GreenTarget = ColorMatch.makeColor(Constants.ColorWheel.GREEN_RGB[0], Constants.ColorWheel.GREEN_RGB[1], Constants.ColorWheel.GREEN_RGB[2]);
   private final Color RedTarget = ColorMatch.makeColor(Constants.ColorWheel.RED_RGB[0], Constants.ColorWheel.RED_RGB[1], Constants.ColorWheel.RED_RGB[2]);
   private final Color YellowTarget = ColorMatch.makeColor(Constants.ColorWheel.YELLOW_RGB[0], Constants.ColorWheel.YELLOW_RGB[1], Constants.ColorWheel.YELLOW_RGB[2]);
+
+
+
   /**
    * Creates a new ExampleSubsystem.
    */
@@ -34,10 +37,32 @@ public class ColorWheel extends SubsystemBase {
     colorMatcher.addColorMatch(RedTarget);
     colorMatcher.addColorMatch(YellowTarget);
 
+
   }
 
   @Override
   public void periodic() {
+    Color detectedColor = colorSensor.getColor();
+    String colorString;
+    ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
+
+    if (match.color == BlueTarget) {
+      colorString = "Blue";
+    } else if (match.color == RedTarget) {
+      colorString = "Red";
+    } else if (match.color == GreenTarget) {
+      colorString = "Green";
+    } else if (match.color == YellowTarget) {
+      colorString = "Yellow";
+    } else {
+      colorString = "Unknown";
+    }
+
+    SmartDashboard.putNumber("Red", detectedColor.red);
+    SmartDashboard.putNumber("Green", detectedColor.green);
+    SmartDashboard.putNumber("Blue", detectedColor.blue);
+    SmartDashboard.putNumber("Confidence", match.confidence);
+    SmartDashboard.putString("Detected Color", colorString);
     // This method will be called once per scheduler run
   }
 }
