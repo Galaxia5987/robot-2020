@@ -9,6 +9,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Utils;
 
 import static frc.robot.Constants.Turret.*;
 import static frc.robot.Ports.Turret.*;
@@ -24,8 +25,11 @@ import static frc.robot.Ports.Turret.*;
  */
 public class Turret extends SubsystemBase {
     private TalonSRX master = new TalonSRX(MASTER);
-    private NetworkTable turretTable = NetworkTableInstance.getDefault().getTable("turret");
-    private NetworkTableEntry turretAngle = turretTable.getEntry("angle");
+    public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
+    private NetworkTableEntry kPentry = table.getEntry("kP");
+    private NetworkTableEntry kIentry = table.getEntry("kI");
+    private NetworkTableEntry kDentry = table.getEntry("kD");
+    private NetworkTableEntry kFentry = table.getEntry("kF");
 
     /**
      * configures the encoder and PID constants.
