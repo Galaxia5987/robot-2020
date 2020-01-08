@@ -7,6 +7,7 @@ import static frc.robot.Robot.intake;
 
 public class ToggleIntake extends CommandBase {
     private Value direction;
+    private boolean auto = false;
 
     public ToggleIntake(Value direction) {
         addRequirements(intake);
@@ -15,21 +16,24 @@ public class ToggleIntake extends CommandBase {
 
     public ToggleIntake() {
         addRequirements(intake);
-        if (intake.getPosition() == Value.kForward) {
-            direction = Value.kReverse;
-            return;
-        }
-        direction = Value.kForward;
+        this.auto = true;
+    }
+
+    private void chooseShootingType() {
+        if (auto)
+            intake.togglePosition();
+        else
+            intake.setPosition(direction);
     }
 
     @Override
     public void initialize() {
-        intake.setPosition(direction);
+        chooseShootingType();
     }
 
     @Override
     public void execute() {
-        intake.togglePosition();
+        chooseShootingType();
     }
 
     @Override
