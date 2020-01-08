@@ -40,8 +40,4 @@ public class Intake extends SubsystemBase {
     public void applyPowerOnWheels(double speed) {
         masterMotor.set(ControlMode.PercentOutput, speed);
     }
-
-    public enum Direction {
-        UP, DOWN
-    }
 }
