@@ -17,12 +17,19 @@ public class Constants {
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
 
-    public static class ExampleSubsystem1 {
-        //All of the Subsystem specific constants go here,and need to be static.
+    public static class ColorWheel{
+        public static final double[] POLLY_YELLOW_RGB = {0.297, 0.541, 0.161};
+        public static final double[] POLLY_GREEN_RGB = {0.195, 0.526, 0.281};
+        public static final double[] POLLY_RED_RGB = {0.398, 0.398, 0.202};
+        public static final double[] POLLY_BLUE_RGB = {0.166, 0.435, 0.398};
 
-        //public static final double TICKS_PER_METER = CONST(256 / (4*0.0254*Math.PI));
-        //public static final double MAX_VELOCITY = CONST(5);
+        public static final double[] YELLOW_RGB = {0.317, 0.552, 0.127};
+        public static final double[] GREEN_RGB = {0.16, 0.571, 0.269};
+        public static final double[] RED_RGB = {0.492, 0.348, 0.145};
+        public static final double[] BLUE_RGB = {0.132, 0.427, 0.442};
+
     }
+
 
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
