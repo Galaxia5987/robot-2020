@@ -58,6 +58,10 @@ public class Climb extends SubsystemBase {
         stopper.set(DoubleSolenoid.Value.kForward);
     }
 
+    public boolean isEngaged(){
+        return stopper.get() == DoubleSolenoid.Value.kForward;
+    }
+
     public double convertTicksToMeters(int ticks){
         return ticks/Constants.Climb.TICKS_PER_METER;
     }
@@ -81,7 +85,7 @@ public class Climb extends SubsystemBase {
     public double getRightHeight(){
         return convertTicksToMeters(rightClimbMaster.getSelectedSensorPosition());
     }
-    
+
 
     @Override
     public void periodic() {
