@@ -17,6 +17,7 @@ package frc.robot;
  */
 public final class Constants {
     public static final class Intake {
+        public static final boolean MASTER_INVERTED = true;
 
     }
 }
