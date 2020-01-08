@@ -20,7 +20,7 @@ import frc.robot.subsystems.intake.Intake;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  public static final Intake intake = new Intake();
+
   private RobotContainer m_robotContainer;
 
   /**

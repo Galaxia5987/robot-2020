@@ -3,7 +3,7 @@ package frc.robot.subsystems.intake.commands;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import static frc.robot.Robot.intake;
+import static frc.robot.RobotContainer.intake;
 
 public class ToggleIntake extends CommandBase {
     private Value direction;

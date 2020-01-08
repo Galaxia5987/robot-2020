@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import static frc.robot.Robot.intake;
+import static frc.robot.RobotContainer.intake;
 
 public class OutakeBall extends CommandBase {
     private Timer timer = new Timer();
