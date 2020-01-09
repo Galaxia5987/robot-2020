@@ -66,7 +66,7 @@ public class Constants {
     public static class Climb {
         public static final int MOTION_MAGIC_VELOCITY = 0;
         public static final int MOTION_MAGIC_ACCELERATION = 0;
-        public static final double TICKS_PER_METER = 1;
+        public static final int TICKS_PER_METER = 1;
         public static final double[] CLIMB_PIDF = {0, 0, 0, 0};
         public static final boolean LEFT_IS_REVERSED = false;
         public static final boolean RIGHT_IS_REVERSED = false;
