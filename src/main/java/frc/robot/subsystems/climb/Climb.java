@@ -7,9 +7,7 @@
 
 package frc.robot.subsystems.climb;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -51,6 +49,9 @@ public class Climb extends SubsystemBase {
 
         leftClimbMaster.setSensorPhase(Constants.Climb.LEFT_SENSOR_PHASE);
         rightClimbMaster.setSensorPhase(Constants.Climb.RIGHT_SENSOR_PHASE);
+
+        leftClimbMaster.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+        rightClimbMaster.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     }
 
     /**
