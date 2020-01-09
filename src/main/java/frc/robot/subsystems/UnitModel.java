@@ -7,11 +7,11 @@ public class UnitModel {
         this.ticksPerUnit = ticksPerUnit;
     }
 
-    public double convertToUnits(double ticks) {
+    public double toUnits(double ticks) {
         return ticks / ticksPerUnit;
     }
 
-    public int convertToTicks(double units) {
+    public int toTicks(double units) {
         return (int) (ticksPerUnit * units);
     }
 
