@@ -16,6 +16,7 @@ public class Constants {
     //public static final double TIME_STEP = CONST(0.02);
 
     public static final int TALON_TIMEOUT_MS = 20;
+    public static final double ROBOT_WIDTH = 0;
 
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
