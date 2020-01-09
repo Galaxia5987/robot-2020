@@ -71,11 +71,11 @@ public class Climb extends SubsystemBase {
     }
 
     public void setLeftHeight(double height){
-        leftClimbMaster.set(ControlMode.MotionMagic, convertMetersToTicks(height));//add arbitrary feedforward
+        leftClimbMaster.set(ControlMode.MotionMagic, convertMetersToTicks(height));//TODO: Add arbitrary feedforward
     }
 
     public void setRightHeight(double height){
-        rightClimbMaster.set(ControlMode.MotionMagic, convertMetersToTicks(height));//add arbitrary feedforward
+        rightClimbMaster.set(ControlMode.MotionMagic, convertMetersToTicks(height));//TODO: Add arbitrary feedforward
     }
 
     public double getLeftHeight(){
