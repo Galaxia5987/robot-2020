@@ -57,13 +57,15 @@ public class Climb extends SubsystemBase {
      * This would allow her to rise
      */
     public void releaseStopper(){
+        if (isEngaged()){
         stopper.set(DoubleSolenoid.Value.kReverse);
-    }
+    }}
 
     /**
      * This method engage the mechanical stopper to lock the climb subsystem.
      */
     public void engageStopper(){
+        if (!isEngaged())
         stopper.set(DoubleSolenoid.Value.kForward);
     }
 
