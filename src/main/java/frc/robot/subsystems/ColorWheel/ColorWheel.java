@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.ColorWheel;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -20,6 +20,10 @@ public class ColorWheel extends SubsystemBase {
 
   public I2C.Port i2cPort = I2C.Port.kOnboard;
   public ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+  private Color detectedColor;
+  private int Counter = 0;
+  private String lastColorString = "";
+  private String colorString = "";
   private final ColorMatch colorMatcher = new ColorMatch();
   private final Color BlueTarget = ColorMatch.makeColor(Constants.ColorWheel.BLUE_RGB[0], Constants.ColorWheel.BLUE_RGB[1], Constants.ColorWheel.BLUE_RGB[2]);
   private final Color GreenTarget = ColorMatch.makeColor(Constants.ColorWheel.GREEN_RGB[0], Constants.ColorWheel.GREEN_RGB[1], Constants.ColorWheel.GREEN_RGB[2]);
@@ -40,12 +44,16 @@ public class ColorWheel extends SubsystemBase {
 
   }
 
+  public void update_sensor_encoder(){
+    if (!lastColorString.equals(colorString))
+      Counter+=1;
+    lastColorString = colorString;
+  }
+
   @Override
   public void periodic() {
-    Color detectedColor = colorSensor.getColor();
-    String colorString;
+    detectedColor = colorSensor.getColor();
     ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
-
     if (match.color == BlueTarget) {
       colorString = "Blue";
     } else if (match.color == RedTarget) {
@@ -57,7 +65,8 @@ public class ColorWheel extends SubsystemBase {
     } else {
       colorString = "Unknown";
     }
-
+    update_sensor_encoder();
+    SmartDashboard.putNumber("Encoder", Counter);
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
