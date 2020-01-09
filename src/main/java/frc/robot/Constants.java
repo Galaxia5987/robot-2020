@@ -75,6 +75,7 @@ public class Constants {
         public static final boolean RIGHT_SENSOR_PHASE = false;
         public static final double CLIMB_HEIGHT_TOLERANCE = 0;
         public static final double CLIMB_ANGLE_TOLERANCE = 0;
+        public static final double CLIMB_HEIGHT = 0;
     }
 
 }
