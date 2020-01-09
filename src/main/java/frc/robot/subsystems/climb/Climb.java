@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
-import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 
 public class Climb extends SubsystemBase {
@@ -89,7 +88,7 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setLeftHeight(double height) {
-        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
+        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
@@ -98,7 +97,7 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setRightHeight(double height) {
-        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
+        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
@@ -116,44 +115,64 @@ public class Climb extends SubsystemBase {
     }
 
 
+    /**
+     * @return whether the limit switch on the left side is closed.
+     */
     public boolean isLeftOnLimit() {
         return leftClimbMaster.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
+    /**
+     * @return whether the limit switch on the right side is closed.
+     */
     public boolean isRightOnLimit() {
         return rightClimbMaster.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
+    /**
+     * Reset the encoder position to the height of the subsystem.
+     */
     public void leftReset() {
         leftClimbMaster.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
     }
 
+    /**
+     * Reset the encoder position to the height of the subsystem.
+     */
     public void rightReset() {
         rightClimbMaster.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
     }
 
-    private double normalizeSetpoint(double setpoint) {
-        if (setpoint > Constants.Climb.CLIMB_HEIGHT) {
+    /**
+     * This method would normalize the setPoint in range.
+     * @param setPoint the setPoint.
+     * @return the normalized setPoint.
+     */
+    private double normalizeSetPoint(double setPoint) {
+        if (setPoint > Constants.Climb.CLIMB_HEIGHT) {
             return Constants.Climb.CLIMB_HEIGHT;
-        } else if (setpoint < 0) {
+        } else if (setPoint < 0) {
             return 0;
         }
-        return setpoint;
+        return setPoint;
     }
 
     @Override
     public void periodic() {
 
+        //Reset if the limit switch is pressed.
         if (isLeftOnLimit()) {
             leftReset();
         }else if (isRightOnLimit()) {
             rightReset();
         }
 
+        //Engage the stopper to prevent the subsystem from exceeding the limits.
         if (isRightOnLimit() || isLeftOnLimit()) {
             engageStopper();
         }
 
+        //Limit the motors to a certain range.
         if (getLeftHeight() <=0 ){
             setLeftHeight(0);
         }else if (getLeftHeight() >= Constants.Climb.CLIMB_HEIGHT){
