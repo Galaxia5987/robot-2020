@@ -76,11 +76,18 @@ public class Climb extends SubsystemBase {
     }
 
 
-
+    /**
+     * This method move the left side of the climb to certain height
+     * @param height the target height of the motor in meters
+     */
     public void setLeftHeight(double height){
         leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height));//TODO: Add arbitrary feedforward
     }
 
+    /**
+     * This method move the right side of the climb to certain height
+     * @param height the target height of the motor in meters
+     */
     public void setRightHeight(double height){
         rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height));//TODO: Add arbitrary feedforward
     }
