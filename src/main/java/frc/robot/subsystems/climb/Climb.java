@@ -88,7 +88,7 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setLeftHeight(double height) {
-        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height), DemandType.ArbitraryFeedForward , Constants.Climb.CLIMB_PIDF[3]);
+        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
@@ -97,7 +97,7 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setRightHeight(double height) {
-        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height), DemandType.ArbitraryFeedForward , Constants.Climb.CLIMB_PIDF[3]);
+        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
@@ -114,6 +114,22 @@ public class Climb extends SubsystemBase {
         return climbUnitModel.toUnits(rightClimbMaster.getSelectedSensorPosition());
     }
 
+
+    public boolean isLeftOnLimit() {
+        return leftClimbMaster.getSensorCollection().isFwdLimitSwitchClosed();
+    }
+
+    public boolean isRightOnLimit() {
+        return rightClimbMaster.getSensorCollection().isFwdLimitSwitchClosed();
+    }
+
+    public void leftReset() {
+        leftClimbMaster.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
+    }
+
+    public void rightReset() {
+        rightClimbMaster.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
+    }
 
     @Override
     public void periodic() {
