@@ -92,10 +92,16 @@ public class Climb extends SubsystemBase {
         rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height));//TODO: Add arbitrary feedforward
     }
 
+    /**
+     * @return the current height of the left side of the climb in meters.
+     */
     public double getLeftHeight(){
         return climbUnitModel.toUnits(leftClimbMaster.getSelectedSensorPosition());
     }
 
+    /**
+     * @return the current height of the right side of the climb in meters.
+     */
     public double getRightHeight(){
         return climbUnitModel.toUnits(rightClimbMaster.getSelectedSensorPosition());
     }
