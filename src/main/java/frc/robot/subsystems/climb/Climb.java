@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 
 public class Climb extends SubsystemBase {
@@ -145,14 +146,24 @@ public class Climb extends SubsystemBase {
 
         if (isLeftOnLimit()) {
             leftReset();
-        }
-
-        if (isRightOnLimit()) {
+        }else if (isRightOnLimit()) {
             rightReset();
         }
 
         if (isRightOnLimit() || isLeftOnLimit()) {
             engageStopper();
+        }
+
+        if (getLeftHeight() <=0 ){
+            setLeftHeight(0);
+        }else if (getLeftHeight() >= Constants.Climb.CLIMB_HEIGHT){
+            setLeftHeight(Constants.Climb.CLIMB_HEIGHT);
+        }
+
+        if (getRightHeight() <=0 ){
+            setRightHeight(0);
+        }else if (getRightHeight() >= Constants.Climb.CLIMB_HEIGHT){
+            setRightHeight(Constants.Climb.CLIMB_HEIGHT);
         }
     }
 }
