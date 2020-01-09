@@ -1,6 +1,6 @@
 package frc.robot;
 
-import frc.robot.Robot;
+
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -13,7 +13,9 @@ import java.util.Optional;
  * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
-public final class Constants {
+public class Constants {
+    //All general constants go here
+    //public static final double TIME_STEP = CONST(0.02);
 
     public static class Shooter {
         public static final int TALON_PID_SLOT = 0;
@@ -34,6 +36,7 @@ public final class Constants {
         public static final double PERCENT_THRESHOLD = 10;
         public static final double RAMP_RATE = 2;
     }
+
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
             replaceFields(Constants.class, BConstants.class); // Replace outer constants
@@ -45,9 +48,6 @@ public final class Constants {
             }
         }
     }
-
-}
-
 
     /**
      * Replaces fields between constants classes
@@ -75,7 +75,7 @@ public final class Constants {
         }
     }
 
-
+}
 
 //Anything in this class will replace the original constants when boolean is true
 class BConstants {
