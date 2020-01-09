@@ -19,7 +19,7 @@ public class ToggleIntake extends CommandBase {
         this.auto = true;
     }
 
-    private void chooseShootingType() {
+    private void chooseFoldingState() {
         if (auto)
             intake.togglePosition();
         else
@@ -28,17 +28,20 @@ public class ToggleIntake extends CommandBase {
 
     @Override
     public void initialize() {
-        chooseShootingType();
+        chooseFoldingState();
     }
 
     @Override
     public void execute() {
-        chooseShootingType();
+        chooseFoldingState();
     }
 
     @Override
     public boolean isFinished() {
-        return intake.getPosition() == direction;
+         if (direction == Value.kForward)
+            return intake.isFolded();
+        else
+            return !intake.isFolded();
     }
 
     @Override

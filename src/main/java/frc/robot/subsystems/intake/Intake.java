@@ -18,30 +18,30 @@ import static frc.robot.Ports.Intake.*;
  * {@using DoubleSolenoid}
  */
 public class Intake extends SubsystemBase {
-    private VictorSPX masterMotor = new VictorSPX(MASTER);
-    private DoubleSolenoid solenoid = new DoubleSolenoid(SOLENOID_FORWARD_CHANNEL, SOLENOID_BACKWARD_CHANNEL);
+    private VictorSPX intakeMotor = new VictorSPX(MASTER);
+    private DoubleSolenoid retracter = new DoubleSolenoid(SOLENOID_FORWARD_CHANNEL, SOLENOID_BACKWARD_CHANNEL);
 
     public Intake() {
-        masterMotor.setInverted(MASTER_INVERTED);
+        intakeMotor.setInverted(MASTER_INVERTED);
     }
 
     /**
-     * get the current position of the solenoid
+     * get the current position of the retracter
      *
-     * @return the position of the solenoid as a Value class instance
+     * @return the position of the retracter as a Value class instance
      */
-    public Value getPosition() {
-        return solenoid.get();
+    public boolean isFolded() {
+        return retracter.get() == Value.kForward;
     }
 
     /**
-     * set the new position of the solenoid.
+     * set the new position of the retracter.
      * can be either Forward (Up) or Reverse (Down).
      *
-     * @param direction the desired direction for the solenoid
+     * @param direction the desired direction for the retracter
      */
     public void setPosition(Value direction) {
-        solenoid.set(direction);
+        retracter.set(direction);
     }
 
     /**
@@ -50,9 +50,9 @@ public class Intake extends SubsystemBase {
      * if you want to choose manually use {@see setPosition(Value)} instead.
      */
     public void togglePosition() {
-        if (getPosition() == Value.kForward) {
+        if (isFolded()) {
             setPosition(Value.kReverse);
-        } else if (getPosition() == Value.kReverse)
+        } else
             setPosition(Value.kForward);
     }
 
@@ -61,7 +61,7 @@ public class Intake extends SubsystemBase {
      *
      * @param speed the speed to apply on the intake's wheels (in percents)
      */
-    public void applyPowerOnWheels(double speed) {
-        masterMotor.set(ControlMode.PercentOutput, speed);
+    public void powerWheels(double speed) {
+        intakeMotor.set(ControlMode.PercentOutput, speed);
     }
 }

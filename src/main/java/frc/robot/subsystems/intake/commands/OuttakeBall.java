@@ -6,18 +6,25 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static frc.robot.RobotContainer.intake;
 
-public class PullBall extends CommandBase {
+public class OuttakeBall extends CommandBase {
     private Timer timer = new Timer();
     private double speed;
     private double timeout;
 
-    public PullBall(double speed, double timeout) {
+    /**
+     * this constructor is for a situation when you use an autonomous command.
+     * please be aware that you should insert positive {@param speed)'s number. {@value <0}
+     *
+     * @param speed
+     * @param timeout
+     */
+    public OuttakeBall(double speed, double timeout) {
         addRequirements(intake);
-        this.speed = speed;
+        this.speed = -speed;
         this.timeout = timeout;
     }
 
-    public PullBall(double speed) {
+    public OuttakeBall(double speed) {
         this(speed, 0);
     }
 
@@ -26,22 +33,22 @@ public class PullBall extends CommandBase {
         timer.reset();
         timer.start();
         intake.setPosition(Value.kReverse);
-        intake.applyPowerOnWheels(speed);
+        intake.powerWheels(speed);
     }
 
     @Override
     public void execute() {
-        intake.applyPowerOnWheels(speed);
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        timer.stop();
-        intake.applyPowerOnWheels(0);
+        intake.powerWheels(speed);
     }
 
     @Override
     public boolean isFinished() {
         return timer.get() >= timeout;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        timer.stop();
+        intake.powerWheels(0);
     }
 }

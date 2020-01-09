@@ -24,8 +24,6 @@ import frc.robot.subsystems.intake.Intake;
 public class RobotContainer {
     public static final Intake intake = new Intake();
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-    private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
     private final XboxController xbox = new XboxController(2);
     private final JoystickButton a = new JoystickButton(xbox, 1);
 
@@ -56,6 +54,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return m_autoCommand;
+        return intake::togglePosition; //TODO Change
     }
 }

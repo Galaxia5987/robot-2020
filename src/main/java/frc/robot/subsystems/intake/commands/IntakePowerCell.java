@@ -6,18 +6,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static frc.robot.RobotContainer.intake;
 
-public class OutakeBall extends CommandBase {
+public class IntakePowerCell extends CommandBase {
     private Timer timer = new Timer();
     private double speed;
     private double timeout;
 
-    public OutakeBall(double speed, double timeout) {
+    public IntakePowerCell(double speed, double timeout) {
         addRequirements(intake);
-        this.speed = -speed;
+        this.speed = speed;
         this.timeout = timeout;
     }
 
-    public OutakeBall(double speed) {
+    public IntakePowerCell(double speed) {
         this(speed, 0);
     }
 
@@ -26,12 +26,12 @@ public class OutakeBall extends CommandBase {
         timer.reset();
         timer.start();
         intake.setPosition(Value.kReverse);
-        intake.applyPowerOnWheels(speed);
+        intake.powerWheels(speed);
     }
 
     @Override
     public void execute() {
-        intake.applyPowerOnWheels(speed);
+        intake.powerWheels(speed);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class OutakeBall extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         timer.stop();
-        intake.applyPowerOnWheels(0);
+        intake.powerWheels(0);
     }
 }
