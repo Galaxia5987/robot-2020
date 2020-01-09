@@ -7,10 +7,10 @@
 
 package frc.robot.subsystems.climb.commands;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.climb.Climb;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command that uses an example subsystem.
@@ -64,7 +64,8 @@ public class RiseToHeightCommand extends CommandBase {
 
         currentAngleError = targetAngle - Robot.navx.getRoll();
         currentHeight = (m_subsystem.getLeftHeight() + m_subsystem.getRightHeight()) / 2;
-        if (Math.abs(targetHeight - currentHeight) < Constants.Climb.CLIMB_TOLERANCE) {
+
+        if (Math.abs(targetHeight - currentHeight) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE) {
             m_subsystem.engageStopper();
         }
         m_subsystem.setLeftHeight(targetHeight);
