@@ -45,9 +45,8 @@ public class Intake extends SubsystemBase {
     }
 
     /**
-     * change the position of the intake automatically,
-     * based on the current position.
-     * if you want to choose manually use {@see setPosition(Value)} instead.
+     * Toggle the position of the intake.
+     * if you wish to change the position manually, use {@see setPosition(Value)} instead.
      */
     public void togglePosition() {
         if (isFolded()) {
