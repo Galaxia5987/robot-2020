@@ -14,12 +14,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.subsystems.UnitModel;
 
 public class Climb extends SubsystemBase {
 
     private TalonSRX leftClimbMaster = new TalonSRX(Ports.climb.leftClimbMaster);
     private TalonSRX rightClimbMaster = new TalonSRX(Ports.climb.rightClimbMaster);
     private DoubleSolenoid stopper = new DoubleSolenoid(Ports.climb.moduleNumber, Ports.climb.solenoidForward, Ports.climb.solenoidReverse);
+    private UnitModel climbUnitModel = new UnitModel(Constants.Climb.TICKS_PER_METER);
 
     /**
      * Creates a new climb Subsystem.
@@ -62,28 +64,22 @@ public class Climb extends SubsystemBase {
         return stopper.get() == DoubleSolenoid.Value.kForward;
     }
 
-    public double convertTicksToMeters(int ticks){
-        return ticks/Constants.Climb.TICKS_PER_METER;
-    }
 
-    public int convertMetersToTicks(double meters){
-        return (int)(meters*Constants.Climb.TICKS_PER_METER);
-    }
 
     public void setLeftHeight(double height){
-        leftClimbMaster.set(ControlMode.MotionMagic, convertMetersToTicks(height));//TODO: Add arbitrary feedforward
+        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height));//TODO: Add arbitrary feedforward
     }
 
     public void setRightHeight(double height){
-        rightClimbMaster.set(ControlMode.MotionMagic, convertMetersToTicks(height));//TODO: Add arbitrary feedforward
+        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height));//TODO: Add arbitrary feedforward
     }
 
     public double getLeftHeight(){
-        return convertTicksToMeters(leftClimbMaster.getSelectedSensorPosition());
+        return climbUnitModel.toUnits(leftClimbMaster.getSelectedSensorPosition());
     }
 
     public double getRightHeight(){
-        return convertTicksToMeters(rightClimbMaster.getSelectedSensorPosition());
+        return climbUnitModel.toUnits(rightClimbMaster.getSelectedSensorPosition());
     }
 
 
