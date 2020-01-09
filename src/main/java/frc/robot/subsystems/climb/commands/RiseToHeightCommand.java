@@ -8,6 +8,7 @@
 package frc.robot.subsystems.climb.commands;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.climb.Climb;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -58,6 +59,10 @@ public class RiseToHeightCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        leftTargetHeight = targetHeight - m_subsystem.getLeftHeight();
+        rightTargetHeight = targetHeight - m_subsystem.getRightHeight();
+
+        currentAngleError = targetAngle - Robot.navx.getRoll();
         currentHeight = (m_subsystem.getLeftHeight() + m_subsystem.getRightHeight()) / 2;
         if (Math.abs(targetHeight - currentHeight) < Constants.Climb.CLIMB_TOLERANCE) {
             m_subsystem.engageStopper();
