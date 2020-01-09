@@ -1,4 +1,4 @@
-package robot.subsystems.shooter;
+package frc.robot.subsystems.shooter;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
