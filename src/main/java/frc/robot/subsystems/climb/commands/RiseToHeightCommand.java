@@ -18,7 +18,11 @@ public class RiseToHeightCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Climb m_subsystem;
     private double targetHeight;
+    private double targetAngle;
     private double currentHeight;
+    private double currentAngleError;
+    private double leftTargetHeight;
+    private double rightTargetHeight;
 
     /**
      * Creates a new RiseToHeightCommand.
@@ -28,7 +32,20 @@ public class RiseToHeightCommand extends CommandBase {
     public RiseToHeightCommand(Climb subsystem, double targetHeight) {
         m_subsystem = subsystem;
         this.targetHeight = targetHeight;
+        this.targetAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(subsystem);
+    }
+
+    /**
+     * @param subsystem    the subsystem
+     * @param targetHeight the desired height for the mechanism
+     * @param targetAngle  the desired angle
+     */
+    public RiseToHeightCommand(Climb subsystem, double targetHeight, double targetAngle) {
+        this.m_subsystem = subsystem;
+        this.targetHeight = targetHeight;
+        this.targetAngle = targetAngle;
         addRequirements(subsystem);
     }
 
