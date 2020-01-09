@@ -46,7 +46,7 @@ public class Intake extends SubsystemBase {
 
     /**
      * Toggle the position of the intake.
-     * if you want to choose manually use {@see setPosition(Value)} instead.
+     * if you wish to change the position manually, use {@see setPosition(Value)} instead.
      */
     public void togglePosition() {
         if (getPosition() == Value.kForward) {
