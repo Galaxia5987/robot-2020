@@ -19,7 +19,9 @@ import frc.robot.subsystems.intake.Intake;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+  public static boolean isRobotA = true;
+    private Command m_autonomousCommand;
+
   private RobotContainer m_robotContainer;
 
   /**
