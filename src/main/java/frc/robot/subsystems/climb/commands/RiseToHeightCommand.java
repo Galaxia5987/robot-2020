@@ -99,4 +99,31 @@ public class RiseToHeightCommand extends CommandBase {
         return Math.abs(leftTargetHeight - m_subsystem.getLeftHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE && Math.abs(rightTargetHeight - m_subsystem.getRightHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE
                 && Math.abs(currentAngleError) < Constants.Climb.CLIMB_ANGLE_TOLERANCE;
     }
+
+    /**
+     * This method would take 2 values and increase the difference between them,
+     * without exceeding min and max limits
+     * @param difference the difference
+     * @param firstHeight the first height
+     * @param secondHeight the second height
+     * @param minLimit the minimum limit
+     * @param maxLimit the maximum limit
+     * @return the modified heights
+     */
+    private double[] normalizeHeights(double difference, double firstHeight, double secondHeight, double minLimit, double maxLimit) {
+        if (firstHeight - difference >= minLimit) {
+            firstHeight -= difference;
+        } else {
+            firstHeight -= difference;
+            difference = Math.abs(Math.abs(firstHeight) - minLimit);
+            firstHeight = minLimit;
+            if (secondHeight + difference <= maxLimit) {
+                secondHeight += difference;
+            } else {
+                secondHeight = maxLimit;
+            }
+        }
+        return new double[]{firstHeight, secondHeight};
+    }
+
 }
