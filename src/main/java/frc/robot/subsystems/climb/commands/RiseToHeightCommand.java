@@ -88,6 +88,7 @@ public class RiseToHeightCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(currentHeight) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE && Math.abs(currentAngleError) < Constants.Climb.CLIMB_ANGLE_TOLERANCE;
+        return Math.abs(leftTargetHeight - m_subsystem.getLeftHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE && Math.abs(rightTargetHeight - m_subsystem.getRightHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE
+                && Math.abs(currentAngleError) < Constants.Climb.CLIMB_ANGLE_TOLERANCE;
     }
 }
