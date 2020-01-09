@@ -52,14 +52,25 @@ public class Climb extends SubsystemBase {
       rightClimbMaster.setSensorPhase(Constants.Climb.RIGHT_SENSOR_PHASE);
     }
 
+    /**
+     * This method release the mechanical stopper from the climb subsystem.
+     * This would allow her to rise
+     */
     public void releaseStopper(){
         stopper.set(DoubleSolenoid.Value.kReverse);
     }
 
+    /**
+     * This method engage the mechanical stopper to lock the climb subsystem.
+     */
     public void engageStopper(){
         stopper.set(DoubleSolenoid.Value.kForward);
     }
 
+    /**
+     * This method return if the mechanical stopper is engaged
+     * @return the state of the mechanical stopper
+     */
     public boolean isEngaged(){
         return stopper.get() == DoubleSolenoid.Value.kForward;
     }
