@@ -68,8 +68,15 @@ public class RiseToHeightCommand extends CommandBase {
         if (Math.abs(targetHeight - currentHeight) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE) {
             m_subsystem.engageStopper();
         }
-        m_subsystem.setLeftHeight(targetHeight);
-        m_subsystem.setRightHeight(targetHeight);
+
+        if (currentAngleError > 0) {
+            rightTargetHeight -= Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(currentAngleError));
+        } else {
+            leftTargetHeight -= Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
+        }
+
+        m_subsystem.setLeftHeight(leftTargetHeight);
+        m_subsystem.setRightHeight(rightTargetHeight);
     }
 
     // Called once the command ends or is interrupted.
