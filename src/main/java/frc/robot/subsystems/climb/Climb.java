@@ -88,7 +88,7 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setLeftHeight(double height) {
-        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
+        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
@@ -97,7 +97,7 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setRightHeight(double height) {
-        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
+        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
@@ -129,6 +129,15 @@ public class Climb extends SubsystemBase {
 
     public void rightReset() {
         rightClimbMaster.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
+    }
+
+    private double normalizeSetpoint(double setpoint) {
+        if (setpoint > Constants.Climb.CLIMB_HEIGHT) {
+            return Constants.Climb.CLIMB_HEIGHT;
+        } else if (setpoint < 0) {
+            return 0;
+        }
+        return setpoint;
     }
 
     @Override
