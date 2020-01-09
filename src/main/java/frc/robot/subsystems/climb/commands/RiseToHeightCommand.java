@@ -59,16 +59,20 @@ public class RiseToHeightCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        //Update the target height of each side
         leftTargetHeight = targetHeight - m_subsystem.getLeftHeight();
         rightTargetHeight = targetHeight - m_subsystem.getRightHeight();
 
+        //Calculate the error angle and the current height
         currentAngleError = targetAngle - Robot.navx.getRoll();
         currentHeight = (m_subsystem.getLeftHeight() + m_subsystem.getRightHeight()) / 2;
 
+        //If the elevator reaches the target height engage the mechanical stopper to stop it from going up
         if (Math.abs(targetHeight - currentHeight) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE) {
             m_subsystem.engageStopper();
         }
 
+        //Fix the heights according to the angle of the robot
         if (currentAngleError > 0) {
             rightTargetHeight -= Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(currentAngleError));
         } else {
@@ -85,7 +89,11 @@ public class RiseToHeightCommand extends CommandBase {
         m_subsystem.engageStopper();
     }
 
-    // Returns true when the command should end.
+
+    /**
+     * Returns true when the command should end.
+     * @return if the left and the right side are on the correct height and the angle is correct
+     */
     @Override
     public boolean isFinished() {
         return Math.abs(leftTargetHeight - m_subsystem.getLeftHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE && Math.abs(rightTargetHeight - m_subsystem.getRightHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE
