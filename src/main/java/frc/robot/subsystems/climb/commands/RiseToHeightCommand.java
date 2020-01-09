@@ -72,11 +72,16 @@ public class RiseToHeightCommand extends CommandBase {
             m_subsystem.engageStopper();
         }
 
+        double difference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
         //Fix the heights according to the angle of the robot
         if (currentAngleError > 0) {
-            rightTargetHeight -= Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(currentAngleError));
+            double[] heights = normalizeHeights(difference, rightTargetHeight, leftTargetHeight, 0, Constants.Climb.CLIMB_HEIGHT);
+            rightTargetHeight = heights[0];
+            leftTargetHeight = heights[1];
         } else {
-            leftTargetHeight -= Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
+            double[] heights = normalizeHeights(difference, leftTargetHeight, rightTargetHeight, 0, Constants.Climb.CLIMB_HEIGHT);
+            rightTargetHeight = heights[0];
+            leftTargetHeight = heights[1];
         }
 
         m_subsystem.setLeftHeight(leftTargetHeight);
