@@ -27,84 +27,88 @@ public class Climb extends SubsystemBase {
      * Creates a new climb Subsystem.
      */
     public Climb() {
-      leftClimbMaster.setInverted(Constants.Climb.LEFT_IS_REVERSED);
-      rightClimbMaster.setInverted(Constants.Climb.RIGHT_IS_REVERSED);
+        leftClimbMaster.setInverted(Constants.Climb.LEFT_IS_REVERSED);
+        rightClimbMaster.setInverted(Constants.Climb.RIGHT_IS_REVERSED);
 
-      leftClimbMaster.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
-      rightClimbMaster.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
+        leftClimbMaster.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
+        rightClimbMaster.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
 
-      leftClimbMaster.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
-      rightClimbMaster.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
+        leftClimbMaster.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
+        rightClimbMaster.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
 
-      leftClimbMaster.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
-      rightClimbMaster.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
-      leftClimbMaster.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
-      rightClimbMaster.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
-      leftClimbMaster.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
-      rightClimbMaster.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
-      leftClimbMaster.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
-      rightClimbMaster.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
+        leftClimbMaster.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
+        rightClimbMaster.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
+        leftClimbMaster.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
+        rightClimbMaster.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
+        leftClimbMaster.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
+        rightClimbMaster.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
+        leftClimbMaster.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
+        rightClimbMaster.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
 
-      leftClimbMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-      rightClimbMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        leftClimbMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        rightClimbMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-      leftClimbMaster.setSensorPhase(Constants.Climb.LEFT_SENSOR_PHASE);
-      rightClimbMaster.setSensorPhase(Constants.Climb.RIGHT_SENSOR_PHASE);
+        leftClimbMaster.setSensorPhase(Constants.Climb.LEFT_SENSOR_PHASE);
+        rightClimbMaster.setSensorPhase(Constants.Climb.RIGHT_SENSOR_PHASE);
     }
 
     /**
      * This method release the mechanical stopper from the climb subsystem.
      * This would allow her to rise
      */
-    public void releaseStopper(){
-        if (isEngaged()){
-        stopper.set(DoubleSolenoid.Value.kReverse);
-    }}
+    public void releaseStopper() {
+        if (isEngaged()) {
+            stopper.set(DoubleSolenoid.Value.kReverse);
+        }
+    }
 
     /**
      * This method engage the mechanical stopper to lock the climb subsystem.
      */
-    public void engageStopper(){
+    public void engageStopper() {
         if (!isEngaged())
-        stopper.set(DoubleSolenoid.Value.kForward);
+            stopper.set(DoubleSolenoid.Value.kForward);
     }
 
     /**
      * This method return if the mechanical stopper is engaged
+     *
      * @return the state of the mechanical stopper
      */
-    public boolean isEngaged(){
+    public boolean isEngaged() {
         return stopper.get() == DoubleSolenoid.Value.kForward;
     }
 
 
     /**
      * This method move the left side of the climb to certain height
+     *
      * @param height the target height of the motor in meters
      */
-    public void setLeftHeight(double height){
+    public void setLeftHeight(double height) {
         leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height));//TODO: Add arbitrary feedforward
     }
 
     /**
      * This method move the right side of the climb to certain height
+     *
      * @param height the target height of the motor in meters
      */
-    public void setRightHeight(double height){
+    public void setRightHeight(double height) {
         rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height));//TODO: Add arbitrary feedforward
     }
 
     /**
      * @return the current height of the left side of the climb in meters.
      */
-    public double getLeftHeight(){
+    public double getLeftHeight() {
         return climbUnitModel.toUnits(leftClimbMaster.getSelectedSensorPosition());
     }
 
     /**
      * @return the current height of the right side of the climb in meters.
      */
-    public double getRightHeight(){
+    public double getRightHeight() {
         return climbUnitModel.toUnits(rightClimbMaster.getSelectedSensorPosition());
     }
 
