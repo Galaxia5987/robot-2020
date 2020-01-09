@@ -1,6 +1,5 @@
 package frc.robot;
 
-import frc.robot.Robot;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
