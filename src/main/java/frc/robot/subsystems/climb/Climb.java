@@ -8,6 +8,7 @@
 package frc.robot.subsystems.climb;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -86,7 +87,7 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setLeftHeight(double height) {
-        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height));//TODO: Add arbitrary feedforward
+        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height), DemandType.ArbitraryFeedForward , Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
@@ -95,7 +96,7 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setRightHeight(double height) {
-        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height));//TODO: Add arbitrary feedforward
+        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(height), DemandType.ArbitraryFeedForward , Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
