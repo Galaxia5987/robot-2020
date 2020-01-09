@@ -26,7 +26,7 @@ public class Constants {
         public static final int TALON_TIMEOUT = 10;
         public static final int MAX_CURRENT = 35; //[A]
         public static final double RADIUS = 0.05; // [m]
-        public static final double TICKS_PER_ROTATION = 36;
+        public static final int TICKS_PER_ROTATION = 36;
         public static final double HEIGHT = 0; // [m]
         public static final double ANGLE = 45; // [deg]
         public static final double g = 9.80665; // [m/sec^2]
@@ -48,6 +48,8 @@ public class Constants {
             }
         }
     }
+
+
 
     /**
      * Replaces fields between constants classes
@@ -74,6 +76,7 @@ public class Constants {
             }
         }
     }
+}
 
 }
 

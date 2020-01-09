@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.UnitModel;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Ports.Shooter.*;
@@ -13,7 +14,7 @@ public class Shooter extends SubsystemBase {
     private TalonSRX shooterMaster = new TalonSRX(MASTER);
     private VictorSPX shooterSlave = new VictorSPX(SLAVE);
     private VictorSPX inputMotor = new VictorSPX(INPUT_MOTOR);
-
+    private UnitModel unitModel = new UnitModel(TICKS_PER_ROTATION);
 
     public Shooter() {
         shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
@@ -56,7 +57,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public double ticksToRPM(double ticks) {
-        return (ticks * TICKS_PER_ROTATION * 10) / 60;
+        return (unitModel.toUnits(ticks) * 10) / 60;
     }
 
     public double rpmToTicks(double rpm) {
