@@ -78,7 +78,7 @@ public class Constants {
     }
 }
 
-}
+
 
 //Anything in this class will replace the original constants when boolean is true
 class BConstants {

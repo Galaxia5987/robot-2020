@@ -73,11 +73,10 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
-     *
      * @param rpm the rotations per minute of the shooter.
      * @return the conversion between rpm to ticks.
      */
-    public double rpmToTicks(double rpm) {
+    public double RPMToTicks(double rpm) {
         return TICKS_PER_ROTATION * 10 * (rpm / 60);
     }
 }
