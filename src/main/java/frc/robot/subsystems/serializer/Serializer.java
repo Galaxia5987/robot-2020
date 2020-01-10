@@ -82,6 +82,16 @@ public class Serializer extends SubsystemBase {
     public boolean getExitProximity() {
         return exitProximity.getVoltage() > EXIT_PROXIMITY_VOLTAGE;
     }
+
+    public void moveConveyor(double location, double speed) {
+        setExitVelocity(getEncoderPosition()+location);
+        setEntryVelocity(speed);
+    }
+
+    public void moveConveyor(double location) {
+        moveConveyor(location, 0.5); //TODO Change the speed to reasonable value
+    }
+
     public double getEncoderPosition() {
         return model.toUnits(exitMotor.getSelectedSensorPosition());
     }
