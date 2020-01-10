@@ -13,6 +13,11 @@ import frc.robot.Ports;
 
 public class Drivetrain extends SubsystemBase {
 
+
+  private final TalonFX rightMaster = new TalonFX(Ports.Drivetrain.RIGHT_MASTER);
+  private final TalonFX rightSlave = new TalonFX(Ports.Drivetrain.RIGHT_SLAVE);
+  private final TalonFX leftMaster = new TalonFX(Ports.Drivetrain.LEFT_MASTER);
+  private final TalonFX leftSlave = new TalonFX(Ports.Drivetrain.LEFT_SLAVE);
   /**
    * Creates a new ExampleSubsystem.
    */
