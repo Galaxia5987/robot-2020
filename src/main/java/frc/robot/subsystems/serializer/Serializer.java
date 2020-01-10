@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.UnitModel;
 
 import static frc.robot.Constants.Serializer.*;
 import static frc.robot.Ports.Serializer.*;
@@ -18,6 +19,7 @@ public class Serializer extends SubsystemBase {
     private AnalogInput integrationProximity = new AnalogInput(MIDDLE_PROXIMITY);
     private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
     private int balls = 3;
+    UnitModel model = new UnitModel(TICK_PER_METERS);
 
     public Serializer() {
         exitMotor.configFactoryDefault();
@@ -73,4 +75,6 @@ public class Serializer extends SubsystemBase {
     public boolean getExitProximity(){
         return exitProximity.getVoltage() > EXIT_PROXIMITY_VOLTAGE;
     }
-}
+    public double getEncoderPosition() {
+        return model.toUnits(exitMotor.getSelectedSensorPosition());
+    }
