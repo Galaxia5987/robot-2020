@@ -50,27 +50,35 @@ public class ColorWheel extends SubsystemBase {
     lastColorString = colorString;
   }
 
+  public String getColorString(){
+    return colorString;
+  }
+
+  public String colorToString(Color color){
+    ColorMatchResult match = colorMatcher.matchClosestColor(color);
+    String colorInString = "Unknown";
+    if (match.color == BlueTarget) {
+      colorInString = "Blue";
+    } else if (match.color == RedTarget) {
+      colorInString = "Red";
+    } else if (match.color == GreenTarget) {
+      colorInString = "Green";
+    } else if (match.color == YellowTarget) {
+      colorInString = "Yellow";
+    } else {
+      colorInString = "Unknown";
+    }
+    return colorInString;
+  }
+
   @Override
   public void periodic() {
     detectedColor = colorSensor.getColor();
-    ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
-    if (match.color == BlueTarget) {
-      colorString = "Blue";
-    } else if (match.color == RedTarget) {
-      colorString = "Red";
-    } else if (match.color == GreenTarget) {
-      colorString = "Green";
-    } else if (match.color == YellowTarget) {
-      colorString = "Yellow";
-    } else {
-      colorString = "Unknown";
-    }
-    update_sensor_encoder();
+    colorString = colorToString(detectedColor);
     SmartDashboard.putNumber("Encoder", Counter);
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
     // This method will be called once per scheduler run
   }
