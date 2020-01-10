@@ -19,6 +19,7 @@ public class Serializer extends SubsystemBase {
     private AnalogInput integrationProximity = new AnalogInput(MIDDLE_PROXIMITY);
     private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
     private int balls = 3;
+    private double startLocation, endLocation;
 
     public Serializer() {
         exitMotor.configFactoryDefault();
@@ -84,7 +85,7 @@ public class Serializer extends SubsystemBase {
     }
 
     public void moveConveyor(double location, double speed) {
-        setExitVelocity(getEncoderPosition()+location);
+        setExitVelocity(getEncoderPosition() + location);
         setEntryVelocity(speed);
     }
 
@@ -98,8 +99,10 @@ public class Serializer extends SubsystemBase {
 
     public void maximizeConveyor() {
         moveConveyor(endLocation, 0.5); //TODO choose real number
-            moveConveyor(,0.5); //TODO choose real number
-        }
+    }
+
+    public void minimizeConveyor() {
+        moveConveyor(startLocation, -0.1); //TODO choose real number
     }
 
     public void setBalls(int balls) {
