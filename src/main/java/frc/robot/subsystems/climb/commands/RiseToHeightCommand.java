@@ -96,29 +96,29 @@ public class RiseToHeightCommand extends CommandBase {
 
     /**
      * Returns true when the command should end.
+     *
      * @return whether the left and the right side are on at their setpoints and the angle is correct (=the robot base is parallel to the ground)
      */
     @Override
     public boolean isFinished() {
-        return Math.abs(leftTargetHeight - climber.getLeftHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE && Math.abs(rightTargetHeight - climber.getRightHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE
+        return Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE && Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE
                 && Math.abs(currentAngleError) < Constants.Climb.CLIMB_ANGLE_TOLERANCE;
     }
 
     /**
      * This method would take 2 values and increase the difference between them,
      * without exceeding min and max limits
-     * @param difference the difference
-     * @param firstHeight the first height
+     *
+     * @param difference   the difference
+     * @param firstHeight  the first height
      * @param secondHeight the second height
-     * @param minLimit the minimum limit
-     * @param maxLimit the maximum limit
+     * @param minLimit     the minimum limit
+     * @param maxLimit     the maximum limit
      * @return the modified heights
      */
     private double[] normalizeHeights(double difference, double firstHeight, double secondHeight, double minLimit, double maxLimit) {
-        if (firstHeight - difference >= minLimit) {
-            firstHeight -= difference;
-        } else {
-            firstHeight -= difference;
+        firstHeight -= difference;
+        if (firstHeight - difference < minLimit) {
             difference = Math.abs(Math.abs(firstHeight) - minLimit);
             firstHeight = minLimit;
             if (secondHeight + difference <= maxLimit) {
