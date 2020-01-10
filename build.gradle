@@ -40,6 +40,11 @@ deploy {
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
@@ -57,6 +62,8 @@ dependencies {
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
+    compile 'com.github.TripleHelixProgramming:HelixUtilities:2020-SNAPSHOT'
+
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
