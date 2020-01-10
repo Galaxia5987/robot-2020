@@ -37,17 +37,25 @@ public class Shooter extends SubsystemBase {
         // TODO: Configure peak and nominal outputs, if needed
     }
 
+    /**
+     * @return the speed of the shooter in rpm.
+     */
     public double getSpeed() {
         return ticksToRPM(shooterMaster.getSelectedSensorVelocity());
     }
 
     /**
-     * @param rpm
+     * set the speed of the shooter.
+     * @param rpm the rotations per minute of the shooter.
      */
     public void setSpeedRPM(double rpm) {
         shooterMaster.set(ControlMode.Velocity, ticksToRPM(rpm));
     }
 
+    /**
+     * set the input speed of the shooter.
+     * @param inputSpeed the input speed of the feeder.
+     */
     public void setInputSpeed(double inputSpeed){
         inputMotor.set(ControlMode.PercentOutput, inputSpeed);
     }
@@ -56,10 +64,19 @@ public class Shooter extends SubsystemBase {
         return shooterMaster.getSelectedSensorPosition();
     }
 
+    /**
+     * @param ticks the encoder units of the Talon.
+     * @return the conversion between ticks to rpm.
+     */
     public double ticksToRPM(double ticks) {
         return (unitModel.toUnits(ticks) * 10) / 60;
     }
 
+    /**
+     *
+     * @param rpm the rotations per minute of the shooter.
+     * @return the conversion between rpm to ticks.
+     */
     public double rpmToTicks(double rpm) {
         return TICKS_PER_ROTATION * 10 * (rpm / 60);
     }
