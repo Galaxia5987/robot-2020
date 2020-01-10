@@ -16,37 +16,36 @@ import frc.robot.subsystems.climb.Climber;
  * An example command that uses an example subsystem.
  */
 public class RiseToHeightCommand extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Climber climber;
-    private double targetHeight;
-    private double targetAngle;
+    private double setpointHeight;
+    private double setpointAngle;
     private double currentHeight;
     private double currentAngleError;
-    private double leftTargetHeight;
-    private double rightTargetHeight;
+    private double leftSetpointHeight;
+    private double rightSetpointHeight;
 
     /**
      * Creates a new RiseToHeightCommand.
      *
      * @param climber The subsystem used by this command.
      */
-    public RiseToHeightCommand(Climber climber, double targetHeight) {
+    public RiseToHeightCommand(Climber climber, double setpointHeight) {
         this.climber = climber;
-        this.targetHeight = targetHeight;
-        this.targetAngle = 0;
+        this.setpointHeight = setpointHeight;
+        this.setpointAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(climber);
     }
 
     /**
-     * @param subsystem    the subsystem
-     * @param targetHeight the desired height for the mechanism
-     * @param targetAngle  the desired angle
+     * @param subsystem      the subsystem
+     * @param setpointHeight the desired height for the mechanism
+     * @param setpointAngle  the desired angle
      */
-    public RiseToHeightCommand(Climber subsystem, double targetHeight, double targetAngle) {
+    public RiseToHeightCommand(Climber subsystem, double setpointHeight, double setpointAngle) {
         this.climber = subsystem;
-        this.targetHeight = targetHeight;
-        this.targetAngle = targetAngle;
+        this.setpointHeight = setpointHeight;
+        this.setpointAngle = setpointAngle;
         addRequirements(subsystem);
     }
 
@@ -60,32 +59,32 @@ public class RiseToHeightCommand extends CommandBase {
     @Override
     public void execute() {
         //Update the target height of each side
-        leftTargetHeight = targetHeight - climber.getLeftHeight();
-        rightTargetHeight = targetHeight - climber.getRightHeight();
+        leftSetpointHeight = setpointHeight - climber.getLeftHeight();
+        rightSetpointHeight = setpointHeight - climber.getRightHeight();
 
         //Calculate the error angle and the current height
-        currentAngleError = targetAngle - Robot.navx.getRoll();
+        currentAngleError = setpointAngle - Robot.navx.getRoll();
         currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
 
         //If the elevator reaches the target height engage the mechanical stopper to stop it from going up
-        if (Math.abs(targetHeight - currentHeight) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE) {
+        if (Math.abs(setpointHeight - currentHeight) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE) {
             climber.engageStopper();
         }
 
-        double difference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
+        double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
         //Fix the heights according to the angle of the robot
         if (currentAngleError > 0) {
-            double[] heights = normalizeHeights(difference, rightTargetHeight, leftTargetHeight, 0, Constants.Climb.CLIMB_HEIGHT);
-            rightTargetHeight = heights[0];
-            leftTargetHeight = heights[1];
+            double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climb.CLIMB_HEIGHT);
+            rightSetpointHeight = heights[0];
+            leftSetpointHeight = heights[1];
         } else {
-            double[] heights = normalizeHeights(difference, leftTargetHeight, rightTargetHeight, 0, Constants.Climb.CLIMB_HEIGHT);
-            rightTargetHeight = heights[0];
-            leftTargetHeight = heights[1];
+            double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climb.CLIMB_HEIGHT);
+            rightSetpointHeight = heights[0];
+            leftSetpointHeight = heights[1];
         }
 
-        climber.setLeftHeight(leftTargetHeight);
-        climber.setRightHeight(rightTargetHeight);
+        climber.setLeftHeight(leftSetpointHeight);
+        climber.setRightHeight(rightSetpointHeight);
     }
 
     // Called once the command ends or is interrupted.
