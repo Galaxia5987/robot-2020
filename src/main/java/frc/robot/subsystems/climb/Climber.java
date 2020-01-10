@@ -145,16 +145,16 @@ public class Climber extends SubsystemBase {
 
     /**
      * Return a normalized constrained in a certain range.
-     * @param setPoint the setPoint.
-     * @return the normalized setPoint.
+     * @param setpoint the setpoint.
+     * @return the normalized setpoint.
      */
-    private double normalizeSetPoint(double setPoint) {
-        if (setPoint > Constants.Climb.CLIMB_HEIGHT) {
+    private double normalizeSetPoint(double setpoint) {
+        if (setpoint > Constants.Climb.CLIMB_HEIGHT) {
             return Constants.Climb.CLIMB_HEIGHT;
-        } else if (setPoint < 0) {
+        } else if (setpoint < 0) {
             return 0;
         }
-        return setPoint;
+        return setpoint;
     }
 
     @Override
@@ -163,7 +163,9 @@ public class Climber extends SubsystemBase {
         //Reset if the limit switch is pressed.
         if (isLeftOnLimit()) {
             leftReset();
-        }else if (isRightOnLimit()) {
+        }
+
+        if (isRightOnLimit()) {
             rightReset();
         }
 
