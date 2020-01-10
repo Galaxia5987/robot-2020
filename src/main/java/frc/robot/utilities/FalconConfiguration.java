@@ -11,6 +11,10 @@ public class FalconConfiguration {
     private NeutralMode neutralMode;
     private FeedbackDevice feedbackDevice;
     private boolean enableVoltageCompensation;
+
+
+
+    private double[] pidSet = {0, 0, 0, 0};
     public TalonFXConfiguration motorConfigs = new TalonFXConfiguration();
 
 
@@ -53,6 +57,14 @@ public class FalconConfiguration {
 
     public void setAuxiliaryPID(TalonFXPIDSetConfiguration auxiliaryPID) {
         this.motorConfigs.auxiliaryPID = auxiliaryPID;
+    }
+
+    public void setPidSet(double[] pidSet) {
+        this.pidSet = pidSet;
+    }
+
+    public double[] getPidSet() {
+        return pidSet;
     }
 
     public void setForwardLimitSwitchSource(LimitSwitchSource forwardLimitSwitchSource) {

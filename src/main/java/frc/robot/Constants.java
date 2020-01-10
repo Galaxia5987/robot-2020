@@ -14,6 +14,13 @@ import java.util.Optional;
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
 public class Constants {
+    public static class Drivetrain{
+
+        public static final double KP = 0;
+        public static final double KI = 0;
+        public static final double KD = 0;
+        public static final double KF = 0;
+    }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
 
