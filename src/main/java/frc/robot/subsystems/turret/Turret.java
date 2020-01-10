@@ -103,7 +103,7 @@ public class Turret extends SubsystemBase {
      *
      * @param angle the desired angle
      */
-    public void moveTurret(double angle) {
+    public void setPosition(double angle) {
         master.set(ControlMode.MotionMagic, setTurretAngle(angle));
     }
 
