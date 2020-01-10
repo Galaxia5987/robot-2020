@@ -70,21 +70,23 @@ public class RiseToHeightCommand extends CommandBase {
         if (Math.abs(setpointHeight - currentHeight) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE) {
             climber.engageStopper();
         }
+        
+        if (climber.isEngaged()) {
+            double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
+            //Fix the heights according to the angle of the robot
+            if (currentAngleError > 0) {
+                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climb.CLIMB_HEIGHT);
+                rightSetpointHeight = heights[0];
+                leftSetpointHeight = heights[1];
+            } else {
+                double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climb.CLIMB_HEIGHT);
+                rightSetpointHeight = heights[0];
+                leftSetpointHeight = heights[1];
+            }
 
-        double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
-        //Fix the heights according to the angle of the robot
-        if (currentAngleError > 0) {
-            double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climb.CLIMB_HEIGHT);
-            rightSetpointHeight = heights[0];
-            leftSetpointHeight = heights[1];
-        } else {
-            double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climb.CLIMB_HEIGHT);
-            rightSetpointHeight = heights[0];
-            leftSetpointHeight = heights[1];
+            climber.setLeftHeight(leftSetpointHeight);
+            climber.setRightHeight(rightSetpointHeight);
         }
-
-        climber.setLeftHeight(leftSetpointHeight);
-        climber.setRightHeight(rightSetpointHeight);
     }
 
     // Called once the command ends or is interrupted.
