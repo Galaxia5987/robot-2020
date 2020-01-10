@@ -124,5 +124,9 @@ public class Serializer extends SubsystemBase {
         balls-= by;
         setBalls(balls);
     }
-}
 
+    public void feed() {
+        exitMotor.set(ControlMode.PercentOutput, 60); //TODO choose reasonable value
+        entryMotor.set(ControlMode.PercentOutput, 70);
+    }
+}
