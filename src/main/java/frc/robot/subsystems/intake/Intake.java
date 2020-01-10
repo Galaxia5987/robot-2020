@@ -35,8 +35,9 @@ public class Intake extends SubsystemBase {
     }
 
     /**
-     * set the new position of the retracter.
-     * can be either Forward (Up) or Reverse (Down).
+     * Set the new position of the retracter.
+     * Can be either Forward (Up) or Reverse (Down).
+     * If you wish to use the same method based on condition, please use {@link this.setPosition(boolean)}
      *
      * @param direction the desired direction for the retracter
      */
@@ -44,13 +45,20 @@ public class Intake extends SubsystemBase {
         retracter.set(direction);
     }
 
+    /**
+     * set the position of the retracter.
+     * can be either Forward (Up) or Reverse (Down).
+     *
+     * @param up whether the retracter should move up.
+     *           Note that in case inserting false, the retracter will move down.
+     */
     public void setPosition(boolean up) {
         setPosition(up ? Value.kForward : Value.kReverse);
     }
 
     /**
      * Toggle the position of the intake.
-     * if you wish to change the position manually, use {@see setPosition(Value)} instead.
+     * if you wish to change the position manually, use {@link this.setPosition(Value)} instead.
      */
     public void togglePosition() {
         if (isFolded()) {
