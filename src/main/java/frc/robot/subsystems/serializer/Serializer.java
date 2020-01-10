@@ -11,48 +11,47 @@ import static frc.robot.Constants.Serializer.*;
 import static frc.robot.Ports.Serializer.*;
 
 public class Serializer extends SubsystemBase {
-    private TalonSRX serializerExitMotor = new TalonSRX(EXIT_MOTOR);
-    private VictorSPX serializerEntryMotor = new VictorSPX(ENTRY_MOTOR);
+    private TalonSRX exitMotor = new TalonSRX(EXIT_MOTOR);
+    private VictorSPX entryMotor = new VictorSPX(ENTRY_MOTOR);
     private AnalogInput entryProximity = new AnalogInput(ENTRY_PROXIMITY);
-    private AnalogInput middleProximity = new AnalogInput(MIDDLE_PROXIMITY);
+    private AnalogInput integrationProximity = new AnalogInput(MIDDLE_PROXIMITY);
     private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
 
     public Serializer() {
-        serializerExitMotor.configFactoryDefault();
-        serializerEntryMotor.configFactoryDefault();
+        exitMotor.configFactoryDefault();
+        entryMotor.configFactoryDefault();
 
-        serializerExitMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
-        serializerExitMotor.setSensorPhase(EXIT_PHASED);
-        serializerEntryMotor.setSensorPhase(ENTRY_PHASED);
-        serializerExitMotor.setInverted(EXIT_INVERTED);
-        serializerEntryMotor.setInverted(ENTRY_INVERTED);
+        exitMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
+        exitMotor.setSensorPhase(EXIT_PHASED);
+        entryMotor.setSensorPhase(ENTRY_PHASED);
+        exitMotor.setInverted(EXIT_INVERTED);
+        entryMotor.setInverted(ENTRY_INVERTED);
 
-        serializerExitMotor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);
-        serializerExitMotor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT_MS);
-        serializerExitMotor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT_MS);
+        exitMotor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);
+        exitMotor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT_MS);
+        exitMotor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT_MS);
 
-        serializerExitMotor.configMotionCruiseVelocity(CRUISE_VELOCITY);
-        serializerExitMotor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT_MS);
-        serializerExitMotor.configPeakCurrentLimit(MAX_CURRENT);
-        serializerExitMotor.configClosedloopRamp(RAMP_RATE);
+        exitMotor.configMotionCruiseVelocity(CRUISE_VELOCITY);
+        exitMotor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT_MS);
+        exitMotor.configPeakCurrentLimit(MAX_CURRENT);
+        exitMotor.configClosedloopRamp(RAMP_RATE);
 
-        serializerExitMotor.configVoltageCompSaturation(12);
-        serializerEntryMotor.configVoltageCompSaturation(12);
-        serializerExitMotor.enableVoltageCompensation(true);
-        serializerEntryMotor.enableVoltageCompensation(true);
-        serializerExitMotor.setSelectedSensorPosition(0);
+        exitMotor.configVoltageCompSaturation(12);
+        entryMotor.configVoltageCompSaturation(12);
+        exitMotor.enableVoltageCompensation(true);
+        entryMotor.enableVoltageCompensation(true);
+        exitMotor.setSelectedSensorPosition(0);
     }
 
     public void setEntrySpeed(double speed) {
-        serializerEntryMotor.set(ControlMode.Velocity, speed);
+        entryMotor.set(ControlMode.Velocity, speed);
     }
 
     public void setExitSpeed(double speed) {
-        serializerExitMotor.set(ControlMode.MotionMagic, speed);
+        exitMotor.set(ControlMode.MotionMagic, speed);
     }
 
     @Override
     public void periodic() {
-        
     }
 }
