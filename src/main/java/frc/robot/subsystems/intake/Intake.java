@@ -44,6 +44,10 @@ public class Intake extends SubsystemBase {
         retracter.set(direction);
     }
 
+    public void setPosition(boolean up) {
+        setPosition(up ? Value.kForward : Value.kReverse);
+    }
+
     /**
      * Toggle the position of the intake.
      * if you wish to change the position manually, use {@see setPosition(Value)} instead.
