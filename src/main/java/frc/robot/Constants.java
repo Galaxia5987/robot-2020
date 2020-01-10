@@ -31,7 +31,7 @@ public class Constants {
         public static final double RAMP_RATE = 0.7;
 
         public static final double ENTRY_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
-        public static final double MIDDLE_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
+        public static final double INTEGRATION_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
         public static final double EXIT_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
     }
 

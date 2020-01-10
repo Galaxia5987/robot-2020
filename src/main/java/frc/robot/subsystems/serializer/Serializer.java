@@ -60,11 +60,9 @@ public class Serializer extends SubsystemBase {
         return entryProximity.getVoltage() > ENTRY_PROXIMITY_VOLTAGE;
     }
 
-
     public boolean getIntegrationProximity(){
-        return integrationProximity.getVoltage() > ENTRY_PROXIMITY_VOLTAGE;
+        return integrationProximity.getVoltage() > INTEGRATION_PROXIMITY_VOLTAGE;
     }
-
 
     public boolean getExitProximity(){
         return exitProximity.getVoltage() > EXIT_PROXIMITY_VOLTAGE;
