@@ -10,14 +10,14 @@ package frc.robot.subsystems.climb.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.subsystems.climb.Climb;
+import frc.robot.subsystems.climb.Climber;
 
 /**
  * An example command that uses an example subsystem.
  */
 public class RiseToHeightCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Climb climber;
+    private final Climber climber;
     private double targetHeight;
     private double targetAngle;
     private double currentHeight;
@@ -28,14 +28,14 @@ public class RiseToHeightCommand extends CommandBase {
     /**
      * Creates a new RiseToHeightCommand.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param climber The subsystem used by this command.
      */
-    public RiseToHeightCommand(Climb climber, double targetHeight) {
-        m_subsystem = subsystem;
+    public RiseToHeightCommand(Climber climber, double targetHeight) {
+        this.climber = climber;
         this.targetHeight = targetHeight;
         this.targetAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(climber);
     }
 
     /**
@@ -43,8 +43,8 @@ public class RiseToHeightCommand extends CommandBase {
      * @param targetHeight the desired height for the mechanism
      * @param targetAngle  the desired angle
      */
-    public RiseToHeightCommand(Climb subsystem, double targetHeight, double targetAngle) {
-        this.m_subsystem = subsystem;
+    public RiseToHeightCommand(Climber subsystem, double targetHeight, double targetAngle) {
+        this.climber = subsystem;
         this.targetHeight = targetHeight;
         this.targetAngle = targetAngle;
         addRequirements(subsystem);
@@ -53,23 +53,23 @@ public class RiseToHeightCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_subsystem.releaseStopper();
+        climber.releaseStopper();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         //Update the target height of each side
-        leftTargetHeight = targetHeight - m_subsystem.getLeftHeight();
-        rightTargetHeight = targetHeight - m_subsystem.getRightHeight();
+        leftTargetHeight = targetHeight - climber.getLeftHeight();
+        rightTargetHeight = targetHeight - climber.getRightHeight();
 
         //Calculate the error angle and the current height
         currentAngleError = targetAngle - Robot.navx.getRoll();
-        currentHeight = (m_subsystem.getLeftHeight() + m_subsystem.getRightHeight()) / 2;
+        currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
 
         //If the elevator reaches the target height engage the mechanical stopper to stop it from going up
         if (Math.abs(targetHeight - currentHeight) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE) {
-            m_subsystem.engageStopper();
+            climber.engageStopper();
         }
 
         double difference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
@@ -84,24 +84,24 @@ public class RiseToHeightCommand extends CommandBase {
             leftTargetHeight = heights[1];
         }
 
-        m_subsystem.setLeftHeight(leftTargetHeight);
-        m_subsystem.setRightHeight(rightTargetHeight);
+        climber.setLeftHeight(leftTargetHeight);
+        climber.setRightHeight(rightTargetHeight);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_subsystem.engageStopper();
+        climber.engageStopper();
     }
 
 
     /**
      * Returns true when the command should end.
-     * @return whether the left and the right side are on at their setpoints and the angle is correct (=the Generator Switch is Level)
+     * @return whether the left and the right side are on at their setpoints and the angle is correct (=the robot base is parallel to the ground)
      */
     @Override
     public boolean isFinished() {
-        return Math.abs(leftTargetHeight - m_subsystem.getLeftHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE && Math.abs(rightTargetHeight - m_subsystem.getRightHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE
+        return Math.abs(leftTargetHeight - climber.getLeftHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE && Math.abs(rightTargetHeight - climber.getRightHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE
                 && Math.abs(currentAngleError) < Constants.Climb.CLIMB_ANGLE_TOLERANCE;
     }
 

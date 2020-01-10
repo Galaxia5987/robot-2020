@@ -25,7 +25,7 @@ public class Climber extends SubsystemBase {
     /**
      * Creates a new climb Subsystem.
      */
-    public Climb() {
+    public Climber() {
         leftMotor.setInverted(Constants.Climb.IS_LEFT_MOTOR_INVERTED);
         rightMotor.setInverted(Constants.Climb.IS_RIGHT_MOTOR_INVERTED);
 
