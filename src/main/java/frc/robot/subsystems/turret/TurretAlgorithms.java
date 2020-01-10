@@ -37,16 +37,13 @@ public class TurretAlgorithms {
      * @return the same position rotated 360 degrees, in order to have more room to rotate
      */
     public double center(double currentPosition, double minimum, double maximum) {
-        double position;
         double avg = (minimum+maximum)/2;
         if (currentPosition > (180 + avg)) {
-            position = currentPosition - 360;
+            currentPosition -= 360;
         } else if (currentPosition < (-180 + avg)){
-            position = currentPosition + 360;
-        } else {
-            position = currentPosition;
+            currentPosition += 360;
         }
-        return position;
+        return currentPosition;
     }
 
 }
