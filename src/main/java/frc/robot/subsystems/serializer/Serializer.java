@@ -97,15 +97,23 @@ public class Serializer extends SubsystemBase {
     }
 
     public void maximizeConveyor() {
-        while (!getExitProximity()) {
+        moveConveyor(endLocation, 0.5); //TODO choose real number
             moveConveyor(,0.5); //TODO choose real number
         }
     }
 
-    public void minimizeConveyor() {
-        while (!getEntryProximity()) {
-            moveConveyor(,-0.1); //TODO choose real number
-        }
+    public void setBalls(int balls) {
+        this.balls = Math.max(0, Math.min(balls, 5));
+    }
+
+    public void incrementBalls(int by) {
+        balls += by;
+        setBalls(balls);
+    }
+
+    public void decrementBalls(int by) {
+        balls-= by;
+        setBalls(balls);
     }
 }
 
