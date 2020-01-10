@@ -1,4 +1,4 @@
-package frc.robot.subsystems.turret.commands;
+package frc.robot.subsystems.turret;
 
 public class TurretAlgorithms {
 
@@ -10,15 +10,16 @@ public class TurretAlgorithms {
      * @return return the target angle.
      */
     public double setTurretAngle(double targetAngle, double currentPosition, double minPos, double maxPos) {
-        targetAngle = targetAngle % 360;
+        targetAngle %= 360;
         targetAngle = constrain(minPos, targetAngle, maxPos);
         if (Math.abs(targetAngle+360-currentPosition) < Math.abs(targetAngle-360-currentPosition)) {
             if (Math.abs(targetAngle+360-currentPosition) < Math.abs(targetAngle-currentPosition)) {
                 targetAngle += 360;
             }
-        } else if (Math.abs(targetAngle-currentPosition) < Math.abs(targetAngle-360-currentPosition)) {
+        } else if (Math.abs(targetAngle-360-currentPosition) < Math.abs(targetAngle-currentPosition)) {
             targetAngle -= 360;
         }
+        targetAngle %= 360;
         return targetAngle;
     }
 
@@ -28,7 +29,8 @@ public class TurretAlgorithms {
      * @param maximum the maximum angle that the turret can turn
      * @return an angle that satisfies the constrain
      */
-    private double constrain(double minimum, double angle, double maximum) {
+    public double constrain(double minimum, double angle, double maximum) {
         return Math.min(maximum, Math.max(minimum, angle));
     }
 }
+
