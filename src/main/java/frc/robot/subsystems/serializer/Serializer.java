@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import static frc.robot.Constants.Serializer.*;
 import static frc.robot.Ports.Serializer.*;
@@ -53,5 +54,19 @@ public class Serializer extends SubsystemBase {
 
     @Override
     public void periodic() {
+    }
+
+    public boolean getEntryProximity(){
+        return entryProximity.getVoltage() > ENTRY_PROXIMITY_VOLTAGE;
+    }
+
+
+    public boolean getIntegrationProximity(){
+        return integrationProximity.getVoltage() > ENTRY_PROXIMITY_VOLTAGE;
+    }
+
+
+    public boolean getExitProximity(){
+        return exitProximity.getVoltage() > EXIT_PROXIMITY_VOLTAGE;
     }
 }

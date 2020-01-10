@@ -15,6 +15,26 @@ public class Constants {
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
 
+    public static class Serializer {
+        public static final boolean EXIT_PHASED = false;
+        public static final boolean ENTRY_PHASED = false;
+        public static final boolean EXIT_INVERTED = false;
+        public static final boolean ENTRY_INVERTED = false;
+        public static final double KP = 0.0;
+        public static final double KI = 0.0;
+        public static final double KD = 0.0;
+        public static final int TALON_TIMEOUT_MS = 10;
+        public static final int TALON_PID_SLOT = 0;
+        public static final int CRUISE_VELOCITY = 2; //TODO: Change
+        public static final int CRUISE_ACCELERATION = 2;
+        public static final int MAX_CURRENT = 1000;
+        public static final double RAMP_RATE = 0.7;
+
+        public static final double ENTRY_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
+        public static final double MIDDLE_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
+        public static final double EXIT_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
+    }
+
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
             replaceFields(Constants.class, BConstants.class); // Replace outer constants
@@ -52,22 +72,6 @@ public class Constants {
                 }
             }
         }
-    }
-
-    public static class Serializer {
-        public static final boolean EXIT_PHASED = false;
-        public static final boolean ENTRY_PHASED = false;
-        public static final boolean EXIT_INVERTED = false;
-        public static final boolean ENTRY_INVERTED = false;
-        public static final double KP = 0.0;
-        public static final double KI = 0.0;
-        public static final double KD = 0.0;
-        public static final int TALON_TIMEOUT_MS = 10;
-        public static final int TALON_PID_SLOT = 0;
-        public static final int CRUISE_VELOCITY = 2; //TODO: Change
-        public static final int CRUISE_ACCELERATION = 2;
-        public static final int MAX_CURRENT = 1000;
-        public static final double RAMP_RATE = 0.7;
     }
 }
 
