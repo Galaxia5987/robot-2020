@@ -35,14 +35,14 @@ public class Climber extends SubsystemBase {
         leftMotor.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
         rightMotor.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
 
-        leftMotor.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
-        rightMotor.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
-        leftMotor.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
-        rightMotor.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
-        leftMotor.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
-        rightMotor.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
-        leftMotor.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
-        rightMotor.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
+        leftMotor.config_kP(0, Constants.Climb.CLIMB_PIDFA[0]);
+        rightMotor.config_kP(0, Constants.Climb.CLIMB_PIDFA[0]);
+        leftMotor.config_kI(0, Constants.Climb.CLIMB_PIDFA[1]);
+        rightMotor.config_kI(0, Constants.Climb.CLIMB_PIDFA[1]);
+        leftMotor.config_kD(0, Constants.Climb.CLIMB_PIDFA[2]);
+        rightMotor.config_kD(0, Constants.Climb.CLIMB_PIDFA[2]);
+        leftMotor.config_kF(0, Constants.Climb.CLIMB_PIDFA[3]);
+        rightMotor.config_kF(0, Constants.Climb.CLIMB_PIDFA[3]);
 
         leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -88,7 +88,7 @@ public class Climber extends SubsystemBase {
      * @param height the setpoint height of the left elevator in meters
      */
     public void setLeftHeight(double height) {
-        leftMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
+        leftMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDFA[4]);
     }
 
     /**
@@ -97,7 +97,7 @@ public class Climber extends SubsystemBase {
      * @param height the setpoint height of the right elevator in meters
      */
     public void setRightHeight(double height) {
-        rightMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
+        rightMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDFA[4]);
     }
 
     /**
