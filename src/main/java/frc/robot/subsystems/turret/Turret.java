@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils;
+import frc.robot.subsystems.turret.commands.TurretAlgorithms;
 
 import static frc.robot.Constants.Turret.*;
 import static frc.robot.Ports.Turret.*;
@@ -24,6 +25,7 @@ import static frc.robot.Ports.Turret.*;
  * {@using Hall Effect}
  */
 public class Turret extends SubsystemBase {
+    public TurretAlgorithms algorithms = new TurretAlgorithms();
     private TalonSRX master = new TalonSRX(MASTER);
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
     private NetworkTableEntry kPentry = table.getEntry("kP");
@@ -68,7 +70,7 @@ public class Turret extends SubsystemBase {
     public void periodic() {
         updateConstants();
         if(getHallEffect()) {
-            adjustEncoderPosition();
+            resetEncoderPosition();
         }
     }
 
@@ -78,23 +80,20 @@ public class Turret extends SubsystemBase {
      *
      * @return the angle of the turret
      */
-    public double getAngle() {
-        return convertTicksToDegrees(master.getSelectedSensorPosition());
+    public double getEncoderPosition() {
+        return master.getSelectedSensorPosition();
     }
 
     /**
      * change the angle to the desired angle,
-     * the value can be between 0 to 360 degrees.
+     * the value can be between -360 to 360 degrees.
      *
      * @param targetAngle the desired angle.
      * @return return the target angle in ticks.
      */
-    private double setTargetAngle(double targetAngle) {
-        targetAngle = (targetAngle + 720) % 360; //To insure that the targetAngle is between 0-360, we add 720 to prevent negative modulo operations.
-        targetAngle = constrain(MINIMUM_ANGLE, targetAngle, MAXIMUM_ANGLE);
-        return convertDegreesToTicks(targetAngle);
+    public double setTurretAngle(double targetAngle) {
+        return convertDegreesToTicks(algorithms.setTurretAngle(targetAngle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION));
     }
-
 
     /**
      * apply power to the controller to move the turret.
@@ -102,7 +101,7 @@ public class Turret extends SubsystemBase {
      * @param angle the desired angle
      */
     public void moveTurret(double angle) {
-        master.set(ControlMode.MotionMagic, setTargetAngle(angle));
+        master.set(ControlMode.MotionMagic, setTurretAngle(angle));
     }
 
     /**
@@ -122,19 +121,10 @@ public class Turret extends SubsystemBase {
     /**
      * set encoder position to the Hall Effect position.
      */
-    public void adjustEncoderPosition() {
+    public void resetEncoderPosition() {
         master.setSelectedSensorPosition(convertDegreesToTicks(HALL_EFFECT_POSITION), 0, TALON_TIMEOUT);
     }
 
-    /**
-     * @param minimum the minimum angle the turret can turn
-     * @param angle the target angle
-     * @param maximum the maximum angle that the turret can turn
-     * @return an angle that satisfies the constrain
-     */
-    private double constrain(double minimum, double angle, double maximum) {
-        return Math.min(maximum, Math.max(minimum, angle));
-    }
 
     /**
      * convert the angle to ticks so the controller will apply the right amount of power on the turret.

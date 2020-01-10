@@ -33,7 +33,7 @@ public class TurnTurret extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return Math.abs(turret.getAngle() - angle) <= ANGLE_THRESHOLD;
+        return Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD;
     }
 
     @Override
