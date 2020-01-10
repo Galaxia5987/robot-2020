@@ -26,8 +26,8 @@ public class Climb extends SubsystemBase {
      * Creates a new climb Subsystem.
      */
     public Climb() {
-        leftClimbMaster.setInverted(Constants.Climb.LEFT_IS_REVERSED);
-        rightClimbMaster.setInverted(Constants.Climb.RIGHT_IS_REVERSED);
+        leftClimbMaster.setInverted(Constants.Climb.IS_LEFT_MOTOR_INVERTED);
+        rightClimbMaster.setInverted(Constants.Climb.IS_RIGHT_MOTOR_INVERTED);
 
         leftClimbMaster.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
         rightClimbMaster.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
@@ -47,8 +47,8 @@ public class Climb extends SubsystemBase {
         leftClimbMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         rightClimbMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-        leftClimbMaster.setSensorPhase(Constants.Climb.LEFT_SENSOR_PHASE);
-        rightClimbMaster.setSensorPhase(Constants.Climb.RIGHT_SENSOR_PHASE);
+        leftClimbMaster.setSensorPhase(Constants.Climb.IS_LEFT_SENSOR_INVERTED);
+        rightClimbMaster.setSensorPhase(Constants.Climb.IS_RIGHT_SENSOR_INVERTED);
 
         leftClimbMaster.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         rightClimbMaster.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
