@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Ports;
 
 public class Drivetrain extends SubsystemBase {
-  
+
   /**
    * Creates a new ExampleSubsystem.
    */
