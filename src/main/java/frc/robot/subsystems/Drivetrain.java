@@ -36,7 +36,7 @@ public class Drivetrain extends SubsystemBase {
     configurations.setNeutralMode(NeutralMode.Coast);
     configurations.setFeedbackDevice(FeedbackDevice.QuadEncoder);
     configurations.setEnableVoltageCompensation(true);
-
+    configurations.setPidSet(pidSet);
     UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
 
   }
