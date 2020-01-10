@@ -5,7 +5,6 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
 
-
 /**
  * A class holding all of the constants of every mechanism on the robot.
  * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
@@ -15,6 +14,7 @@ public class Constants {
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
 
+    //TODO: Change values for all of the constants
     public static class Serializer {
         public static final boolean EXIT_PHASED = false;
         public static final boolean ENTRY_PHASED = false;
@@ -25,7 +25,7 @@ public class Constants {
         public static final double KD = 0.0;
         public static final int TALON_TIMEOUT_MS = 10;
         public static final int TALON_PID_SLOT = 0;
-        public static final int CRUISE_VELOCITY = 2; //TODO: Change
+        public static final int CRUISE_VELOCITY = 2;
         public static final int CRUISE_ACCELERATION = 2;
         public static final int MAX_CURRENT = 1000;
         public static final double RAMP_RATE = 0.7;
@@ -35,6 +35,8 @@ public class Constants {
         public static final double EXIT_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
 
         public static final int TICK_PER_METERS = 0;
+        public static final double THRESH_HOLD = 0.5;
+
     }
 
     static { // Runs alongside main
