@@ -175,16 +175,10 @@ public class Climber extends SubsystemBase {
         }
 
         // Limit the elevators to a certain range.
-        if (getLeftHeight() <=0 ){
-            setLeftHeight(0);
-        }else if (getLeftHeight() >= Constants.Climb.CLIMB_HEIGHT){
-            setLeftHeight(Constants.Climb.CLIMB_HEIGHT);
-        }
-
-        if (getRightHeight() <=0 ){
-            setRightHeight(0);
-        }else if (getRightHeight() >= Constants.Climb.CLIMB_HEIGHT){
-            setRightHeight(Constants.Climb.CLIMB_HEIGHT);
-        }
+        double leftHeight = normalizeSetPoint(getLeftHeight());
+        double rightHeight = normalizeSetPoint(getRightHeight());
+        setLeftHeight(leftHeight);
+        setRightHeight(rightHeight);
+        
     }
 }
