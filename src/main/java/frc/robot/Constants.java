@@ -55,12 +55,20 @@ public class Constants {
     }
 
     public static class Serializer {
-        //All of the Subsystem specific constants go here,and need to be static.
-
-        //public static final double TICKS_PER_METER = CONST(256 / (4*0.0254*Math.PI));
-        //public static final double MAX_VELOCITY = CONST(5);
+        public static final boolean EXIT_PHASED = false;
+        public static final boolean ENTRY_PHASED = false;
+        public static final boolean EXIT_INVERTED = false;
+        public static final boolean ENTRY_INVERTED = false;
+        public static final double KP = 0.0;
+        public static final double KI = 0.0;
+        public static final double KD = 0.0;
+        public static final int TALON_TIMEOUT_MS = 10;
+        public static final int TALON_PID_SLOT = 0;
+        public static final int CRUISE_VELOCITY = 2; //TODO: Change
+        public static final int CRUISE_ACCELERATION = 2;
+        public static final int MAX_CURRENT = 1000;
+        public static final double RAMP_RATE = 0.7;
     }
-
 }
 
 //Anything in this class will replace the original constants when boolean is true
