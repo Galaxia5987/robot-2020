@@ -15,7 +15,7 @@ import frc.robot.Constants;
 import frc.robot.Ports;
 import frc.robot.subsystems.UnitModel;
 
-public class Climb extends SubsystemBase {
+public class Climber extends SubsystemBase {
 
     private TalonSRX leftMotor = new TalonSRX(Ports.climber.leftMotor);
     private TalonSRX rightMotor = new TalonSRX(Ports.climber.rightMotor);
@@ -55,8 +55,8 @@ public class Climb extends SubsystemBase {
     }
 
     /**
-     * This method release the mechanical stopper from the climb subsystem.
-     * This would allow her to rise
+     * Release the mechanical stopper of the climber.
+     * This would allow it to extend.
      */
     public void releaseStopper() {
         if (isEngaged()) {
@@ -65,7 +65,7 @@ public class Climb extends SubsystemBase {
     }
 
     /**
-     * This method engage the mechanical stopper to lock the climb subsystem.
+     * Engage the mechanical stopper to lock the climber.
      */
     public void engageStopper() {
         if (!isEngaged())
@@ -73,7 +73,7 @@ public class Climb extends SubsystemBase {
     }
 
     /**
-     * This method return if the mechanical stopper is engaged
+     * Return whether the mechanical stopper is engaged.
      *
      * @return the state of the mechanical stopper
      */
@@ -83,32 +83,32 @@ public class Climb extends SubsystemBase {
 
 
     /**
-     * This method move the left side of the climb to certain height
+     * Move the left side of the climber to a given height.
      *
-     * @param height the target height of the motor in meters
+     * @param height the setpoint height of the left elevator in meters
      */
     public void setLeftHeight(double height) {
         leftMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
-     * This method move the right side of the climb to certain height
+     * Move the right side of the climber to a given height.
      *
-     * @param height the target height of the motor in meters
+     * @param height the setpoint height of the right elevator in meters
      */
     public void setRightHeight(double height) {
         rightMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
-     * @return the current height of the left side of the climb in meters.
+     * @return the current height of the left side of the climber in meters.
      */
     public double getLeftHeight() {
         return climbUnitModel.toUnits(leftMotor.getSelectedSensorPosition());
     }
 
     /**
-     * @return the current height of the right side of the climb in meters.
+     * @return the current height of the right side of the climber in meters.
      */
     public double getRightHeight() {
         return climbUnitModel.toUnits(rightMotor.getSelectedSensorPosition());
@@ -116,14 +116,14 @@ public class Climb extends SubsystemBase {
 
 
     /**
-     * @return whether the limit switch on the left side is closed.
+     * @return whether the left elevator reached its limit.
      */
     public boolean isLeftOnLimit() {
         return leftMotor.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
     /**
-     * @return whether the limit switch on the right side is closed.
+     * @return whether the right elevator reached its limit.
      */
     public boolean isRightOnLimit() {
         return rightMotor.getSensorCollection().isFwdLimitSwitchClosed();
@@ -144,7 +144,7 @@ public class Climb extends SubsystemBase {
     }
 
     /**
-     * This method would normalize the setPoint in range.
+     * Return a normalized constrained in a certain range.
      * @param setPoint the setPoint.
      * @return the normalized setPoint.
      */
@@ -167,12 +167,12 @@ public class Climb extends SubsystemBase {
             rightReset();
         }
 
-        //Engage the stopper to prevent the subsystem from exceeding the limits.
+        // Engage the stopper to prevent the subsystem from exceeding the limits.
         if (isRightOnLimit() || isLeftOnLimit()) {
             engageStopper();
         }
 
-        //Limit the motors to a certain range.
+        // Limit the elevators to a certain range.
         if (getLeftHeight() <=0 ){
             setLeftHeight(0);
         }else if (getLeftHeight() >= Constants.Climb.CLIMB_HEIGHT){

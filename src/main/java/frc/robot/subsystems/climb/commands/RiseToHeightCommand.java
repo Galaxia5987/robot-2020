@@ -17,7 +17,7 @@ import frc.robot.subsystems.climb.Climb;
  */
 public class RiseToHeightCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Climb m_subsystem;
+    private final Climb climber;
     private double targetHeight;
     private double targetAngle;
     private double currentHeight;
@@ -30,7 +30,7 @@ public class RiseToHeightCommand extends CommandBase {
      *
      * @param subsystem The subsystem used by this command.
      */
-    public RiseToHeightCommand(Climb subsystem, double targetHeight) {
+    public RiseToHeightCommand(Climb climber, double targetHeight) {
         m_subsystem = subsystem;
         this.targetHeight = targetHeight;
         this.targetAngle = 0;
@@ -97,7 +97,7 @@ public class RiseToHeightCommand extends CommandBase {
 
     /**
      * Returns true when the command should end.
-     * @return if the left and the right side are on the correct height and the angle is correct
+     * @return whether the left and the right side are on at their setpoints and the angle is correct (=the Generator Switch is Level)
      */
     @Override
     public boolean isFinished() {
