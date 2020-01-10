@@ -33,6 +33,8 @@ public class Constants {
         public static final double ENTRY_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
         public static final double INTEGRATION_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
         public static final double EXIT_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
+
+        public static final int TICK_PER_METERS = 0;
     }
 
     static { // Runs alongside main
