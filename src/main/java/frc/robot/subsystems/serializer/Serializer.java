@@ -55,23 +55,31 @@ public class Serializer extends SubsystemBase {
 
     }
 
-    public void setEntrySpeed(double speed) {
+    public void setEntryVelocity(double speed) {
         entryMotor.set(ControlMode.Velocity, speed);
     }
 
-    public void setExitSpeed(double speed) {
-        exitMotor.set(ControlMode.MotionMagic, speed);
+    public int getEntryVelocity() {
+        return entryMotor.getSelectedSensorVelocity();
     }
 
-    public boolean getEntryProximity(){
+    public void setExitVelocity(double location) {
+        exitMotor.set(ControlMode.MotionMagic, location);
+    }
+
+    public int getExitVelocity() {
+        return exitMotor.getSelectedSensorVelocity();
+    }
+
+    public boolean getEntryProximity() {
         return entryProximity.getVoltage() > ENTRY_PROXIMITY_VOLTAGE;
     }
 
-    public boolean getIntegrationProximity(){
+    public boolean getIntegrationProximity() {
         return integrationProximity.getVoltage() > INTEGRATION_PROXIMITY_VOLTAGE;
     }
 
-    public boolean getExitProximity(){
+    public boolean getExitProximity() {
         return exitProximity.getVoltage() > EXIT_PROXIMITY_VOLTAGE;
     }
     public double getEncoderPosition() {
