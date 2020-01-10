@@ -7,5 +7,7 @@ public class Ports {
         public static final int LEFT_MASTER = 0;
         public static final int LEFT_SLAVE = 0;
 
+        public static final int SHIFTER_FORWARD_PORT = 0;
+        public static final int SHIFTER_REVERSE_PORT = 0;
     }
 }
