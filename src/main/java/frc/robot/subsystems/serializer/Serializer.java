@@ -17,6 +17,7 @@ public class Serializer extends SubsystemBase {
     private AnalogInput entryProximity = new AnalogInput(ENTRY_PROXIMITY);
     private AnalogInput integrationProximity = new AnalogInput(MIDDLE_PROXIMITY);
     private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
+    private int balls = 3;
 
     public Serializer() {
         exitMotor.configFactoryDefault();
@@ -44,16 +45,21 @@ public class Serializer extends SubsystemBase {
         exitMotor.setSelectedSensorPosition(0);
     }
 
+    @Override
+    public void periodic() {
+        if (getEntryProximity())
+            balls++;
+        if (getExitProximity())
+            balls--;
+
+    }
+
     public void setEntrySpeed(double speed) {
         entryMotor.set(ControlMode.Velocity, speed);
     }
 
     public void setExitSpeed(double speed) {
         exitMotor.set(ControlMode.MotionMagic, speed);
-    }
-
-    @Override
-    public void periodic() {
     }
 
     public boolean getEntryProximity(){
