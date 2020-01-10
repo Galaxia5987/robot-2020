@@ -17,41 +17,41 @@ import frc.robot.subsystems.UnitModel;
 
 public class Climb extends SubsystemBase {
 
-    private TalonSRX leftClimbMaster = new TalonSRX(Ports.climb.leftClimbMaster);
-    private TalonSRX rightClimbMaster = new TalonSRX(Ports.climb.rightClimbMaster);
-    private DoubleSolenoid stopper = new DoubleSolenoid(Ports.climb.moduleNumber, Ports.climb.solenoidForward, Ports.climb.solenoidReverse);
+    private TalonSRX leftMotor = new TalonSRX(Ports.climber.leftMotor);
+    private TalonSRX rightMotor = new TalonSRX(Ports.climber.rightMotor);
+    private DoubleSolenoid stopper = new DoubleSolenoid(Ports.moduleNumber, Ports.climber.stopperForward, Ports.climber.stopperReverse);
     private UnitModel climbUnitModel = new UnitModel(Constants.Climb.TICKS_PER_METER);
 
     /**
      * Creates a new climb Subsystem.
      */
     public Climb() {
-        leftClimbMaster.setInverted(Constants.Climb.IS_LEFT_MOTOR_INVERTED);
-        rightClimbMaster.setInverted(Constants.Climb.IS_RIGHT_MOTOR_INVERTED);
+        leftMotor.setInverted(Constants.Climb.IS_LEFT_MOTOR_INVERTED);
+        rightMotor.setInverted(Constants.Climb.IS_RIGHT_MOTOR_INVERTED);
 
-        leftClimbMaster.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
-        rightClimbMaster.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
+        leftMotor.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
+        rightMotor.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
 
-        leftClimbMaster.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
-        rightClimbMaster.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
+        leftMotor.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
+        rightMotor.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
 
-        leftClimbMaster.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
-        rightClimbMaster.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
-        leftClimbMaster.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
-        rightClimbMaster.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
-        leftClimbMaster.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
-        rightClimbMaster.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
-        leftClimbMaster.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
-        rightClimbMaster.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
+        leftMotor.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
+        rightMotor.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
+        leftMotor.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
+        rightMotor.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
+        leftMotor.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
+        rightMotor.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
+        leftMotor.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
+        rightMotor.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
 
-        leftClimbMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        rightClimbMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-        leftClimbMaster.setSensorPhase(Constants.Climb.IS_LEFT_SENSOR_INVERTED);
-        rightClimbMaster.setSensorPhase(Constants.Climb.IS_RIGHT_SENSOR_INVERTED);
+        leftMotor.setSensorPhase(Constants.Climb.IS_LEFT_SENSOR_INVERTED);
+        rightMotor.setSensorPhase(Constants.Climb.IS_RIGHT_SENSOR_INVERTED);
 
-        leftClimbMaster.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-        rightClimbMaster.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+        leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+        rightMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setLeftHeight(double height) {
-        leftClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
+        leftMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
@@ -97,21 +97,21 @@ public class Climb extends SubsystemBase {
      * @param height the target height of the motor in meters
      */
     public void setRightHeight(double height) {
-        rightClimbMaster.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
+        rightMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.CLIMB_PIDF[3]);
     }
 
     /**
      * @return the current height of the left side of the climb in meters.
      */
     public double getLeftHeight() {
-        return climbUnitModel.toUnits(leftClimbMaster.getSelectedSensorPosition());
+        return climbUnitModel.toUnits(leftMotor.getSelectedSensorPosition());
     }
 
     /**
      * @return the current height of the right side of the climb in meters.
      */
     public double getRightHeight() {
-        return climbUnitModel.toUnits(rightClimbMaster.getSelectedSensorPosition());
+        return climbUnitModel.toUnits(rightMotor.getSelectedSensorPosition());
     }
 
 
@@ -119,28 +119,28 @@ public class Climb extends SubsystemBase {
      * @return whether the limit switch on the left side is closed.
      */
     public boolean isLeftOnLimit() {
-        return leftClimbMaster.getSensorCollection().isFwdLimitSwitchClosed();
+        return leftMotor.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
     /**
      * @return whether the limit switch on the right side is closed.
      */
     public boolean isRightOnLimit() {
-        return rightClimbMaster.getSensorCollection().isFwdLimitSwitchClosed();
+        return rightMotor.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
     /**
      * Reset the encoder position to the height of the subsystem.
      */
     public void leftReset() {
-        leftClimbMaster.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
+        leftMotor.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
     }
 
     /**
      * Reset the encoder position to the height of the subsystem.
      */
     public void rightReset() {
-        rightClimbMaster.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
+        rightMotor.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
     }
 
     /**
