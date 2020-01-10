@@ -1,5 +1,6 @@
 package frc.robot.subsystems.serializer;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -40,5 +41,18 @@ public class Serializer extends SubsystemBase {
         serializerExitMotor.enableVoltageCompensation(true);
         serializerEntryMotor.enableVoltageCompensation(true);
         serializerExitMotor.setSelectedSensorPosition(0);
+    }
+
+    public void setEntrySpeed(double speed) {
+        serializerEntryMotor.set(ControlMode.Velocity, speed);
+    }
+
+    public void setExitSpeed(double speed) {
+        serializerExitMotor.set(ControlMode.MotionMagic, speed);
+    }
+
+    @Override
+    public void periodic() {
+        
     }
 }
