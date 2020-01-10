@@ -13,7 +13,7 @@ public class Shoot extends CommandBase {
     private double distance;
     private double timeout;
     private Timer timer = new Timer();
-    private static NetworkTable shooterTable = new NetworkTableInstance().getDefault().getTable("shooter");
+    public static NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
     private NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
 
     public Shoot(double distance, double timeout) {
@@ -36,13 +36,8 @@ public class Shoot extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-
-        if (100 - ((shooter.getSpeed() / TARGET_RPM) * 100) <= PERCENT_THRESHOLD){
-            shooter.setInputSpeed(0.5);
-        }
-        else {
-            shooter.setInputSpeed(0);
-        }
+        shooter.setSpeedRPM(calculateVelocity(TARGET_DISTANCE));
+        setNetworkTable();
     }
 
     private void setNetworkTable() {
@@ -61,7 +56,7 @@ public class Shoot extends CommandBase {
 
     // Called once after isFinished returns true
     @Override
-    public void end() {
+    public void end(boolean interrupted) {
         timer.stop();
         shooter.setSpeedRPM(0);
         shooter.setInputSpeed(0);
@@ -69,7 +64,6 @@ public class Shoot extends CommandBase {
 
     // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-    @Override
     protected void interrupted() {
     }
 }
