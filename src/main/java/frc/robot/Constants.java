@@ -1,7 +1,5 @@
 package frc.robot;
 
-import frc.robot.Robot;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -17,13 +15,6 @@ public class Constants {
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
 
-    public static class ExampleSubsystem1 {
-        //All of the Subsystem specific constants go here,and need to be static.
-
-        //public static final double TICKS_PER_METER = CONST(256 / (4*0.0254*Math.PI));
-        //public static final double MAX_VELOCITY = CONST(5);
-    }
-
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
             replaceFields(Constants.class, BConstants.class); // Replace outer constants
@@ -38,6 +29,7 @@ public class Constants {
 
     /**
      * Replaces fields between constants classes
+     *
      * @param class1 Original constants class
      * @param class2 Constants to replace with
      */
@@ -60,6 +52,13 @@ public class Constants {
                 }
             }
         }
+    }
+
+    public static class Serializer {
+        //All of the Subsystem specific constants go here,and need to be static.
+
+        //public static final double TICKS_PER_METER = CONST(256 / (4*0.0254*Math.PI));
+        //public static final double MAX_VELOCITY = CONST(5);
     }
 
 }
