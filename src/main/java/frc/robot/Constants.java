@@ -30,8 +30,8 @@ public final class Constants {
         public static final int CRUISE_ACCELERATION = 0;
         public static final double HALL_EFFECT_POSITION = 0; // in degrees
         public static final double ANGLE_THRESHOLD = 5;
-        public static final double MAXIMUM_ANGLE = 0;
-        public static final double MINIMUM_ANGLE = 0;
+        public static final double MAXIMUM_POSITION = 0;
+        public static final double MINIMUM_POSITION = 0;
 
     }
 
