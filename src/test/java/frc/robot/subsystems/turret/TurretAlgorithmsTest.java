@@ -1,5 +1,6 @@
 package frc.robot.subsystems.turret;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,5 +31,10 @@ public class TurretAlgorithmsTest {
         double maxPos = 359;
 
         Assert.assertEquals(algorithmsTest.constrain(minPos, targetAngle, maxPos), 359, 2);
+    }
+
+    @Test
+    public void center(){
+        Assert.assertEquals(algorithmsTest.center(280, -359, 300), -80, 0.1);
     }
 }
