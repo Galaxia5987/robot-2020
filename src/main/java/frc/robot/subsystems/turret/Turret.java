@@ -10,7 +10,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils;
-import frc.robot.subsystems.turret.commands.TurretAlgorithms;
 
 import static frc.robot.Constants.Turret.*;
 import static frc.robot.Ports.Turret.*;
@@ -93,6 +92,10 @@ public class Turret extends SubsystemBase {
      */
     public double setTurretAngle(double targetAngle) {
         return convertDegreesToTicks(algorithms.setTurretAngle(targetAngle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION));
+    }
+
+    public double center(double minimum, double maximum) {
+        return convertDegreesToTicks(algorithms.center(getEncoderPosition(), minimum, maximum));
     }
 
     /**
