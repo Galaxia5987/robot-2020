@@ -1,5 +1,7 @@
 package frc.robot.subsystems.turret;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 public class TurretAlgorithms {
 
     /**
@@ -11,16 +13,19 @@ public class TurretAlgorithms {
      */
     public double setTurretAngle(double targetAngle, double currentPosition, double minPos, double maxPos) {
         targetAngle %= 360; targetAngle += 360; targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
-        
-        if (Math.abs(targetAngle+360-currentPosition) < Math.abs(targetAngle-360-currentPosition)) {
-            if (Math.abs(targetAngle+360-currentPosition) < Math.abs(targetAngle-currentPosition)) {
-                targetAngle += 360;
+        double[] positions = {targetAngle-360, targetAngle, targetAngle+360};
+        double targetPosition = Double.NaN;
+        double shortestDistance = Double.MAX_VALUE;
+        for (double _targetPos: positions){
+            if(_targetPos < minPos || targetPosition > maxPos)
+                continue;
+            if(Math.abs(_targetPos - currentPosition) < shortestDistance)
+            {
+                shortestDistance = Math.abs(_targetPos - currentPosition);
+                targetPosition = _targetPos;
             }
-        } else if (Math.abs(targetAngle-360-currentPosition) < Math.abs(targetAngle-currentPosition)) {
-            targetAngle -= 360;
         }
-
-        return targetAngle;
+        return targetPosition;
     }
 
     /**
