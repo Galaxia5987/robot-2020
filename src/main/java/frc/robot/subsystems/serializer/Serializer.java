@@ -18,9 +18,9 @@ public class Serializer extends SubsystemBase {
     private AnalogInput entryProximity = new AnalogInput(ENTRY_PROXIMITY);
     private AnalogInput integrationProximity = new AnalogInput(MIDDLE_PROXIMITY);
     private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
-    private int balls = 3;
+    private int ballsCount = 3;
     private double startLocation, endLocation;
-    private boolean movingUp;
+    private boolean movingUp, inside;
 
     public Serializer() {
         exitMotor.configFactoryDefault();
@@ -50,14 +50,26 @@ public class Serializer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (getEntryProximity() && movingUp) {
-            incrementBalls(1);
+        if (getEntryProximity() && movingUp && !inside) {
+            incrementBallsCount(1);
+            inside = true;
             startLocation = getEncoderPosition();
-        }
+        } else
+            inside = false;
+
         if (getExitProximity() && movingUp) {
-            decrementBalls(1);
+            decrementBallsCount(1);
+            inside = true;
             endLocation = getEncoderPosition();
-        }
+        } else
+            inside = false;
+
+        if (getEntryProximity() && !movingUp && !inside) {
+            decrementBallsCount(1);
+            inside = true;
+            startLocation = getEncoderPosition();
+        }else
+            inside = false;
     }
 
     public int getEntryVelocity() {
@@ -111,18 +123,18 @@ public class Serializer extends SubsystemBase {
         moveConveyor(startLocation, -0.1); //TODO choose real number
     }
 
-    public void setBalls(int balls) {
-        this.balls = Math.max(0, Math.min(balls, 5));
+    public void setBallsCount(int ballsCount) {
+        this.ballsCount = Math.max(0, Math.min(ballsCount, 5));
     }
 
-    public void incrementBalls(int by) {
-        balls += by;
-        setBalls(balls);
+    public void incrementBallsCount(int by) {
+        ballsCount += by;
+        setBallsCount(ballsCount);
     }
 
-    public void decrementBalls(int by) {
-        balls-= by;
-        setBalls(balls);
+    public void decrementBallsCount(int by) {
+        ballsCount -= by;
+        setBallsCount(ballsCount);
     }
 
     public void feed() {
