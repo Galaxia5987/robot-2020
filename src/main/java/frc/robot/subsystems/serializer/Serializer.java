@@ -137,7 +137,7 @@ public class Serializer extends SubsystemBase {
     }
 
     public void setBallsCount(int ballsCount) {
-        this.ballsCount = Math.max(0, Math.min(ballsCount, 5));
+        this.ballsCount = Math.max(0, Math.min(ballsCount, MAX_BALLS_COUNT));
     }
 
     public void incrementBallsCount(int by) {
