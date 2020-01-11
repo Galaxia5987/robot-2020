@@ -3,6 +3,8 @@ package frc.robot.subsystems.serializer.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import static edu.wpi.first.wpilibj.RobotBase.startRobot;
+import static frc.robot.Constants.Serializer.BALL_DROP_TIME;
 import static frc.robot.Robot.serializer;
 
 public class DropBalls extends CommandBase {
@@ -16,21 +18,23 @@ public class DropBalls extends CommandBase {
 
     @Override
     public void initialize() {
-
+        timer.reset();
+        timer.start();
+        serializer.drop();
     }
 
     @Override
     public void execute() {
-
+        serializer.drop();
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return timer.get() > (balls * BALL_DROP_TIME) || serializer.getBallsCount() < 0;
     }
 
     @Override
     public void end(boolean interrupted) {
-
+        timer.stop();
     }
 }
