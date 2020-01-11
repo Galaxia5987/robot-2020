@@ -90,16 +90,28 @@ public class Serializer extends SubsystemBase {
         exitMotor.set(ControlMode.MotionMagic, location);
     }
 
-    public boolean getEntryProximity() {
-        return entryProximity.getVoltage() > ENTRY_PROXIMITY_VOLTAGE;
+    public boolean isEntryProximityPressed() {
+        return entryProximity.getVoltage() > ENTRY_PROXIMITY_MAX_VOLTAGE;
     }
 
-    public boolean getIntegrationProximity() {
-        return integrationProximity.getVoltage() > INTEGRATION_PROXIMITY_VOLTAGE;
+    public boolean isEntryProximityReleased() {
+        return entryProximity.getVoltage() < ENTRY_PROXIMITY_MIN_VOLTAGE;
     }
 
-    public boolean getExitProximity() {
-        return exitProximity.getVoltage() > EXIT_PROXIMITY_VOLTAGE;
+    public boolean isIntegrationProximityPressed() {
+        return integrationProximity.getVoltage() > INTEGRATION_PROXIMITY_MAX_VOLTAGE;
+    }
+
+    public boolean isIntegrationProximityReleased() {
+        return integrationProximity.getVoltage() < INTEGRATION_PROXIMITY_MIN_VOLTAGE;
+    }
+
+    public boolean isExitProximityPressed() {
+        return exitProximity.getVoltage() > EXIT_PROXIMITY_MAX_VOLTAGE;
+    }
+
+    public boolean isExitProximityReleased() {
+        return exitProximity.getVoltage() < EXIT_PROXIMITY_MIN_VOLTAGE;
     }
 
     public void moveConveyor(double location, double speed) {
