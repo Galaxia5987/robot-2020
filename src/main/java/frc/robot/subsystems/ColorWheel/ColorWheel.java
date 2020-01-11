@@ -54,6 +54,22 @@ public class ColorWheel extends SubsystemBase {
     return colorString;
   }
 
+  public int indexOfColor(String color, String lastColor) {
+    switch (color) {
+      case ("Yellow"):
+        return 0;
+      case ("Red"):
+        return 1;
+      case ("Green"):
+        return 2;
+      case ("Blue"):
+        return 3;
+      default:
+        return -1;
+
+    }
+  }
+
   public String colorToString(Color color){
     ColorMatchResult match = colorMatcher.matchClosestColor(color);
     String colorInString = "Unknown";
