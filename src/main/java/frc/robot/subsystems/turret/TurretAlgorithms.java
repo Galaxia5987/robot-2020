@@ -13,11 +13,11 @@ public class TurretAlgorithms {
      */
     public double setTurretAngle(double targetAngle, double currentPosition, double minPos, double maxPos) {
         targetAngle %= 360; targetAngle += 360; targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
-        double[] positions = {targetAngle-360, targetAngle, targetAngle+360};
+        double[] positions = {targetAngle-360, targetAngle, targetAngle+360}; // An array of all possible target positions
         double targetPosition = Double.NaN;
         double shortestDistance = Double.MAX_VALUE;
         for (double _targetPos: positions){
-            if(_targetPos < minPos || targetPosition > maxPos)
+            if(_targetPos < minPos || _targetPos > maxPos)
                 continue;
             if(Math.abs(_targetPos - currentPosition) < shortestDistance)
             {
