@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems.ColorWheel;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
@@ -15,11 +17,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Ports;
 
 public class ColorWheel extends SubsystemBase {
 
   public I2C.Port i2cPort = I2C.Port.kOnboard;
   public ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+
   private Color detectedColor;
   private int Counter = 0;
   private String lastColorString = "";
@@ -30,7 +34,7 @@ public class ColorWheel extends SubsystemBase {
   private final Color RedTarget = ColorMatch.makeColor(Constants.ColorWheel.RED_RGB[0], Constants.ColorWheel.RED_RGB[1], Constants.ColorWheel.RED_RGB[2]);
   private final Color YellowTarget = ColorMatch.makeColor(Constants.ColorWheel.YELLOW_RGB[0], Constants.ColorWheel.YELLOW_RGB[1], Constants.ColorWheel.YELLOW_RGB[2]);
 
-
+  private final VictorSPX spinMotor = new VictorSPX(Ports.ColorWheel.SPIN_MOTOR);
 
   /**
    * Creates a new ExampleSubsystem.
@@ -85,6 +89,10 @@ public class ColorWheel extends SubsystemBase {
       colorInString = "Unknown";
     }
     return colorInString;
+  }
+
+  public void setMotorSpeed(double percent){
+    spinMotor.set(ControlMode.PercentOutput, percent);
   }
 
   @Override
