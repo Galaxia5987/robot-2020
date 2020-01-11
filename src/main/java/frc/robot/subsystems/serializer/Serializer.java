@@ -20,7 +20,8 @@ public class Serializer extends SubsystemBase {
     private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
     private int ballsCount = 3;
     private double startLocation, endLocation;
-    private boolean movingUp, inside;
+    private boolean movingUp;
+    private boolean entryBallInside, integrationBallInside, exitBallInside;
 
     public Serializer() {
         exitMotor.configFactoryDefault();
