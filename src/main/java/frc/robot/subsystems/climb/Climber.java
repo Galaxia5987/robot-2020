@@ -17,10 +17,10 @@ import frc.robot.subsystems.UnitModel;
 
 public class Climber extends SubsystemBase {
 
-    private TalonSRX leftMotor = new TalonSRX(Ports.climber.leftMotor);
-    private TalonSRX rightMotor = new TalonSRX(Ports.climber.rightMotor);
-    private DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.stopperForward, Ports.climber.stopperReverse);
-    private UnitModel climbUnitModel = new UnitModel(Constants.Climb.TICKS_PER_METER);
+    private final TalonSRX leftMotor = new TalonSRX(Ports.climber.leftMotor);
+    private final TalonSRX rightMotor = new TalonSRX(Ports.climber.rightMotor);
+    private final DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.stopperForward, Ports.climber.stopperReverse);
+    private final UnitModel unitModel = new UnitModel(Constants.Climb.TICKS_PER_METER);
 
     /**
      * Creates a new climb Subsystem.
@@ -78,6 +78,12 @@ public class Climber extends SubsystemBase {
         return stopper.get().equals(DoubleSolenoid.Value.kForward);
     }
 
+    /**
+     * @return the current height of the left side of the climber in meters.
+     */
+    public double getLeftHeight() {
+        return unitModel.toUnits(leftMotor.getSelectedSensorPosition());
+    }
 
     /**
      * Move the left side of the climber to a given height.
@@ -85,7 +91,14 @@ public class Climber extends SubsystemBase {
      * @param height the setpoint height of the left elevator in meters
      */
     public void setLeftHeight(double height) {
-        leftMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.ARBITRARY_FEEDFORWARD);
+        leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.ARBITRARY_FEEDFORWARD);
+    }
+
+    /**
+     * @return the current height of the right side of the climber in meters.
+     */
+    public double getRightHeight() {
+        return unitModel.toUnits(rightMotor.getSelectedSensorPosition());
     }
 
     /**
@@ -94,21 +107,7 @@ public class Climber extends SubsystemBase {
      * @param height the setpoint height of the right elevator in meters
      */
     public void setRightHeight(double height) {
-        rightMotor.set(ControlMode.MotionMagic, climbUnitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.ARBITRARY_FEEDFORWARD);
-    }
-
-    /**
-     * @return the current height of the left side of the climber in meters.
-     */
-    public double getLeftHeight() {
-        return climbUnitModel.toUnits(leftMotor.getSelectedSensorPosition());
-    }
-
-    /**
-     * @return the current height of the right side of the climber in meters.
-     */
-    public double getRightHeight() {
-        return climbUnitModel.toUnits(rightMotor.getSelectedSensorPosition());
+        rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.ARBITRARY_FEEDFORWARD);
     }
 
 
@@ -130,14 +129,14 @@ public class Climber extends SubsystemBase {
      * Reset the encoder position to the height of the subsystem.
      */
     public void leftReset() {
-        leftMotor.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.HEIGHT));
+        leftMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climb.HEIGHT));
     }
 
     /**
      * Reset the encoder position to the height of the subsystem.
      */
     public void rightReset() {
-        rightMotor.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.HEIGHT));
+        rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climb.HEIGHT));
     }
 
     /**
