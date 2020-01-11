@@ -8,10 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.turret.commands.CenterTurret;
+import frc.robot.subsystems.turret.commands.TurnTurret;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,7 +29,9 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-
+  private XboxController xbox = new XboxController(0);
+  private JoystickButton a = new JoystickButton(xbox, 0);
+  private JoystickButton b = new JoystickButton(xbox, 0);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -42,6 +48,9 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    a.whenPressed(new TurnTurret(45));
+    b.whenPressed(new CenterTurret());
+
   }
 
 
