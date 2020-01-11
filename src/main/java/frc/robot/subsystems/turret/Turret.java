@@ -95,7 +95,7 @@ public class Turret extends SubsystemBase {
         double targetPosition = Double.NaN;
         double shortestDistance = Double.MAX_VALUE;
         for (double _targetPos: positions){ // for each possible position
-            if(_targetPos < MAXIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
+            if(_targetPos < MINIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
                 continue;
             if(Math.abs(_targetPos - getEncoderPosition()) < shortestDistance) // if the calculated distance is less than the current shortest distance
             {
@@ -105,6 +105,24 @@ public class Turret extends SubsystemBase {
         }
         return convertDegreesToTicks(targetPosition);
     }
+
+    public double getCorrectPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION){
+        targetAngle %= 360; targetAngle += 360; targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
+        double[] positions = {targetAngle-360, targetAngle, targetAngle+360}; // An array of all possible target positions
+        double targetPosition = Double.NaN;
+        double shortestDistance = Double.MAX_VALUE;
+        for (double _targetPos: positions){ // for each possible position
+            if(_targetPos < MINIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
+                continue;
+            if(Math.abs(_targetPos - currentPosition) < shortestDistance) // if the calculated distance is less than the current shortest distance
+            {
+                shortestDistance = Math.abs(_targetPos - currentPosition);
+                targetPosition = _targetPos;
+            }
+        }
+        return convertDegreesToTicks(targetPosition);
+    }
+
 
     /**
      *
