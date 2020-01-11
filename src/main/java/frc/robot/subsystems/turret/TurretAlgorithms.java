@@ -28,20 +28,6 @@ public class TurretAlgorithms {
         return targetPosition;
     }
 
-    /**
-     * @param minimum the minimum angle the turret can turn
-     * @param angle the target angle
-     * @param maximum the maximum angle that the turret can turn
-     * @return an angle that satisfies the constrain
-     */
-    public double boundary(double minimum, double angle, double maximum) {
-        if (angle < minimum) {
-            angle -= 360;
-        } else if (angle > maximum) {
-            angle += 360;
-        }
-        return angle;
-    }
 
     /**
      * @return the same position rotated 360 degrees, in order to have more room to rotate
