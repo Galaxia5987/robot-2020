@@ -21,7 +21,7 @@ public class Serializer extends SubsystemBase {
     private int ballsCount = 3;
     private double startLocation, endLocation;
     private boolean movingUp;
-    private boolean entryBallInside, integrationBallInside, exitBallInside;
+    private boolean entryBallInside, integrationBallInside;
 
     public Serializer() {
         exitMotor.configFactoryDefault();
@@ -51,26 +51,21 @@ public class Serializer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (isEntryProximityPressed() && movingUp && !entryBallInside) {
+        if (isEntryProximityPressed() && movingUp) {
             incrementBallsCount(1);
-            entryBallInside = true;
             startLocation = getEncoderPosition();
-        } else
-            entryBallInside = false;
+        }
 
-        if (isExitProximityReleased() && movingUp && exitBallInside) {
+        if (isExitProximityReleased() && movingUp) {
             decrementBallsCount(1);
-            exitBallInside = false;
             endLocation = getEncoderPosition();
-        } else
-            exitBallInside = true;
+        }
 
         if (isEntryProximityReleased() && !movingUp && entryBallInside) {
             decrementBallsCount(1);
-            entryBallInside = false;
             startLocation = getEncoderPosition();
-        } else
-            entryBallInside = true;
+        }
+        entryBallInside = isEntryProximityPressed();
     }
 
     public int getEntryVelocity() {
