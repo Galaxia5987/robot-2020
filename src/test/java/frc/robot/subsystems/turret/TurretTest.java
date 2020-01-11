@@ -13,14 +13,17 @@ public class TurretTest {
     }
 
     @Test
-    public void setTurretAngle() {
+    public void getCorrectionPosition() {
         double targetAngle = 280;
-        Assert.assertEquals(turret.setTurretAngle(targetAngle), turret.convertDegreesToTicks(-80), 0.1);
-        Assert.assertEquals(turret.setTurretAngle(-359), turret.convertDegreesToTicks(1), 0.1);
-        Assert.assertEquals(turret.setTurretAngle(300), turret.convertDegreesToTicks(-60), 0.1);
-        Assert.assertEquals(turret.setTurretAngle(20), turret.convertDegreesToTicks(20), 0.1);
-        Assert.assertEquals(turret.setTurretAngle(320), turret.convertDegreesToTicks(-40), 0.1);
-        Assert.assertEquals(turret.setTurretAngle(173), turret.convertDegreesToTicks(-187), 0.1);
+        double currentPosition = 30;
+        double minPos = -360;
+        double maxPos = 360;
+        Assert.assertEquals(turret.getCorrectPosition(targetAngle, currentPosition, minPos, maxPos), turret.convertDegreesToTicks(-80), 0.1);
+        Assert.assertEquals(turret.getCorrectPosition(-359, 200, minPos, maxPos), turret.convertDegreesToTicks(1), 0.1);
+        Assert.assertEquals(turret.getCorrectPosition(300, -40, minPos, maxPos), turret.convertDegreesToTicks(-60), 0.1);
+        Assert.assertEquals(turret.getCorrectPosition(20, 320, minPos, maxPos), turret.convertDegreesToTicks(20), 0.1);
+        Assert.assertEquals(turret.getCorrectPosition(320, 20, minPos, maxPos), turret.convertDegreesToTicks(-40), 0.1);
+        Assert.assertEquals(turret.getCorrectPosition(173, -247, minPos, maxPos), turret.convertDegreesToTicks(-187), 0.1);
     }
 
 
