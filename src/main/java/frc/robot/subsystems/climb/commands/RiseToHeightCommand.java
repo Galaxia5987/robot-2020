@@ -120,7 +120,7 @@ public class RiseToHeightCommand extends CommandBase {
      * @param maxLimit     the maximum limit
      * @return the modified heights
      */
-    private double[] normalizeHeights(double difference, double firstHeight, double secondHeight, double minLimit, double maxLimit) {
+    public double[] normalizeHeights(double difference, double firstHeight, double secondHeight, double minLimit, double maxLimit) {
         firstHeight -= difference;
         if (firstHeight <= minLimit) {
             difference = Math.abs(Math.abs(firstHeight) - minLimit);
