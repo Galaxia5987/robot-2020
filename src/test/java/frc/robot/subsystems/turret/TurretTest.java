@@ -28,7 +28,10 @@ public class TurretTest {
 
 
     @Test
-    public void center() {
-        Assert.assertEquals(turret.center(), turret.convertDegreesToTicks(-80), 0.1);
+    public void getCorrectCenterPosition() {
+        double currentPos = 200;
+        double minPos = -360;
+        double maxPos = 360;
+        Assert.assertEquals(turret.getCorrectCenterPosition(currentPos, minPos, maxPos), turret.convertDegreesToTicks(-160), 0.1);
     }
 }

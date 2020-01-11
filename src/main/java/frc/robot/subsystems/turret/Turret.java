@@ -24,8 +24,8 @@ import static frc.robot.Ports.Turret.*;
  * {@using Hall Effect}
  */
 public class Turret extends SubsystemBase {
-    private TalonSRX master = new TalonSRX(MASTER);
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
+    private TalonSRX master = new TalonSRX(MASTER);
     private NetworkTableEntry kPentry = table.getEntry("kP");
     private NetworkTableEntry kIentry = table.getEntry("kI");
     private NetworkTableEntry kDentry = table.getEntry("kD");
@@ -67,7 +67,7 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         updateConstants();
-        if(getHallEffect()) {
+        if (getHallEffect()) {
             resetEncoderPosition();
         }
     }
@@ -90,14 +90,16 @@ public class Turret extends SubsystemBase {
      * @return return the target angle in ticks.
      */
     public double setTurretAngle(double targetAngle) {
-        targetAngle %= 360; targetAngle += 360; targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
-        double[] positions = {targetAngle-360, targetAngle, targetAngle+360}; // An array of all possible target positions
+        targetAngle %= 360;
+        targetAngle += 360;
+        targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
+        double[] positions = {targetAngle - 360, targetAngle, targetAngle + 360}; // An array of all possible target positions
         double targetPosition = Double.NaN;
         double shortestDistance = Double.MAX_VALUE;
-        for (double _targetPos: positions){ // for each possible position
-            if(_targetPos < MINIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
+        for (double _targetPos : positions) { // for each possible position
+            if (_targetPos < MINIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
                 continue;
-            if(Math.abs(_targetPos - getEncoderPosition()) < shortestDistance) // if the calculated distance is less than the current shortest distance
+            if (Math.abs(_targetPos - getEncoderPosition()) < shortestDistance) // if the calculated distance is less than the current shortest distance
             {
                 shortestDistance = Math.abs(_targetPos - getEncoderPosition());
                 targetPosition = _targetPos;
@@ -109,15 +111,17 @@ public class Turret extends SubsystemBase {
     /**
      * this method tests the code of setTurretAngle without having to rely on encoders and other robot outputs.
      */
-    public double getCorrectPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION){
-        targetAngle %= 360; targetAngle += 360; targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
-        double[] positions = {targetAngle-360, targetAngle, targetAngle+360}; // An array of all possible target positions
+    public double getCorrectPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
+        targetAngle %= 360;
+        targetAngle += 360;
+        targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
+        double[] positions = {targetAngle - 360, targetAngle, targetAngle + 360}; // An array of all possible target positions
         double targetPosition = Double.NaN;
         double shortestDistance = Double.MAX_VALUE;
-        for (double _targetPos: positions){ // for each possible position
-            if(_targetPos < MINIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
+        for (double _targetPos : positions) { // for each possible position
+            if (_targetPos < MINIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
                 continue;
-            if(Math.abs(_targetPos - currentPosition) < shortestDistance) // if the calculated distance is less than the current shortest distance
+            if (Math.abs(_targetPos - currentPosition) < shortestDistance) // if the calculated distance is less than the current shortest distance
             {
                 shortestDistance = Math.abs(_targetPos - currentPosition);
                 targetPosition = _targetPos;
@@ -128,15 +132,27 @@ public class Turret extends SubsystemBase {
 
 
     /**
-     *
      * @return the same position rotated 360 degrees or the current position in ticks
      */
     public double center() {
         double currentPosition = getEncoderPosition();
-        double avg = (MINIMUM_POSITION+MAXIMUM_POSITION)/2;
+        double avg = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
         if (currentPosition > (180 + avg)) {
             currentPosition -= 360;
-        } else if (currentPosition < (-180 + avg)){
+        } else if (currentPosition < (-180 + avg)) {
+            currentPosition += 360;
+        }
+        return convertDegreesToTicks(currentPosition);
+    }
+
+    /**
+     * this method tests center() without relying on encoders and other robot outputs.
+     */
+    public double getCorrectCenterPosition(double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
+        double avg = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
+        if (currentPosition > (180 + avg)) {
+            currentPosition -= 360;
+        } else if (currentPosition < (-180 + avg)) {
             currentPosition += 360;
         }
         return convertDegreesToTicks(currentPosition);
@@ -169,7 +185,7 @@ public class Turret extends SubsystemBase {
      * set encoder position to the nearest Hall Effect position.
      */
     public void resetEncoderPosition() {
-        if (Math.abs(getEncoderPosition()- HALL_EFFECT_POSITION_1) < Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_2))
+        if (Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_1) < Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_2))
             master.setSelectedSensorPosition(convertDegreesToTicks(HALL_EFFECT_POSITION_1), 0, TALON_TIMEOUT);
         else
             master.setSelectedSensorPosition(convertDegreesToTicks(HALL_EFFECT_POSITION_2), 0, TALON_TIMEOUT);
