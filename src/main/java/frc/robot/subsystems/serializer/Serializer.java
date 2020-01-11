@@ -51,26 +51,26 @@ public class Serializer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (getEntryProximity() && movingUp && !inside) {
+        if (isEntryProximityPressed() && movingUp && !entryBallInside) {
             incrementBallsCount(1);
-            inside = true;
+            entryBallInside = true;
             startLocation = getEncoderPosition();
         } else
-            inside = false;
+            entryBallInside = false;
 
-        if (getExitProximity() && movingUp) {
+        if (isExitProximityReleased() && movingUp && exitBallInside) {
             decrementBallsCount(1);
-            inside = true;
+            exitBallInside = false;
             endLocation = getEncoderPosition();
         } else
-            inside = false;
+            exitBallInside = true;
 
-        if (getEntryProximity() && !movingUp && !inside) {
+        if (isEntryProximityReleased() && !movingUp && entryBallInside) {
             decrementBallsCount(1);
-            inside = true;
+            entryBallInside = false;
             startLocation = getEncoderPosition();
-        }else
-            inside = false;
+        } else
+            entryBallInside = true;
     }
 
     public int getEntryVelocity() {

@@ -30,9 +30,12 @@ public class Constants {
         public static final int MAX_CURRENT = 1000;
         public static final double RAMP_RATE = 0.7;
 
-        public static final double ENTRY_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
-        public static final double INTEGRATION_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
-        public static final double EXIT_PROXIMITY_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
+        public static final double ENTRY_PROXIMITY_MAX_VOLTAGE = 1; //The voltage the entry proximity will return, when it sees a ball.
+        public static final double ENTRY_PROXIMITY_MIN_VOLTAGE = 0;
+        public static final double INTEGRATION_PROXIMITY_MAX_VOLTAGE = 1; //The voltage the entry proximity will return, when it sees a ball.
+        public static final double INTEGRATION_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
+        public static final double EXIT_PROXIMITY_MAX_VOLTAGE = 1; //The voltage the entry proximity will return, when it sees a ball.
+        public static final double EXIT_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
 
         public static final int TICK_PER_METERS = 0;
         public static final double THRESH_HOLD = 0.5;
