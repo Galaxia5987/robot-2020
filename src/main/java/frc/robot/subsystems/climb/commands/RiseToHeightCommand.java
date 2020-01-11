@@ -106,9 +106,7 @@ public class RiseToHeightCommand extends CommandBase {
         boolean isLeftOnSetpoint = Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climb.HEIGHT_TOLERANCE;
         boolean isRightOnSetpoint = Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climb.HEIGHT_TOLERANCE;
         boolean isAngleOnSetpoint = Math.abs(currentAngleError) < Constants.Climb.ANGLE_TOLERANCE;
-        return isLeftOnSetpoint &&
-                isRightOnSetpoint &&
-                isAngleOnSetpoint;
+        return isLeftOnSetpoint && isRightOnSetpoint && isAngleOnSetpoint;
     }
 
     /**
