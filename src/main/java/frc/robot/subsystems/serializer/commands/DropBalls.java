@@ -3,9 +3,8 @@ package frc.robot.subsystems.serializer.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import static edu.wpi.first.wpilibj.RobotBase.startRobot;
 import static frc.robot.Constants.Serializer.BALL_DROP_TIME;
-import static frc.robot.Robot.serializer;
+import static frc.robot.RobotContainer.serializer;
 
 public class DropBalls extends CommandBase {
     private int balls;

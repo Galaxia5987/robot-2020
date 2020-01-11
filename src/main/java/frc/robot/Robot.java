@@ -20,7 +20,6 @@ import frc.robot.subsystems.serializer.Serializer;
  */
 public class Robot extends TimedRobot {
     public static boolean isRobotA = true;
-    public static Serializer serializer = new Serializer();
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;

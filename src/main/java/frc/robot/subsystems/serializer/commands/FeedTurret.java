@@ -4,8 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static frc.robot.Constants.Serializer.BALL_FEED_TIME;
-import static frc.robot.Constants.Serializer.MAX_BALLS_COUNT;
-import static frc.robot.Robot.serializer;
+import static frc.robot.RobotContainer.serializer;
 
 public class FeedTurret extends CommandBase {
     public int ballsCount;
