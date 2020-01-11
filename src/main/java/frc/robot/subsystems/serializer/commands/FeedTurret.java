@@ -36,5 +36,6 @@ public class FeedTurret extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         timer.stop();
+        serializer.stop();
     }
 }
