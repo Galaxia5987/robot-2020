@@ -145,7 +145,7 @@ public class Climber extends SubsystemBase {
      * @param setpoint the setpoint.
      * @return the normalized setpoint.
      */
-    private double normalizeSetPoint(double setpoint) {
+    public double normalizeSetPoint(double setpoint) {
         if (setpoint > Constants.Climb.HEIGHT) {
             return Constants.Climb.HEIGHT;
         } else if (setpoint < 0) {
