@@ -124,13 +124,14 @@ public class RiseToHeightCommand extends CommandBase {
      */
     private double[] normalizeHeights(double difference, double firstHeight, double secondHeight, double minLimit, double maxLimit) {
         firstHeight -= difference;
-        if (firstHeight - difference < minLimit) {
+        if (firstHeight <= minLimit) {
             difference = Math.abs(Math.abs(firstHeight) - minLimit);
             firstHeight = minLimit;
-            if (secondHeight + difference <= maxLimit) {
-                secondHeight += difference;
-            } else {
+            if (secondHeight + difference >= maxLimit) {
                 secondHeight = maxLimit;
+            } else {
+                secondHeight += difference;
+
             }
         }
         return new double[]{firstHeight, secondHeight};
