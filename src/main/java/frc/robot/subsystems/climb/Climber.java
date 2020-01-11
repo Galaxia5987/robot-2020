@@ -162,7 +162,6 @@ public class Climber extends SubsystemBase {
         if (isLeftOnLimit()) {
             leftReset();
         }
-
         if (isRightOnLimit()) {
             rightReset();
         }
