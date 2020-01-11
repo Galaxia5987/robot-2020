@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Climber m_exampleSubsystem = new Climber();
+  private final Climber climber = new Climber();
   private final Command m_autoCommand = null;
 
 
