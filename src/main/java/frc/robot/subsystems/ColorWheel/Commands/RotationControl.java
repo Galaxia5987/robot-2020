@@ -17,8 +17,8 @@ public class RotationControl extends CommandBase {
     private double percentSpeed = 0;
 
 
-    public RotationControl(double percetSpeed) {
-        percentSpeed = percetSpeed;
+    public RotationControl(double percentSpeed) {
+        this.percentSpeed = percentSpeed;
     }
 
     @Override
