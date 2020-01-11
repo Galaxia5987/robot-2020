@@ -20,7 +20,7 @@ public class CenterTurret extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        turret.center(MAXIMUM_POSITION, MINIMUM_POSITION);
+        turret.center();
     }
 
     // Make this return true when this Command no longer needs to run execute()
