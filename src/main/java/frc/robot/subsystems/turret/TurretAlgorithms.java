@@ -16,12 +16,12 @@ public class TurretAlgorithms {
         double[] positions = {targetAngle-360, targetAngle, targetAngle+360}; // An array of all possible target positions
         double targetPosition = Double.NaN;
         double shortestDistance = Double.MAX_VALUE;
-        for (double _targetPos: positions){
-            if(_targetPos < minPos || _targetPos > maxPos)
+        for (double _targetPos: positions){ // for each possible position
+            if(_targetPos < minPos || _targetPos > maxPos) // if the position is out of boundaries
                 continue;
-            if(Math.abs(_targetPos - currentPosition) < shortestDistance)
+            if(Math.abs(_targetPos - currentPosition) < shortestDistance) // if the calculated distance is less than the current shortest distance
             {
-                shortestDistance = Math.abs(_targetPos - currentPosition);
+                shortestDistance = Math.abs(_targetPos - currentPosition); 
                 targetPosition = _targetPos;
             }
         }
