@@ -106,6 +106,9 @@ public class Turret extends SubsystemBase {
         return convertDegreesToTicks(targetPosition);
     }
 
+    /**
+     * this method tests the code of setTurretAngle without having to rely on encoders and other robot outputs.
+     */
     public double getCorrectPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION){
         targetAngle %= 360; targetAngle += 360; targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
         double[] positions = {targetAngle-360, targetAngle, targetAngle+360}; // An array of all possible target positions
