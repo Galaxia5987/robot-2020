@@ -51,11 +51,7 @@ public class Shooter extends SubsystemBase {
     public void setSpeedRPM(double rpm) {
         shooterMaster.set(ControlMode.Velocity, ticksToRPM(rpm));
     }
-
-    public double getPosition() {
-        return shooterMaster.getSelectedSensorPosition();
-    }
-
+    
     /**
      * @param ticks the encoder units of the Talon.
      * @return the conversion between ticks to rpm.
