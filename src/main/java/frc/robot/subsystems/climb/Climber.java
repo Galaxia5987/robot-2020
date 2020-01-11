@@ -59,17 +59,14 @@ public class Climber extends SubsystemBase {
      * This would allow it to extend.
      */
     public void releaseStopper() {
-        if (isEngaged()) {
-            stopper.set(DoubleSolenoid.Value.kReverse);
-        }
+        stopper.set(DoubleSolenoid.Value.kReverse);
     }
 
     /**
      * Engage the mechanical stopper to lock the climber.
      */
     public void engageStopper() {
-        if (!isEngaged())
-            stopper.set(DoubleSolenoid.Value.kForward);
+        stopper.set(DoubleSolenoid.Value.kForward);
     }
 
     /**
@@ -145,6 +142,7 @@ public class Climber extends SubsystemBase {
 
     /**
      * Return a normalized constrained in a certain range.
+     *
      * @param setpoint the setpoint.
      * @return the normalized setpoint.
      */
@@ -179,6 +177,6 @@ public class Climber extends SubsystemBase {
         double rightHeight = normalizeSetPoint(getRightHeight());
         setLeftHeight(leftHeight);
         setRightHeight(rightHeight);
-        
+
     }
 }
