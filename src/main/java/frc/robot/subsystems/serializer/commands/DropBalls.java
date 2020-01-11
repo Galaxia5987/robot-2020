@@ -30,7 +30,7 @@ public class DropBalls extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return timer.get() > (balls * BALL_DROP_TIME) || serializer.getBallsCount() < 0;
+        return timer.get() > (balls * BALL_DROP_TIME);
     }
 
     @Override
