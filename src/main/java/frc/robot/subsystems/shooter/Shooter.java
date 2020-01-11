@@ -17,6 +17,7 @@ public class Shooter extends SubsystemBase {
     private UnitModel unitModel = new UnitModel(TICKS_PER_ROTATION);
 
     public Shooter() {
+        shooterMaster.configFactoryDefault();
         shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         shooterSlave.follow(shooterMaster);
         shooterMaster.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
@@ -51,7 +52,7 @@ public class Shooter extends SubsystemBase {
     public void setSpeedRPM(double rpm) {
         shooterMaster.set(ControlMode.Velocity, ticksToRPM(rpm));
     }
-    
+
     /**
      * @param ticks the encoder units of the Talon.
      * @return the conversion between ticks to rpm.
