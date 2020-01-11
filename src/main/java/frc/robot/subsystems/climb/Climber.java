@@ -130,14 +130,14 @@ public class Climber extends SubsystemBase {
      * Reset the encoder position to the height of the subsystem.
      */
     public void leftReset() {
-        leftMotor.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
+        leftMotor.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.HEIGHT));
     }
 
     /**
      * Reset the encoder position to the height of the subsystem.
      */
     public void rightReset() {
-        rightMotor.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.CLIMB_HEIGHT));
+        rightMotor.setSelectedSensorPosition(climbUnitModel.toTicks(Constants.Climb.HEIGHT));
     }
 
     /**
@@ -147,8 +147,8 @@ public class Climber extends SubsystemBase {
      * @return the normalized setpoint.
      */
     private double normalizeSetPoint(double setpoint) {
-        if (setpoint > Constants.Climb.CLIMB_HEIGHT) {
-            return Constants.Climb.CLIMB_HEIGHT;
+        if (setpoint > Constants.Climb.HEIGHT) {
+            return Constants.Climb.HEIGHT;
         } else if (setpoint < 0) {
             return 0;
         }

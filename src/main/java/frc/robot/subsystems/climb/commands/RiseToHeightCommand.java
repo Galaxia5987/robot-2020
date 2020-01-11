@@ -67,7 +67,7 @@ public class RiseToHeightCommand extends CommandBase {
         currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
 
         //If the elevator reaches the target height engage the mechanical stopper to stop it from going up
-        if (Math.abs(setpointHeight - currentHeight) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE) {
+        if (Math.abs(setpointHeight - currentHeight) < Constants.Climb.HEIGHT_TOLERANCE) {
             climber.engageStopper();
         }
         
@@ -75,11 +75,11 @@ public class RiseToHeightCommand extends CommandBase {
             double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
             //Fix the heights according to the angle of the robot
             if (currentAngleError > 0) {
-                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climb.CLIMB_HEIGHT);
+                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climb.HEIGHT);
                 rightSetpointHeight = heights[0];
                 leftSetpointHeight = heights[1];
             } else {
-                double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climb.CLIMB_HEIGHT);
+                double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climb.HEIGHT);
                 rightSetpointHeight = heights[0];
                 leftSetpointHeight = heights[1];
             }
@@ -103,9 +103,9 @@ public class RiseToHeightCommand extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        boolean isLeftOnSetpoint = Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE;
-        boolean isRightOnSetpoint = Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climb.CLIMB_HEIGHT_TOLERANCE;
-        boolean isAngleOnSetpoint = Math.abs(currentAngleError) < Constants.Climb.CLIMB_ANGLE_TOLERANCE;
+        boolean isLeftOnSetpoint = Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climb.HEIGHT_TOLERANCE;
+        boolean isRightOnSetpoint = Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climb.HEIGHT_TOLERANCE;
+        boolean isAngleOnSetpoint = Math.abs(currentAngleError) < Constants.Climb.ANGLE_TOLERANCE;
         return isLeftOnSetpoint &&
                 isRightOnSetpoint &&
                 isAngleOnSetpoint;

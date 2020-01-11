@@ -73,9 +73,9 @@ public class Constants {
         public static final boolean IS_RIGHT_MOTOR_INVERTED = false;
         public static final boolean IS_LEFT_SENSOR_INVERTED = false;
         public static final boolean IS_RIGHT_SENSOR_INVERTED = false;
-        public static final double CLIMB_HEIGHT_TOLERANCE = 0;//The tolerance between the current height to the desired height
-        public static final double CLIMB_ANGLE_TOLERANCE = 0;//The tolerance between the current angle to the desired angle
-        public static final double CLIMB_HEIGHT = 0;// The maximum height of the subsystem
+        public static final double HEIGHT_TOLERANCE = 0;//The tolerance between the current height to the desired height
+        public static final double ANGLE_TOLERANCE = 0;//The tolerance between the current angle to the desired angle
+        public static final double HEIGHT = 0;// The maximum height of the subsystem
     }
 
 }
