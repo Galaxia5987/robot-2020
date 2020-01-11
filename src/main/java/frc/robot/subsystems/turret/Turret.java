@@ -48,7 +48,7 @@ public class Turret extends SubsystemBase {
         master.configMotionCruiseVelocity(CRUISE_VELOCITY);
         master.configPeakCurrentLimit(MAX_CURRENT);
         master.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
-        master.setSelectedSensorPosition((int) HALL_EFFECT_POSITION, 0, TALON_TIMEOUT);
+        master.setSelectedSensorPosition((int) HALL_EFFECT_POSITION_1, 0, TALON_TIMEOUT);
     }
 
     /**
@@ -128,10 +128,13 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * set encoder position to the Hall Effect position.
+     * set encoder position to the nearest Hall Effect position.
      */
     public void resetEncoderPosition() {
-        master.setSelectedSensorPosition(convertDegreesToTicks(HALL_EFFECT_POSITION), 0, TALON_TIMEOUT);
+        if (Math.abs(getEncoderPosition()- HALL_EFFECT_POSITION_1) < Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_2))
+            master.setSelectedSensorPosition(convertDegreesToTicks(HALL_EFFECT_POSITION_1), 0, TALON_TIMEOUT);
+        else
+            master.setSelectedSensorPosition(convertDegreesToTicks(HALL_EFFECT_POSITION_2), 0, TALON_TIMEOUT);
     }
 
 
