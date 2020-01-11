@@ -7,11 +7,11 @@ import static frc.robot.Constants.Serializer.BALL_FEED_TIME;
 import static frc.robot.Constants.Serializer.MAX_BALLS_COUNT;
 import static frc.robot.Robot.serializer;
 
-public class FeedBalls extends CommandBase {
+public class FeedTurret extends CommandBase {
     public int ballsCount;
     private Timer timer = new Timer();
 
-    public FeedBalls(int ballsCount) {
+    public FeedTurret(int ballsCount) {
         addRequirements(serializer);
         this.ballsCount = ballsCount;
     }
