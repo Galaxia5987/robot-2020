@@ -24,7 +24,6 @@ import static frc.robot.Ports.Turret.*;
  * {@using Hall Effect}
  */
 public class Turret extends SubsystemBase {
-    public TurretAlgorithms algorithms = new TurretAlgorithms();
     private TalonSRX master = new TalonSRX(MASTER);
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
     private NetworkTableEntry kPentry = table.getEntry("kP");
@@ -91,17 +90,35 @@ public class Turret extends SubsystemBase {
      * @return return the target angle in ticks.
      */
     public double setTurretAngle(double targetAngle) {
-        return convertDegreesToTicks(algorithms.setTurretAngle(targetAngle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION));
+        targetAngle %= 360; targetAngle += 360; targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
+        double[] positions = {targetAngle-360, targetAngle, targetAngle+360}; // An array of all possible target positions
+        double targetPosition = Double.NaN;
+        double shortestDistance = Double.MAX_VALUE;
+        for (double _targetPos: positions){ // for each possible position
+            if(_targetPos < MAXIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
+                continue;
+            if(Math.abs(_targetPos - getEncoderPosition()) < shortestDistance) // if the calculated distance is less than the current shortest distance
+            {
+                shortestDistance = Math.abs(_targetPos - getEncoderPosition());
+                targetPosition = _targetPos;
+            }
+        }
+        return convertDegreesToTicks(targetPosition);
     }
 
     /**
      *
-     * @param minimum
-     * @param maximum
      * @return the same position rotated 360 degrees or the current position in ticks
      */
-    public double center(double minimum, double maximum) {
-        return convertDegreesToTicks(algorithms.center(getEncoderPosition(), minimum, maximum));
+    public double center() {
+        double currentPosition = getEncoderPosition();
+        double avg = (MINIMUM_POSITION+MAXIMUM_POSITION)/2;
+        if (currentPosition > (180 + avg)) {
+            currentPosition -= 360;
+        } else if (currentPosition < (-180 + avg)){
+            currentPosition += 360;
+        }
+        return convertDegreesToTicks(currentPosition);
     }
 
     /**
@@ -144,7 +161,7 @@ public class Turret extends SubsystemBase {
      * @param degrees the degrees to convert.
      * @return the degrees converted to ticks.
      */
-    private int convertDegreesToTicks(double degrees) {
+    public int convertDegreesToTicks(double degrees) {
         return (int) (degrees * TICKS_PER_DEGREE);
     }
 
