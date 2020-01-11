@@ -68,14 +68,15 @@ public class Constants {
         public static final int MOTION_MAGIC_VELOCITY = 0;
         public static final int MOTION_MAGIC_ACCELERATION = 0;
         public static final int TICKS_PER_METER = 1;
-        public static final double[] CLIMB_PIDFA = {0, 0, 0, 0,0};//Proportional, Integral, Derivative, Feedforward, Arbitrary Feedforward
+        public static final double[] CLIMB_PIDF = {0, 0, 0, 0};//Proportional, Integral, Derivative, Feedforward
+        public static final double ARBITRARY_FEEDFORWARD = 0;
         public static final boolean IS_LEFT_MOTOR_INVERTED = false;
         public static final boolean IS_RIGHT_MOTOR_INVERTED = false;
         public static final boolean IS_LEFT_SENSOR_INVERTED = false;
         public static final boolean IS_RIGHT_SENSOR_INVERTED = false;
-        public static final double HEIGHT_TOLERANCE = 0;//The tolerance between the current height to the desired height
-        public static final double ANGLE_TOLERANCE = 0;//The tolerance between the current angle to the desired angle
-        public static final double HEIGHT = 0;// The maximum height of the subsystem
+        public static final double HEIGHT_TOLERANCE = 0;//The allowed tolerance between the current height to the desired height
+        public static final double ANGLE_TOLERANCE = 0;//The allowed tolerance between the current angle to the desired angle
+        public static final double HEIGHT = 0;// The allowed maximum height of the subsystem
     }
 
 }
