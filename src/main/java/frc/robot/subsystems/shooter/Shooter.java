@@ -52,14 +52,6 @@ public class Shooter extends SubsystemBase {
         shooterMaster.set(ControlMode.Velocity, ticksToRPM(rpm));
     }
 
-    /**
-     * set the input speed of the shooter.
-     * @param inputSpeed the input speed of the feeder.
-     */
-    public void setInputSpeed(double inputSpeed){
-        inputMotor.set(ControlMode.PercentOutput, inputSpeed);
-    }
-
     public double getPosition() {
         return shooterMaster.getSelectedSensorPosition();
     }

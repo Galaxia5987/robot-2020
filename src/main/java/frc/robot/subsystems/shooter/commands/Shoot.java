@@ -59,7 +59,6 @@ public class Shoot extends CommandBase {
     public void end(boolean interrupted) {
         timer.stop();
         shooter.setSpeedRPM(0);
-        shooter.setInputSpeed(0);
     }
 
     // Called when another command which requires one or more of the same
