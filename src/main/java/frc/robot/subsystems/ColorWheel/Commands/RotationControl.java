@@ -17,6 +17,7 @@ public class RotationControl extends CommandBase {
     public void initialize() {
         currentColor = colorWheel.getColorString();
         currentIndex = colorWheel.indexOfColor(currentColor, currentColor);
+        colorWheel.setMotorSpeed(0.2);
 
     }
 
@@ -47,7 +48,7 @@ public class RotationControl extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        colorWheel.setMotorSpeed(0.2);
     }
 
 }
