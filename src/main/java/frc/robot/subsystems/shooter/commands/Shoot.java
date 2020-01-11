@@ -44,6 +44,10 @@ public class Shoot extends CommandBase {
         velocityEntry.setDouble(shooter.getSpeed());
     }
 
+    /**
+     * @param distance the distance away from the target.
+     * @return the calculated velocity to get to the target.
+     */
     private double calculateVelocity(double distance) {
         return (520.78 * Math.exp(0.1685 * distance));
     }
