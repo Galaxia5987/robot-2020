@@ -75,7 +75,7 @@ public class Climber extends SubsystemBase {
      * @return the state of the mechanical stopper
      */
     public boolean isEngaged() {
-        return stopper.get() == DoubleSolenoid.Value.kForward;
+        return stopper.get().equals(DoubleSolenoid.Value.kForward);
     }
 
 
