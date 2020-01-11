@@ -10,8 +10,8 @@ public class TurretAlgorithms {
      * @return return the target angle.
      */
     public double setTurretAngle(double targetAngle, double currentPosition, double minPos, double maxPos) {
-        targetAngle %= 360;
-        targetAngle = constrain(minPos, targetAngle, maxPos);
+        targetAngle %= 360; targetAngle += 360; targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
+        
         if (Math.abs(targetAngle+360-currentPosition) < Math.abs(targetAngle-360-currentPosition)) {
             if (Math.abs(targetAngle+360-currentPosition) < Math.abs(targetAngle-currentPosition)) {
                 targetAngle += 360;
@@ -19,7 +19,7 @@ public class TurretAlgorithms {
         } else if (Math.abs(targetAngle-360-currentPosition) < Math.abs(targetAngle-currentPosition)) {
             targetAngle -= 360;
         }
-        targetAngle %= 360;
+
         return targetAngle;
     }
 
