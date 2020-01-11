@@ -141,13 +141,11 @@ public class Serializer extends SubsystemBase {
     }
 
     public void incrementBallsCount(int by) {
-        ballsCount += by;
-        setBallsCount(ballsCount);
+        setBallsCount(ballsCount + by);
     }
 
     public void decrementBallsCount(int by) {
-        ballsCount -= by;
-        setBallsCount(ballsCount);
+        setBallsCount(ballsCount - by);
     }
 
     public void feed() {
