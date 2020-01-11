@@ -30,7 +30,7 @@ public class FeedBalls extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= (ballsCount * BALL_FEED_TIME) || serializer.getBallsCount() > MAX_BALLS_COUNT;
+        return timer.get() >= (ballsCount * BALL_FEED_TIME);
     }
 
     @Override
