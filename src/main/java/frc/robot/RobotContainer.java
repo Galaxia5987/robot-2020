@@ -9,8 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.climb.commands.RiseToHeightCommand;
-import frc.robot.subsystems.climb.Climb;
+import frc.robot.subsystems.climb.Climber;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -21,8 +20,8 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Climb m_exampleSubsystem = new Climb();
-  private final RiseToHeightCommand m_autoCommand = new RiseToHeightCommand(m_exampleSubsystem , 0);
+  private final Climber m_exampleSubsystem = new Climber();
+  private final Command m_autoCommand = null;
 
 
 
