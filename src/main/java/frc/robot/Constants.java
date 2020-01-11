@@ -21,7 +21,7 @@ public final class Constants {
         public static final int TALON_TIMEOUT = 10;
         public static final int TALON_PID_SLOT = 0;
         public static final int MAX_CURRENT = 35;
-        public static final double TICKS_PER_DEGREE = 0;
+        public static final double TICKS_PER_DEGREE = 1;
         public static double KP = 0;
         public static double KI = 0;
         public static double KD = 0;
@@ -31,8 +31,8 @@ public final class Constants {
         public static final double HALL_EFFECT_POSITION_1 = 0; // in degrees
         public static final double HALL_EFFECT_POSITION_2 = 0; // in degrees
         public static final double ANGLE_THRESHOLD = 5;
-        public static final double MAXIMUM_POSITION = 0;
-        public static final double MINIMUM_POSITION = 0;
+        public static final double MAXIMUM_POSITION = -360;
+        public static final double MINIMUM_POSITION = 360;
 
     }
 
