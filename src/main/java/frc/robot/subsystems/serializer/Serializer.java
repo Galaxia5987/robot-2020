@@ -163,4 +163,9 @@ public class Serializer extends SubsystemBase {
             exitMotor.set(ControlMode.PercentOutput, -10);
         entryMotor.set(ControlMode.PercentOutput, -70);
     }
+
+    public void stop() {
+        exitMotor.set(ControlMode.PercentOutput, 0);
+        entryMotor.set(ControlMode.PercentOutput, 0);
+    }
 }
