@@ -34,8 +34,13 @@ public class TurretAlgorithms {
      * @param maximum the maximum angle that the turret can turn
      * @return an angle that satisfies the constrain
      */
-    public double constrain(double minimum, double angle, double maximum) {
-        return Math.min(maximum, Math.max(minimum, angle));
+    public double boundary(double minimum, double angle, double maximum) {
+        if (angle < minimum) {
+            angle -= 360;
+        } else if (angle > maximum) {
+            angle += 360;
+        }
+        return angle;
     }
 
     /**
