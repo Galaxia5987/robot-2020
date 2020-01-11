@@ -21,7 +21,7 @@ public class TurretAlgorithms {
                 continue;
             if(Math.abs(_targetPos - currentPosition) < shortestDistance) // if the calculated distance is less than the current shortest distance
             {
-                shortestDistance = Math.abs(_targetPos - currentPosition); 
+                shortestDistance = Math.abs(_targetPos - currentPosition);
                 targetPosition = _targetPos;
             }
         }
@@ -30,7 +30,7 @@ public class TurretAlgorithms {
 
 
     /**
-     * @return the same position rotated 360 degrees, in order to have more room to rotate
+     * @return the same position rotated 360 degrees or current position, in order to have more room to rotate
      */
     public double center(double currentPosition, double minimum, double maximum) {
         double avg = (minimum+maximum)/2;

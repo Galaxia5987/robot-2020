@@ -94,6 +94,12 @@ public class Turret extends SubsystemBase {
         return convertDegreesToTicks(algorithms.setTurretAngle(targetAngle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION));
     }
 
+    /**
+     *
+     * @param minimum
+     * @param maximum
+     * @return the same position rotated 360 degrees or the current position in ticks
+     */
     public double center(double minimum, double maximum) {
         return convertDegreesToTicks(algorithms.center(getEncoderPosition(), minimum, maximum));
     }
