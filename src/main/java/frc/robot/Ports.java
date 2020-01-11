@@ -2,9 +2,9 @@ package frc.robot;
 
 public class Ports {
     public class climber {
-        public static final int leftMotor = 0;
-        public static final int rightMotor = 0;
-        public static final int stopperForward = 0;
-        public static final int stopperReverse = 0;
+        public static final int LEFT_MOTOR = 0;
+        public static final int RIGHT_MOTOR = 0;
+        public static final int STOPPER_FORWARD = 0;
+        public static final int STOPPER_REVERSE = 0;
     }
 }

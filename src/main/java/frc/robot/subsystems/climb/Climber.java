@@ -17,9 +17,9 @@ import frc.robot.subsystems.UnitModel;
 
 public class Climber extends SubsystemBase {
 
-    private final TalonSRX leftMotor = new TalonSRX(Ports.climber.leftMotor);
-    private final TalonSRX rightMotor = new TalonSRX(Ports.climber.rightMotor);
-    private final DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.stopperForward, Ports.climber.stopperReverse);
+    private final TalonSRX leftMotor = new TalonSRX(Ports.climber.LEFT_MOTOR);
+    private final TalonSRX rightMotor = new TalonSRX(Ports.climber.RIGHT_MOTOR);
+    private final DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
     private final UnitModel unitModel = new UnitModel(Constants.Climb.TICKS_PER_METER);
 
     /**
