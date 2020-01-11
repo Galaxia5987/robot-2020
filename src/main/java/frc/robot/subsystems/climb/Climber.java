@@ -19,7 +19,7 @@ public class Climber extends SubsystemBase {
 
     private TalonSRX leftMotor = new TalonSRX(Ports.climber.leftMotor);
     private TalonSRX rightMotor = new TalonSRX(Ports.climber.rightMotor);
-    private DoubleSolenoid stopper = new DoubleSolenoid(Ports.moduleNumber, Ports.climber.stopperForward, Ports.climber.stopperReverse);
+    private DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.stopperForward, Ports.climber.stopperReverse);
     private UnitModel climbUnitModel = new UnitModel(Constants.Climb.TICKS_PER_METER);
 
     /**
