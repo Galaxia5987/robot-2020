@@ -136,24 +136,31 @@ public class Serializer extends SubsystemBase {
         moveConveyor(startLocation, -0.1); //TODO choose real number
     }
 
-    public void setBallsCount(int ballsCount) {
-        this.ballsCount = Math.max(0, Math.min(ballsCount, MAX_BALLS_COUNT));
-    }
-
     public int getBallsCount() {
         return ballsCount;
     }
 
-    public void incrementBallsCount(int by) {
+    public void setBallsCount(int ballsCount) {
+        this.ballsCount = Math.max(0, Math.min(ballsCount, MAX_BALLS_COUNT));
+    }
+
+    private void incrementBallsCount(int by) {
         setBallsCount(ballsCount + by);
     }
 
-    public void decrementBallsCount(int by) {
+    private void decrementBallsCount(int by) {
         setBallsCount(ballsCount - by);
     }
 
+    //TODO choose reasonable value
     public void feed() {
-        exitMotor.set(ControlMode.PercentOutput, 60); //TODO choose reasonable value
+        exitMotor.set(ControlMode.PercentOutput, 60);
         entryMotor.set(ControlMode.PercentOutput, 70);
+    }
+
+    public void drop() {
+        if (!isEntryProximityReleased())
+            exitMotor.set(ControlMode.PercentOutput, -10);
+        entryMotor.set(ControlMode.PercentOutput, -70);
     }
 }
