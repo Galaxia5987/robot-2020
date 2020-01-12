@@ -20,7 +20,7 @@ import frc.robot.subsystems.turret.Turret;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  public static Turret turret = new Turret();
+
   private RobotContainer m_robotContainer;
 
   /**

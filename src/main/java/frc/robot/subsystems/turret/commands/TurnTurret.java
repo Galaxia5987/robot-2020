@@ -4,7 +4,7 @@ package frc.robot.subsystems.turret.commands;
 import edu.wpi.first.wpilibj2.command.*;
 
 import static frc.robot.Constants.Turret.*;
-import static frc.robot.Robot.turret;
+import static frc.robot.RobotContainer.turret;
 
 /**
  * this command turns the turret until it reaches a certain threshold.
