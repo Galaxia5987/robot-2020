@@ -55,37 +55,6 @@ public class Shoot extends CommandBase {
         return (8.68 * Math.exp(0.1685 * distance));
     }
 
-    /**
-     * This method uses physical formulas of ballistic motion
-     * to calculate the velocity needed for the shooter to spin
-     * so that the ball will land at the target.
-     * The initial velocity [v0] is raised at an angle of [a] from the ground. The ball starts flying at height [hs]
-     * and needs to reach [ht], which is [dx] meters away.
-     * The calculation uses several formulas:
-     * V0 * Cos(a) * t = dx
-     * h(t) = hs + (v0 * sin(a) * t) - g/2 * t*t
-     * The final function is:
-     * v0^2 = (-g * dx^2) / [2 * Cos(a)^2 * (ht - hs - dx * tan a)]
-     *
-     * @return return the velocity that is needed to reach the target
-     */
-//    public double calculateVelocity(double targetDistance, double ANGLE, double TARGET_HEIGHT, double SHOOTER_HEIGHT, double WHEEL_BALL_VELOCITY_RATIO) {
-//        double velocity =
-//                Math.sqrt(
-//                        (- g * targetDistance * targetDistance) /
-//                                (2 * Math.pow(Math.cos(Math.toRadians(ANGLE)), 2) * (TARGET_HEIGHT - SHOOTER_HEIGHT - targetDistance * Math.tan(Math.toRadians(ANGLE))))
-//                );
-//        return convertMPSToRPS(velocity * WHEEL_BALL_VELOCITY_RATIO); //velocity is the balls velocity, but we need to return the wheel velocity.
-//    }
-
-    /**
-     * @param mps
-     * @return the conversion between mps and rpm
-     */
-    private double convertMPSToRPS(double mps) {
-        return mps / (2 * Math.PI * RADIUS);
-    }
-
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
