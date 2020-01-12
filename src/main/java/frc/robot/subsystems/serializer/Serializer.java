@@ -30,8 +30,8 @@ public class Serializer extends SubsystemBase {
     private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
     private int ballsCount = 3;
     private double startLocation, endLocation;
-    private boolean movingUp;
-    private boolean entryBallInside, integrationBallInside;
+    private boolean ballInEntryPosition, ballInIntegrationPosition, ballInExitPosition;
+    private Direction direction;
 
     public Serializer() {
         exitMotor.configFactoryDefault();
@@ -60,21 +60,23 @@ public class Serializer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (isEntryProximityPressed() && movingUp) {
+        if (isEntryProximityPressed() && isBallsMovingUp() && !ballInEntryPosition) {
             incrementBallsCount(1);
             startLocation = getEncoderPosition();
         }
 
-        if (isExitProximityReleased() && movingUp) {
+        if (isExitProximityReleased() && isBallsMovingUp() && !ballInExitPosition) {
             decrementBallsCount(1);
             endLocation = getEncoderPosition();
         }
 
-        if (isEntryProximityReleased() && !movingUp && entryBallInside) {
+        if (isEntryProximityReleased() && !isBallsMovingUp() && ballInEntryPosition) {
             decrementBallsCount(1);
             startLocation = getEncoderPosition();
         }
-        entryBallInside = isEntryProximityPressed();
+
+        ballInExitPosition = !isExitProximityReleased();
+        ballInEntryPosition = !isEntryProximityReleased();
     }
 
     /**
@@ -92,7 +94,7 @@ public class Serializer extends SubsystemBase {
      * @param meterPerSecond the speed to apply on {@link #entryMotor}.
      */
     public void setEntryVelocity(double meterPerSecond) {
-        movingUp = (meterPerSecond >= 0);
+        direction = (meterPerSecond >= 0) ? Direction.UP : Direction.DOWN;
         entryMotor.set(ControlMode.Velocity, model.toUnits(meterPerSecond) / 10);
     }
 
@@ -111,7 +113,7 @@ public class Serializer extends SubsystemBase {
      * @param location the relative location you want the {@link #exitMotor} to move.
      */
     public void setExitVelocity(double location) {
-        movingUp = (location >= 0);
+        direction = (location >= 0) ? Direction.UP : Direction.DOWN;
         exitMotor.set(ControlMode.MotionMagic, location);
     }
 
@@ -254,7 +256,6 @@ public class Serializer extends SubsystemBase {
     }
 
     //TODO choose reasonable value
-
     /**
      * feed the conveyor in one ball per run.
      */
@@ -264,19 +265,19 @@ public class Serializer extends SubsystemBase {
     }
 
     /**
-     * drop from the conveyor one ball per run.
-     */
-    public void drop() {
-        if (!isEntryProximityReleased())
-            exitMotor.set(ControlMode.PercentOutput, -10);
-        entryMotor.set(ControlMode.PercentOutput, -70);
-    }
-
-    /**
      * stop the conveyor's motors from moving.
      */
     public void stop() {
         exitMotor.set(ControlMode.PercentOutput, 0);
         entryMotor.set(ControlMode.PercentOutput, 0);
+    }
+
+    public boolean isBallsMovingUp() {
+        return direction == Direction.UP;
+    }
+
+    public enum Direction {
+        UP,
+        DOWN
     }
 }
