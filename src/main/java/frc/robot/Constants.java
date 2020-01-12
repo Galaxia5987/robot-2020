@@ -1,7 +1,6 @@
 package frc.robot;
 
 
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -17,6 +16,7 @@ public class Constants {
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
 
+
     public static class Shooter {
         public static final int TALON_PID_SLOT = 0;
         public static final double KP = 0.085; // 0.13
@@ -27,10 +27,12 @@ public class Constants {
         public static final int MAX_CURRENT = 35; //[A]
         public static final double RADIUS = 0.05; // [m]
         public static final int TICKS_PER_ROTATION = 36;
-        public static final double HEIGHT = 0; // [m]
-        public static final double ANGLE = 45; // [deg]
         public static final double g = 9.80665; // [m/sec^2]
         public static final double TARGET_DISTANCE = 2; // [m]
+        public static final double SHOOTER_HEIGHT = 0.4; // [m]
+        public static final double TARGET_HEIGHT = 2.5; // [m]
+        public static final double ANGLE = 80; // [deg]
+        public static final double VELOCITY_DIFFERENCE = 830;
         public static final double SHOOTING_TIME = 3.5;
         public static final double TARGET_RPM = 500;
         public static final double PERCENT_THRESHOLD = 10;
@@ -50,10 +52,9 @@ public class Constants {
         }
     }
 
-
-
     /**
      * Replaces fields between constants classes
+     *
      * @param class1 Original constants class
      * @param class2 Constants to replace with
      */
@@ -78,7 +79,6 @@ public class Constants {
         }
     }
 }
-
 
 
 //Anything in this class will replace the original constants when boolean is true
