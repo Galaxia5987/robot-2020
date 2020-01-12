@@ -26,7 +26,7 @@ import static frc.robot.Ports.Turret.*;
  */
 public class Turret extends SubsystemBase {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
-    private TalonSRX master = new TalonSRX(MASTER);
+    private TalonSRX master = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
     private NetworkTableEntry kPentry = table.getEntry("kP");
     private NetworkTableEntry kIentry = table.getEntry("kI");
@@ -38,7 +38,7 @@ public class Turret extends SubsystemBase {
      */
     public Turret() {
         master.configFactoryDefault();
-        master.setInverted(IS_MASTER_INVERTED);
+        master.setInverted(IS_MOTOR_INVERTED);
         master.setSensorPhase(IS_ENCODER_INVERTED);
         master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         master.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
