@@ -26,7 +26,7 @@ public class Serializer extends SubsystemBase {
     private TalonSRX exitMotor = new TalonSRX(EXIT_MOTOR);
     private VictorSPX entryMotor = new VictorSPX(ENTRY_MOTOR);
     private AnalogInput entryProximity = new AnalogInput(ENTRY_PROXIMITY);
-    private AnalogInput integrationProximity = new AnalogInput(MIDDLE_PROXIMITY);
+    private AnalogInput integrationProximity = new AnalogInput(INTEGRATION_PROXIMITY);
     private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
     private int ballsCount = 3;
     private double startLocation, endLocation;
