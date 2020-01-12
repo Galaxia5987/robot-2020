@@ -23,8 +23,8 @@ import static frc.robot.Ports.Serializer.*;
  */
 public class Serializer extends SubsystemBase {
     UnitModel model = new UnitModel(TICK_PER_METERS);
-    private TalonSRX exitMotor = new TalonSRX(EXIT_MOTOR);
     private VictorSPX entryMotor = new VictorSPX(ENTRY_MOTOR);
+    private TalonSRX exitMotor = new TalonSRX(EXIT_MOTOR);
     private AnalogInput entryProximity = new AnalogInput(ENTRY_PROXIMITY);
     private AnalogInput integrationProximity = new AnalogInput(INTEGRATION_PROXIMITY);
     private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
@@ -77,15 +77,6 @@ public class Serializer extends SubsystemBase {
 
         ballInExitPosition = !isExitProximityReleased();
         ballInEntryPosition = !isEntryProximityReleased();
-    }
-
-    /**
-     * retrieve the current {@link #entryMotor}'s velocity.
-     *
-     * @return the velocity of the {@link #entryMotor}.
-     */
-    public int getEntryVelocity() {
-        return entryMotor.getSelectedSensorVelocity();
     }
 
     /**
@@ -229,7 +220,7 @@ public class Serializer extends SubsystemBase {
     /**
      * change the amount of balls in the conveyor.
      * notice that this method will only change the variable {@link #ballsCount},
-     * if you wish to move the conveyor, use {@link #feed()} or {@link #drop()} instead.
+     * if you wish to move the conveyor, use {@link #feed()} instead.
      *
      * @param ballsCount the amount of ball.
      */
