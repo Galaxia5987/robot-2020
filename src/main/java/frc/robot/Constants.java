@@ -20,7 +20,7 @@ public final class Constants {
     public static class Turret {
         public static final int TALON_TIMEOUT = 10;
         public static final int TALON_PID_SLOT = 0;
-        public static final int MAX_CURRENT = 35;
+        public static final int MAX_CURRENT = 35; // [A]
         public static final double TICKS_PER_DEGREE = 1;
         public static double KP = 0;
         public static double KI = 0;
