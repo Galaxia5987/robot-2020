@@ -32,7 +32,7 @@ public class OuttakeBall extends CommandBase {
     public void initialize() {
         timer.reset();
         timer.start();
-        intake.setPosition(Value.kReverse);
+        intake.setPosition(false);
         intake.powerWheels(speed);
     }
 
@@ -43,7 +43,7 @@ public class OuttakeBall extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= timeout;
+        return timer.get() >= timeout || timeout == 0;
     }
 
     @Override

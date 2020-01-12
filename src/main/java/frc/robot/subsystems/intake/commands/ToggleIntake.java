@@ -1,17 +1,16 @@
 package frc.robot.subsystems.intake.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static frc.robot.RobotContainer.intake;
 
 public class ToggleIntake extends CommandBase {
-    private Value direction;
+    private boolean direction;
     private boolean auto = false;
 
-    public ToggleIntake(Value direction) {
+    public ToggleIntake(boolean up) {
         addRequirements(intake);
-        this.direction = direction;
+        this.direction = up;
     }
 
     public ToggleIntake() {
@@ -38,10 +37,9 @@ public class ToggleIntake extends CommandBase {
 
     @Override
     public boolean isFinished() {
-         if (direction == Value.kForward)
+        if (direction)
             return intake.isFolded();
-        else
-            return !intake.isFolded();
+        return !intake.isFolded();
     }
 
     @Override
