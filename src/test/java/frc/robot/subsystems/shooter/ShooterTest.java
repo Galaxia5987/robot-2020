@@ -17,7 +17,7 @@ public class ShooterTest {
     @Test
     public void ticksToRPM() {
         int ticks = 4320;
-        double desired_RPM = 12;
+        double desired_RPM = 72000;
         double RPM_res = shooter.ticksToRPM(4320);
 
         Assert.assertEquals (desired_RPM, RPM_res,1e-10);
@@ -25,9 +25,9 @@ public class ShooterTest {
 
     @Test
     public void RPMToTicks() {
-        int rpm = 12;
+        int rpm = 72000;
         double desired_ticks = 4320;
-        double ticks_res = shooter.RPMToTicks(12);
+        double ticks_res = shooter.RPMToTicks(rpm);
 
         Assert.assertEquals(desired_ticks, ticks_res, 1e-10);
     }
