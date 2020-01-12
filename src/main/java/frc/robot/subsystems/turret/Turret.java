@@ -89,31 +89,7 @@ public class Turret extends SubsystemBase {
      * @param targetAngle the desired angle.
      * @return return the target angle in ticks.
      */
-    public double getNearestTurretPosition(double targetAngle) throws Exception {
-        targetAngle %= 360;
-        targetAngle += 360;
-        targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
-        double[] positions = {targetAngle - 360, targetAngle, targetAngle + 360}; // An array of all possible target positions
-        double targetPosition = Double.NaN;
-        double shortestDistance = Double.MAX_VALUE;
-        for (double _targetPos : positions) { // for each possible position
-            if (_targetPos < MINIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
-                continue;
-            if (Math.abs(_targetPos - getEncoderPosition()) < shortestDistance) // if the calculated distance is less than the current shortest distance
-            {
-                shortestDistance = Math.abs(_targetPos - getEncoderPosition());
-                targetPosition = _targetPos;
-            }
-        }
-        if(targetPosition == Double.NaN)
-            throw new Exception("Can't reach specified angle {}");
-        return convertDegreesToTicks(targetPosition);
-    }
-
-    /**
-     * this method tests the code of setTurretAngle without having to rely on encoders and other robot outputs.
-     */
-    public double getCorrectPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
+    public double getNearestTurretPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) throws Exception {
         targetAngle %= 360;
         targetAngle += 360;
         targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
@@ -129,6 +105,8 @@ public class Turret extends SubsystemBase {
                 targetPosition = _targetPos;
             }
         }
+        if(targetPosition == Double.NaN)
+            throw new Exception("Can't reach specified angle {}");
         return convertDegreesToTicks(targetPosition);
     }
 
@@ -136,21 +114,7 @@ public class Turret extends SubsystemBase {
     /**
      * @return the same position rotated 360 degrees or the current position in ticks
      */
-    public double center() {
-        double currentPosition = getEncoderPosition();
-        double middle = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
-        if (currentPosition > (180 + middle)) {
-            currentPosition -= 360;
-        } else if (currentPosition < (-180 + middle)) {
-            currentPosition += 360;
-        }
-        return convertDegreesToTicks(currentPosition);
-    }
-
-    /**
-     * this method tests center() without relying on encoders and other robot outputs.
-     */
-    public double getCorrectCenterPosition(double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
+    public double center(double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
         double middle = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
         if (currentPosition > (180 + middle)) {
             currentPosition -= 360;
@@ -168,7 +132,7 @@ public class Turret extends SubsystemBase {
     public void setPosition(double angle) {
         double targetTurretPosition = 0;
         try {
-            targetTurretPosition = getNearestTurretPosition(angle);
+            targetTurretPosition = getNearestTurretPosition(angle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION);
         } catch (Exception e) {
             return;
         }
