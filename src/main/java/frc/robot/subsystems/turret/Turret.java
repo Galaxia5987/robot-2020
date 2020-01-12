@@ -67,7 +67,7 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         updateConstants();
-        if (getHallEffect()) {
+        if (isHallEffectClosed()) {
             resetEncoderPosition();
         }
     }
@@ -127,7 +127,7 @@ public class Turret extends SubsystemBase {
     /**
      * apply power to the controller to move the turret.
      *
-     * @param angle the desired angle
+     * @param angle setpoint angle
      */
     public void setPosition(double angle) {
         double targetTurretPosition = 0;
@@ -149,7 +149,7 @@ public class Turret extends SubsystemBase {
     /**
      * @return return if the state of the Hall Effect sensor is Closed.
      */
-    public boolean getHallEffect() {
+    public boolean isHallEffectClosed() {
         return master.getSensorCollection().isRevLimitSwitchClosed();
     }
 
@@ -157,10 +157,12 @@ public class Turret extends SubsystemBase {
      * set encoder position to the nearest Hall Effect position.
      */
     public void resetEncoderPosition() {
+        double resetAngle;
         if (Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_1) < Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_2))
-            master.setSelectedSensorPosition(convertDegreesToTicks(HALL_EFFECT_POSITION_1), 0, TALON_TIMEOUT);
+            resetAngle = HALL_EFFECT_POSITION_1;
         else
-            master.setSelectedSensorPosition(convertDegreesToTicks(HALL_EFFECT_POSITION_2), 0, TALON_TIMEOUT);
+            resetAngle = HALL_EFFECT_POSITION_2;
+        master.setSelectedSensorPosition(convertDegreesToTicks(resetAngle), 0, TALON_TIMEOUT);
     }
 
 
