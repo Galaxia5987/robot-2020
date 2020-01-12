@@ -24,8 +24,8 @@ public final class Constants {
         public static double KI = 0;
         public static double KD = 0;
         public static double KF = 0;
-        public static final int CRUISE_VELOCITY = 0;
-        public static final int CRUISE_ACCELERATION = 0;
+        public static final int MOTION_MAGIC_CRUISE_VELOCITY = 0;
+        public static final int MOTION_MAGIC_ACCELERATION = 0;
         public static final double HALL_EFFECT_POSITION_1 = 0; // in degrees, the two different positions are if the turret has turned a full circle or not
         public static final double HALL_EFFECT_POSITION_2 = 0; // in degrees
         public static final double ANGLE_THRESHOLD = 1;

@@ -45,8 +45,8 @@ public class Turret extends SubsystemBase {
         master.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
         master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
-        master.configMotionAcceleration(CRUISE_ACCELERATION);
-        master.configMotionCruiseVelocity(CRUISE_VELOCITY);
+        master.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
+        master.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
         master.configPeakCurrentLimit(MAX_CURRENT);
         master.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         master.setSelectedSensorPosition((int) HALL_EFFECT_POSITION_1, 0, TALON_TIMEOUT);
