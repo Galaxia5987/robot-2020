@@ -6,8 +6,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import static frc.robot.Robot.shooter;
 import static frc.robot.Constants.Shooter.*;
+import static frc.robot.Robot.shooter;
 
 public class Shoot extends CommandBase {
     private double distance;
@@ -36,7 +36,7 @@ public class Shoot extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        shooter.setSpeedRPM(calculateVelocity(distance));
+        shooter.setSpeedRPM(approximateVelocity(distance));
         setNetworkTable();
     }
 
@@ -48,8 +48,17 @@ public class Shoot extends CommandBase {
      * @param distance the distance away from the target.
      * @return the calculated velocity to get to the target.
      */
-    private double calculateVelocity(double distance) {
+    private double approximateVelocity(double distance) {
         return (520.78 * Math.exp(0.1685 * distance));
+    }
+
+    /**
+     *
+     * @return return the velocity that is needed to reach the target
+     */
+    private double calculateVelocity() {
+        double velocity = Math.sqrt((-g*Math.pow(TARGET_DISTANCE, 2))/2*Math.pow(Math.cos(Math.toRadians(ANGLE)),2)*(TARGET_HEIGHT-SHOOTER_HEIGHT-TARGET_DISTANCE*Math.tan(Math.toRadians(ANGLE))));
+        return velocity * VELOCITY_DIFFERENCE;
     }
 
     // Make this return true when this Command no longer needs to run execute()
