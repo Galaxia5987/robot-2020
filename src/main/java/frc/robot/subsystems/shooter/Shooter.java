@@ -14,7 +14,7 @@ public class Shooter extends SubsystemBase {
     private TalonSRX shooterMaster = new TalonSRX(MASTER);
     private VictorSPX shooterSlave = new VictorSPX(SLAVE);
     private VictorSPX inputMotor = new VictorSPX(INPUT_MOTOR);
-    private UnitModel unitModel = new UnitModel(TICKS_PER_ROTATION);
+    private UnitModel rpmUnitModel = new UnitModel(TICKS_PER_ROTATION);
 
     public Shooter() {
         shooterMaster.configFactoryDefault();
@@ -41,7 +41,7 @@ public class Shooter extends SubsystemBase {
      * @return the speed of the shooter in rpm.
      */
     public double getSpeed() {
-        return ticksToRPM(shooterMaster.getSelectedSensorVelocity());
+        return rpmUnitModel.toUnits(shooterMaster.getSelectedSensorVelocity() * 600);
     }
 
     /**
@@ -49,23 +49,7 @@ public class Shooter extends SubsystemBase {
      * @param rpm the rotations per minute of the shooter.
      */
     public void setSpeedRPM(double rpm) {
-        shooterMaster.set(ControlMode.Velocity, ticksToRPM(rpm));
-    }
-
-    /**
-     * @param ticks the encoder units of the Talon.
-     * @return the conversion between ticks to rpm.
-     */
-    public double ticksToRPM(double ticks) {
-        return unitModel.toUnits(ticks) * 10.0 * 60.0;
-    }
-
-    /**
-     * @param rpm the rotations per minute of the shooter.
-     * @return the conversion between rpm to ticks.
-     */
-    public double RPMToTicks(double rpm) {
-        return unitModel.toTicks(rpm) / 10.0 / 60.0;
+        shooterMaster.set(ControlMode.Velocity, rpmUnitModel.toTicks(rpm) / 600.); //convert rpm to ticks per 100ms
     }
 
 }
