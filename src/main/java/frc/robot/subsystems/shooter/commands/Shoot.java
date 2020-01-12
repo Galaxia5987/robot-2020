@@ -5,7 +5,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.UnitModel;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Robot.shooter;
@@ -37,7 +36,7 @@ public class Shoot extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        shooter.setSpeedRPM(approximateVelocity(distance));
+        shooter.setSpeedRPS(approximateVelocity(distance));
         setNetworkTable();
     }
 
@@ -50,10 +49,10 @@ public class Shoot extends CommandBase {
 
     /**
      * @param distance the distance away from the target.
-     * @return the calculated velocity to get to the target.
+     * @return the calculated velocity to get to the target in rps.
      */
     private double approximateVelocity(double distance) {
-        return (520.78 * Math.exp(0.1685 * distance));
+        return (8.68 * Math.exp(0.1685 * distance));
     }
 
     /**
@@ -61,7 +60,7 @@ public class Shoot extends CommandBase {
      */
     private double calculateVelocity() {
         double velocity = Math.sqrt((-g*Math.pow(TARGET_DISTANCE, 2))/2*Math.pow(Math.cos(Math.toRadians(ANGLE)),2)*(TARGET_HEIGHT-SHOOTER_HEIGHT-TARGET_DISTANCE*Math.tan(Math.toRadians(ANGLE))));
-        return convertMPSToRPM(velocity * VELOCITY_DIFFERENCE);
+        return convertMPSToRPS(velocity * VELOCITY_DIFFERENCE);
     }
 
     /**
@@ -69,8 +68,8 @@ public class Shoot extends CommandBase {
      * @param mps
      * @return the conversion between mps and rpm
      */
-    private double convertMPSToRPM(double mps) {
-        return mps / (2*Math.PI*RADIUS*60);
+    private double convertMPSToRPS(double mps) {
+        return mps / (2*Math.PI*RADIUS);
     }
     // Make this return true when this Command no longer needs to run execute()
     @Override
@@ -82,7 +81,7 @@ public class Shoot extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         timer.stop();
-        shooter.setSpeedRPM(0);
+        shooter.setSpeedRPS(0);
     }
 
     // Called when another command which requires one or more of the same
