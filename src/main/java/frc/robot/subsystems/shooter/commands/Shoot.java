@@ -69,14 +69,14 @@ public class Shoot extends CommandBase {
      *
      * @return return the velocity that is needed to reach the target
      */
-    public double calculateVelocity(double targetDistance, double ANGLE, double TARGET_HEIGHT, double SHOOTER_HEIGHT, double WHEEL_BALL_VELOCITY_RATIO) {
-        double velocity =
-                Math.sqrt(
-                        (-g * targetDistance * targetDistance) /
-                                (2 * Math.pow(Math.cos(Math.toRadians(ANGLE)), 2) * (TARGET_HEIGHT - SHOOTER_HEIGHT - targetDistance * Math.tan(Math.toRadians(ANGLE))))
-                );
-        return convertMPSToRPS(velocity * WHEEL_BALL_VELOCITY_RATIO); //velocity is the balls velocity, but we need to return the wheel velocity.
-    }
+//    public double calculateVelocity(double targetDistance, double ANGLE, double TARGET_HEIGHT, double SHOOTER_HEIGHT, double WHEEL_BALL_VELOCITY_RATIO) {
+//        double velocity =
+//                Math.sqrt(
+//                        (- g * targetDistance * targetDistance) /
+//                                (2 * Math.pow(Math.cos(Math.toRadians(ANGLE)), 2) * (TARGET_HEIGHT - SHOOTER_HEIGHT - targetDistance * Math.tan(Math.toRadians(ANGLE))))
+//                );
+//        return convertMPSToRPS(velocity * WHEEL_BALL_VELOCITY_RATIO); //velocity is the balls velocity, but we need to return the wheel velocity.
+//    }
 
     /**
      * @param mps

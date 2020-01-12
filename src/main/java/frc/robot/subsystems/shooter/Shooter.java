@@ -13,7 +13,6 @@ import static frc.robot.Ports.Shooter.*;
 public class Shooter extends SubsystemBase {
     private TalonSRX shooterMaster = new TalonSRX(MASTER);
     private VictorSPX shooterSlave = new VictorSPX(SLAVE);
-    private VictorSPX inputMotor = new VictorSPX(INPUT_MOTOR);
     private UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);
 
     public Shooter() {

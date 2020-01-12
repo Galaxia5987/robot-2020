@@ -33,7 +33,7 @@ public class Constants {
         public static final double SHOOTER_HEIGHT = 0.4; // [m]
         public static final double TARGET_HEIGHT = 2.5; // [m]
         public static final double ANGLE = 80; // [deg]
-        public static final double WHEEL_BALL_VELOCITY_RATIO = 0.40; //The difference between the wheel velocity and the ball velocity
+        public static final double WHEEL_BALL_VELOCITY_RATIO = 1/0.40; //The ratio between the wheel velocity and the ball velocity
         public static final double SHOOTING_TIME = 3.5;
         public static final double TARGET_RPM = 500;
         public static final double PERCENT_THRESHOLD = 10;
