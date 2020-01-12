@@ -66,9 +66,10 @@ public class Shoot extends CommandBase {
      * h(t) = hs + (v0 * sin(a) * t) - g/2 * t*t
      * The final function is:
      * v0^2 = (-g * dx^2) / [2 * Cos(a)^2 * (ht - hs - dx * tan a)]
+     *
      * @return return the velocity that is needed to reach the target
      */
-    private double calculateVelocity(double targetDistance) {
+    public double calculateVelocity(double targetDistance, double ANGLE, double TARGET_HEIGHT, double SHOOTER_HEIGHT, double WHEEL_BALL_VELOCITY_RATIO) {
         double velocity =
                 Math.sqrt(
                         (-g * targetDistance * targetDistance) /
