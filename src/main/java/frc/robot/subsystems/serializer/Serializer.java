@@ -60,33 +60,34 @@ public class Serializer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (isEntryProximityPressed() && isBallsMovingUp() && !ballInEntryPosition) {
+        if (isBallSensedInEntry() && isBallsMovingUp() && !ballInEntryPosition) {
             incrementBallsCount(1);
             startLocation = getEncoderPosition();
         }
 
-        if (isExitProximityReleased() && isBallsMovingUp() && !ballInExitPosition) {
+        if (isBallLostInExit() && isBallsMovingUp() && !ballInExitPosition) {
             decrementBallsCount(1);
             endLocation = getEncoderPosition();
         }
 
-        if (isEntryProximityReleased() && !isBallsMovingUp() && ballInEntryPosition) {
+        if (isBallLostInEntry() && !isBallsMovingUp() && ballInEntryPosition) {
             decrementBallsCount(1);
             startLocation = getEncoderPosition();
         }
 
-        ballInExitPosition = !isExitProximityReleased();
-        ballInEntryPosition = !isEntryProximityReleased();
+        ballInExitPosition = !isBallLostInExit();
+        ballInEntryPosition = !isBallLostInEntry();
     }
 
     /**
      * set the velocity for the {@link #entryMotor}.
      *
-     * @param meterPerSecond the speed to apply on {@link #entryMotor}.
+     * @param velocity the speed to apply on {@link #entryMotor}.
+     *                 be noted you should enter a value between -1 to 1.
      */
-    public void setEntryVelocity(double meterPerSecond) {
-        direction = (meterPerSecond >= 0) ? Direction.UP : Direction.DOWN;
-        entryMotor.set(ControlMode.Velocity, model.toUnits(meterPerSecond) / 10);
+    public void setEntryVelocity(double velocity) {
+        direction = (velocity >= 0) ? Direction.UP : Direction.DOWN;
+        entryMotor.set(ControlMode.PercentOutput, velocity);
     }
 
     /**
@@ -101,64 +102,69 @@ public class Serializer extends SubsystemBase {
     /**
      * set the relative location for the {@link #exitMotor}.
      *
-     * @param location the relative location you want the {@link #exitMotor} to move.
+     * @param location the relative location you want the conveyor to move.
      */
-    public void setExitVelocity(double location) {
+    public void setLocationToExitMotor(double location) {
         direction = (location >= 0) ? Direction.UP : Direction.DOWN;
         exitMotor.set(ControlMode.MotionMagic, location);
     }
 
     /**
-     * retrieve whether the {@link #entryProximity} is pressed by a ball.
+     * retrieve whether the {@link #entryProximity} sense a Power Cell.
+     * If you wish to check whether the proximity lost the Power Cell, use {@link #isBallLostInEntry()} instead.
      *
-     * @return whether the {@link #entryProximity} is pressed.
+     * @return whether the {@link #entryProximity} sense a Power Cell.
      */
-    public boolean isEntryProximityPressed() {
+    public boolean isBallSensedInEntry() {
         return entryProximity.getVoltage() > ENTRY_PROXIMITY_MAX_VOLTAGE;
     }
 
     /**
-     * retrieve whether the {@link #entryProximity} is released by a ball.
+     * retrieve whether the {@link #entryProximity} lost the Power Cell.
+     * If you wish to check whether the proximity sensed a Power Cell, use {@link #isBallSensedInIntegration()} instead.
      *
-     * @return whether the {@link #entryProximity} is released.
+     * @return whether the {@link #entryProximity} lost the Power Cell.
      */
-    public boolean isEntryProximityReleased() {
+    public boolean isBallLostInEntry() {
         return entryProximity.getVoltage() < ENTRY_PROXIMITY_MIN_VOLTAGE;
     }
 
     /**
-     * retrieve whether the {@link #integrationProximity} is pressed by a ball.
+     * retrieve whether the {@link #integrationProximity} sense a Power Cell.
+     * If you wish to check whether the proximity lost the Power Cell, use {@link #isBallLostInIntegration()} instead.
      *
-     * @return whether the {@link #integrationProximity} is pressed.
+     * @return whether the {@link #integrationProximity} sense a Power Cell.
      */
-    public boolean isIntegrationProximityPressed() {
+    public boolean isBallSensedInIntegration() {
         return integrationProximity.getVoltage() > INTEGRATION_PROXIMITY_MAX_VOLTAGE;
     }
 
     /**
-     * retrieve whether the {@link #integrationProximity} is released by a ball.
+     * retrieve whether the {@link #integrationProximity} lost the Power Cell.
+     * If you wish to check whether the proximity sensed a Power Cell, use {@link #isBallSensedInExit()} instead.
      *
-     * @return whether the {@link #integrationProximity} is released.
+     * @return whether the {@link #integrationProximity} lost the Power Cell.
      */
-    public boolean isIntegrationProximityReleased() {
+    public boolean isBallLostInIntegration() {
         return integrationProximity.getVoltage() < INTEGRATION_PROXIMITY_MIN_VOLTAGE;
     }
 
     /**
-     * retrieve whether the {@link #exitProximity} is pressed by a ball.
+     * retrieve whether the {@link #exitProximity} sense a Power Cell.
+     * If you wish to check whether the proximity lost the Power Cell, use {@link #isBallLostInExit()} instead.
      *
-     * @return whether the {@link #exitProximity} is pressed.
+     * @return whether the {@link #exitProximity} sense a Power Cell.
      */
-    public boolean isExitProximityPressed() {
+    public boolean isBallSensedInExit() {
         return exitProximity.getVoltage() > EXIT_PROXIMITY_MAX_VOLTAGE;
     }
 
     /**
-     * retrieve whether the {@link #exitProximity} is released by a ball.
+     * retrieve whether the {@link #exitProximity} lost the Power Cell.
      *
-     * @return whether the {@link #exitProximity} is released.
+     * @return whether the {@link #exitProximity} lost the Power Cell.
      */
-    public boolean isExitProximityReleased() {
+    public boolean isBallLostInExit() {
         return exitProximity.getVoltage() < EXIT_PROXIMITY_MIN_VOLTAGE;
     }
 
@@ -170,7 +176,7 @@ public class Serializer extends SubsystemBase {
      * @param metersPerSecond the metersPerSecond you want the motor to move.
      */
     public void moveConveyor(double location, double metersPerSecond) {
-        setExitVelocity(getEncoderPosition() + location);
+        setLocationToExitMotor(getEncoderPosition() + location);
         setEntryVelocity(metersPerSecond);
     }
 
@@ -193,36 +199,36 @@ public class Serializer extends SubsystemBase {
     }
 
     /**
-     * move the the first ball to the {@link #exitProximity}.
-     * note that the other balls still move until the first ball will reach to the {@link #exitProximity}.
+     * move the first Power Cell to the higher end of the conveyor.
+     * note that the other Power Cells still move until the first Power Cell will reach to the {@link #exitProximity}.
      */
     public void maximizeConveyor() {
         moveConveyor(endLocation); //TODO choose real number
     }
 
     /**
-     * move the the last ball to the {@link #entryProximity}.
-     * note that the other balls still move until the last ball will reach to the {@link #entryProximity}.
+     * move the the last Power Cell to the lower end of the conveyor.
+     * note that the other Power Cells still move until the last Power Cell will reach to the {@link #entryProximity}.
      */
     public void minimizeConveyor() {
         moveConveyor(startLocation, -0.1); //TODO choose real number
     }
 
     /**
-     * retrieve the balls count that the proximities noticed.
+     * retrieve the Power Cells count that the proximities noticed.
      *
-     * @return the balls count that the proximities noticed.
+     * @return the Power Cells count that the proximities noticed.
      */
     public int getBallsCount() {
         return ballsCount;
     }
 
     /**
-     * change the amount of balls in the conveyor.
+     * change the amount of Power Cells in the conveyor.
      * notice that this method will only change the variable {@link #ballsCount},
      * if you wish to move the conveyor, use {@link #feed()} instead.
      *
-     * @param ballsCount the amount of ball.
+     * @param ballsCount the amount of Power Cell.
      */
     private void setBallsCount(int ballsCount) {
         this.ballsCount = Math.max(0, Math.min(ballsCount, MAX_BALLS_COUNT));
@@ -231,24 +237,25 @@ public class Serializer extends SubsystemBase {
     /**
      * increment the amount of {@link #ballsCount}.
      *
-     * @param by the number of balls you want to increment.
+     * @param amount the number of Power Cells you want to increment.
      */
-    private void incrementBallsCount(int by) {
-        setBallsCount(ballsCount + by);
+    private void incrementBallsCount(int amount) {
+        setBallsCount(ballsCount + amount);
     }
 
     /**
      * decrement the amount of {@link #ballsCount}.
      *
-     * @param by the number of balls you want to decrement.
+     * @param amount the number of Power Cells you want to decrement.
      */
-    private void decrementBallsCount(int by) {
-        setBallsCount(ballsCount - by);
+    private void decrementBallsCount(int amount) {
+        setBallsCount(ballsCount - amount);
     }
 
     //TODO choose reasonable value
+
     /**
-     * feed the conveyor in one ball per run.
+     * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
         exitMotor.set(ControlMode.PercentOutput, EXIT_MOTOR_FEED_VELOCITY);
