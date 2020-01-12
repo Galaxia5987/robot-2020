@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 
 import static frc.robot.Constants.Serializer.*;
@@ -36,18 +37,17 @@ public class Serializer extends SubsystemBase {
         exitMotor.configFactoryDefault();
         entryMotor.configFactoryDefault();
 
-        exitMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
-        exitMotor.setSensorPhase(EXIT_PHASED);
-        entryMotor.setSensorPhase(ENTRY_PHASED);
+        exitMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, Constants.TALON_TIMEOUT_MS);
+        exitMotor.setSensorPhase(EXIT_SENSOR_PHASED);
         exitMotor.setInverted(EXIT_INVERTED);
         entryMotor.setInverted(ENTRY_INVERTED);
 
-        exitMotor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);
-        exitMotor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT_MS);
-        exitMotor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT_MS);
+        exitMotor.config_kP(TALON_PID_SLOT, KP, Constants.TALON_TIMEOUT_MS);
+        exitMotor.config_kI(TALON_PID_SLOT, KI, Constants.TALON_TIMEOUT_MS);
+        exitMotor.config_kD(TALON_PID_SLOT, KD, Constants.TALON_TIMEOUT_MS);
 
         exitMotor.configMotionCruiseVelocity(CRUISE_VELOCITY);
-        exitMotor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT_MS);
+        exitMotor.configMotionAcceleration(CRUISE_ACCELERATION, Constants.TALON_TIMEOUT_MS);
         exitMotor.configPeakCurrentLimit(MAX_CURRENT);
         exitMotor.configClosedloopRamp(RAMP_RATE);
 

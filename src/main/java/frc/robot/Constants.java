@@ -13,37 +13,7 @@ import java.util.Optional;
 public class Constants {
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
-
-    //TODO: Change values for all of the constants
-    public static class Serializer {
-        public static final boolean EXIT_PHASED = false;
-        public static final boolean ENTRY_PHASED = false;
-        public static final boolean EXIT_INVERTED = false;
-        public static final boolean ENTRY_INVERTED = false;
-        public static final double KP = 0.0;
-        public static final double KI = 0.0;
-        public static final double KD = 0.0;
-        public static final int TALON_TIMEOUT_MS = 10;
-        public static final int TALON_PID_SLOT = 0;
-        public static final int CRUISE_VELOCITY = 2;
-        public static final int CRUISE_ACCELERATION = 2;
-        public static final int MAX_CURRENT = 1000;
-        public static final double RAMP_RATE = 0.7;
-
-        public static final double ENTRY_PROXIMITY_MAX_VOLTAGE = 1; //The voltage the entry proximity will return, when it sees a ball.
-        public static final double ENTRY_PROXIMITY_MIN_VOLTAGE = 0;
-        public static final double INTEGRATION_PROXIMITY_MAX_VOLTAGE = 1; //The voltage the entry proximity will return, when it sees a ball.
-        public static final double INTEGRATION_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
-        public static final double EXIT_PROXIMITY_MAX_VOLTAGE = 1; //The voltage the entry proximity will return, when it sees a ball.
-        public static final double EXIT_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the entry proximity will return, when it sees a ball.
-
-        public static final int TICK_PER_METERS = 0;
-        public static final double THRESH_HOLD = 0.5;
-        public static final double BALL_FEED_TIME = 0.5;
-        public static final double BALL_DROP_TIME = 0.5;
-        public static final int MAX_BALLS_COUNT = 5;
-
-    }
+    public static final int TALON_TIMEOUT_MS = 10;
 
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
@@ -82,6 +52,34 @@ public class Constants {
                 }
             }
         }
+    }
+
+    //TODO: Change values for all of the constants
+    public static class Serializer {
+        public static final boolean EXIT_SENSOR_PHASED = false;
+        public static final boolean EXIT_INVERTED = false;
+        public static final boolean ENTRY_INVERTED = false;
+        public static final double KP = 0.0;
+        public static final double KI = 0.0;
+        public static final double KD = 0.0;
+        public static final int TALON_PID_SLOT = 0;
+        public static final int CRUISE_VELOCITY = 0;
+        public static final int CRUISE_ACCELERATION = 0;
+        public static final int MAX_CURRENT = 0;
+        public static final double RAMP_RATE = 0;
+
+        public static final double ENTRY_PROXIMITY_MAX_VOLTAGE = 0; //The voltage the entry proximity will return, when it senses a Power Cell.
+        public static final double ENTRY_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the entry proximity will return, when it senses a Power Cell.
+        public static final double INTEGRATION_PROXIMITY_MAX_VOLTAGE = 0; //The voltage the integration proximity will return, when it senses a Power Cell.
+        public static final double INTEGRATION_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the integration proximity will return, when it senses a Power Cell.
+        public static final double EXIT_PROXIMITY_MAX_VOLTAGE = 0; //The voltage the exit proximity will return, when it senses a Power Cell.
+        public static final double EXIT_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the exit proximity will return, when it senses a Power Cell.
+
+        public static final int TICK_PER_METERS = 0;
+        public static final double BALL_FEED_TIME = 0.5;
+        public static final double BALL_DROP_TIME = 0.5;
+        public static final int MAX_BALLS_COUNT = 5;
+
     }
 }
 
