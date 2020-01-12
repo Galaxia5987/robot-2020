@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.UnitModel;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Robot.shooter;
@@ -15,6 +16,7 @@ public class Shoot extends CommandBase {
     private Timer timer = new Timer();
     public static NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
     private NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
+    private UnitModel unitModel = new UnitModel(TICKS_PER_SECOND);
 
     public Shoot(double distance, double timeout) {
         addRequirements(shooter);
@@ -40,6 +42,9 @@ public class Shoot extends CommandBase {
         setNetworkTable();
     }
 
+    /**
+     * sets the velocity in the network table
+     */
     private void setNetworkTable() {
         velocityEntry.setDouble(shooter.getSpeed());
     }
@@ -53,14 +58,21 @@ public class Shoot extends CommandBase {
     }
 
     /**
-     *
      * @return return the velocity that is needed to reach the target
      */
     private double calculateVelocity() {
         double velocity = Math.sqrt((-g*Math.pow(TARGET_DISTANCE, 2))/2*Math.pow(Math.cos(Math.toRadians(ANGLE)),2)*(TARGET_HEIGHT-SHOOTER_HEIGHT-TARGET_DISTANCE*Math.tan(Math.toRadians(ANGLE))));
-        return velocity * VELOCITY_DIFFERENCE;
+        return convertMPSToRPM(velocity * VELOCITY_DIFFERENCE);
     }
 
+    /**
+     *
+     * @param mps
+     * @return the conversion between mps and rpm
+     */
+    private double convertMPSToRPM(double mps) {
+        return unitModel.toUnits(mps)/60;
+    }
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {

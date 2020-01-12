@@ -27,6 +27,7 @@ public class Constants {
         public static final int MAX_CURRENT = 35; //[A]
         public static final double RADIUS = 0.05; // [m]
         public static final int TICKS_PER_ROTATION = 36;
+        public static final int TICKS_PER_SECOND = 1;
         public static final double g = 9.80665; // [m/sec^2]
         public static final double TARGET_DISTANCE = 2; // [m]
         public static final double SHOOTER_HEIGHT = 0.4; // [m]
