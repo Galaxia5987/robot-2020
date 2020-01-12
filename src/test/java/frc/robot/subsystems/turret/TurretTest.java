@@ -33,5 +33,9 @@ public class TurretTest {
         double minPos = -360;
         double maxPos = 360;
         Assert.assertEquals(turret.center(currentPos, minPos, maxPos), turret.convertDegreesToTicks(-160), 0.1);
+        Assert.assertEquals(turret.center(-20, minPos, maxPos), turret.convertDegreesToTicks(-20), 0.1);
+        Assert.assertEquals(turret.center(-180, minPos, maxPos), turret.convertDegreesToTicks(-180), 0.1);
+        Assert.assertEquals(turret.center(-200, minPos, maxPos), turret.convertDegreesToTicks(160), 0.1);
+        Assert.assertEquals(turret.center(50, minPos, maxPos), turret.convertDegreesToTicks(50), 0.1);
     }
 }
