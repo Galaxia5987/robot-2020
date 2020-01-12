@@ -58,7 +58,7 @@ public class Shoot extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return timeout > 0 && timer.get() >= timeout;
+        return timeout > 0 && timer.get() >= timeout; //TODO: Check if timeout == 0 works instead, depending on how whileHeld works.
     }
 
     // Called once after isFinished returns true
