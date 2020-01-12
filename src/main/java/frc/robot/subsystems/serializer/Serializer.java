@@ -251,8 +251,8 @@ public class Serializer extends SubsystemBase {
      * feed the conveyor in one ball per run.
      */
     public void feed() {
-        exitMotor.set(ControlMode.PercentOutput, 60);
-        entryMotor.set(ControlMode.PercentOutput, 70);
+        exitMotor.set(ControlMode.PercentOutput, EXIT_MOTOR_FEED_VELOCITY);
+        entryMotor.set(ControlMode.PercentOutput, ENTRY_MOTOR_FEED_VELOCITY);
     }
 
     /**
