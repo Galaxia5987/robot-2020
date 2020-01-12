@@ -1,19 +1,17 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
+import frc.robot.Robot;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.Optional;
+
+
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+ * A class holding all of the constants of every mechanism on the robot.
+ * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
+ * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
 public final class Constants {
 
@@ -34,6 +32,18 @@ public final class Constants {
         public static final double MAXIMUM_POSITION = 360;
         public static final double MINIMUM_POSITION = -360;
 
+    }
+
+}
+
+//Anything in this class will replace the original constants when boolean is true
+class BConstants {
+    //General constants to be replaced
+    //public static final double TIME_STEP = CONST(0.4);
+
+    public static class ExampleSubsystem1 {
+        //public static final double TICKS_PER_METER = CONST(512 / (4*0.0254*Math.PI));
+        //public static final double MAX_VELOCITY = CONST(10);
     }
 
 }
