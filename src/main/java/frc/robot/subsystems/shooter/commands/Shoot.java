@@ -16,7 +16,6 @@ public class Shoot extends CommandBase {
     private Timer timer = new Timer();
     public static NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
     private NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
-    private UnitModel unitModel = new UnitModel(TICKS_PER_SECOND);
 
     public Shoot(double distance, double timeout) {
         addRequirements(shooter);
@@ -71,7 +70,7 @@ public class Shoot extends CommandBase {
      * @return the conversion between mps and rpm
      */
     private double convertMPSToRPM(double mps) {
-        return unitModel.toUnits(mps)/60;
+        return mps / (2*Math.PI*RADIUS*60);
     }
     // Make this return true when this Command no longer needs to run execute()
     @Override

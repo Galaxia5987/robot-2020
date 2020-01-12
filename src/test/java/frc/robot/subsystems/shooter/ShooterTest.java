@@ -15,21 +15,19 @@ public class ShooterTest {
 
 
     @Test
-    public void ticksToRPMTest() {
+    public void ticksToRPM() {
         int ticks = 4320;
         double desired_RPM = 72000;
-        double gearRatio = 1;
-        double RPM_res = shooter.ticksToRPMTest(4320, gearRatio);
+        double RPM_res = shooter.ticksToRPM(4320);
 
         Assert.assertEquals (desired_RPM, RPM_res,1e-10);
     }
 
     @Test
-    public void RPMToTicksTest() {
+    public void RPMToTicks() {
         int rpm = 72000;
         double desired_ticks = 4320;
-        double gearRatio = 1;
-        double ticks_res = shooter.RPMToTicksTest(rpm, gearRatio);
+        double ticks_res = shooter.RPMToTicks(rpm);
 
         Assert.assertEquals(desired_ticks, ticks_res, 1e-10);
     }
