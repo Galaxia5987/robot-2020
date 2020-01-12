@@ -10,10 +10,10 @@ import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Robot.shooter;
 
 public class Shoot extends CommandBase {
+    public static NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
     private double distance;
     private double timeout;
     private Timer timer = new Timer();
-    public static NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
     private NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
 
     public Shoot(double distance, double timeout) {
@@ -56,6 +56,16 @@ public class Shoot extends CommandBase {
     }
 
     /**
+     * This method uses physical formulas of ballistic motion
+     * to calculate the velocity needed for the shooter to spin
+     * so that the ball will land at the target.
+     * The initial velocity [v0] is raised at an angle of [a] from the ground. The ball starts flying at height [hs]
+     * and needs to reach [ht], which is [dx] meters away.
+     * The calculation uses several formulas:
+     * V0 * Cos(a) * t = dx
+     * h(t) = hs + (v0 * sin(a) * t) - g/2 * t*t
+     * The final function is:
+     * v0^2 = (-g * dx^2) / [2 * Cos(a)^2 * (ht - hs - dx * tan a)]
      * @return return the velocity that is needed to reach the target
      */
     private double calculateVelocity(double targetDistance) {
@@ -68,13 +78,13 @@ public class Shoot extends CommandBase {
     }
 
     /**
-     *
      * @param mps
      * @return the conversion between mps and rpm
      */
     private double convertMPSToRPS(double mps) {
-        return mps / (2*Math.PI*RADIUS);
+        return mps / (2 * Math.PI * RADIUS);
     }
+
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
