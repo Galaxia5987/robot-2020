@@ -1,34 +1,19 @@
 package frc.robot.subsystems.shooter;
 
+import frc.robot.Robot;
+import frc.robot.subsystems.UnitModel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import static frc.robot.Constants.Shooter.TICKS_PER_ROTATION;
 
 
 public class ShooterTest {
-    private Shooter shooter;
+    private UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);
 
     @Before
     public void createShooterInstance() {
-        shooter = new Shooter();
+        Robot.shooter = new Shooter();
     }
-
-
-    @Test
-    public void ticksToRPM() {
-        int ticks = 4320;
-        double desired_RPM = 72000;
-        double RPM_res = shooter.ticksToRPM(4320);
-
-        Assert.assertEquals (desired_RPM, RPM_res,1e-10);
-    }
-
-    @Test
-    public void RPMToTicks() {
-        int rpm = 72000;
-        double desired_ticks = 4320;
-        double ticks_res = shooter.RPMToTicks(rpm);
-
-        Assert.assertEquals(desired_ticks, ticks_res, 1e-10);
-    }
+    
 }
