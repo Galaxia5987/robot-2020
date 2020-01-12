@@ -89,7 +89,7 @@ public class Turret extends SubsystemBase {
      * @param targetAngle the desired angle.
      * @return return the target angle in ticks.
      */
-    public double setTurretAngle(double targetAngle) {
+    public double getNearestTurretPosition(double targetAngle) throws Exception {
         targetAngle %= 360;
         targetAngle += 360;
         targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
