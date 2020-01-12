@@ -58,7 +58,7 @@ public class Shooter extends SubsystemBase {
      * @return the conversion between ticks to rpm.
      */
     public double ticksToRPM(double ticks) {
-        return unitModel.toUnits(ticks) * 10.0 * 60.0; // TODO: fix conversions and add gear ratio
+        return unitModel.toUnits(ticks) * 10.0 * 60.0 * GEAR_RATIO;
     }
 
     /**
@@ -66,6 +66,6 @@ public class Shooter extends SubsystemBase {
      * @return the conversion between rpm to ticks.
      */
     public double RPMToTicks(double rpm) {
-        return unitModel.toTicks(rpm) / 10.0 / 60.0;
+        return unitModel.toTicks(rpm) / 10.0 / 60.0 / GEAR_RATIO;
     }
 }

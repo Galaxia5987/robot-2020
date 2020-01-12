@@ -35,6 +35,7 @@ public class Constants {
         public static final double TARGET_RPM = 500;
         public static final double PERCENT_THRESHOLD = 10;
         public static final double RAMP_RATE = 2;
+        public static final int GEAR_RATIO = 1;
     }
 
     static { // Runs alongside main
