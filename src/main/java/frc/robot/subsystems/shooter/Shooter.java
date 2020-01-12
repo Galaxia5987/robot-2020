@@ -35,7 +35,6 @@ public class Shooter extends SubsystemBase {
         shooterSlave.enableVoltageCompensation(true);
         shooterMaster.configPeakCurrentLimit(MAX_CURRENT);
         shooterMaster.setSelectedSensorPosition(0);
-        // TODO: Configure peak and nominal outputs, if needed
     }
 
     /**
@@ -62,10 +61,24 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
+     * this method was made to test the conversion from ticks to rpm
+     */
+    public double ticksToRPMTest(double ticks, double gearRatio) {
+        return unitModel.toUnits(ticks) * 10.0 * 60.0 * gearRatio;
+    }
+
+    /**
      * @param rpm the rotations per minute of the shooter.
      * @return the conversion between rpm to ticks.
      */
     public double RPMToTicks(double rpm) {
         return unitModel.toTicks(rpm) / 10.0 / 60.0 / GEAR_RATIO;
+    }
+
+    /**
+     * this method was made to test the conversion from rpm to ticks
+     */
+    public double RPMToTicksTest(double rpm, double gearRatio) {
+        return unitModel.toTicks(rpm) / 10.0 / 60.0 / gearRatio;
     }
 }
