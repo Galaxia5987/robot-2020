@@ -105,6 +105,8 @@ public class Turret extends SubsystemBase {
                 targetPosition = _targetPos;
             }
         }
+        if(targetPosition == Double.NaN)
+            throw new Exception("Can't reach specified angle {}");
         return convertDegreesToTicks(targetPosition);
     }
 
@@ -164,14 +166,20 @@ public class Turret extends SubsystemBase {
      * @param angle the desired angle
      */
     public void setPosition(double angle) {
-        master.set(ControlMode.MotionMagic, setTurretAngle(angle));
+        double targetTurretPosition = 0;
+        try {
+            targetTurretPosition = getNearestTurretPosition(angle);
+        } catch (Exception e) {
+            return;
+        }
+        master.set(ControlMode.MotionMagic, targetTurretPosition);
     }
 
     /**
-     * set the speed of the motor to 0.
+     * set the position to the target position to stop the turret at the target position.
      */
-    public void stop() {
-        master.set(ControlMode.PercentOutput, 0);
+    public void stop(double targetPosition) {
+        master.set(ControlMode.Position, targetPosition);
     }
 
     /**
