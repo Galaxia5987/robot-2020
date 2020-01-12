@@ -16,14 +16,19 @@ public class ShooterTest {
 
     @Test
     public void ticksToRPM() {
-        int ticks = 12;
-        double desired_RPM = 1.2;
-        double RPM_res = shooter.ticksToRPM(12);
+        int ticks = 4320;
+        double desired_RPM = 12;
+        double RPM_res = shooter.ticksToRPM(4320);
 
-//        Assert.assertEquals (desired_RPM, RPM_res,1e-10);
+        Assert.assertEquals (desired_RPM, RPM_res,1e-10);
     }
 
     @Test
     public void RPMToTicks() {
+        int rpm = 12;
+        double desired_ticks = 4320;
+        double ticks_res = shooter.RPMToTicks(12);
+
+        Assert.assertEquals(desired_ticks, ticks_res, 1e-10);
     }
 }
