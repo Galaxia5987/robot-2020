@@ -136,10 +136,10 @@ public class Turret extends SubsystemBase {
      */
     public double center() {
         double currentPosition = getEncoderPosition();
-        double avg = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
-        if (currentPosition > (180 + avg)) {
+        double middle = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
+        if (currentPosition > (180 + middle)) {
             currentPosition -= 360;
-        } else if (currentPosition < (-180 + avg)) {
+        } else if (currentPosition < (-180 + middle)) {
             currentPosition += 360;
         }
         return convertDegreesToTicks(currentPosition);
@@ -149,10 +149,10 @@ public class Turret extends SubsystemBase {
      * this method tests center() without relying on encoders and other robot outputs.
      */
     public double getCorrectCenterPosition(double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
-        double avg = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
-        if (currentPosition > (180 + avg)) {
+        double middle = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
+        if (currentPosition > (180 + middle)) {
             currentPosition -= 360;
-        } else if (currentPosition < (-180 + avg)) {
+        } else if (currentPosition < (-180 + middle)) {
             currentPosition += 360;
         }
         return convertDegreesToTicks(currentPosition);
