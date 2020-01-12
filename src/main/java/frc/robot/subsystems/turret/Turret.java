@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils;
+import frc.robot.subsystems.UnitModel;
 
 import static frc.robot.Constants.Turret.*;
 import static frc.robot.Ports.Turret.*;
@@ -26,6 +27,7 @@ import static frc.robot.Ports.Turret.*;
 public class Turret extends SubsystemBase {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
     private TalonSRX master = new TalonSRX(MASTER);
+    private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
     private NetworkTableEntry kPentry = table.getEntry("kP");
     private NetworkTableEntry kIentry = table.getEntry("kI");
     private NetworkTableEntry kDentry = table.getEntry("kD");
@@ -173,7 +175,7 @@ public class Turret extends SubsystemBase {
      * @return the degrees converted to ticks.
      */
     public int convertDegreesToTicks(double degrees) {
-        return (int) (degrees * TICKS_PER_DEGREE);
+        return unitModel.toTicks(degrees);
     }
 
     /**
@@ -183,7 +185,7 @@ public class Turret extends SubsystemBase {
      * @return the ticks converted to ticks
      */
     private double convertTicksToDegrees(int ticks) {
-        return ticks / TICKS_PER_DEGREE;
+        return unitModel.toUnits(ticks);
     }
 
     /**
