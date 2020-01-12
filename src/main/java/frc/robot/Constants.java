@@ -1,12 +1,9 @@
 package frc.robot;
 
-import frc.robot.Robot;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
-
 
 /**
  * A class holding all of the constants of every mechanism on the robot.
@@ -18,12 +15,6 @@ public final class Constants {
         public static final boolean MASTER_INVERTED = true;
 
     }
-    public static class ExampleSubsystem1 {
-        //All of the Subsystem specific constants go here,and need to be static.
-
-        //public static final double TICKS_PER_METER = CONST(256 / (4*0.0254*Math.PI));
-    }
-        //public static final double MAX_VELOCITY = CONST(5);
 
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
@@ -38,26 +29,27 @@ public final class Constants {
     }
 
     /**
-     * @param class1 Original constants class
      * Replaces fields between constants classes
-     * @param class2 Constants to replace with
+     *
+     * @param class1 Original constants class
+     * @param class1 Original constants class
      */
     public static void replaceFields(Class class1, Class class2) {
-        for (Field f : class2.getDeclaredFields()) {
         //Loop and replace all fields
+        for (Field f : class2.getDeclaredFields()) {
             for (Field f2 : class1.getDeclaredFields()) {
+                //Loop and replace all fields
                 if (f2.getName().equals(f.getName())) { // If the name is equal perform replacement
+
                     f2.setAccessible(true);
                     f.setAccessible(true);
                     try {
-                        //Override final modifier
-                        modifiersField.setAccessible(true);
                         Field modifiersField = Field.class.getDeclaredField("modifiers");
+                        modifiersField.setAccessible(true);
                         modifiersField.setInt(f2, f2.getModifiers() & ~Modifier.FINAL);
                     } catch (IllegalAccessException | NoSuchFieldException e) { // Catch relevant exceptions
                         e.printStackTrace();
                     }
-                        f2.set(null, f.get(null)); // Set value
                 }
             }
         }
