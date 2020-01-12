@@ -5,25 +5,25 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import static frc.robot.Constants.Shooter.*;
-import static frc.robot.Robot.shooter;
+import frc.robot.subsystems.shooter.Shooter;
 
 public class Shoot extends CommandBase {
     public static NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
     private double distance;
     private double timeout;
+    private Shooter shooter;
     private Timer timer = new Timer();
     private NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
 
-    public Shoot(double distance, double timeout) {
+    public Shoot(Shooter shooter,  double distance, double timeout) {
         addRequirements(shooter);
         this.distance = distance;
         this.timeout = timeout;
+        this.shooter = shooter;
     }
 
-    public Shoot(double distance) {
-        this(distance, 0);
+    public Shoot(Shooter shooter, double distance) {
+        this(shooter, distance, 0);
     }
 
     // Called just before this Command runs the first time

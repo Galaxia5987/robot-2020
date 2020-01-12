@@ -13,7 +13,7 @@ public class ShooterTest {
 
     @Before
     public void createShooterInstance() {
-        Robot.shooter = new Shooter();
+        //Robot.shooter = new Shooter();
     }
     
 }

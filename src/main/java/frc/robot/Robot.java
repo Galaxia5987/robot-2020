@@ -21,7 +21,6 @@ import frc.robot.subsystems.shooter.Shooter;
 public class Robot extends TimedRobot {
   public static boolean isRobotA = true;
     private Command m_autonomousCommand;
-  public static Shooter shooter = new Shooter();
   private RobotContainer m_robotContainer;
 
   /**
