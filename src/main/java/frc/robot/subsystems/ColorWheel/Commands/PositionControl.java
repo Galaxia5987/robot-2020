@@ -2,6 +2,7 @@ package frc.robot.subsystems.ColorWheel.Commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 
 import static frc.robot.RobotContainer.colorWheel;
 
@@ -11,11 +12,10 @@ public class PositionControl extends CommandBase {
     private String currentColor;
     private int currentIndex = 0;
     private double spinCounter = 0.125;
-    private String gameData;
     private String targetColor;
 
     public PositionControl(){
-        gameData = DriverStation.getInstance().getGameSpecificMessage();
+        String gameData = DriverStation.getInstance().getGameSpecificMessage();
         if (gameData.length() > 0){
             switch (gameData.charAt(0)){
                 case('Y'):
@@ -44,11 +44,11 @@ public class PositionControl extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return colorWheel.getColorString().equals(colors[colorWheel.indexOfColor(targetColor, targetColor)+2]);
+        return colorWheel.getColorString().equals(colors[colorWheel.indexOfColor(targetColor)+ Constants.ColorWheel.TILES_BEFORE_SENSOR]);
     }
 
     @Override
     public void end(boolean interrupted) {
         colorWheel.setMotorSpeed(0);
     }
-}
+    }
