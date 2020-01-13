@@ -1,18 +1,17 @@
 package frc.robot.subsystems.climb;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.climb.commands.RiseToHeightCommand;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static frc.robot.RobotContainer.climber;
+
 public class climbTest {
-    Climber climber;
     RiseToHeightCommand rise;
 
     @Before
     public void setClimber() throws Exception {
-        climber = new Climber();
         rise = new RiseToHeightCommand(climber, 2);
     }
 
