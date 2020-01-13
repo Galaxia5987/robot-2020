@@ -11,29 +11,37 @@ import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Ports.Shooter.*;
 
 public class Shooter extends SubsystemBase {
-    private TalonSRX shooterMaster = new TalonSRX(MASTER);
-    private VictorSPX shooterSlave = new VictorSPX(SLAVE);
-    private UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);
+    private final TalonSRX shooterMaster = new TalonSRX(MASTER);
+    private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);
 
     public Shooter() {
+        // Basic motor configurations
+        // Master configurations
         shooterMaster.configFactoryDefault();
         shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
-        shooterSlave.follow(shooterMaster);
+        shooterMaster.setInverted(IS_MASTER_INVERTED);
+        shooterMaster.setSensorPhase(MASTER_SENSOR_PHASED);
+        shooterMaster.setSelectedSensorPosition(0);
+
+        // Closed loop control
+        shooterMaster.configClosedloopRamp(RAMP_RATE);
         shooterMaster.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
         shooterMaster.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         shooterMaster.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
         shooterMaster.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
-        shooterMaster.setInverted(IS_MASTER_INVERTED);
-        shooterMaster.setSensorPhase(MASTER_SENSOR_PHASED);
-        shooterMaster.configClosedloopRamp(RAMP_RATE);
+
+        // Electrical (master)
         shooterMaster.configVoltageCompSaturation(12);
         shooterMaster.enableVoltageCompensation(true);
-        shooterSlave.setInverted(IS_SLAVE_INVERTED);
-        shooterSlave.setSensorPhase(SLAVE_SENSOR_PHASED);
+        shooterMaster.configPeakCurrentLimit(MAX_CURRENT);
+
+        // Slave configuration
+        VictorSPX shooterSlave = new VictorSPX(SLAVE);
+        shooterSlave.follow(shooterMaster);
+
+        // Electrical (slave)
         shooterSlave.configVoltageCompSaturation(12);
         shooterSlave.enableVoltageCompensation(true);
-        shooterMaster.configPeakCurrentLimit(MAX_CURRENT);
-        shooterMaster.setSelectedSensorPosition(0);
     }
 
     /**
