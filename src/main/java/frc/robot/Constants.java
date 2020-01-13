@@ -17,29 +17,6 @@ public class Constants {
     //public static final double TIME_STEP = CONST(0.02);
 
 
-    public static class Shooter {
-        public static final int TALON_PID_SLOT = 0;
-        public static final double KP = 0.085; // 0.13
-        public static final double KI = 0.0;
-        public static final double KD = 0.00;
-        public static final double KF = 0.003;
-        public static final int TALON_TIMEOUT = 10;
-        public static final int MAX_CURRENT = 35; //[A]
-        public static final double RADIUS = 0.05; // [m]
-        public static final int TICKS_PER_ROTATION = 36;
-        public static final int TICKS_PER_SECOND = 1;
-        public static final double g = 9.80665; // [m/sec^2]
-        public static final double TARGET_DISTANCE = 2; // [m]
-        public static final double SHOOTER_HEIGHT = 0.4; // [m]
-        public static final double TARGET_HEIGHT = 2.5; // [m]
-        public static final double ANGLE = 80; // [deg]
-        public static final double WHEEL_BALL_VELOCITY_RATIO = 1/0.40; //The ratio between the wheel velocity and the ball velocity
-        public static final double SHOOTING_TIME = 3.5;
-        public static final double TARGET_RPM = 500;
-        public static final double PERCENT_THRESHOLD = 10;
-        public static final double RAMP_RATE = 2;
-    }
-
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
             replaceFields(Constants.class, BConstants.class); // Replace outer constants
@@ -77,6 +54,19 @@ public class Constants {
                 }
             }
         }
+    }
+
+    public static class Shooter {
+        public static final int TALON_PID_SLOT = 0;
+        public static final double KP = 0.085; // 0.13
+        public static final double KI = 0.0;
+        public static final double KD = 0.00;
+        public static final double KF = 0.003;
+        public static final int TALON_TIMEOUT = 10;
+        public static final int MAX_CURRENT = 35; //[A]
+        public static final int TICKS_PER_ROTATION = 36;
+        public static final double SHOOTING_TIME = 3.5;
+        public static final double RAMP_RATE = 2;
     }
 }
 

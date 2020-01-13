@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
 
 public class Shoot extends CommandBase {
-    public static NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
-    private double distance;
-    private double timeout;
-    private Shooter shooter;
-    private Timer timer = new Timer();
-    private NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
+    public static final NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
+    private final double distance;
+    private final double timeout;
+    private final Shooter shooter;
+    private final Timer timer = new Timer();
+    private final NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
 
     public Shoot(Shooter shooter,  double distance, double timeout) {
         addRequirements(shooter);
@@ -68,8 +68,4 @@ public class Shoot extends CommandBase {
         shooter.setSpeedRPS(0);
     }
 
-    // Called when another command which requires one or more of the same
-// subsystems is scheduled to run
-    protected void interrupted() {
-    }
 }
