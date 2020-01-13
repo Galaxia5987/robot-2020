@@ -24,8 +24,6 @@ public class ColorWheel extends SubsystemBase {
   public final I2C.Port i2cPort = I2C.Port.kOnboard;
   public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-  private Color detectedColor;
-  private int Counter = 0;
   private String colorString = "";
   private final ColorMatch colorMatcher = new ColorMatch();
   private final Color BlueTarget = ColorMatch.makeColor(Constants.ColorWheel.BLUE_RGB[0], Constants.ColorWheel.BLUE_RGB[1], Constants.ColorWheel.BLUE_RGB[2]);
@@ -90,7 +88,7 @@ public class ColorWheel extends SubsystemBase {
 
   @Override
   public void periodic() {
-    detectedColor = colorSensor.getColor();
+    Color detectedColor = colorSensor.getColor();
     colorString = colorToString(detectedColor);
     SmartDashboard.putNumber("Encoder", Counter);
     SmartDashboard.putNumber("Red", detectedColor.red);

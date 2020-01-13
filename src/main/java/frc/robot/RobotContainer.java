@@ -52,6 +52,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
 //    return m_autoCommand;
-    return new RotationControl();
+    return new RotationControl(0.1);
   }
 }
