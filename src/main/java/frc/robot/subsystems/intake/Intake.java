@@ -54,11 +54,11 @@ public class Intake extends SubsystemBase {
     }
 
     /**
-     * apply power on the wheel to spin them based on the speed you insert.
+     * apply power on the wheel to spin them based on the power you insert.
      *
-     * @param speed the speed to apply on the intake's wheels (in percents)
+     * @param power the power to apply on the intake's wheels (in percents)
      */
-    public void powerWheels(double speed) {
-        intakeMotor.set(ControlMode.PercentOutput, speed);
+    public void powerWheels(double power) {
+        intakeMotor.set(ControlMode.PercentOutput, power);
     }
 }
