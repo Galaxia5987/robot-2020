@@ -26,7 +26,6 @@ public class ColorWheel extends SubsystemBase {
 
   private Color detectedColor;
   private int Counter = 0;
-  private String lastColorString = "";
   private String colorString = "";
   private final ColorMatch colorMatcher = new ColorMatch();
   private final Color BlueTarget = ColorMatch.makeColor(Constants.ColorWheel.BLUE_RGB[0], Constants.ColorWheel.BLUE_RGB[1], Constants.ColorWheel.BLUE_RGB[2]);
@@ -48,17 +47,11 @@ public class ColorWheel extends SubsystemBase {
 
   }
 
-  public void update_sensor_encoder(){
-    if (!lastColorString.equals(colorString))
-      Counter+=1;
-    lastColorString = colorString;
-  }
-
   public String getColorString(){
     return colorString;
   }
 
-  public int indexOfColor(String color, String lastColor) {
+  public int indexOfColor(String color) {
     switch (color) {
       case ("Yellow"):
         return 0;
