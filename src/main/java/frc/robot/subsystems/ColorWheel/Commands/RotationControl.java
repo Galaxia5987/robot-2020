@@ -1,17 +1,13 @@
 package frc.robot.subsystems.ColorWheel.Commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static frc.robot.RobotContainer.colorWheel;
 
 public class RotationControl extends CommandBase {
-    private String currentColor;
-    private int currentIndex = 0;
-    private double spinCounter = 0;
-    private double relativeCounter = 0;
-    private String relativeColor = "";
-    private String lastRelativeColor = "";
+    private String clockWiseCurrentColor = "Yellow";
+    private String counterClockWiseCurrentColor = "Yellow";
+    private double clockWiseSpins = 0;
     private double percentSpeed = 0;
 
 
@@ -21,45 +17,33 @@ public class RotationControl extends CommandBase {
 
     @Override
     public void initialize() {
-        currentColor = colorWheel.getColorString();
-        currentIndex = colorWheel.indexOfColor(currentColor);
+        clockWiseCurrentColor = colorWheel.getColorString();
+        counterClockWiseCurrentColor = colorWheel.getColorString();
         colorWheel.setMotorSpeed(percentSpeed);
-
     }
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("spins", spinCounter);
-        relativeColor = colorWheel.getColorString();
-        if (colorWheel.indexOfColor(lastRelativeColor) == colorWheel.indexOfColor(relativeColor)+1
-                || colorWheel.indexOfColor(lastRelativeColor) == colorWheel.indexOfColor(relativeColor)%3)
-            relativeCounter += 0.125;
-        else
-            relativeCounter = 0;
-        lastRelativeColor = relativeColor;
-        if (colorWheel.indexOfColor(colorWheel.getColorString()) == currentIndex + 1 ||
-                colorWheel.indexOfColor(colorWheel.getColorString()) == (currentIndex) % 3) {
-            currentColor = colorWheel.getColorString();
-            currentIndex += 1;
-            currentIndex %= 3;
-            spinCounter += 0.125;
+        String detectedColor = colorWheel.getColorString();
+        if (colorWheel.indexOfColor(detectedColor) == colorWheel.indexOfColor(clockWiseCurrentColor) +1
+                || colorWheel.indexOfColor(detectedColor) == colorWheel.indexOfColor(clockWiseCurrentColor) % 3){
+            clockWiseSpins += 0.125;
+            clockWiseCurrentColor = detectedColor;
         }
-        if (colorWheel.indexOfColor(colorWheel.getColorString()) == currentIndex - 1
-                || colorWheel.indexOfColor(colorWheel.getColorString()) == (currentIndex) % 3) {
-            currentColor = colorWheel.getColorString();
-            currentIndex -= 1;
-            currentIndex %= 3;
-            spinCounter -= 0.125;
+        if (colorWheel.indexOfColor(detectedColor) == colorWheel.indexOfColor(counterClockWiseCurrentColor) -1
+                || colorWheel.indexOfColor(detectedColor)%3 == colorWheel.indexOfColor(clockWiseCurrentColor)){
+            clockWiseSpins -= 0.125;
+            counterClockWiseCurrentColor = detectedColor;
         }
+
+
 
     }
 
     @Override
     public boolean isFinished() {
-        if (relativeCounter > 0.375)
-            return relativeCounter >= 3 || relativeCounter <= -3;
-        else
-            return spinCounter >= 3 || spinCounter <= -3;
+        double counterClockWiseSpins = 0;
+        return Math.max(clockWiseSpins, counterClockWiseSpins) >= 3;
     }
 
     @Override
