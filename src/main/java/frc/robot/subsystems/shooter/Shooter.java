@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase {
         shooterMaster.setSelectedSensorPosition(0);
 
         // Closed loop control
-        shooterMaster.configClosedloopRamp(RAMP_RATE);
+        shooterMaster.configClosedloopRamp(MAX_ACCELERATION);
         shooterMaster.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
         shooterMaster.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         shooterMaster.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);

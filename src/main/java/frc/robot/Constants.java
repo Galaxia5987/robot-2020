@@ -65,8 +65,8 @@ public class Constants {
         public static final double KF = 0.003;
         public static final int MAX_CURRENT = 35; //[A]
         public static final int TICKS_PER_ROTATION = 36;
-        public static final double SHOOTING_TIME = 3.5;
-        public static final double RAMP_RATE = 2;
+        public static final double SHOOTING_TIME = 3.5; // [s]
+        public static final double MAX_ACCELERATION = 2;
     }
 }
 
