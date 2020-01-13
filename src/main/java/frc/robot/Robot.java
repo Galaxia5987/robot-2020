@@ -20,7 +20,7 @@ import static frc.robot.RobotContainer.colorWheel;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static boolean isRobotA = true;
+  public static final boolean isRobotA = true;
     private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;

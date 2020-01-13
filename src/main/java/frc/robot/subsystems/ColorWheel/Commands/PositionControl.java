@@ -7,7 +7,7 @@ import static frc.robot.RobotContainer.colorWheel;
 
 public class PositionControl extends CommandBase {
 
-    private String[] colors = {"Yellow", "Red", "Green", "Blue"};
+    private final String[] colors = {"Yellow", "Red", "Green", "Blue"};
     private String currentColor;
     private int currentIndex = 0;
     private double spinCounter = 0.125;

@@ -21,8 +21,8 @@ import frc.robot.Ports;
 
 public class ColorWheel extends SubsystemBase {
 
-  public I2C.Port i2cPort = I2C.Port.kOnboard;
-  public ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+  public final I2C.Port i2cPort = I2C.Port.kOnboard;
+  public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
   private Color detectedColor;
   private int Counter = 0;

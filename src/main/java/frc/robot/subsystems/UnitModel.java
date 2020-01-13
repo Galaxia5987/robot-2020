@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 public class UnitModel {
-    int ticksPerUnit;
+    final int ticksPerUnit;
 
     public UnitModel(int ticksPerUnit) {
         this.ticksPerUnit = ticksPerUnit;

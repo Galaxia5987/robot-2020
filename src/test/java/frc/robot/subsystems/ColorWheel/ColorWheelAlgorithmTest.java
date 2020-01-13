@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class ColorWheelAlgorithmTest {
     private static Scanner kb = new Scanner(System.in);
     private String[] colors = {"Yellow", "Red", "Green", "Blue"};
-    private String[] input = {
+    private final String[] input = {
             "Yellow", "Red", "Green", "Blue",
             "Yellow", "Red", "Green", "Blue",
             "Yellow", "Red", "Green", "Blue",
@@ -31,7 +31,7 @@ public class ColorWheelAlgorithmTest {
     }
 
     @Test
-    public void calculateSpins() throws Exception {
+    public void calculateSpins() {
         String clockWisecurrentColor = "Yellow";
         String counterClockWiseCurrentColor = "Yellow";
         double clockWiseSpins = 0;
