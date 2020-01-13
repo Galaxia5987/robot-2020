@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Constants.Turret.*;
@@ -65,7 +66,10 @@ public class Turret extends SubsystemBase {
         master.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
         master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
+        this.setDefaultCommand(new JoystickTurret());
     }
+
+
 
     /**
      * runs periodically, updates the constants and resets encoder position if the hall effect is closed
