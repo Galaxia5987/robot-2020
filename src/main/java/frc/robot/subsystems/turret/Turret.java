@@ -66,6 +66,9 @@ public class Turret extends SubsystemBase {
         master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
     }
 
+    /**
+     * runs periodically, updates the constants and resets encoder position if the hall effect is closed
+     */
     @Override
     public void periodic() {
         updateConstants();
