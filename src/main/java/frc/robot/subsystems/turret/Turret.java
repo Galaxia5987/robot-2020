@@ -112,7 +112,7 @@ public class Turret extends SubsystemBase {
         }
         if(targetPosition == Double.NaN)
             throw new Exception("Can't reach specified angle {}");
-        return convertDegreesToTicks(targetPosition);
+        return unitModel.toTicks(targetPosition);
     }
 
 
@@ -126,7 +126,7 @@ public class Turret extends SubsystemBase {
         } else if (currentPosition < (-180 + middle)) {
             currentPosition += 360;
         }
-        return convertDegreesToTicks(currentPosition);
+        return unitModel.toTicks(currentPosition);
     }
 
     /**
@@ -167,29 +167,9 @@ public class Turret extends SubsystemBase {
             resetAngle = HALL_EFFECT_POSITION_1;
         else
             resetAngle = HALL_EFFECT_POSITION_2;
-        master.setSelectedSensorPosition(convertDegreesToTicks(resetAngle), 0, TALON_TIMEOUT);
+        master.setSelectedSensorPosition(unitModel.toTicks(resetAngle), 0, TALON_TIMEOUT);
     }
 
-
-    /**
-     * convert the angle to ticks so the controller will apply the right amount of power on the turret.
-     *
-     * @param degrees the degrees to convert.
-     * @return the degrees converted to ticks.
-     */
-    public int convertDegreesToTicks(double degrees) {
-        return unitModel.toTicks(degrees);
-    }
-
-    /**
-     * convert the ticks from the controller to angle so human can understand.
-     *
-     * @param ticks the ticks to convert.
-     * @return the ticks converted to ticks
-     */
-    private double convertTicksToDegrees(int ticks) {
-        return unitModel.toUnits(ticks);
-    }
 
     /**
      * resets the encoder position to 0
