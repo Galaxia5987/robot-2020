@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
 
 import static frc.robot.Constants.Shooter.*;
+import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Shooter.*;
 
 public class Shooter extends SubsystemBase {

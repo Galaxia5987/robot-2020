@@ -16,6 +16,7 @@ public class Constants {
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
 
+    public static final int TALON_TIMEOUT = 10;
 
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
@@ -62,7 +63,6 @@ public class Constants {
         public static final double KI = 0.0;
         public static final double KD = 0.00;
         public static final double KF = 0.003;
-        public static final int TALON_TIMEOUT = 10;
         public static final int MAX_CURRENT = 35; //[A]
         public static final int TICKS_PER_ROTATION = 36;
         public static final double SHOOTING_TIME = 3.5;
