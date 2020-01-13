@@ -1,13 +1,5 @@
 package frc.robot;
 
-import frc.robot.Robot;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.Optional;
-
-
 /**
  * A class holding all of the constants of every mechanism on the robot.
  * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
@@ -20,10 +12,6 @@ public final class Constants {
         public static final int TALON_PID_SLOT = 0;
         public static final int MAX_CURRENT = 35; // [A]
         public static final int TICKS_PER_DEGREE = 1;
-        public static double KP = 0;
-        public static double KI = 0;
-        public static double KD = 0;
-        public static double KF = 0;
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 0;
         public static final int MOTION_MAGIC_ACCELERATION = 0;
         public static final double HALL_EFFECT_POSITION_1 = 0; // in degrees, the two different positions are if the turret has turned a full circle or not
@@ -31,6 +19,10 @@ public final class Constants {
         public static final double ANGLE_THRESHOLD = 1;
         public static final double MAXIMUM_POSITION = 360;
         public static final double MINIMUM_POSITION = -360;
+        public static double KP = 0;
+        public static double KI = 0;
+        public static double KD = 0;
+        public static double KF = 0;
 
     }
 
