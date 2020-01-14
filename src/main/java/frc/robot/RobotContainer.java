@@ -31,10 +31,10 @@ public class RobotContainer {
   public static Turret turret = new Turret();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private XboxController xbox = new XboxController(0);
-  private JoystickButton a = new JoystickButton(xbox, 1);
-  private JoystickButton b = new JoystickButton(xbox, 2);
-  public static int rightYStick = 3;
+  private XboxController xbox = new XboxController(2);
+  private JoystickButton a = new JoystickButton(xbox, 3);
+  private JoystickButton b = new JoystickButton(xbox, 4);
+  public static int rightYStick = 5;
   public static double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
 
 
