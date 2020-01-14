@@ -51,6 +51,11 @@ public class JoystickControlCommand extends CommandBase {
     }
 
 
+    /**
+     * This command is designed to work only while a button is held,
+     * so it would terminate itself if the button is released so there is no need for isFinished.
+     * @return false
+     */
     @Override
     public boolean isFinished() {
         return false;
