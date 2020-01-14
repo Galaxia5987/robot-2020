@@ -43,7 +43,11 @@ public class PositionControl extends CommandBase {
     }
     @Override
     public boolean isFinished() {
-        return colorWheel.getColorString().equals(colors[colorWheel.indexOfColor(targetColor)+ Constants.ColorWheel.TILES_BEFORE_SENSOR]);
+        try {
+            return targetColor.equals(colors[colorWheel.indexOfColor(colorWheel.getColorString())+ Constants.ColorWheel.TILES_BEFORE_SENSOR]);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
