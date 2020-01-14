@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import static frc.robot.Constants.Intake.INTAKE_MOTOR_INVERTED;
+import static frc.robot.Constants.Intake.*;
 import static frc.robot.Ports.Intake.*;
 
 /**
@@ -14,15 +14,18 @@ import static frc.robot.Ports.Intake.*;
  * @version 1.0.0
  * <p>
  * this class defining methods to the intake subsystem to apply in the commands.
- * {@using VictorSPX}
+ * {@using 2x VictorSPX}
  * {@using DoubleSolenoid}
  */
 public class Intake extends SubsystemBase {
-    private VictorSPX intakeMotor = new VictorSPX(INTAKE);
+    private VictorSPX masterMotor = new VictorSPX(MASTER);
+    private VictorSPX slaveMotor = new VictorSPX(SLAVE);
     private DoubleSolenoid redactor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
 
     public Intake() {
-        intakeMotor.setInverted(INTAKE_MOTOR_INVERTED);
+        masterMotor.setInverted(MASTER_INVERTED);
+        slaveMotor.setInverted(SLAVE_INVERTED);
+        slaveMotor.follow(masterMotor);
     }
 
     /**
@@ -59,6 +62,6 @@ public class Intake extends SubsystemBase {
      * @param power the power to apply on the intake's wheels (in percents)
      */
     public void powerWheels(double power) {
-        intakeMotor.set(ControlMode.PercentOutput, power);
+        masterMotor.set(ControlMode.PercentOutput, power);
     }
 }

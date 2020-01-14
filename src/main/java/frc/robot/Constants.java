@@ -12,7 +12,8 @@ import java.util.Optional;
  */
 public final class Constants {
     public static final class Intake {
-        public static final boolean INTAKE_MOTOR_INVERTED = true;
+        public static final boolean MASTER_INVERTED = true;
+        public static final boolean SLAVE_INVERTED = true;
 
     }
 
