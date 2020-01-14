@@ -13,7 +13,7 @@ public class OuttakeBall extends CommandBase {
 
     /**
      * this constructor is for a situation when you use an autonomous command.
-     * please be aware that you should insert positive {@param speed)'s number. {@value <0}
+     * please be aware that you should insert positive {@param speed)'s number.
      *
      * @param speed
      * @param timeout
