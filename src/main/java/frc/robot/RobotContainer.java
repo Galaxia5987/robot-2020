@@ -15,6 +15,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.CenterTurret;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 
 /**
@@ -35,13 +36,13 @@ public class RobotContainer {
   public static final int rightYStick = 5;
   public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
 
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    turret.setDefaultCommand(new JoystickTurret(turret));
   }
 
   /**

@@ -66,7 +66,6 @@ public class Turret extends SubsystemBase {
         master.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
         master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
-        this.setDefaultCommand(new JoystickTurret());
     }
 
 
