@@ -11,7 +11,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils;
 import frc.robot.subsystems.UnitModel;
-import frc.robot.subsystems.turret.commands.JoystickTurret;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Constants.Turret.*;
@@ -28,7 +27,7 @@ import static frc.robot.Ports.Turret.*;
  */
 public class Turret extends SubsystemBase {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
-    private TalonSRX master = new TalonSRX(MOTOR);
+    private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
     private NetworkTableEntry kPentry = table.getEntry("kP");
     private NetworkTableEntry kIentry = table.getEntry("kI");
@@ -39,19 +38,19 @@ public class Turret extends SubsystemBase {
      * configures the encoder and PID constants.
      */
     public Turret() {
-        master.configFactoryDefault();
-        master.setInverted(IS_MOTOR_INVERTED);
-        master.setSensorPhase(IS_ENCODER_INVERTED);
-        master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
-        master.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
-        master.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
-        master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
-        master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
-        master.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
-        master.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
-        master.configPeakCurrentLimit(MAX_CURRENT);
-        master.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-        master.setSelectedSensorPosition((int) HALL_EFFECT_POSITION_1, 0, TALON_TIMEOUT);
+        motor.configFactoryDefault();
+        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
+        motor.setInverted(IS_MOTOR_INVERTED);
+        motor.setSensorPhase(IS_ENCODER_INVERTED);
+        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
+        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
+        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
+        motor.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
+        motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
+        motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
+        motor.configPeakCurrentLimit(MAX_CURRENT);
+        motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+        motor.setSelectedSensorPosition((int) HALL_EFFECT_POSITION_1, 0, TALON_TIMEOUT);
     }
 
     /**
@@ -62,10 +61,10 @@ public class Turret extends SubsystemBase {
         Utils.setValue(kIentry, KP);
         Utils.setValue(kDentry, KP);
         Utils.setValue(kFentry, KP);
-        master.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
-        master.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
-        master.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
-        master.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
+        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
+        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
+        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
+        motor.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
     }
 
 
@@ -88,7 +87,7 @@ public class Turret extends SubsystemBase {
      * @return the angle of the turret
      */
     public double getEncoderPosition() {
-        return master.getSelectedSensorPosition();
+        return motor.getSelectedSensorPosition();
     }
 
     /**
@@ -138,14 +137,14 @@ public class Turret extends SubsystemBase {
      *
      * @param angle setpoint angle.
      */
-    public void setPosition(double angle) {
+    public void setAngle(double angle) {
         double targetTurretPosition = 0;
         try {
             targetTurretPosition = getNearestTurretPosition(angle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION);
         } catch (Exception e) {
             return;
         }
-        master.set(ControlMode.MotionMagic, targetTurretPosition);
+        motor.set(ControlMode.MotionMagic, targetTurretPosition);
     }
 
     /**
@@ -153,21 +152,21 @@ public class Turret extends SubsystemBase {
      * @param position the setpoint position indicated by the joystick.
      */
     public void setJoystickPosition(double position){
-        master.set(ControlMode.Position, unitModel.toTicks(position));
+        motor.set(ControlMode.Position, unitModel.toTicks(position));
     }
 
     /**
      * set the position to the current position to stop the turret at the target position.
      */
     public void stop() {
-        master.set(ControlMode.MotionMagic, getEncoderPosition());
+        motor.set(ControlMode.MotionMagic, getEncoderPosition());
     }
 
     /**
      * @return return if the state of the Hall Effect sensor is Closed.
      */
     public boolean isLimitSwitchClosed() {
-        return master.getSensorCollection().isRevLimitSwitchClosed();
+        return motor.getSensorCollection().isRevLimitSwitchClosed();
     }
 
     /**
@@ -179,7 +178,7 @@ public class Turret extends SubsystemBase {
             resetAngle = HALL_EFFECT_POSITION_1;
         else
             resetAngle = HALL_EFFECT_POSITION_2;
-        master.setSelectedSensorPosition(unitModel.toTicks(resetAngle), 0, TALON_TIMEOUT);
+        motor.setSelectedSensorPosition(unitModel.toTicks(resetAngle), 0, TALON_TIMEOUT);
     }
 
 
@@ -187,6 +186,6 @@ public class Turret extends SubsystemBase {
      * resets the encoder position to 0
      */
     public void reset() {
-        master.setSelectedSensorPosition(0);
+        motor.setSelectedSensorPosition(0);
     }
 }
