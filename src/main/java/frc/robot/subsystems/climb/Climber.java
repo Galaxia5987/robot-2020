@@ -110,6 +110,24 @@ public class Climber extends SubsystemBase {
         rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.ARBITRARY_FEEDFORWARD);
     }
 
+    /**
+     * Method to set the left motor percent output.
+     *
+     * @param speed of the left motor.
+     */
+    public void setLeftSpeed(double speed) {
+        leftMotor.set(ControlMode.PercentOutput, speed);
+    }
+
+    /**
+     * Method to set the right motor percent output.
+     *
+     * @param speed of the right motor.
+     */
+    public void setRightSpeed(double speed) {
+        rightMotor.set(ControlMode.PercentOutput, speed);
+    }
+
 
     /**
      * @return whether the left elevator reached its limit.
