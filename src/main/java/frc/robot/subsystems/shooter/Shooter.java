@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
         shooterMaster.configFactoryDefault();
         shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         shooterMaster.setInverted(IS_MASTER_INVERTED);
-        shooterMaster.setSensorPhase(MASTER_SENSOR_PHASED);
+        shooterMaster.setSensorPhase(IS_MASTER_ENCODER_INVERTED);
         shooterMaster.setSelectedSensorPosition(0);
 
         // Closed loop control
@@ -40,6 +40,8 @@ public class Shooter extends SubsystemBase {
         // Slave configuration
         VictorSPX shooterSlave = new VictorSPX(SLAVE);
         shooterSlave.follow(shooterMaster);
+        shooterMaster.setInverted(IS_SLAVE_INVERTED);
+        shooterMaster.setSensorPhase(IS_SLAVE_ENCODER_INVERTED);
 
         // Electrical (slave)
         shooterSlave.configVoltageCompSaturation(12);

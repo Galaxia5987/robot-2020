@@ -7,6 +7,8 @@ public class Ports {
         public static final int MASTER = 0;
         public static final int SLAVE = 0;
         public static final boolean IS_MASTER_INVERTED = false;
-        public static final boolean MASTER_SENSOR_PHASED = false;
+        public static final boolean IS_MASTER_ENCODER_INVERTED = false;
+        public static final boolean IS_SLAVE_INVERTED = false;
+        public static final boolean IS_SLAVE_ENCODER_INVERTED = false;
     }
 }
