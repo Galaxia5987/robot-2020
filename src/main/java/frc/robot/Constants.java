@@ -17,10 +17,10 @@ public class Constants {
     //public static final double TIME_STEP = CONST(0.02);
 
     public static class ColorWheel{
-        public static final double[] POLLY_YELLOW_RGB = {0.297, 0.541, 0.161};
-        public static final double[] POLLY_GREEN_RGB = {0.195, 0.526, 0.281};
-        public static final double[] POLLY_RED_RGB = {0.398, 0.398, 0.202};
-        public static final double[] POLLY_BLUE_RGB = {0.166, 0.435, 0.398};
+        public static final double[] POLY_YELLOW_RGB = {0.297, 0.541, 0.161};
+        public static final double[] POLY_GREEN_RGB = {0.195, 0.526, 0.281};
+        public static final double[] POLY_RED_RGB = {0.398, 0.398, 0.202};
+        public static final double[] POLY_BLUE_RGB = {0.166, 0.435, 0.398};
 
         public static final double[] YELLOW_RGB = {0.317, 0.552, 0.127};
         public static final double[] GREEN_RGB = {0.16, 0.571, 0.269};
