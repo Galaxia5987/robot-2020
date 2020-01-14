@@ -4,10 +4,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.turret.Turret;
 
 import static frc.robot.Constants.Turret.*;
-import static frc.robot.RobotContainer.turret;
 
 public class CenterTurret extends CommandBase {
-    private double currentPosition;
+    private double initialPosition;
     private static Turret turret;
 
     public CenterTurret(Turret turret) {
@@ -17,7 +16,7 @@ public class CenterTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        currentPosition = turret.getEncoderPosition();
+        initialPosition = turret.getEncoderPosition();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,7 +28,7 @@ public class CenterTurret extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return Math.abs(turret.getEncoderPosition() - currentPosition) <= ANGLE_THRESHOLD;
+        return Math.abs(turret.getEncoderPosition() - initialPosition) <= ANGLE_THRESHOLD;
     }
 
     @Override

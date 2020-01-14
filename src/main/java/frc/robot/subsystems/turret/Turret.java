@@ -97,12 +97,12 @@ public class Turret extends SubsystemBase {
      * @param targetAngle the desired angle.
      * @return return the target angle in ticks.
      */
-    public double getNearestTurretPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) throws Exception {
+    public double getNearestTurretPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
         targetAngle %= 360;
         targetAngle += 360;
         targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
         double[] positions = {targetAngle - 360, targetAngle, targetAngle + 360}; // An array of all possible target positions
-        double targetPosition = Double.NaN;
+        double targetPosition = currentPosition;
         double shortestDistance = Double.MAX_VALUE;
         for (double targetPos : positions) { // for each possible position
             if (targetPos < MINIMUM_POSITION || targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
@@ -113,8 +113,6 @@ public class Turret extends SubsystemBase {
                 targetPosition = targetPos;
             }
         }
-        if(targetPosition == Double.NaN)
-            throw new Exception("Can't reach specified angle {}");
         return unitModel.toTicks(targetPosition);
     }
 
@@ -138,13 +136,8 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetTurretPosition = 0;
-        try {
-            targetTurretPosition = getNearestTurretPosition(angle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION);
-        } catch (Exception e) {
-            return;
-        }
-        motor.set(ControlMode.MotionMagic, targetTurretPosition);
+        double targetAngle = getNearestTurretPosition(angle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        motor.set(ControlMode.MotionMagic, targetAngle);
     }
 
     /**
