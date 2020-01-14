@@ -9,10 +9,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.commands.RamseteCommand;
 import frc.robot.utilities.TrajectoryLoader;
 
 /**
@@ -23,7 +22,7 @@ import frc.robot.utilities.TrajectoryLoader;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    public final Drivetrain drivetrain = new Drivetrain();
+    public static final Drivetrain drivetrain = new Drivetrain();
 
 
     /**
@@ -50,12 +49,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new RamseteCommand(
-                TrajectoryLoader.getTrajectory("middle"),
-                drivetrain::getPose,
-                new RamseteController(Constants.Drivetrain.kBeta, Constants.Drivetrain.kZeta),
-                Constants.Drivetrain.kDriveKinematics,
-                drivetrain::setVelocityRamsete
-        );
+        return new RamseteCommand(TrajectoryLoader.getTrajectory("middle"));
     }
 }

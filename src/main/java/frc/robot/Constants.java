@@ -1,8 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import frc.robot.Robot;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -17,16 +17,16 @@ import java.util.Optional;
  */
 public class Constants {
 
-    public static class Drivetrain{
+    public static class Drivetrain {
         public static final double TRACK_WIDTH = 0;
         public static final int TICKS_PER_METER = 0;
         public static final double KP = 0;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KF = 0;
-        public static final double kBeta = 0;
-        public static final double kZeta = 0;
-        public static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(TRACK_WIDTH);
+        public static final RamseteController follower = new RamseteController(0, 0);
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(TRACK_WIDTH);
+        public static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0, 0);
     }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
@@ -52,6 +52,7 @@ public class Constants {
 
     /**
      * Replaces fields between constants classes
+     *
      * @param class1 Original constants class
      * @param class2 Constants to replace with
      */

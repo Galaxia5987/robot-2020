@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems.drivetrain;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -84,8 +86,9 @@ public class Drivetrain extends SubsystemBase {
         return odometry.getPoseMeters();
     }
 
-    public void setVelocityRamsete(double left, double right) {
-        //TODO: Implement
+    public void setVelocityAndFeedForward(double left, double right, double leftFF, double rightFF) {
+        leftMaster.set(ControlMode.Velocity, left, DemandType.ArbitraryFeedForward, leftFF);
+        leftMaster.set(ControlMode.Velocity, right, DemandType.ArbitraryFeedForward, rightFF);
     }
 
     @Override
