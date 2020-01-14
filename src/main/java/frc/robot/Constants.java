@@ -77,7 +77,7 @@ public class Constants {
         public static final double HEIGHT_TOLERANCE = 0;//The allowed tolerance between the current height to the desired height
         public static final double ANGLE_TOLERANCE = 0;//The allowed tolerance between the current angle to the desired angle
         public static final double HEIGHT = 2;// The allowed maximum height of the subsystem
-        public static final double MODIFY_JOYSTICK_SPEED = 0.2;
+        public static final double MODIFY_JOYSTICK_RATE = 0;
     }
 
 }
