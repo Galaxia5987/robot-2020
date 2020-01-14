@@ -71,7 +71,7 @@ public class RiseToHeightCommand extends CommandBase {
             climber.engageStopper();
         }
         
-        if (climber.isEngaged()) {
+        if (climber.isStopperEngaged()) {
             double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
             //Fix the heights according to the angle of the robot
             if (currentAngleError > 0) {
