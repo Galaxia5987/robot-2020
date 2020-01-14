@@ -29,10 +29,10 @@ public class Turret extends SubsystemBase {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
-    private NetworkTableEntry kPentry = table.getEntry("kP");
-    private NetworkTableEntry kIentry = table.getEntry("kI");
-    private NetworkTableEntry kDentry = table.getEntry("kD");
-    private NetworkTableEntry kFentry = table.getEntry("kF");
+    private final NetworkTableEntry kPentry = table.getEntry("kP");
+    private final NetworkTableEntry kIentry = table.getEntry("kI");
+    private final NetworkTableEntry kDentry = table.getEntry("kD");
+    private final NetworkTableEntry kFentry = table.getEntry("kF");
 
     /**
      * configures the encoder and PID constants.
