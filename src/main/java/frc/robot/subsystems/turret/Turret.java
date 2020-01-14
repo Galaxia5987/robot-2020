@@ -158,10 +158,10 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * set the position to the target position to stop the turret at the target position.
+     * set the position to the current position to stop the turret at the target position.
      */
-    public void stop(double targetPosition) {
-        master.set(ControlMode.Position, targetPosition);
+    public void stop() {
+        master.set(ControlMode.MotionMagic, getEncoderPosition());
     }
 
     /**
