@@ -14,6 +14,7 @@ public class Shoot extends CommandBase {
     private final Shooter shooter;
     private final Timer timer = new Timer();
     private final NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
+    private static final NetworkTableEntry visionDistance = shooterTable.getEntry("distance");
 
     public Shoot(Shooter shooter,  double distance, double timeout) {
         addRequirements(shooter);
@@ -26,6 +27,11 @@ public class Shoot extends CommandBase {
         this(shooter, distance, 0);
     }
 
+    public Shoot(Shooter shooter) {
+        this(shooter, visionDistance.getDouble(3), 0); //TODO replace 3 with the vision distance output value
+
+    }
+
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
@@ -36,6 +42,7 @@ public class Shoot extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
+        visionDistance.getDouble(3);
         shooter.setSpeed(approximateVelocity(distance));
         setNetworkTable();
     }

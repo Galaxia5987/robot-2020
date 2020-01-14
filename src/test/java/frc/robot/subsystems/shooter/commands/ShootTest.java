@@ -13,6 +13,6 @@ public class ShootTest {
 
     @Test
     public void approximateVelocity() {
-        Assert.assertEquals(shoot.approximateVelocity(distance), 20, 1e-3);
+        Assert.assertEquals(shoot.approximateVelocity(distance), 12.15, 1e-2);
     }
 }
