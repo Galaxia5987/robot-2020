@@ -77,7 +77,7 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         updateConstants();
-        if (isHallEffectClosed()) {
+        if (isLimitSwitchClosed()) {
             resetEncoderPosition();
         }
     }
@@ -167,7 +167,7 @@ public class Turret extends SubsystemBase {
     /**
      * @return return if the state of the Hall Effect sensor is Closed.
      */
-    public boolean isHallEffectClosed() {
+    public boolean isLimitSwitchClosed() {
         return master.getSensorCollection().isRevLimitSwitchClosed();
     }
 
