@@ -1,14 +1,17 @@
 package frc.robot.subsystems.turret.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.turret.Turret;
 
 import static frc.robot.Constants.Turret.*;
 import static frc.robot.RobotContainer.turret;
 
 public class CenterTurret extends CommandBase {
     private double currentPosition;
+    private static Turret turret;
 
-    public CenterTurret() {
+    public CenterTurret(Turret turret) {
+        CenterTurret.turret = turret;
         addRequirements(turret);
     }
 
@@ -31,6 +34,6 @@ public class CenterTurret extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        turret.stop(turret.getEncoderPosition());
+        turret.stop();
     }
 }

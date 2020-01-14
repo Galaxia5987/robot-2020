@@ -40,6 +40,6 @@ public class TurnTurret extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        turret.stop(angle);
+        turret.stop();
     }
 }
