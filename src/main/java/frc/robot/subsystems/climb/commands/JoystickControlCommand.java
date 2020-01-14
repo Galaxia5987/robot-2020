@@ -9,7 +9,6 @@ package frc.robot.subsystems.climb.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 
@@ -41,8 +40,8 @@ public class JoystickControlCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        climber.setLeftSpeed(RobotContainer.getLeftXboxX()*Constants.Climb.MODIFY_JOYSTICK_SPEED);
-        climber.setRightSpeed(-RobotContainer.getLeftXboxX()*Constants.Climb.MODIFY_JOYSTICK_SPEED);
+        climber.setLeftHeight(RobotContainer.getLeftXboxX()*Constants.Climb.MODIFY_JOYSTICK_RATE + climber.getLeftHeight());
+        climber.setRightHeight(-RobotContainer.getLeftXboxX()*Constants.Climb.MODIFY_JOYSTICK_RATE + climber.getRightHeight());
     }
 
 
