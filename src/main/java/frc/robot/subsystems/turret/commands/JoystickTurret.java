@@ -9,7 +9,6 @@ import static frc.robot.RobotContainer.*;
 
 
 public class JoystickTurret extends CommandBase {
-    private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
     private RobotContainer m_robotContainer = new RobotContainer();
 
     public JoystickTurret() {

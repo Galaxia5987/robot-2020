@@ -135,9 +135,9 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * set the position of the turret to the setpoint angle
+     * set the position of the turret to the setpoint angle.
      *
-     * @param angle setpoint angle
+     * @param angle setpoint angle.
      */
     public void setPosition(double angle) {
         double targetTurretPosition = 0;
@@ -147,6 +147,14 @@ public class Turret extends SubsystemBase {
             return;
         }
         master.set(ControlMode.MotionMagic, targetTurretPosition);
+    }
+
+    /**
+     * sets the position of the turret to the joystick position.
+     * @param position the setpoint position indicated by the joystick.
+     */
+    public void setJoystickPosition(double position){
+        master.set(ControlMode.Position, unitModel.toTicks(position));
     }
 
     /**
