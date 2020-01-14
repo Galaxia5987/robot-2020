@@ -1,9 +1,6 @@
 package frc.robot.utilities;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
 
@@ -11,6 +8,10 @@ public class FalconConfiguration {
     private NeutralMode neutralMode;
     private FeedbackDevice feedbackDevice;
     private boolean enableVoltageCompensation;
+    private double supplyCurrentLimit = 0;
+    private boolean enableCurrentLimit = false;
+    private double threshHoldCurrent = 0;
+    private double threshHoldTime = 0;
 
 
 
@@ -25,6 +26,38 @@ public class FalconConfiguration {
         enableVoltageCompensation = false;
 
 
+    }
+
+    public double getSupplyCurrentLimit() {
+        return supplyCurrentLimit;
+    }
+
+    public void setSupplyCurrentLimit(double supplyCurrentLimit) {
+        this.supplyCurrentLimit = supplyCurrentLimit;
+    }
+
+    public boolean isEnableCurrentLimit() {
+        return enableCurrentLimit;
+    }
+
+    public void setEnableCurrentLimit(boolean enableCurrentLimit) {
+        this.enableCurrentLimit = enableCurrentLimit;
+    }
+
+    public double getThreshHoldCurrent() {
+        return threshHoldCurrent;
+    }
+
+    public void setThreshHoldCurrent(double threshHoldCurrent) {
+        this.threshHoldCurrent = threshHoldCurrent;
+    }
+
+    public double getThreshHoldTime() {
+        return threshHoldTime;
+    }
+
+    public void setThreshHoldTime(double threshHoldTime) {
+        this.threshHoldTime = threshHoldTime;
     }
 
     public NeutralMode getNeutralMode() {

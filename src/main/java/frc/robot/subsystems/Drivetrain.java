@@ -46,7 +46,8 @@ public class Drivetrain extends SubsystemBase {
     configurations.setEnableVoltageCompensation(true);
     configurations.setPidSet(pidSet);
     configurations.setEnableCurrentLimit(true);
-    configurations.setContinuousCurrentLimit(DRIVETRAIN_CURRENT_LIMIT);
+    configurations.setEnableCurrentLimit(true);
+    configurations.setSupplyCurrentLimit(40);
     UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
 
   }
