@@ -11,7 +11,7 @@ import static frc.robot.RobotContainer.turret;
  */
 public class TurnTurret extends CommandBase {
 
-    private double angle;
+    private final double angle;
 
     public TurnTurret(double angle) {
         addRequirements(turret);
