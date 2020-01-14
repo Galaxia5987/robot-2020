@@ -9,5 +9,6 @@ public class Ports {
 
         public static final int SHIFTER_FORWARD_PORT = 0;
         public static final int SHIFTER_REVERSE_PORT = 0;
+        public static final int SHIFTER_PORT = 0;
     }
 }
