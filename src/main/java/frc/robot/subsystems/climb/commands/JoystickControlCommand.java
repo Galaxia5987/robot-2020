@@ -52,11 +52,6 @@ public class JoystickControlCommand extends CommandBase {
     }
 
 
-    /**
-     * Returns true when the command should end.
-     *
-     * @return whether the left and the right side are on at their setpoints and the angle is correct (=the robot base is parallel to the ground)
-     */
     @Override
     public boolean isFinished() {
         return false;
