@@ -1,7 +1,7 @@
 package frc.robot;
 
 public class Ports {
-    public static class Serializer {
+    public static class Conveyor {
         public static final int EXIT_MOTOR = 22;
         public static final int ENTRY_MOTOR = 21;
 

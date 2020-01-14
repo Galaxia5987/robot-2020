@@ -1,4 +1,4 @@
-package frc.robot.subsystems.serializer;
+package frc.robot.subsystems.conveyor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 
-import static frc.robot.Constants.Serializer.*;
-import static frc.robot.Ports.Serializer.*;
+import static frc.robot.Constants.Conveyor.*;
+import static frc.robot.Ports.Conveyor.*;
 
 /**
  * @author Barel
@@ -21,7 +21,7 @@ import static frc.robot.Ports.Serializer.*;
  * {@using VictorSPX}
  * {@using 3xProximities}
  */
-public class Serializer extends SubsystemBase {
+public class Conveyor extends SubsystemBase {
     UnitModel model = new UnitModel(TICK_PER_METERS);
     private VictorSPX entryMotor = new VictorSPX(ENTRY_MOTOR);
     private TalonSRX exitMotor = new TalonSRX(EXIT_MOTOR);
@@ -33,7 +33,7 @@ public class Serializer extends SubsystemBase {
     private boolean ballInEntryPosition, ballInIntegrationPosition, ballInExitPosition;
     private boolean movingUp;
 
-    public Serializer() {
+    public Conveyor() {
         exitMotor.configFactoryDefault();
         entryMotor.configFactoryDefault();
 
