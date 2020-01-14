@@ -10,6 +10,7 @@ public class RotationControl extends CommandBase {
     private int clockwiseColorIndex = 0;
     private int counterClockwiseIndex = 0;
     private double clockwiseSpins = 0;
+    private double counterClockwiseSpins = 0;
 
     public RotationControl(double percentSpeed) {
         this.percentSpeed = percentSpeed;
@@ -31,7 +32,7 @@ public class RotationControl extends CommandBase {
             clockwiseColorIndex = sensorColorIndex;
         }
         if (sensorColorIndex == (counterClockwiseIndex - 1) % 4) {
-            clockwiseSpins -= 0.125;
+            counterClockwiseSpins += 0.125;
             counterClockwiseIndex = sensorColorIndex;
         }
 
@@ -47,8 +48,7 @@ public class RotationControl extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        double counterClockWiseSpins = 0;
-        return Math.max(clockwiseSpins, counterClockWiseSpins) >= 3;
+        return Math.max(clockwiseSpins, counterClockwiseSpins) >= 3;
     }
 
     @Override
