@@ -10,6 +10,7 @@ import static frc.robot.RobotContainer.*;
 
 public class JoystickTurret extends CommandBase {
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
+    private RobotContainer m_robotContainer = new RobotContainer();
 
     public JoystickTurret() {
         addRequirements(turret);
@@ -22,7 +23,7 @@ public class JoystickTurret extends CommandBase {
 
     @Override
     public void execute() {
-        double joystickInput = RobotContainer.m_robotContainer.getXboxY();
+        double joystickInput = m_robotContainer.getXboxY();
         double position = turret.getEncoderPosition() + joystickInput * TURRET_JOYSTICK_SPEED;
         if (position < MINIMUM_POSITION && position > MAXIMUM_POSITION)
             turret.setPosition(position);

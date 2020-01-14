@@ -30,7 +30,6 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public static Turret turret = new Turret();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  public static RobotContainer m_robotContainer = new RobotContainer();
 
   private XboxController xbox = new XboxController(0);
   private JoystickButton a = new JoystickButton(xbox, 1);
