@@ -34,16 +34,11 @@ public class ColorWheel extends SubsystemBase {
 
   private final VictorSPX spinMotor = new VictorSPX(Ports.ColorWheel.SPIN_MOTOR);
 
-  /**
-   * Creates a new ExampleSubsystem.
-   */
   public ColorWheel() {
     colorMatcher.addColorMatch(BlueTarget);
     colorMatcher.addColorMatch(GreenTarget);
     colorMatcher.addColorMatch(RedTarget);
     colorMatcher.addColorMatch(YellowTarget);
-
-
   }
 
   public String getColorString(){
@@ -66,7 +61,7 @@ public class ColorWheel extends SubsystemBase {
     }
   }
 
-  public String colorToString(Color color){
+  private String colorToString(Color color){
     ColorMatchResult match = colorMatcher.matchClosestColor(color);
     String colorInString;
     if (match.color == BlueTarget) {
