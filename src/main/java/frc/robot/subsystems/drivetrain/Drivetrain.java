@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -14,11 +14,13 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.UtilityFunctions;
+import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 
 import static frc.robot.Ports.Drivetrain.LEFT_MASTER;
@@ -71,6 +73,12 @@ public class Drivetrain extends SubsystemBase {
         return Math.IEEEremainder(navx.getAngle(), 360);
     }
 
+    public void initialize() {
+        navx.reset();
+        odometry.resetPosition(new Pose2d(), new Rotation2d()); //Set to actual starting position
+        leftMaster.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
+    }
 
     @Override
     public void periodic() {
