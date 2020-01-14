@@ -45,7 +45,7 @@ public class ColorWheel extends SubsystemBase {
     return colorString;
   }
 
-  public int indexOfColor(String color) {
+  public int indexOfColor(String color) throws Exception {
     switch (color) {
       case ("Yellow"):
         return 0;
@@ -56,7 +56,7 @@ public class ColorWheel extends SubsystemBase {
       case ("Blue"):
         return 3;
       default:
-        return -1;
+        throw new Exception(String.format("Color %s does not have an index", color));
 
     }
   }

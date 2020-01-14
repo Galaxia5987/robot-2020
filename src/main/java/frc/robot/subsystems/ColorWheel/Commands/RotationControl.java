@@ -6,9 +6,10 @@ import static frc.robot.RobotContainer.colorWheel;
 
 public class RotationControl extends CommandBase {
     private double percentSpeed;
-    private String clockWiseCurrentColor = "Yellow";
-    private String counterClockWiseCurrentColor = "Yellow";
-    private double clockWiseSpins = 0;
+    private int sensorColorIndex;
+    private int clockwiseColorIndex = 0;
+    private int counterClockwiseIndex = 0;
+    private double clockwiseSpins = 0;
 
     public RotationControl(double percentSpeed) {
         this.percentSpeed = percentSpeed;
@@ -16,33 +17,38 @@ public class RotationControl extends CommandBase {
 
     @Override
     public void initialize() {
-        clockWiseCurrentColor = colorWheel.getColorString();
-        counterClockWiseCurrentColor = colorWheel.getColorString();
+        updateColorIndex();
+        clockwiseColorIndex = sensorColorIndex;
+        counterClockwiseIndex = sensorColorIndex;
         colorWheel.setMotorSpeed(percentSpeed);
     }
 
     @Override
     public void execute() {
-        String detectedColor = colorWheel.getColorString();
-        if (colorWheel.indexOfColor(detectedColor) == colorWheel.indexOfColor(clockWiseCurrentColor) +1
-                || colorWheel.indexOfColor(detectedColor) == colorWheel.indexOfColor(clockWiseCurrentColor) % 3){
-            clockWiseSpins += 0.125;
-            clockWiseCurrentColor = detectedColor;
+        updateColorIndex();
+        if (sensorColorIndex == (clockwiseColorIndex + 1) % 4){
+            clockwiseSpins += 0.125;
+            clockwiseColorIndex = sensorColorIndex;
         }
-        if (colorWheel.indexOfColor(detectedColor) == colorWheel.indexOfColor(counterClockWiseCurrentColor) -1
-                || colorWheel.indexOfColor(detectedColor)%3 == colorWheel.indexOfColor(clockWiseCurrentColor)){
-            clockWiseSpins -= 0.125;
-            counterClockWiseCurrentColor = detectedColor;
+        if (sensorColorIndex == (counterClockwiseIndex - 1) % 4){
+            clockwiseSpins -= 0.125;
+            counterClockwiseIndex = sensorColorIndex;
         }
 
+    }
 
+    private void updateColorIndex(){
+        try {
+            sensorColorIndex = colorWheel.indexOfColor(colorWheel.getColorString());
+        } catch (Exception ignored){
 
+        }
     }
 
     @Override
     public boolean isFinished() {
         double counterClockWiseSpins = 0;
-        return Math.max(clockWiseSpins, counterClockWiseSpins) >= 3;
+        return Math.max(clockwiseSpins, counterClockWiseSpins) >= 3;
     }
 
     @Override
