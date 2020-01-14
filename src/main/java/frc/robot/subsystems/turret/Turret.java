@@ -135,7 +135,7 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * apply power to the controller to move the turret.
+     * set the position of the turret to the setpoint angle
      *
      * @param angle setpoint angle
      */
