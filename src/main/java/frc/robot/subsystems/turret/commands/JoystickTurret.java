@@ -25,7 +25,7 @@ public class JoystickTurret extends CommandBase {
         double joystickInput = m_robotContainer.getXboxY();
         double position = turret.getEncoderPosition() + joystickInput * TURRET_JOYSTICK_SPEED;
         if (position < MINIMUM_POSITION && position > MAXIMUM_POSITION)
-            turret.setPosition(position);
+            turret.setJoystickPosition(position);
     }
 
 }
