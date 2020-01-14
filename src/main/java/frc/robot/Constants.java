@@ -28,6 +28,8 @@ public class Constants {
         public static final double[] BLUE_RGB = {0.132, 0.427, 0.442};
 
         public static final int TILES_BEFORE_SENSOR = 2;
+
+        public static final double POSITION_SPEED = 0.2;
     }
 
 

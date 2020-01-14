@@ -31,7 +31,7 @@ public class PositionControl extends CommandBase {
 
     @Override
     public void initialize() {
-        colorWheel.setMotorSpeed(0.2);
+        colorWheel.setMotorSpeed(Constants.ColorWheel.POSITION_SPEED);
     }
 
     @Override
