@@ -53,20 +53,6 @@ public class Turret extends SubsystemBase {
         motor.setSelectedSensorPosition((int) HALL_EFFECT_POSITION_1, 0, TALON_TIMEOUT);
     }
 
-    /**
-     * updates the turret PID constants and configures the controller PID
-     */
-    public void updateConstants() {
-        Utils.setValue(kPentry, KP);
-        Utils.setValue(kIentry, KP);
-        Utils.setValue(kDentry, KP);
-        Utils.setValue(kFentry, KP);
-        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
-        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
-        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
-        motor.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
-    }
-
 
 
     /**
@@ -74,7 +60,6 @@ public class Turret extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        updateConstants();
         if (isLimitSwitchClosed()) {
             resetEncoderPosition();
         }
@@ -145,7 +130,7 @@ public class Turret extends SubsystemBase {
      */
     public void setAngle(double angle) {
         double targetAngle = getNearestTurretPosition(angle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION);
-        motor.set(ControlMode.MotionMagic, targetAngle);
+        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
 
     /**
