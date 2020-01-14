@@ -65,14 +65,14 @@ public class Serializer extends SubsystemBase {
             startLocation = getEncoderPosition();
         }
 
+        if (isBallLostInEntry() && !isBallsMovingUp() && !ballInEntryPosition) {
+            decrementBallsCount(1);
+            startLocation = getEncoderPosition();
+        }
+
         if (isBallLostInExit() && isBallsMovingUp() && !ballInExitPosition) {
             decrementBallsCount(1);
             endLocation = getEncoderPosition();
-        }
-
-        if (isBallLostInEntry() && !isBallsMovingUp() && ballInEntryPosition) {
-            decrementBallsCount(1);
-            startLocation = getEncoderPosition();
         }
 
         ballInExitPosition = !isBallLostInExit();
