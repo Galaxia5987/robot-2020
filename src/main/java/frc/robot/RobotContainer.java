@@ -22,7 +22,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public static final Climber climber = new Climber();
     private final Command m_autoCommand = null;
-    public XboxController xbox = new XboxController(2);
+    public static XboxController xbox = new XboxController(2);
     public static int leftXStick = 0;
 
 
@@ -54,7 +54,9 @@ public class RobotContainer {
         return m_autoCommand;
     }
 
-    public double getLeftXboxX() {
+    public static double getLeftXboxX(){
         return xbox.getRawAxis(leftXStick);
     }
+
 }
+
