@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPXPIDSetConfiguration;
 
-public class CustomVictorConfigs {
+public class VictorConfiguration {
 
 
     private NeutralMode neutralMode;
@@ -13,7 +13,7 @@ public class CustomVictorConfigs {
     public VictorSPXConfiguration motorConfigs = new VictorSPXConfiguration();
 
 
-    public CustomVictorConfigs() {
+    public VictorConfiguration() {
 
         neutralMode = NeutralMode.Coast;
         feedbackDevice = FeedbackDevice.CTRE_MagEncoder_Absolute;
