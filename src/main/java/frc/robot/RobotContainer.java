@@ -26,14 +26,14 @@ import frc.robot.subsystems.turret.commands.TurnTurret;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private static Turret turret = new Turret();
+  private static final Turret turret = new Turret();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private XboxController xbox = new XboxController(2);
-  private JoystickButton a = new JoystickButton(xbox, 3);
-  private JoystickButton b = new JoystickButton(xbox, 4);
-  public static int rightYStick = 5;
-  public static double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
+  private final XboxController xbox = new XboxController(2);
+  private final JoystickButton a = new JoystickButton(xbox, 3);
+  private final JoystickButton b = new JoystickButton(xbox, 4);
+  public static final int rightYStick = 5;
+  public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
 
 
   /**
