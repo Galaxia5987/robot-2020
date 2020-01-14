@@ -27,7 +27,6 @@ public class JoystickControlCommand extends CommandBase {
      */
     public JoystickControlCommand(Climber climber) {
         this.climber = climber;
-
         addRequirements(climber);
     }
 
