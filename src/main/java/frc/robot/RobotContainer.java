@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExampleCommand;
@@ -16,7 +15,6 @@ import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.CenterTurret;
-import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 
 /**
@@ -28,7 +26,7 @@ import frc.robot.subsystems.turret.commands.TurnTurret;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  public static Turret turret = new Turret();
+  private static Turret turret = new Turret();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private XboxController xbox = new XboxController(2);
@@ -53,7 +51,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    a.whenPressed(new TurnTurret(45));
+    a.whenPressed(new TurnTurret(turret, 45));
     b.whenPressed(new CenterTurret());
 
   }

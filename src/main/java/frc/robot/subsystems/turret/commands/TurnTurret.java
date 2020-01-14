@@ -2,6 +2,7 @@ package frc.robot.subsystems.turret.commands;
 
 
 import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.subsystems.turret.Turret;
 
 import static frc.robot.Constants.Turret.*;
 import static frc.robot.RobotContainer.turret;
@@ -11,9 +12,11 @@ import static frc.robot.RobotContainer.turret;
  */
 public class TurnTurret extends CommandBase {
 
+    private static Turret turret;
     private final double angle;
 
-    public TurnTurret(double angle) {
+    public TurnTurret(Turret turret, double angle) {
+        TurnTurret.turret = turret;
         addRequirements(turret);
         this.angle = angle;
     }
