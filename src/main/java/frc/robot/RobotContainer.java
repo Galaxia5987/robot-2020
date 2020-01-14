@@ -9,8 +9,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ColorWheel.ColorWheel;
-import frc.robot.subsystems.ColorWheel.Commands.RotationControl;
+import frc.robot.subsystems.color_wheel.ColorWheel;
+import frc.robot.subsystems.color_wheel.commands.RotationControl;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a

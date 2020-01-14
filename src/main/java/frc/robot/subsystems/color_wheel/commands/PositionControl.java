@@ -1,4 +1,4 @@
-package frc.robot.subsystems.ColorWheel.Commands;
+package frc.robot.subsystems.color_wheel.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -41,7 +41,6 @@ public class PositionControl extends CommandBase {
     public void execute() {
 
     }
-
     @Override
     public boolean isFinished() {
         return colorWheel.getColorString().equals(colors[colorWheel.indexOfColor(targetColor)+ Constants.ColorWheel.TILES_BEFORE_SENSOR]);

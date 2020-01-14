@@ -1,4 +1,4 @@
-package frc.robot.subsystems.ColorWheel.Commands;
+package frc.robot.subsystems.color_wheel.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
