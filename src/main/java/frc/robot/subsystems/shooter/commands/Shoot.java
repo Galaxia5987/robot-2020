@@ -36,7 +36,7 @@ public class Shoot extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        shooter.setSpeedRPS(approximateVelocity(distance));
+        shooter.setSpeed(approximateVelocity(distance));
         setNetworkTable();
     }
 
@@ -65,7 +65,7 @@ public class Shoot extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         timer.stop();
-        shooter.setSpeedRPS(0);
+        shooter.setSpeed(0);
     }
 
 }
