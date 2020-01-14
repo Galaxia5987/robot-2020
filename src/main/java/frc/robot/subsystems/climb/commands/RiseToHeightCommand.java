@@ -80,8 +80,8 @@ public class RiseToHeightCommand extends CommandBase {
                 leftSetpointHeight = heights[1];
             } else {
                 double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climb.HEIGHT);
-                rightSetpointHeight = heights[0];
-                leftSetpointHeight = heights[1];
+                rightSetpointHeight = heights[1];
+                leftSetpointHeight = heights[0];
             }
 
             climber.setLeftHeight(leftSetpointHeight);
