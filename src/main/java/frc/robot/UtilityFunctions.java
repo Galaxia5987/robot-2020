@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import frc.robot.utilities.FalconConfiguration;
 
@@ -11,6 +12,10 @@ public class UtilityFunctions {
             falcon.setNeutralMode(NeutralMode.Brake);
             falcon.configSelectedFeedbackSensor(configurations.getFeedbackDevice());
             falcon.enableVoltageCompensation(configurations.isEnableVoltageCompensation());
+            falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
+                    , configurations.getSupplyCurrentLimit()
+                    , configurations.getThreshHoldCurrent()
+                        , configurations.getThreshHoldTime()));
             falcon.config_kP(0, configurations.getPidSet()[0]);
             falcon.config_kI(0, configurations.getPidSet()[1]);
             falcon.config_kD(0, configurations.getPidSet()[2]);

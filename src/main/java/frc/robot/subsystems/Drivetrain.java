@@ -9,15 +9,18 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
 import frc.robot.UtilityFunctions;
 import frc.robot.utilities.FalconConfiguration;
 import static frc.robot.Ports.Drivetrain.*;
+import static frc.robot.Constants.Drivetrain.*;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -29,7 +32,8 @@ public class Drivetrain extends SubsystemBase {
   private FalconConfiguration configurations = new FalconConfiguration();
   private double[] pidSet = {Constants.Drivetrain.KP, Constants.Drivetrain.KI, Constants.Drivetrain.KD, Constants.Drivetrain.KF};
 
-  private DoubleSolenoid gearShifter = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+  private DoubleSolenoid AgearShifter = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+  private Solenoid BgearShifter = new Solenoid(1, SHIFTER_PORT);
   
   /**
    * Creates a new ExampleSubsystem.
@@ -41,6 +45,9 @@ public class Drivetrain extends SubsystemBase {
     configurations.setFeedbackDevice(FeedbackDevice.QuadEncoder);
     configurations.setEnableVoltageCompensation(true);
     configurations.setPidSet(pidSet);
+    configurations.setEnableCurrentLimit(true);
+    configurations.setEnableCurrentLimit(true);
+    configurations.setSupplyCurrentLimit(40);
     UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
 
   }
