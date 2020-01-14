@@ -31,7 +31,7 @@ public class Serializer extends SubsystemBase {
     private int ballsCount = 3;
     private double startLocation, endLocation;
     private boolean ballInEntryPosition, ballInIntegrationPosition, ballInExitPosition;
-    private Direction direction;
+    private boolean movingUp;
 
     public Serializer() {
         exitMotor.configFactoryDefault();
@@ -86,7 +86,7 @@ public class Serializer extends SubsystemBase {
      *                 be noted you should enter a value between -1 to 1.
      */
     public void setEntryVelocity(double velocity) {
-        direction = (velocity >= 0) ? Direction.UP : Direction.DOWN;
+        movingUp = (velocity >= 0);
         entryMotor.set(ControlMode.PercentOutput, velocity);
     }
 
@@ -105,7 +105,7 @@ public class Serializer extends SubsystemBase {
      * @param location the relative location you want the conveyor to move.
      */
     public void setLocationToExitMotor(double location) {
-        direction = (location >= 0) ? Direction.UP : Direction.DOWN;
+        movingUp = (location >= 0);
         exitMotor.set(ControlMode.MotionMagic, location);
     }
 
@@ -271,11 +271,6 @@ public class Serializer extends SubsystemBase {
     }
 
     public boolean isBallsMovingUp() {
-        return direction == Direction.UP;
-    }
-
-    public enum Direction {
-        UP,
-        DOWN
+        return movingUp;
     }
 }
