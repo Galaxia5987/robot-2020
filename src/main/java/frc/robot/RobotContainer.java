@@ -53,7 +53,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     a.whenPressed(new TurnTurret(turret, 45));
-    b.whenPressed(new CenterTurret());
+    b.whenPressed(new CenterTurret(turret));
 
   }
 
