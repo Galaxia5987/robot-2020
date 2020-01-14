@@ -98,9 +98,7 @@ public class Turret extends SubsystemBase {
      * @return return the target angle in ticks.
      */
     public double getNearestTurretPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
-        targetAngle %= 360;
-        targetAngle += 360;
-        targetAngle %= 360; //Ensure that targetAngle is a number between 0-360.
+        targetAngle = mathFloor(targetAngle);
         double[] positions = {targetAngle - 360, targetAngle, targetAngle + 360}; // An array of all possible target positions
         double targetPosition = currentPosition;
         double shortestDistance = Double.MAX_VALUE;
@@ -114,6 +112,16 @@ public class Turret extends SubsystemBase {
             }
         }
         return unitModel.toTicks(targetPosition);
+    }
+
+    /**
+     * sets the target angle to the corresponding angle between 0 and 360.
+     * @param targetAngle the setpoint angle.
+     * @return the angle between 0 and 360.
+     */
+    private double mathFloor(double targetAngle) {
+        targetAngle%=360; targetAngle+=360; targetAngle%=360;
+        return targetAngle;
     }
 
 
