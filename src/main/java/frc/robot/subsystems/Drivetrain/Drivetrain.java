@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.Drivetrain;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -19,6 +19,9 @@ import frc.robot.Constants;
 import frc.robot.Ports;
 import frc.robot.UtilityFunctions;
 import frc.robot.utilities.FalconConfiguration;
+
+import java.util.Timer;
+
 import static frc.robot.Ports.Drivetrain.*;
 import static frc.robot.Constants.Drivetrain.*;
 
@@ -34,6 +37,8 @@ public class Drivetrain extends SubsystemBase {
 
   private DoubleSolenoid AgearShifter = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
   private Solenoid BgearShifter = new Solenoid(1, SHIFTER_PORT);
+  private Timer shiftCooldown = new Timer();
+  private boolean isShifting = false;
   
   /**
    * Creates a new ExampleSubsystem.

@@ -9,8 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.commands.ExampleCommand;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drivetrain.commands.ExampleCommand;
+import frc.robot.subsystems.Drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
