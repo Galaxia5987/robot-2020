@@ -21,74 +21,74 @@ import frc.robot.Ports;
 
 public class ColorWheel extends SubsystemBase {
 
-  //Color sensor definitions
-  public final I2C.Port i2cPort = I2C.Port.kOnboard;
-  public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+    //Color sensor definitions
+    public final I2C.Port i2cPort = I2C.Port.kOnboard;
+    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-  private String colorString = "";
-  private final ColorMatch colorMatcher = new ColorMatch();
-  private final Color BlueTarget = ColorMatch.makeColor(Constants.ColorWheel.BLUE_RGB[0], Constants.ColorWheel.BLUE_RGB[1], Constants.ColorWheel.BLUE_RGB[2]);
-  private final Color GreenTarget = ColorMatch.makeColor(Constants.ColorWheel.GREEN_RGB[0], Constants.ColorWheel.GREEN_RGB[1], Constants.ColorWheel.GREEN_RGB[2]);
-  private final Color RedTarget = ColorMatch.makeColor(Constants.ColorWheel.RED_RGB[0], Constants.ColorWheel.RED_RGB[1], Constants.ColorWheel.RED_RGB[2]);
-  private final Color YellowTarget = ColorMatch.makeColor(Constants.ColorWheel.YELLOW_RGB[0], Constants.ColorWheel.YELLOW_RGB[1], Constants.ColorWheel.YELLOW_RGB[2]);
+    private String colorString = "";
+    private final ColorMatch colorMatcher = new ColorMatch();
+    private final Color BlueTarget = ColorMatch.makeColor(Constants.ColorWheel.BLUE_RGB[0], Constants.ColorWheel.BLUE_RGB[1], Constants.ColorWheel.BLUE_RGB[2]);
+    private final Color GreenTarget = ColorMatch.makeColor(Constants.ColorWheel.GREEN_RGB[0], Constants.ColorWheel.GREEN_RGB[1], Constants.ColorWheel.GREEN_RGB[2]);
+    private final Color RedTarget = ColorMatch.makeColor(Constants.ColorWheel.RED_RGB[0], Constants.ColorWheel.RED_RGB[1], Constants.ColorWheel.RED_RGB[2]);
+    private final Color YellowTarget = ColorMatch.makeColor(Constants.ColorWheel.YELLOW_RGB[0], Constants.ColorWheel.YELLOW_RGB[1], Constants.ColorWheel.YELLOW_RGB[2]);
 
-  private final VictorSPX spinMotor = new VictorSPX(Ports.ColorWheel.SPIN_MOTOR);
+    private final VictorSPX spinMotor = new VictorSPX(Ports.ColorWheel.SPIN_MOTOR);
 
-  public ColorWheel() {
-    colorMatcher.addColorMatch(BlueTarget);
-    colorMatcher.addColorMatch(GreenTarget);
-    colorMatcher.addColorMatch(RedTarget);
-    colorMatcher.addColorMatch(YellowTarget);
-  }
-
-  public String getColorString(){
-    return colorString;
-  }
-
-  public int indexOfColor(String color) throws Exception {
-    switch (color) {
-      case ("Yellow"):
-        return 0;
-      case ("Red"):
-        return 1;
-      case ("Green"):
-        return 2;
-      case ("Blue"):
-        return 3;
-      default:
-        throw new Exception(String.format("Color %s does not have an index", color));
-
+    public ColorWheel() {
+        colorMatcher.addColorMatch(BlueTarget);
+        colorMatcher.addColorMatch(GreenTarget);
+        colorMatcher.addColorMatch(RedTarget);
+        colorMatcher.addColorMatch(YellowTarget);
     }
-  }
 
-  private String colorToString(Color color){
-    ColorMatchResult match = colorMatcher.matchClosestColor(color);
-    String colorInString;
-    if (match.color == BlueTarget) {
-      colorInString = "Blue";
-    } else if (match.color == RedTarget) {
-      colorInString = "Red";
-    } else if (match.color == GreenTarget) {
-      colorInString = "Green";
-    } else if (match.color == YellowTarget) {
-      colorInString = "Yellow";
-    } else {
-      colorInString = "Unknown";
+    public String getColorString() {
+        return colorString;
     }
-    return colorInString;
-  }
 
-  public void setMotorSpeed(double percent){
-    spinMotor.set(ControlMode.PercentOutput, percent);
-  }
+    public int indexOfColor(String color) throws Exception {
+        switch (color) {
+            case ("Yellow"):
+                return 0;
+            case ("Red"):
+                return 1;
+            case ("Green"):
+                return 2;
+            case ("Blue"):
+                return 3;
+            default:
+                throw new Exception(String.format("Color %s does not have an index", color));
 
-  @Override
-  public void periodic() {
-    Color detectedColor = colorSensor.getColor();
-    colorString = colorToString(detectedColor);
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putString("Detected Color", colorString);
-  }
+        }
+    }
+
+    private String colorToString(Color color) {
+        ColorMatchResult match = colorMatcher.matchClosestColor(color);
+        String colorInString;
+        if (match.color == BlueTarget) {
+            colorInString = "Blue";
+        } else if (match.color == RedTarget) {
+            colorInString = "Red";
+        } else if (match.color == GreenTarget) {
+            colorInString = "Green";
+        } else if (match.color == YellowTarget) {
+            colorInString = "Yellow";
+        } else {
+            colorInString = "Unknown";
+        }
+        return colorInString;
+    }
+
+    public void setMotorSpeed(double percent) {
+        spinMotor.set(ControlMode.PercentOutput, percent);
+    }
+
+    @Override
+    public void periodic() {
+        Color detectedColor = colorSensor.getColor();
+        colorString = colorToString(detectedColor);
+        SmartDashboard.putNumber("Red", detectedColor.red);
+        SmartDashboard.putNumber("Green", detectedColor.green);
+        SmartDashboard.putNumber("Blue", detectedColor.blue);
+        SmartDashboard.putString("Detected Color", colorString);
+    }
 }

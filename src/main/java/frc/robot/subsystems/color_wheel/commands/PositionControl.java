@@ -11,17 +11,17 @@ public class PositionControl extends CommandBase {
     private final String[] colors = {"Yellow", "Red", "Green", "Blue"};
     private String targetColor;
 
-    public PositionControl(){
+    public PositionControl() {
         String gameData = DriverStation.getInstance().getGameSpecificMessage();
-        if (gameData.length() > 0){
-            switch (gameData.charAt(0)){
-                case('Y'):
+        if (gameData.length() > 0) {
+            switch (gameData.charAt(0)) {
+                case ('Y'):
                     targetColor = "Yellow";
-                case('R'):
+                case ('R'):
                     targetColor = "Red";
-                case('G'):
+                case ('G'):
                     targetColor = "Green";
-                case('B'):
+                case ('B'):
                     targetColor = "Blue";
                 default:
                     targetColor = "Unknown";
@@ -38,10 +38,11 @@ public class PositionControl extends CommandBase {
     public void execute() {
 
     }
+
     @Override
     public boolean isFinished() {
         try {
-            return targetColor.equals(colors[colorWheel.indexOfColor(colorWheel.getColorString())+ Constants.ColorWheel.TILES_BEFORE_SENSOR]);
+            return targetColor.equals(colors[colorWheel.indexOfColor(colorWheel.getColorString()) + Constants.ColorWheel.TILES_BEFORE_SENSOR]);
         } catch (Exception e) {
             return false;
         }
@@ -51,4 +52,4 @@ public class PositionControl extends CommandBase {
     public void end(boolean interrupted) {
         colorWheel.setMotorSpeed(0);
     }
-    }
+}

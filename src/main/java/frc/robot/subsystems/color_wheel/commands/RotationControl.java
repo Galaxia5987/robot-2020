@@ -26,21 +26,21 @@ public class RotationControl extends CommandBase {
     @Override
     public void execute() {
         updateColorIndex();
-        if (sensorColorIndex == (clockwiseColorIndex + 1) % 4){
+        if (sensorColorIndex == (clockwiseColorIndex + 1) % 4) {
             clockwiseSpins += 0.125;
             clockwiseColorIndex = sensorColorIndex;
         }
-        if (sensorColorIndex == (counterClockwiseIndex - 1) % 4){
+        if (sensorColorIndex == (counterClockwiseIndex - 1) % 4) {
             clockwiseSpins -= 0.125;
             counterClockwiseIndex = sensorColorIndex;
         }
 
     }
 
-    private void updateColorIndex(){
+    private void updateColorIndex() {
         try {
             sensorColorIndex = colorWheel.indexOfColor(colorWheel.getColorString());
-        } catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
     }
