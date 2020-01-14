@@ -80,6 +80,14 @@ public class Drivetrain extends SubsystemBase {
         rightMaster.setSelectedSensorPosition(0);
     }
 
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
+    public void setVelocityRamsete(double left, double right) {
+        //TODO: Implement
+    }
+
     @Override
     public void periodic() {
         odometry.update(

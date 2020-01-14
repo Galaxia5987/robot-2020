@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import frc.robot.Robot;
 
 import java.lang.reflect.Field;
@@ -16,11 +18,15 @@ import java.util.Optional;
 public class Constants {
 
     public static class Drivetrain{
+        public static final double TRACK_WIDTH = 0;
         public static final int TICKS_PER_METER = 0;
         public static final double KP = 0;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KF = 0;
+        public static final double kBeta = 0;
+        public static final double kZeta = 0;
+        public static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(TRACK_WIDTH);
     }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);

@@ -23,9 +23,8 @@ public class TrajectoryLoader {
         }
     }
 
-    public Trajectory getTrajectory(String name) {
+    public static Trajectory getTrajectory(String name) {
         return trajectories.get(name);
     }
-
 
 }
