@@ -76,9 +76,9 @@ public class OdometryInertialProcess extends ProcessModel {
     public void processNoiseCovariance(double[][] cov) {
         cov[0][0] = 1e-9;
         cov[1][1] = 1e-9;
-        cov[2][2] = 1e-3;
+        cov[2][2] = 1e-2;
         cov[3][3] = 1e-9;
-        cov[4][4] = 1e-3;
+        cov[4][4] = 1e-2;
     }
 
 }

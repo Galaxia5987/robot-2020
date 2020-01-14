@@ -11,6 +11,11 @@ public class OdometryInertialObservation  extends ObservationModel {
     private double m_Rr;
     private double m_Rl;
 
+    private boolean m_encoderValid = true;
+
+    public void setEncoderValid(boolean valid){
+        m_encoderValid = valid;
+    }
 
     public OdometryInertialObservation(double Rr, double Rl)
     {
@@ -67,9 +72,16 @@ public class OdometryInertialObservation  extends ObservationModel {
 
     @Override
     public void observationNoiseCovariance(double[][] cov) {
-        cov[0][0] = 3e4;
-        cov[1][1] = 1e-6;
-        cov[2][2] = 1e-6;
+        cov[0][0] = 4e-4;     // sigma = 2e-2 rad
+
+        if (m_encoderValid) {
+            cov[1][1] = 1e-4; // sigma = 1e-2 m/s
+            cov[2][2] = 1e-4; // sigma = 1e-2 m/s
+        }
+        else{
+            cov[1][1] = 1e6; // garbage measurement
+            cov[2][2] = 1e6; // garbage measurement
+        }
 
     }
 

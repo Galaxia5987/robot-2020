@@ -18,12 +18,15 @@ import frc.robot.KalmanLocalization.OdometryInertialProcess;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-        import edu.wpi.first.hal.FRCNetComm.tInstances;
-        import edu.wpi.first.hal.FRCNetComm.tResourceType;
-        import edu.wpi.first.hal.HAL;
-        import edu.wpi.first.wpilibj.geometry.Pose2d;
-        import edu.wpi.first.wpilibj.geometry.Rotation2d;
-        import edu.wpi.first.wpilibj.geometry.Twist2d;
+import edu.wpi.first.hal.FRCNetComm.tInstances;
+import edu.wpi.first.hal.FRCNetComm.tResourceType;
+import edu.wpi.first.hal.HAL;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Twist2d;
+
+import static java.lang.Math.abs;
+import static java.lang.Math.toRadians;
 
 /**
  * Class for differential drive odometry. Odometry allows you to track the
@@ -43,6 +46,8 @@ public class FullLocalization {
     private OdometryInertialProcess process;
     private OdometryInertialObservation observation;
     double time = 0;
+    double m_width;
+    final double MAX_ANGLE_DELTA_ENCODER_GYRO = 0.01;
 
 
     private Pose2d m_poseMeters;
@@ -61,15 +66,16 @@ public class FullLocalization {
      * @param initialPoseMeters The starting position of the robot on the field.
      */
     public FullLocalization(Rotation2d gyroAngle,
-                                     Pose2d initialPoseMeters,double widthMeters) {
+                            Pose2d initialPoseMeters, double widthMeters) {
         m_poseMeters = initialPoseMeters;
         m_gyroOffset = m_poseMeters.getRotation().minus(gyroAngle);
         m_previousAngle = initialPoseMeters.getRotation();
 
-        observation =  new OdometryInertialObservation(widthMeters/2,widthMeters/2);
+        observation = new OdometryInertialObservation(widthMeters / 2, widthMeters / 2);
         process = new OdometryInertialProcess();
         filter = new KalmanFilter(process);
         m_prev_time = 0;
+        m_width = widthMeters;
     }
 
     /**
@@ -77,7 +83,7 @@ public class FullLocalization {
      *
      * @param gyroAngle The angle reported by the gyroscope.
      */
-    public FullLocalization(Rotation2d gyroAngle,double widthMeters) {
+    public FullLocalization(Rotation2d gyroAngle, double widthMeters) {
         this(gyroAngle, new Pose2d(), widthMeters);
     }
 
@@ -102,11 +108,11 @@ public class FullLocalization {
 
         m_prev_time = time;
 
-        process.setState(0,poseMeters.getTranslation().getX());
-        process.setState(1,poseMeters.getTranslation().getY());
-        process.setState(2,0);
-        process.setState(3,poseMeters.getRotation().minus(gyroAngle).getRadians());
-        process.setState(4,0);
+        process.setState(0, poseMeters.getTranslation().getX());
+        process.setState(1, poseMeters.getTranslation().getY());
+        process.setState(2, 0);
+        process.setState(3, poseMeters.getRotation().minus(gyroAngle).getRadians());
+        process.setState(4, 0);
 
     }
 
@@ -138,29 +144,41 @@ public class FullLocalization {
         m_prevLeftDistance = leftDistanceMeters;
         m_prevRightDistance = rightDistanceMeters;
 
-        double averageDeltaDistance = (deltaLeftDistance + deltaRightDistance) / 2.0;
-        var angle = gyroAngle.plus(m_gyroOffset);
+         var angle = gyroAngle.plus(m_gyroOffset);
 
-        var newPose = m_poseMeters.exp(
-                new Twist2d(averageDeltaDistance, 0.0, angle.minus(m_previousAngle).getRadians()));
 
         m_previousAngle = angle;
 
 
-        double dt = time-m_prev_time;
-        observation.SetMeasurement(gyroAngle.getRadians(),deltaLeftDistance,deltaRightDistance,dt);
+        double dt = time - m_prev_time;
+        observation.SetMeasurement(gyroAngle.getRadians(), deltaLeftDistance, deltaRightDistance, dt);
         process.setAcc(acc);
 
-        filter.update(time,observation);
+        observation.setEncoderValid(EncoderValid(gyroAngle, deltaLeftDistance, deltaRightDistance));
 
-        Rotation2d phi = new Rotation2d( filter.model.state_estimate.data[3][0]);
+
+        filter.update(time, observation);
+
+        Rotation2d phi = new Rotation2d(filter.model.state_estimate.data[3][0]);
         m_poseMeters = new Pose2d(filter.model.state_estimate.data[0][0],
                 filter.model.state_estimate.data[1][0],
                 phi);
 
 
-
         m_prev_time = time;
         return m_poseMeters;
+    }
+
+    public boolean EncoderValid(Rotation2d gyroAngle, double deltaLeftDistance,
+                                double deltaRightDistance) {
+        double delta_angle = gyroAngle.getRadians() - m_previousAngle.getRadians();
+
+        double delta_angle_from_encoder = (deltaRightDistance - deltaLeftDistance) / m_width;
+
+        if (abs(delta_angle - delta_angle_from_encoder) > MAX_ANGLE_DELTA_ENCODER_GYRO) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
