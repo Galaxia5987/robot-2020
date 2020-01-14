@@ -14,14 +14,15 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 
 /**
- * An example command that uses an example subsystem.
+ * This command would allow the driver to modify the robot's angel manually
+ * with the value of the left xbox's joystick.
  */
 public class JoystickControlCommand extends CommandBase {
     private final Climber climber;
 
 
     /**
-     * Creates a new RiseToHeightCommand.
+     * Creates a new JoystickControlCommand.
      *
      * @param climber The subsystem used by this command.
      */
