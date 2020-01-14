@@ -32,5 +32,4 @@ public class climbTest {
         Assert.assertEquals(1.5, climber.normalizeSetPoint(1.5),0);
     }
 
-
 }
