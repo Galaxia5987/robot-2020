@@ -1,6 +1,7 @@
 package frc.robot;
 
 public class Ports {
+    public static final int TALON_PID_SLOT = 0;
 
     public static class Shooter {
         public static final int MASTER = 0;

@@ -10,6 +10,7 @@ import frc.robot.subsystems.UnitModel;
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Shooter.*;
+import static frc.robot.Ports.TALON_PID_SLOT;
 
 public class Shooter extends SubsystemBase {
     private final TalonSRX shooterMaster = new TalonSRX(MASTER);

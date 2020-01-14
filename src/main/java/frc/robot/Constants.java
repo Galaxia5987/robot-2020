@@ -58,7 +58,6 @@ public class Constants {
     }
 
     public static class Shooter {
-        public static final int TALON_PID_SLOT = 0;
         public static final double KP = 0.085; // 0.13
         public static final double KI = 0.0;
         public static final double KD = 0.00;
