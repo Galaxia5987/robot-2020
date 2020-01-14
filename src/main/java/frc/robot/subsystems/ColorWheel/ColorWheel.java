@@ -21,6 +21,7 @@ import frc.robot.Ports;
 
 public class ColorWheel extends SubsystemBase {
 
+  //Color sensor definitions
   public final I2C.Port i2cPort = I2C.Port.kOnboard;
   public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
@@ -67,7 +68,7 @@ public class ColorWheel extends SubsystemBase {
 
   public String colorToString(Color color){
     ColorMatchResult match = colorMatcher.matchClosestColor(color);
-    String colorInString = "Unknown";
+    String colorInString;
     if (match.color == BlueTarget) {
       colorInString = "Blue";
     } else if (match.color == RedTarget) {
@@ -90,11 +91,9 @@ public class ColorWheel extends SubsystemBase {
   public void periodic() {
     Color detectedColor = colorSensor.getColor();
     colorString = colorToString(detectedColor);
-    SmartDashboard.putNumber("Encoder", Counter);
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putString("Detected Color", colorString);
-    // This method will be called once per scheduler run
   }
 }

@@ -5,11 +5,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import static frc.robot.RobotContainer.colorWheel;
 
 public class RotationControl extends CommandBase {
+    private double percentSpeed;
     private String clockWiseCurrentColor = "Yellow";
     private String counterClockWiseCurrentColor = "Yellow";
     private double clockWiseSpins = 0;
-    private double percentSpeed = 0;
-
 
     public RotationControl(double percentSpeed) {
         this.percentSpeed = percentSpeed;
