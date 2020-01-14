@@ -51,7 +51,7 @@ public class Shoot extends CommandBase {
      * @param distance the distance away from the target.
      * @return the calculated velocity to get to the target in rps.
      */
-    private double approximateVelocity(double distance) {
+    public double approximateVelocity(double distance) {
         return (8.68 * Math.exp(0.1685 * distance));
     }
 
