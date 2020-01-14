@@ -181,11 +181,4 @@ public class Turret extends SubsystemBase {
         motor.setSelectedSensorPosition(unitModel.toTicks(resetAngle), 0, TALON_TIMEOUT);
     }
 
-
-    /**
-     * resets the encoder position to 0
-     */
-    public void reset() {
-        motor.setSelectedSensorPosition(0);
-    }
 }
