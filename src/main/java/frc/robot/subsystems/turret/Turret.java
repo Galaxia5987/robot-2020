@@ -106,13 +106,13 @@ public class Turret extends SubsystemBase {
         double[] positions = {targetAngle - 360, targetAngle, targetAngle + 360}; // An array of all possible target positions
         double targetPosition = Double.NaN;
         double shortestDistance = Double.MAX_VALUE;
-        for (double _targetPos : positions) { // for each possible position
-            if (_targetPos < MINIMUM_POSITION || _targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
+        for (double targetPos : positions) { // for each possible position
+            if (targetPos < MINIMUM_POSITION || targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
                 continue;
-            if (Math.abs(_targetPos - currentPosition) < shortestDistance) // if the calculated distance is less than the current shortest distance
+            if (Math.abs(targetPos - currentPosition) < shortestDistance) // if the calculated distance is less than the current shortest distance
             {
-                shortestDistance = Math.abs(_targetPos - currentPosition);
-                targetPosition = _targetPos;
+                shortestDistance = Math.abs(targetPos - currentPosition);
+                targetPosition = targetPos;
             }
         }
         if(targetPosition == Double.NaN)
