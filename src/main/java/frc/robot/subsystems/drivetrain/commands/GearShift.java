@@ -31,7 +31,6 @@ public class GearShift extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drivetrain.startCooldown();
     drivetrain.shiftGear(shiftmode);
   }
 

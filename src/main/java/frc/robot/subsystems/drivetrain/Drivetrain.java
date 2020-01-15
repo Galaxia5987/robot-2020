@@ -23,6 +23,7 @@ import frc.robot.utilities.FalconConfiguration;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
+import static frc.robot.RobotContainer.drivetrain;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -60,6 +61,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void shiftGear(shiftModes mode) {
+        startCooldown();
         if (Robot.isRobotA) {
             switch (mode) {
                 case TOGGLE:
