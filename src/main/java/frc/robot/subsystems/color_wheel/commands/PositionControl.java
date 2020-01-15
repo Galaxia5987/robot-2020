@@ -36,7 +36,11 @@ public class PositionControl extends CommandBase {
 
     @Override
     public void execute() {
-
+        int distanceFromTarget = Math.abs(currentColor - colorWheel.indexOfColor(targetColor));
+        if (distanceFromTarget < REVERSE_TILE_THRESHOLD)
+            colorWheel.setMotorSpeed(POSITION_SPEED * (distanceFromTarget * kP));
+        else
+            colorWheel.setMotorSpeed(-POSITION_SPEED * (distanceFromTarget * kP));
     }
 
     @Override
@@ -51,5 +55,11 @@ public class PositionControl extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         colorWheel.setMotorSpeed(0);
+    public void getCurrentColor() {
+        try {
+            currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
+        } catch (Exception ignored) {
+
     }
+}
 }
