@@ -61,44 +61,23 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void shiftGear(shiftModes mode) {
-        startCooldown();
-        if (Robot.isRobotA) {
-            switch (mode) {
-                case TOGGLE:
-                    if (isShiftedHigh() && canShiftHigh())
-                        AgearShifter.set(DoubleSolenoid.Value.kForward);
-
-                    else if (canShiftLow())
-                        AgearShifter.set(DoubleSolenoid.Value.kReverse);
-                case LOW:
-                    if (canShiftLow())
-                        AgearShifter.set(DoubleSolenoid.Value.kReverse);
-                case HIGH:
-                    if (isShiftedHigh() && canShiftHigh())
-                        AgearShifter.set(DoubleSolenoid.Value.kForward);
-                default:
-                    throw new IllegalStateException("Unexpected value: " + mode);
-            }
-        } else {
-            switch (mode) {
-                case TOGGLE:
-                    if (isShiftedHigh() && canShiftHigh())
-                        BgearShifter.set(true);
-                    else if (canShiftLow())
-                        BgearShifter.set(false);
-                    break;
-                case HIGH:
-                    if (isShiftedHigh() && canShiftHigh())
-                        BgearShifter.set(true);
-                    break;
-                case LOW:
-                    if (canShiftLow())
-                        BgearShifter.set(false);
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + mode);
-
-            }
+        switch (mode) {
+            case TOGGLE:
+                if (!isShiftedHigh() && canShiftHigh())
+                    shiftHigh();
+                else if (canShiftLow())
+                    shiftLow();
+                break;
+            case LOW:
+                if (canShiftLow())
+                    shiftLow();
+                break;
+            case HIGH:
+                if (isShiftedHigh() && canShiftHigh())
+                    shiftHigh();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + mode);
         }
     }
 
@@ -129,6 +108,21 @@ public class Drivetrain extends SubsystemBase {
         return shiftCooldown.get();
     }
 
+    private void shiftHigh(){
+        drivetrain.startCooldown();
+        if(Robot.isRobotA)
+            AgearShifter.set(DoubleSolenoid.Value.kForward);
+        else
+            BgearShifter.set(true);
+    }
+
+    private void shiftLow(){
+        drivetrain.startCooldown();
+        if(Robot.isRobotA)
+            AgearShifter.set(DoubleSolenoid.Value.kReverse);
+        else
+            BgearShifter.set(false);
+    }
 
     /**
      * Checks if the drivetrain is  able to switch to highgear
