@@ -56,7 +56,7 @@ public class Shooter extends SubsystemBase {
 
     /**
      * set the speed of the shooter.
-     * @param speed the rotations per minute of the shooter.
+     * @param speed the rotations per second of the shooter.
      */
     public void setSpeed(double speed) {
         shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks(speed) / 10.); //convert rps to ticks per 100ms
