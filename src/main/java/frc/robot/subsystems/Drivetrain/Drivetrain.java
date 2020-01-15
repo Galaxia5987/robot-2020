@@ -36,6 +36,11 @@ public class Drivetrain extends SubsystemBase {
   private FalconConfiguration configurations = new FalconConfiguration();
   private double[] pidSet = {Constants.Drivetrain.KP, Constants.Drivetrain.KI, Constants.Drivetrain.KD, Constants.Drivetrain.KF};
     private UnitModel drivetrainModel = new UnitModel(TICKS_PER_METER);
+    /**
+     * The gear shifter will be programmed according to the following terms
+     * High gear - low torque High speed
+     * Low gear - high torque Low speed
+     */
   private DoubleSolenoid AgearShifter = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
   private Solenoid BgearShifter = new Solenoid(1, SHIFTER_PORT);
   private Timer shiftCooldown = new Timer();
