@@ -58,6 +58,16 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
+    public void startCooldown(){
+        shiftCooldown.start();
+        isShifting = true;
+    }
+
+    public void resetCooldown(){
+        shiftCooldown.stop();
+        shiftCooldown.reset();
+        isShifting = false;
+    }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
