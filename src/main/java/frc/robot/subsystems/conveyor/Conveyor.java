@@ -30,7 +30,6 @@ public class Conveyor extends SubsystemBase {
     private DeadbandProximity exitProximity = new DeadbandProximity(EXIT_PROXIMITY, EXIT_PROXIMITY_MIN_VOLTAGE, EXIT_PROXIMITY_MAX_VOLTAGE);
     private int ballsCount = 3;
     private double startLocation, endLocation;
-    private boolean ballInEntryPosition, ballInIntegrationPosition, ballInExitPosition;
     private boolean movingUp;
 
     public Conveyor() {
