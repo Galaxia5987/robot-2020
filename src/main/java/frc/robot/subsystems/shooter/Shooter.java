@@ -40,7 +40,6 @@ public class Shooter extends SubsystemBase {
         VictorSPX shooterSlave = new VictorSPX(SLAVE);
         shooterSlave.follow(shooterMaster);
         shooterMaster.setInverted(IS_SLAVE_INVERTED);
-        shooterMaster.setSensorPhase(IS_SLAVE_ENCODER_INVERTED);
 
         // Electrical (slave)
         shooterSlave.configVoltageCompSaturation(12);

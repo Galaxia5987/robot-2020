@@ -15,7 +15,5 @@ public class Ports {
         public static final boolean IS_MASTER_INVERTED = false;
         public static final boolean IS_MASTER_ENCODER_INVERTED = false;
         public static final boolean IS_SLAVE_INVERTED = false;
-        public static final boolean IS_SLAVE_ENCODER_INVERTED = false;
-
     }
 }
