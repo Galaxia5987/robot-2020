@@ -61,7 +61,7 @@ public class Conveyor extends SubsystemBase {
     public void periodic() {
         entryProximity.update();
         if (entryProximity.isBallSensed()) {
-            if (movingUp)
+            if (isBallsMovingUp())
                 incrementBallsCount(1);
             else
                 decrementBallsCount(1);
@@ -70,10 +70,28 @@ public class Conveyor extends SubsystemBase {
         integrationProximity.update();
         exitProximity.update();
         if (exitProximity.isBallSensed()) {
-            if (movingUp)
+            if (isBallsMovingUp())
                 decrementBallsCount(1);
             endLocation = getEncoderPosition();
         }
+    }
+
+    /**
+     * retrieve the current {@link #exitMotor}'s encoder position.
+     *
+     * @return the current {@link #exitMotor}'s encoder position.
+     */
+    public double getEncoderPosition() {
+        return model.toTicks(exitMotor.getSelectedSensorPosition());
+    }
+
+    /**
+     * return whether the balls are moving up.
+     *
+     * @return whether the balls are moving up.
+     */
+    public boolean isBallsMovingUp() {
+        return movingUp;
     }
 
     /**
@@ -128,12 +146,11 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * retrieve the current {@link #exitMotor}'s encoder position.
-     *
-     * @return the current {@link #exitMotor}'s encoder position.
+     * move the the last Power Cell to the lower end of the conveyor.
+     * note that the other Power Cells still move until the last Power Cell will reach to the {@link #entryProximity}.
      */
-    public double getEncoderPosition() {
-        return model.toTicks(exitMotor.getSelectedSensorPosition());
+    public void minimizeConveyor() {
+        moveConveyor(startLocation, -0.1); //TODO choose real number
     }
 
     /**
@@ -145,20 +162,29 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * move the the last Power Cell to the lower end of the conveyor.
-     * note that the other Power Cells still move until the last Power Cell will reach to the {@link #entryProximity}.
-     */
-    public void minimizeConveyor() {
-        moveConveyor(startLocation, -0.1); //TODO choose real number
-    }
-
-    /**
      * retrieve the Power Cells count that the proximities noticed.
      *
      * @return the Power Cells count that the proximities noticed.
      */
     public int getBallsCount() {
         return ballsCount;
+    }
+
+    //TODO choose reasonable value
+    /**
+     * feed the conveyor in one Power Cell per run.
+     */
+    public void feed() {
+        exitMotor.set(ControlMode.PercentOutput, EXIT_MOTOR_FEED_VELOCITY);
+        entryMotor.set(ControlMode.PercentOutput, ENTRY_MOTOR_FEED_VELOCITY);
+    }
+
+    /**
+     * stop the conveyor's motors from moving.
+     */
+    public void stop() {
+        exitMotor.set(ControlMode.PercentOutput, 0);
+        entryMotor.set(ControlMode.PercentOutput, 0);
     }
 
     /**
@@ -188,31 +214,5 @@ public class Conveyor extends SubsystemBase {
      */
     private void decrementBallsCount(int amount) {
         setBallsCount(ballsCount - amount);
-    }
-
-    //TODO choose reasonable value
-    /**
-     * feed the conveyor in one Power Cell per run.
-     */
-    public void feed() {
-        exitMotor.set(ControlMode.PercentOutput, EXIT_MOTOR_FEED_VELOCITY);
-        entryMotor.set(ControlMode.PercentOutput, ENTRY_MOTOR_FEED_VELOCITY);
-    }
-
-    /**
-     * stop the conveyor's motors from moving.
-     */
-    public void stop() {
-        exitMotor.set(ControlMode.PercentOutput, 0);
-        entryMotor.set(ControlMode.PercentOutput, 0);
-    }
-
-    /**
-     * return whether the balls are moving up.
-     *
-     * @return whether the balls are moving up.
-     */
-    public boolean isBallsMovingUp() {
-        return movingUp;
     }
 }
