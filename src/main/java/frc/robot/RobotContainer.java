@@ -13,6 +13,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.intake.Intake;
 
+import frc.robot.subsystems.turret.Turret;
+import frc.robot.subsystems.turret.commands.CenterTurret;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.TurnTurret;
+import frc.robot.subsystems.shooter.Shooter;
+
+
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -20,38 +27,48 @@ import frc.robot.subsystems.intake.Intake;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+   // The robot's subsystems and commands are defined here...
     public static final Intake intake = new Intake();
-    // The robot's subsystems and commands are defined here...
+    private static final Turret turret = new Turret();
+    private final Shooter shooter = new Shooter();
+    
     private final XboxController xbox = new XboxController(2);
-    private final JoystickButton a = new JoystickButton(xbox, 1);
+    private final JoystickButton a = new JoystickButton(xbox, 3);
+    private final JoystickButton b = new JoystickButton(xbox, 4);
+    public static final int rightYStick = 5;
+    public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
 
+   /**
+    * The container for the robot.  Contains subsystems, OI devices, and commands.
+    */
+   public RobotContainer() {
+     // Configure the button bindings
+     configureButtonBindings();
+     turret.setDefaultCommand(new JoystickTurret(turret));
+   }
 
-    /**
-     * The container for the robot.  Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
-    }
+  /**
+   * Use this method to define your button->command mappings.  Buttons can be created by
+   * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
+   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   */
+  private void configureButtonBindings() {
+    a.whenPressed(new TurnTurret(turret, 45));
+    b.whenPressed(new CenterTurret(turret));
 
-    /**
-     * Use this method to define your button->command mappings.  Buttons can be created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-     * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
-        a.whenPressed(intake::togglePosition, intake);
-    }
+  }
 
-
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return null; //TODO Change
-    }
+  public double getXboxY(){
+    return xbox.getRawAxis(rightYStick);
+  }
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    return null;
+  }
 }
