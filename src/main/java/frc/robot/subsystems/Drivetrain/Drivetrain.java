@@ -140,11 +140,11 @@ public class Drivetrain extends SubsystemBase {
     }
 
     private double getRightVelocity() {
-        return drivetrainModel.toUnits(rightMaster.getSelectedSensorPosition());
+        return drivetrainModel.toUnits(rightMaster.getSelectedSensorVelocity());
     }
 
     private double getLeftVelocity() {
-        return drivetrainModel.toUnits(leftMaster.getSelectedSensorPosition());
+        return drivetrainModel.toUnits(leftMaster.getSelectedSensorVelocity());
     }
 
     public boolean isShiftedHigh() {
