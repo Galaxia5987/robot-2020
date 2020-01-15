@@ -20,6 +20,7 @@ public class Constants {
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KF = 0;
+        public static final int TICKS_PER_METER = 0;
     }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
