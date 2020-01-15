@@ -76,7 +76,6 @@ public class Constants {
         public static final double EXIT_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the exit proximity will return, when it senses a Power Cell.
 
         public static final int TICK_PER_METERS = 0;
-        public static final double BALL_FEED_TIME = 0.5;
         public static final double BALL_DROP_TIME = 0.5;
         public static final int MAX_BALLS_COUNT = 5;
 
