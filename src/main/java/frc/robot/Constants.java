@@ -35,8 +35,6 @@ public final class Constants {
         public static double KF = 0;
       }
 
-    public static final int TALON_TIMEOUT = 10;
-
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
             replaceFields(Constants.class, BConstants.class); // Replace outer constants

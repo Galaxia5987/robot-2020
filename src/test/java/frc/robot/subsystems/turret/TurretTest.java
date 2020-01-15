@@ -12,13 +12,13 @@ public class TurretTest {
     UnitModel unitModel;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         turret = new Turret();
         unitModel = new UnitModel(TICKS_PER_DEGREE);
     }
 
     @Test
-    public void getNearestTurretPosition() throws Exception {
+    public void getNearestTurretPosition() {
         double targetAngle = 280;
         double currentPosition = 30;
         double minPos = -360;
