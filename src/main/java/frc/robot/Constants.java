@@ -1,12 +1,9 @@
 package frc.robot;
 
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
-
-
 
 /**
  * A class holding all of the constants of every mechanism on the robot.
@@ -15,6 +12,11 @@ import java.util.Optional;
  */
 
 public final class Constants {
+    public static final class Intake {
+        public static final boolean MASTER_INVERTED = true;
+        public static final boolean SLAVE_INVERTED = true;
+
+    }
 
     public static final int TALON_TIMEOUT = 10;
 
@@ -51,21 +53,20 @@ public final class Constants {
      * Replaces fields between constants classes
      *
      * @param class1 Original constants class
-     * @param class2 Constants to replace with
      */
     public static void replaceFields(Class class1, Class class2) {
         //Loop and replace all fields
         for (Field f : class2.getDeclaredFields()) {
             for (Field f2 : class1.getDeclaredFields()) {
+                //Loop and replace all fields
                 if (f2.getName().equals(f.getName())) { // If the name is equal perform replacement
+
                     f2.setAccessible(true);
                     f.setAccessible(true);
                     try {
-                        //Override final modifier
                         Field modifiersField = Field.class.getDeclaredField("modifiers");
                         modifiersField.setAccessible(true);
                         modifiersField.setInt(f2, f2.getModifiers() & ~Modifier.FINAL);
-                        f2.set(null, f.get(null)); // Set value
                     } catch (IllegalAccessException | NoSuchFieldException e) { // Catch relevant exceptions
                         e.printStackTrace();
                     }
