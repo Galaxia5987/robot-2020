@@ -113,6 +113,10 @@ public class Drivetrain extends SubsystemBase {
         isShifting = false;
     }
 
+    public double getCooldown(){
+        return shiftCooldown.get();
+    }
+
 
     private boolean canShiftHigh() {
         return shiftCooldown.get() > SHIFTER_COOLDOWN
