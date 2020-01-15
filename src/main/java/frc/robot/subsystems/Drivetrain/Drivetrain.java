@@ -61,7 +61,47 @@ public class Drivetrain extends SubsystemBase {
     configurations.setSupplyCurrentLimit(40);
     UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
 
-  }
+    }
+
+    public void shiftGear(shiftModes mode) {
+        if (Robot.isRobotA) {
+            switch (mode) {
+                case TOGGLE:
+                    if (isShiftedHigh() && canShiftHigh())
+                        AgearShifter.set(DoubleSolenoid.Value.kForward);
+                    else if (canShiftLow())
+                        AgearShifter.set(DoubleSolenoid.Value.kReverse);
+                case LOW:
+                    if (canShiftLow())
+                        AgearShifter.set(DoubleSolenoid.Value.kReverse);
+                case HIGH:
+                    if (isShiftedHigh() && canShiftHigh())
+                        AgearShifter.set(DoubleSolenoid.Value.kForward);
+                default:
+                    throw new IllegalStateException("Unexpected value: " + mode);
+            }
+        } else {
+            switch (mode) {
+                case TOGGLE:
+                    if (isShiftedHigh() && canShiftHigh())
+                        BgearShifter.set(true);
+                    else if (canShiftLow())
+                        BgearShifter.set(false);
+                    break;
+                case HIGH:
+                    if (isShiftedHigh() && canShiftHigh())
+                        BgearShifter.set(true);
+                    break;
+                case LOW:
+                    if (canShiftLow())
+                        BgearShifter.set(false);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + mode);
+
+            }
+        }
+    }
 
     public void startCooldown(){
         shiftCooldown.start();
