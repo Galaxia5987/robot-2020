@@ -13,10 +13,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.CenterTurret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
+import frc.robot.subsystems.shooter.Shooter;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -28,6 +31,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private static final Turret turret = new Turret();
+  private final Shooter shooter = new Shooter();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final XboxController xbox = new XboxController(2);
