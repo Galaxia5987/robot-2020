@@ -110,65 +110,6 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * retrieve whether the {@link #entryProximity} sense a Power Cell.
-     * If you wish to check whether the proximity lost the Power Cell, use {@link #isBallLostInEntry()} instead.
-     *
-     * @return whether the {@link #entryProximity} sense a Power Cell.
-     */
-    public boolean isBallSensedInEntry() {
-        return entryProximity.getVoltage() > ENTRY_PROXIMITY_MAX_VOLTAGE;
-    }
-
-    /**
-     * retrieve whether the {@link #entryProximity} lost the Power Cell.
-     * If you wish to check whether the proximity sensed a Power Cell, use {@link #isBallSensedInIntegration()} instead.
-     *
-     * @return whether the {@link #entryProximity} lost the Power Cell.
-     */
-    public boolean isBallLostInEntry() {
-        return entryProximity.getVoltage() < ENTRY_PROXIMITY_MIN_VOLTAGE;
-    }
-
-    /**
-     * retrieve whether the {@link #integrationProximity} sense a Power Cell.
-     * If you wish to check whether the proximity lost the Power Cell, use {@link #isBallLostInIntegration()} instead.
-     *
-     * @return whether the {@link #integrationProximity} sense a Power Cell.
-     */
-    public boolean isBallSensedInIntegration() {
-        return integrationProximity.getVoltage() > INTEGRATION_PROXIMITY_MAX_VOLTAGE;
-    }
-
-    /**
-     * retrieve whether the {@link #integrationProximity} lost the Power Cell.
-     * If you wish to check whether the proximity sensed a Power Cell, use {@link #isBallSensedInExit()} instead.
-     *
-     * @return whether the {@link #integrationProximity} lost the Power Cell.
-     */
-    public boolean isBallLostInIntegration() {
-        return integrationProximity.getVoltage() < INTEGRATION_PROXIMITY_MIN_VOLTAGE;
-    }
-
-    /**
-     * retrieve whether the {@link #exitProximity} sense a Power Cell.
-     * If you wish to check whether the proximity lost the Power Cell, use {@link #isBallLostInExit()} instead.
-     *
-     * @return whether the {@link #exitProximity} sense a Power Cell.
-     */
-    public boolean isBallSensedInExit() {
-        return exitProximity.getVoltage() > EXIT_PROXIMITY_MAX_VOLTAGE;
-    }
-
-    /**
-     * retrieve whether the {@link #exitProximity} lost the Power Cell.
-     *
-     * @return whether the {@link #exitProximity} lost the Power Cell.
-     */
-    public boolean isBallLostInExit() {
-        return exitProximity.getVoltage() < EXIT_PROXIMITY_MIN_VOLTAGE;
-    }
-
-    /**
      * move the conveyor to the desired relative location.
      * if you wish to use the default, use {@link #moveConveyor(double)} instead.
      *
@@ -253,7 +194,6 @@ public class Conveyor extends SubsystemBase {
     }
 
     //TODO choose reasonable value
-
     /**
      * feed the conveyor in one Power Cell per run.
      */
