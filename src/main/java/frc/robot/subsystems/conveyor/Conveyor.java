@@ -4,10 +4,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utils.DeadbandProximity;
 
 import static frc.robot.Constants.Conveyor.*;
 import static frc.robot.Ports.Conveyor.*;
@@ -25,9 +25,9 @@ public class Conveyor extends SubsystemBase {
     UnitModel model = new UnitModel(TICK_PER_METERS);
     private VictorSPX entryMotor = new VictorSPX(ENTRY_MOTOR);
     private TalonSRX exitMotor = new TalonSRX(EXIT_MOTOR);
-    private AnalogInput entryProximity = new AnalogInput(ENTRY_PROXIMITY);
-    private AnalogInput integrationProximity = new AnalogInput(INTEGRATION_PROXIMITY);
-    private AnalogInput exitProximity = new AnalogInput(EXIT_PROXIMITY);
+    private DeadbandProximity entryProximity = new DeadbandProximity(ENTRY_PROXIMITY, ENTRY_PROXIMITY_MIN_VOLTAGE, ENTRY_PROXIMITY_MAX_VOLTAGE);
+    private DeadbandProximity integrationProximity = new DeadbandProximity(INTEGRATION_PROXIMITY, INTEGRATION_PROXIMITY_MIN_VOLTAGE, ENTRY_PROXIMITY_MAX_VOLTAGE);
+    private DeadbandProximity exitProximity = new DeadbandProximity(EXIT_PROXIMITY, EXIT_PROXIMITY_MIN_VOLTAGE, EXIT_PROXIMITY_MAX_VOLTAGE);
     private int ballsCount = 3;
     private double startLocation, endLocation;
     private boolean ballInEntryPosition, ballInIntegrationPosition, ballInExitPosition;
