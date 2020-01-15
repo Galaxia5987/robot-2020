@@ -5,10 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems.Drivetrain.commands;
+package frc.robot.subsystems.drivetrain.commands;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static frc.robot.RobotContainer.drivetrain;

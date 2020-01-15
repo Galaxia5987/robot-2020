@@ -5,9 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems.Drivetrain;
+package frc.robot.subsystems.drivetrain;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
@@ -24,7 +23,6 @@ import frc.robot.utilities.FalconConfiguration;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
-import static frc.robot.subsystems.Drivetrain.Drivetrain.shiftModes.TOGGLE;
 
 public class Drivetrain extends SubsystemBase {
 
