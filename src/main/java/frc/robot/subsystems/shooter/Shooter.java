@@ -10,6 +10,7 @@ import frc.robot.subsystems.UnitModel;
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Shooter.*;
+import static frc.robot.Ports.TALON_PID_SLOT;
 
 public class Shooter extends SubsystemBase {
     private final TalonSRX shooterMaster = new TalonSRX(MASTER);
@@ -21,8 +22,7 @@ public class Shooter extends SubsystemBase {
         shooterMaster.configFactoryDefault();
         shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         shooterMaster.setInverted(IS_MASTER_INVERTED);
-        shooterMaster.setSensorPhase(MASTER_SENSOR_PHASED);
-        shooterMaster.setSelectedSensorPosition(0);
+        shooterMaster.setSensorPhase(IS_MASTER_ENCODER_INVERTED);
 
         // Closed loop control
         shooterMaster.configClosedloopRamp(MAX_ACCELERATION);
@@ -39,6 +39,8 @@ public class Shooter extends SubsystemBase {
         // Slave configuration
         VictorSPX shooterSlave = new VictorSPX(SLAVE);
         shooterSlave.follow(shooterMaster);
+        shooterMaster.setInverted(IS_SLAVE_INVERTED);
+        shooterMaster.setSensorPhase(IS_SLAVE_ENCODER_INVERTED);
 
         // Electrical (slave)
         shooterSlave.configVoltageCompSaturation(12);
@@ -54,10 +56,10 @@ public class Shooter extends SubsystemBase {
 
     /**
      * set the speed of the shooter.
-     * @param rps the rotations per minute of the shooter.
+     * @param speed the rotations per second of the shooter.
      */
-    public void setSpeedRPS(double rps) {
-        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks(rps) / 10.); //convert rps to ticks per 100ms
+    public void setSpeed(double speed) {
+        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks(speed) / 10.); //convert rps to ticks per 100ms
     }
 
 }

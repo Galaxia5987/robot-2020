@@ -9,9 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.turret.Turret;
@@ -29,16 +28,16 @@ import frc.robot.subsystems.shooter.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
   private static final Turret turret = new Turret();
   private final Shooter shooter = new Shooter();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final XboxController xbox = new XboxController(2);
   private final JoystickButton a = new JoystickButton(xbox, 3);
   private final JoystickButton b = new JoystickButton(xbox, 4);
   public static final int rightYStick = 5;
   public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -71,6 +70,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }

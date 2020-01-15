@@ -9,11 +9,13 @@ import frc.robot.subsystems.shooter.Shooter;
 
 public class Shoot extends CommandBase {
     public static final NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
-    private final double distance;
+    private double distance;
     private final double timeout;
     private final Shooter shooter;
     private final Timer timer = new Timer();
     private final NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
+    private static final NetworkTableEntry visionDistance = shooterTable.getEntry("distance");
+    private boolean isVisionActive = false;
 
     public Shoot(Shooter shooter,  double distance, double timeout) {
         addRequirements(shooter);
@@ -26,6 +28,11 @@ public class Shoot extends CommandBase {
         this(shooter, distance, 0);
     }
 
+    public Shoot(Shooter shooter) {
+        this(shooter, visionDistance.getDouble(3), 0); //TODO replace 3 with the vision distance output value
+        isVisionActive = true;
+    }
+
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
@@ -36,7 +43,10 @@ public class Shoot extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        shooter.setSpeedRPS(approximateVelocity(distance));
+        if (isVisionActive) {
+            distance = visionDistance.getDouble(3);
+        }
+        shooter.setSpeed(approximateVelocity(distance));
         setNetworkTable();
     }
 
@@ -51,7 +61,7 @@ public class Shoot extends CommandBase {
      * @param distance the distance away from the target.
      * @return the calculated velocity to get to the target in rps.
      */
-    private double approximateVelocity(double distance) {
+    public double approximateVelocity(double distance) {
         return (8.68 * Math.exp(0.1685 * distance));
     }
 
@@ -65,7 +75,7 @@ public class Shoot extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         timer.stop();
-        shooter.setSpeedRPS(0);
+        shooter.setSpeed(0);
     }
 
 }
