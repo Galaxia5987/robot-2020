@@ -4,7 +4,7 @@ import frc.robot.EKF.ProcessModel;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-
+// Class that describes the 2D dynamics of robot. Has 5 states as following
 // State [x y v phi omega]
 //      [ 0 1 2  3   4  ]
 //       x [m] , y [m], v [m/s], phi [rad], omega [rad/s]
@@ -34,11 +34,12 @@ public class OdometryInertialProcess extends ProcessModel {
 
     @Override
     public void initialStateCovariance(double[][] cov) {
-        cov[0][0] = 0.01;
-        cov[1][1] = 0.01;
-        cov[2][2] = 0.1;
-        cov[3][3] = 8e-3; //  5 deg sqrd in rad
-        cov[4][4] = 1e-5; //  assume not moving
+        // Sets initial variance for state variables.
+        cov[0][0] = 0.01; // 10 cm accuracy for X
+        cov[1][1] = 0.01; // 10 cm accuracy for Y
+        cov[2][2] = 0.1;  // 0.31 m/s accuracy for X
+        cov[3][3] = 8e-3; //  5 deg sqrd in rad for phi
+        cov[4][4] = 1e-5; //  assume not moving : 0.2 deg/s for omega
     }
 
     @Override
@@ -49,11 +50,12 @@ public class OdometryInertialProcess extends ProcessModel {
         double phi = x[3][0];
         double omega = x[4][0];
 
-        f[0][0] = v * cos(phi);
-        f[1][0] = v * sin(phi);
-        f[2][0] = m_acc;
-        f[3][0] = omega;
-        f[4][0] = 0;
+        // The main system dynamics:
+        f[0][0] = v * cos(phi); // 2 D motion
+        f[1][0] = v * sin(phi); // 2 D motion
+        f[2][0] = m_acc;        // Acceleration enters here
+        f[3][0] = omega;        // phi derivative is omega
+        f[4][0] = 0;            // Assume constant omega
     }
 
     @Override
@@ -64,6 +66,7 @@ public class OdometryInertialProcess extends ProcessModel {
         double phi = x[3][0];
         double omega = x[4][0];
 
+        // Derivative of state equation
         j[0][2] = cos(phi);
         j[1][2] = sin(phi);
         j[0][3] = -v * sin(phi);
@@ -74,11 +77,11 @@ public class OdometryInertialProcess extends ProcessModel {
 
     @Override
     public void processNoiseCovariance(double[][] cov) {
-        cov[0][0] = 1e-9;
-        cov[1][1] = 1e-9;
-        cov[2][2] = 1e-2;
-        cov[3][3] = 1e-9;
-        cov[4][4] = 1e-2;
+        cov[0][0] = 0;  // Assume the position is not changing by itself - use a very small covariance
+        cov[1][1] = 0;  // Assume the position is not changing by itself - use a very small covariance
+        cov[2][2] = 1e-4;  // Allow change in velocity can  - change by measurements
+        cov[3][3] = 1e-9;  // assume phi is not changing
+        cov[4][4] = 1e-2;  // Allow change in omega
     }
 
 }

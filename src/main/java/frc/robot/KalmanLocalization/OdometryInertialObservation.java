@@ -2,21 +2,24 @@ package frc.robot.KalmanLocalization;
 
 import frc.robot.EKF.ObservationModel;
 
+// Class that implements the observation model for localization Kalman filter
 public class OdometryInertialObservation  extends ObservationModel {
 
+    // Measurements:
     private double m_yaw;
     private double m_LeftTrackSpeed;
     private double m_RightTrackSpeed;
 
-    private double m_Rr;
-    private double m_Rl;
+    private double m_Rr; // distance from robot IMU to right wheel
+    private double m_Rl; // distacne from robot IMU to left wheel
 
-    private boolean m_encoderValid = true;
+    private boolean m_encoderValid = true; // Encoder valid flag
 
     public void setEncoderValid(boolean valid){
         m_encoderValid = valid;
     }
 
+    // Constructor must receive the geometry of the robot
     public OdometryInertialObservation(double Rr, double Rl)
     {
         m_Rl = Rl;
@@ -55,9 +58,9 @@ public class OdometryInertialObservation  extends ObservationModel {
         double phi = x[3][0];
         double omega = x[4][0];
 
-        h[0][0] = phi;
-        h[1][0] = v - m_Rl*omega;
-        h[2][0] = v + m_Rr*omega;
+        h[0][0] = phi; // First measurement is the gyro angle
+        h[1][0] = v - m_Rl*omega; // Second measurement is the left encoder
+        h[2][0] = v + m_Rr*omega; // Third measurement is the right encoder
     }
 
     @Override
@@ -77,8 +80,7 @@ public class OdometryInertialObservation  extends ObservationModel {
         if (m_encoderValid) {
             cov[1][1] = 1e-4; // sigma = 1e-2 m/s
             cov[2][2] = 1e-4; // sigma = 1e-2 m/s
-        }
-        else{
+        } else{ // Throw away encoders if it slips
             cov[1][1] = 1e6; // garbage measurement
             cov[2][2] = 1e6; // garbage measurement
         }

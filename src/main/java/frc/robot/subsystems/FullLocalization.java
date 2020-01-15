@@ -29,9 +29,9 @@ import static java.lang.Math.abs;
 import static java.lang.Math.toRadians;
 
 /**
- * Class for differential drive odometry. Odometry allows you to track the
+ * Class for localization using differntial drive odometry and inertial sensors. Odometry allows you to track the
  * robot's position on the field over the course of a match using readings from
- * 2 encoders and a gyroscope.
+ * 2 encoders, a gyroscope and an accelerometer.
  *
  * <p>Teams can use odometry during the autonomous period for complex tasks like
  * path following. Furthermore, odometry can be used for latency compensation
@@ -45,13 +45,11 @@ public class FullLocalization {
     public KalmanFilter filter;
     private OdometryInertialProcess process;
     private OdometryInertialObservation observation;
-    double time = 0;
-    double m_width;
-    final double MAX_ANGLE_DELTA_ENCODER_GYRO = 0.01;
+    double m_width;     // Robot width - distance between wheel centers
+    final double MAX_ANGLE_DELTA_ENCODER_GYRO = 0.01; // allowed deviation in one cycle of between gyro and encoders. A larger value means wheel is slipping
 
 
     private Pose2d m_poseMeters;
-
     private Rotation2d m_gyroOffset;
     private Rotation2d m_previousAngle;
 
@@ -127,13 +125,15 @@ public class FullLocalization {
 
 
     /**
-     * Updates the robot position on the field using distance measurements from encoders. This
+     * Updates the robot position on the field using distance measurements from encoders and IMU. This
      * method is more numerically accurate than using velocities to integrate the pose and
      * is also advantageous for teams that are using lower CPR encoders.
      *
      * @param gyroAngle           The angle reported by the gyroscope.
      * @param leftDistanceMeters  The distance traveled by the left encoder.
      * @param rightDistanceMeters The distance traveled by the right encoder.
+     * @param acc                 The acceleration along X axis of the robot [m/s^2]
+     * @param time                The current time [s]
      * @return The new pose of the robot.
      */
     public Pose2d update(Rotation2d gyroAngle, double leftDistanceMeters,
@@ -145,20 +145,23 @@ public class FullLocalization {
         m_prevRightDistance = rightDistanceMeters;
 
          var angle = gyroAngle.plus(m_gyroOffset);
-
-
         m_previousAngle = angle;
 
 
         double dt = time - m_prev_time;
+        // Observation object holds the new measurements
         observation.SetMeasurement(gyroAngle.getRadians(), deltaLeftDistance, deltaRightDistance, dt);
+        // Acceleration enters the process and not the observation
         process.setAcc(acc);
 
+        // Check if encoders are valid or slipping:
         observation.setEncoderValid(EncoderValid(gyroAngle, deltaLeftDistance, deltaRightDistance));
 
 
+        // The main estimate step:
         filter.update(time, observation);
 
+        // Pack the results in Pose2d class
         Rotation2d phi = new Rotation2d(filter.model.state_estimate.data[3][0]);
         m_poseMeters = new Pose2d(filter.model.state_estimate.data[0][0],
                 filter.model.state_estimate.data[1][0],
