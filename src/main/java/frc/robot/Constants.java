@@ -30,6 +30,8 @@ public class Constants {
         public static final int TILES_BEFORE_SENSOR = 2;
 
         public static final double POSITION_SPEED = 0.2;
+        public static final int REVERSE_TILE_THRESHOLD = 2;
+        public static double kP = 0.3;
     }
 
 
