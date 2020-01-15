@@ -34,7 +34,7 @@ public class Drivetrain extends SubsystemBase {
   private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
   private FalconConfiguration configurations = new FalconConfiguration();
   private double[] pidSet = {Constants.Drivetrain.KP, Constants.Drivetrain.KI, Constants.Drivetrain.KD, Constants.Drivetrain.KF};
-
+    private UnitModel drivetrainModel = new UnitModel(TICKS_PER_METER);
   private DoubleSolenoid AgearShifter = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
   private Solenoid BgearShifter = new Solenoid(1, SHIFTER_PORT);
   private Timer shiftCooldown = new Timer();
