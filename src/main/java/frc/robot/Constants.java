@@ -20,7 +20,13 @@ public class Constants {
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KF = 0;
+        public static final double SHIFTER_COOLDOWN = 0;
+        public static final double HIGH_ACCELERATION_THRESHOLD = 0;
+        public static final double LOW_ACCELERATION_THRESHOLD = 0;
+        public static final double TURNING_TOLERANCE = 0;
         public static final int TICKS_PER_METER = 0;
+        public static final double HIGH_GEAR_MIN_VELOCITY = 0;
+        public static final double LOW_GEAR_MIN_OUTPUT = 0;
     }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
