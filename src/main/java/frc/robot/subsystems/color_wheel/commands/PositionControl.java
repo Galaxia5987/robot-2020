@@ -36,7 +36,7 @@ public class PositionControl extends CommandBase {
 
     @Override
     public void initialize() {
-        colorWheel.setMotorSpeed(Constants.ColorWheel.POSITION_SPEED);
+        colorWheel.setNeutralMode(NeutralMode.Coast);
         endTimer.reset();
     }
 
