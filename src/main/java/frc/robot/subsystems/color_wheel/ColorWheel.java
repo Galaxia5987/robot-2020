@@ -8,6 +8,7 @@
 package frc.robot.subsystems.color_wheel;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -76,6 +77,10 @@ public class ColorWheel extends SubsystemBase {
             colorInString = "Unknown";
         }
         return colorInString;
+    }
+
+    public void setNeutralMode(NeutralMode mode){
+        spinMotor.setNeutralMode(mode);
     }
 
     public void setMotorSpeed(double percent) {
