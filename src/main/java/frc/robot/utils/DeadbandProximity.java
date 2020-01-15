@@ -29,6 +29,12 @@ public class DeadbandProximity {
         return ballSensed;
     }
 
+    /**
+     * retrieve whether the {@link #proximity} sense a Power Cell.
+     * If you wish to check whether the proximity lost the Power Cell, use {@link #isBallAway()} ()} instead.
+     *
+     * @return whether the {@link #proximity} sense a Power Cell.
+     */
     private boolean isBallClose() {
         return getRaw() > maxDistance;
     }
