@@ -9,21 +9,22 @@ package frc.robot.subsystems.Drivetrain;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Ports;
+import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
+import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 
-import java.util.Timer;
-
-import static frc.robot.Ports.Drivetrain.*;
 import static frc.robot.Constants.Drivetrain.*;
+import static frc.robot.Ports.Drivetrain.*;
+import static frc.robot.subsystems.Drivetrain.Drivetrain.shiftModes.TOGGLE;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -113,8 +114,49 @@ public class Drivetrain extends SubsystemBase {
         shiftCooldown.reset();
         isShifting = false;
     }
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+
+
+    private boolean canShiftHigh() {
+        return shiftCooldown.get() > SHIFTER_COOLDOWN
+                && !isShifting
+                && (double) navx.getRawAccelX() > HIGH_ACCELERATION_THRESHOLD
+                && !isShiftedHigh()
+                && Math.abs(getLeftVelocity() - getRightVelocity()) < TURNING_TOLERANCE
+                && (getLeftVelocity() + getRightVelocity()) / 2 > HIGH_GEAR_MIN_VELOCITY;
+    }
+
+    private boolean canShiftLow() {
+        return shiftCooldown.get() > SHIFTER_COOLDOWN
+                && !isShifting
+                && (double) navx.getRawAccelX() > LOW_ACCELERATION_THRESHOLD
+                && !isShiftedLow()
+                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE
+                && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_OUTPUT;
+    }
+
+    private double getRightVelocity() {
+        return drivetrainModel.toUnits(rightMaster.getSelectedSensorPosition());
+    }
+
+    private double getLeftVelocity() {
+        return drivetrainModel.toUnits(leftMaster.getSelectedSensorPosition());
+    }
+
+    public boolean isShiftedHigh() {
+        if (Robot.isRobotA)
+            return AgearShifter.get() == DoubleSolenoid.Value.kForward;
+        else
+            return BgearShifter.get();
+    }
+
+    public boolean isShiftedLow() {
+        if (Robot.isRobotA)
+            return AgearShifter.get() == DoubleSolenoid.Value.kReverse;
+        else
+            return !BgearShifter.get();
+    }
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 }
