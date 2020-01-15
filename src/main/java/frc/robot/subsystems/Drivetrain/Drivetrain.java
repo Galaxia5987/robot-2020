@@ -68,6 +68,7 @@ public class Drivetrain extends SubsystemBase {
                 case TOGGLE:
                     if (isShiftedHigh() && canShiftHigh())
                         AgearShifter.set(DoubleSolenoid.Value.kForward);
+
                     else if (canShiftLow())
                         AgearShifter.set(DoubleSolenoid.Value.kReverse);
                 case LOW:
@@ -103,8 +104,10 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void startCooldown(){
-        shiftCooldown.start();
-        isShifting = true;
+        if (getCooldown() == 0) {
+            shiftCooldown.start();
+            isShifting = true;
+        }
     }
 
     public void resetCooldown(){
@@ -160,6 +163,8 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (getCooldown() > SHIFTER_COOLDOWN)
+            resetCooldown();
         // This method will be called once per scheduler run
     }
 
