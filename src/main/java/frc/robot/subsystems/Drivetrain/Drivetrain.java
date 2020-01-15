@@ -52,7 +52,6 @@ public class Drivetrain extends SubsystemBase {
         rightSlave.follow(rightMaster);
         leftSlave.follow(leftMaster);
         configurations.setNeutralMode(NeutralMode.Coast);
-        configurations.setFeedbackDevice(FeedbackDevice.QuadEncoder);
         configurations.setEnableVoltageCompensation(true);
         configurations.setPidSet(pidSet);
         configurations.setEnableCurrentLimit(true);
@@ -103,6 +102,9 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+    /**
+     * Starts the cooldown of the shifter so it won't rapidly shift
+     */
     public void startCooldown(){
         if (getCooldown() == 0) {
             shiftCooldown.start();
@@ -110,17 +112,28 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+    /**
+     * Resets the cooldown of the shifter and stops it
+     */
     public void resetCooldown(){
         shiftCooldown.stop();
         shiftCooldown.reset();
         isShifting = false;
     }
 
+    /**
+     * Returns the the time since the last shift
+     * @return
+     */
     public double getCooldown(){
         return shiftCooldown.get();
     }
 
 
+    /**
+     * Checks if the drivetrain is  able to switch to highgear
+     * @return
+     */
     private boolean canShiftHigh() {
         return shiftCooldown.get() > SHIFTER_COOLDOWN
                 && !isShifting
@@ -130,6 +143,10 @@ public class Drivetrain extends SubsystemBase {
                 && (getLeftVelocity() + getRightVelocity()) / 2 > HIGH_GEAR_MIN_VELOCITY;
     }
 
+    /**
+     * Checks if the drivetrain is  able to switch to lowgear
+     * @return
+     */
     private boolean canShiftLow() {
         return shiftCooldown.get() > SHIFTER_COOLDOWN
                 && !isShifting
@@ -139,14 +156,24 @@ public class Drivetrain extends SubsystemBase {
                 && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_OUTPUT;
     }
 
+    /**
+     * @return the velocity of the right motor
+     */
     private double getRightVelocity() {
         return drivetrainModel.toUnits(rightMaster.getSelectedSensorVelocity());
     }
 
+    /**
+     * @return the velocity of the left motor
+     */
     private double getLeftVelocity() {
         return drivetrainModel.toUnits(leftMaster.getSelectedSensorVelocity());
     }
 
+    /**
+     * Indicates whether the shifter is on a high gear
+     * @return
+     */
     public boolean isShiftedHigh() {
         if (Robot.isRobotA)
             return AgearShifter.get() == DoubleSolenoid.Value.kForward;
@@ -154,12 +181,17 @@ public class Drivetrain extends SubsystemBase {
             return BgearShifter.get();
     }
 
+    /**
+     * Indicates whether the shifter is on a low gear
+     * @return
+     */
     public boolean isShiftedLow() {
         if (Robot.isRobotA)
             return AgearShifter.get() == DoubleSolenoid.Value.kReverse;
         else
             return !BgearShifter.get();
     }
+
 
     @Override
     public void periodic() {
