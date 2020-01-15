@@ -59,23 +59,21 @@ public class Conveyor extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (isBallSensedInEntry() && isBallsMovingUp() && !ballInEntryPosition) {
-            incrementBallsCount(1);
+        entryProximity.update();
+        if (entryProximity.isBallSensed()) {
+            if (movingUp)
+                incrementBallsCount(1);
+            else
+                decrementBallsCount(1);
             startLocation = getEncoderPosition();
         }
-
-        if (isBallLostInEntry() && !isBallsMovingUp() && !ballInEntryPosition) {
-            decrementBallsCount(1);
-            startLocation = getEncoderPosition();
-        }
-
-        if (isBallLostInExit() && isBallsMovingUp() && !ballInExitPosition) {
-            decrementBallsCount(1);
+        integrationProximity.update();
+        exitProximity.update();
+        if (exitProximity.isBallSensed()) {
+            if (movingUp)
+                decrementBallsCount(1);
             endLocation = getEncoderPosition();
         }
-
-        ballInExitPosition = !isBallLostInExit();
-        ballInEntryPosition = !isBallLostInEntry();
     }
 
     /**
