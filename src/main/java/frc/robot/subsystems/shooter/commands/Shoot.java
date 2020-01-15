@@ -46,7 +46,7 @@ public class Shoot extends CommandBase {
         if (isVisionActive) {
             distance = visionDistance.getDouble(3);
         }
-        shooter.setSpeed(approximateVelocity(distance));
+        shooter.setSpeed(shooter.approximateVelocity(distance));
         setNetworkTable();
     }
 
@@ -57,13 +57,6 @@ public class Shoot extends CommandBase {
         velocityEntry.setDouble(shooter.getSpeed());
     }
 
-    /**
-     * @param distance the distance away from the target.
-     * @return the calculated velocity to get to the target in rps.
-     */
-    public double approximateVelocity(double distance) {
-        return (8.68 * Math.exp(0.1685 * distance));
-    }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
