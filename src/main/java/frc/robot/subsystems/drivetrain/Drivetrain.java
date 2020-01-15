@@ -184,10 +184,7 @@ public class Drivetrain extends SubsystemBase {
      * @return
      */
     public boolean isShiftedLow() {
-        if (Robot.isRobotA)
-            return AgearShifter.get() == DoubleSolenoid.Value.kReverse;
-        else
-            return !BgearShifter.get();
+        return !isShiftedHigh();
     }
 
 
