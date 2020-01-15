@@ -9,10 +9,17 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import frc.robot.subsystems.turret.Turret;
+import frc.robot.subsystems.turret.commands.CenterTurret;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.subsystems.shooter.Shooter;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -23,11 +30,15 @@ import frc.robot.subsystems.shooter.Shooter;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
+  private static final Turret turret = new Turret();
   private final Shooter shooter = new Shooter();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-
+  private final XboxController xbox = new XboxController(2);
+  private final JoystickButton a = new JoystickButton(xbox, 3);
+  private final JoystickButton b = new JoystickButton(xbox, 4);
+  public static final int rightYStick = 5;
+  public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -35,6 +46,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    turret.setDefaultCommand(new JoystickTurret(turret));
   }
 
   /**
@@ -44,9 +56,14 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    a.whenPressed(new TurnTurret(turret, 45));
+    b.whenPressed(new CenterTurret(turret));
+
   }
 
-
+  public double getXboxY(){
+    return xbox.getRawAxis(rightYStick);
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
