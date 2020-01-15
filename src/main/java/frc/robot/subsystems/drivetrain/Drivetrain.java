@@ -41,8 +41,8 @@ public class Drivetrain extends SubsystemBase {
      * High gear - low torque High speed
      * Low gear - high torque Low speed
      */
-    private DoubleSolenoid AgearShifter = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
-    private Solenoid BgearShifter = new Solenoid(1, SHIFTER_PORT);
+    private DoubleSolenoid gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+    private Solenoid gearShifterB = new Solenoid(1, SHIFTER_PORT);
     private Timer shiftCooldown = new Timer();
     private boolean isShifting = false;
 
@@ -111,17 +111,17 @@ public class Drivetrain extends SubsystemBase {
     private void shiftHigh(){
         drivetrain.startCooldown();
         if(Robot.isRobotA)
-            AgearShifter.set(DoubleSolenoid.Value.kForward);
+            gearShifterA.set(DoubleSolenoid.Value.kForward);
         else
-            BgearShifter.set(true);
+            gearShifterB.set(true);
     }
 
     private void shiftLow(){
         drivetrain.startCooldown();
         if(Robot.isRobotA)
-            AgearShifter.set(DoubleSolenoid.Value.kReverse);
+            gearShifterA.set(DoubleSolenoid.Value.kReverse);
         else
-            BgearShifter.set(false);
+            gearShifterB.set(false);
     }
 
     /**
@@ -170,9 +170,9 @@ public class Drivetrain extends SubsystemBase {
      */
     public boolean isShiftedHigh() {
         if (Robot.isRobotA)
-            return AgearShifter.get() == DoubleSolenoid.Value.kForward;
+            return gearShifterA.get() == DoubleSolenoid.Value.kForward;
         else
-            return BgearShifter.get();
+            return gearShifterB.get();
     }
 
     /**
