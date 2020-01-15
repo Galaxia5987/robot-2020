@@ -6,6 +6,7 @@ public class DeadbandProximity {
     private AnalogInput proximity;
     private double minDistance;
     private double maxDistance;
+    private boolean ballSensed;
 
     public DeadbandProximity(int port, double minDistance, double maxDistance) {
         proximity = new AnalogInput(port);
@@ -13,5 +14,26 @@ public class DeadbandProximity {
         this.minDistance = minDistance;
     }
 
-   
+    public void update() {
+        if (isBallAway())
+            ballSensed = false;
+        else if (isBallClose())
+            ballSensed = true;
+    }
+
+    public double getRaw() {
+        return proximity.getVoltage();
+    }
+
+    public boolean isBallSensed() {
+        return ballSensed;
+    }
+
+    private boolean isBallClose() {
+        return getRaw() > maxDistance;
+    }
+
+    private boolean isBallAway() {
+        return getRaw() < minDistance;
+    }
 }
