@@ -14,6 +14,9 @@ public class DeadbandProximity {
         this.minDistance = minDistance;
     }
 
+    /**
+     * check whether the ballSensed was sensed by the proximity.
+     */
     public void update() {
         if (isBallAway())
             ballSensed = false;
@@ -21,10 +24,20 @@ public class DeadbandProximity {
             ballSensed = true;
     }
 
+    /**
+     * Retrieve the proximity's voltage.
+     *
+     * @return the proximity's voltage.
+     */
     public double getRaw() {
         return proximity.getVoltage();
     }
 
+    /**
+     * Retrieve whether the ball was sensed by the proximity.
+     *
+     * @return whether the ball was sensed by the proximity.
+     */
     public boolean isBallSensed() {
         return ballSensed;
     }
@@ -39,6 +52,12 @@ public class DeadbandProximity {
         return getRaw() > maxDistance;
     }
 
+    /**
+     * retrieve whether the {@link #proximity} lost the Power Cell.
+     * If you wish to check whether the proximity sense the Power Cell, use {@link #isBallClose()} instead.
+     *
+     * @return whether the {@link #proximity} lost the Power Cell.
+     */
     private boolean isBallAway() {
         return getRaw() < minDistance;
     }

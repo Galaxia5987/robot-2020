@@ -207,6 +207,11 @@ public class Conveyor extends SubsystemBase {
         entryMotor.set(ControlMode.PercentOutput, 0);
     }
 
+    /**
+     * return whether the balls are moving up.
+     *
+     * @return whether the balls are moving up.
+     */
     public boolean isBallsMovingUp() {
         return movingUp;
     }
