@@ -15,16 +15,13 @@ import java.util.Optional;
  */
 public class Constants {
     public static class Drivetrain{
-
-        public static final double KP = 0;
-        public static final double KI = 0;
-        public static final double KD = 0;
-        public static final double KF = 0;
+        public static final double[] VELOCITY_PID_SET = {0, 0, 0, 0};//PID set for the velocity drive of the wheels
+        public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
+        public static final double HIGH_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into high gear
+        public static final double LOW_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into low gear
+        public static final double TURNING_TOLERANCE = 0;//Stops the robot from shifting while the robot is turning
         public static final int LOW_TICKS_PER_METER = 0;//unit conversion while the robot is on low gear
         public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
-        public static final double LOW_ACCELERATION_THRESHOLD = 0;
-        public static final double TURNING_TOLERANCE = 0;
-        public static final int TICKS_PER_METER = 0;
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
     }
