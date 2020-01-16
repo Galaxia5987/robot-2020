@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
 
-public class Shoot extends CommandBase {
+public class SpeedUp extends CommandBase {
     public static final NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
     private double distance;
     private final double timeout;
@@ -17,18 +17,18 @@ public class Shoot extends CommandBase {
     private static final NetworkTableEntry visionDistance = shooterTable.getEntry("distance");
     private boolean isVisionActive = false;
 
-    public Shoot(Shooter shooter,  double distance, double timeout) {
+    public SpeedUp(Shooter shooter, double distance, double timeout) {
         addRequirements(shooter);
         this.distance = distance;
         this.timeout = timeout;
         this.shooter = shooter;
     }
 
-    public Shoot(Shooter shooter, double distance) {
+    public SpeedUp(Shooter shooter, double distance) {
         this(shooter, distance, 0);
     }
 
-    public Shoot(Shooter shooter) {
+    public SpeedUp(Shooter shooter) {
         this(shooter, visionDistance.getDouble(3), 0); //TODO replace 3 with the vision distance output value
         isVisionActive = true;
     }

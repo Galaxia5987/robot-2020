@@ -6,10 +6,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-public class ShootTest {
+public class SpeedUpTest {
     private final double distance = 2;
     private Shooter shooter = new Shooter();
-    private Shoot shoot = new Shoot(shooter, distance);
+    private SpeedUp speedUp = new SpeedUp(shooter, distance);
 
     @Test
     public void approximateVelocity() {
