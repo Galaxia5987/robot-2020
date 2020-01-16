@@ -9,9 +9,7 @@ package frc.robot.subsystems.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,8 +31,9 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftMaster = new TalonFX(LEFT_MASTER);
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private FalconConfiguration configurations = new FalconConfiguration();
-    private double[] pidSet = {KP, KI, KD, KF};
-    private UnitModel drivetrainModel = new UnitModel(TICKS_PER_METER);
+private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
+    private UnitModel lowDrivetrainModel = new UnitModel(LOW_TICKS_PER_METER);
+    private UnitModel highDrivetrainModel = new UnitModel(HIGH_TICKS_PER_METER);
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -147,7 +146,7 @@ public class Drivetrain extends SubsystemBase {
     private boolean canShiftLow() {
         return shiftCooldown.get() > SHIFTER_COOLDOWN
                 && !isShifting
-                && (double) navx.getRawAccelX() > LOW_ACCELERATION_THRESHOLD
+                && (double) navx.getRawAccelX() < LOW_ACCELERATION_THRESHOLD
                 && !isShiftedLow()
                 && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE
                 && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_OUTPUT;
