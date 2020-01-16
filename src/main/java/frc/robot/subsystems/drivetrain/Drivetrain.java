@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
@@ -23,18 +22,18 @@ import frc.robot.utilities.FalconConfiguration;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
-import static frc.robot.RobotContainer.drivetrain;
+import static frc.robot.Robot.drivetrain;
+import static frc.robot.Robot.navx;
 
 public class Drivetrain extends SubsystemBase {
 
 
-    private static AHRS navx = new AHRS(SPI.Port.kMXP);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
     private final TalonFX leftMaster = new TalonFX(LEFT_MASTER);
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private FalconConfiguration configurations = new FalconConfiguration();
-    private double[] pidSet = {Constants.Drivetrain.KP, Constants.Drivetrain.KI, Constants.Drivetrain.KD, Constants.Drivetrain.KF};
+    private double[] pidSet = {KP, KI, KD, KF};
     private UnitModel drivetrainModel = new UnitModel(TICKS_PER_METER);
     /**
      * The gear shifter will be programmed according to the following terms

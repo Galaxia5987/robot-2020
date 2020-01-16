@@ -7,7 +7,9 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
@@ -19,7 +21,7 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public static final Drivetrain drivetrain = new Drivetrain();
+
 
 
 
