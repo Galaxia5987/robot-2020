@@ -79,12 +79,12 @@ public class Drivetrain extends SubsystemBase {
                     shiftHigh();
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + mode);
+                return;
         }
     }
 
     /**
-     * Starts the cooldown of the shifter so it won't rapidly shift
+     * Start the cooldown of the shifter so it won't shift too open
      */
     public void startCooldown(){
         if (getCooldown() == 0) {
