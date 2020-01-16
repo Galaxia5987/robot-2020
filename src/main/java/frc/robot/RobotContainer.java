@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
 /**
@@ -49,8 +50,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-//  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-//    return m_autoCommand;
-//  }
+  public CommandBase getAutonomousCommand() {
+    return null;
+  }
 }

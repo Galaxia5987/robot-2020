@@ -31,7 +31,7 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftMaster = new TalonFX(LEFT_MASTER);
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private FalconConfiguration configurations = new FalconConfiguration();
-private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
+    private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowDrivetrainModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highDrivetrainModel = new UnitModel(HIGH_TICKS_PER_METER);
     /**
