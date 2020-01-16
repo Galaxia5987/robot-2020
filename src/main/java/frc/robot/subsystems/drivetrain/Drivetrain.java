@@ -133,7 +133,7 @@ public class Drivetrain extends SubsystemBase {
     private boolean canShiftHigh() {
         return shiftCooldown.get() > SHIFTER_COOLDOWN
                 && !isShifting
-                && (double) navx.getRawAccelX() > HIGH_ACCELERATION_THRESHOLD
+                && (double) navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION > HIGH_ACCELERATION_THRESHOLD
                 && !isShiftedHigh()
                 && Math.abs(getLeftVelocity() - getRightVelocity()) < TURNING_TOLERANCE
                 && (getLeftVelocity() + getRightVelocity()) / 2 > HIGH_GEAR_MIN_VELOCITY;

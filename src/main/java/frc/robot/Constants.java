@@ -24,6 +24,7 @@ public class Constants {
         public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
+        public static final double GRAVITY_ACCELERATION = 9.80665;
     }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
