@@ -20,8 +20,8 @@ public class Constants {
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KF = 0;
-        public static final double SHIFTER_COOLDOWN = 0;
-        public static final double HIGH_ACCELERATION_THRESHOLD = 0;
+        public static final int LOW_TICKS_PER_METER = 0;//unit conversion while the robot is on low gear
+        public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
         public static final double LOW_ACCELERATION_THRESHOLD = 0;
         public static final double TURNING_TOLERANCE = 0;
         public static final int TICKS_PER_METER = 0;
