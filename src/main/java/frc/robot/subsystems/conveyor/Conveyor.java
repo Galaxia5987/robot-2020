@@ -22,7 +22,7 @@ import static frc.robot.Ports.Conveyor.*;
  * {@using 3xProximities}
  */
 public class Conveyor extends SubsystemBase {
-    UnitModel model = new UnitModel(TICK_PER_METERS);
+    UnitModel unitsConverter = new UnitModel(TICK_PER_METERS);
     private VictorSPX entryMotor = new VictorSPX(ENTRY_MOTOR);
     private TalonSRX exitMotor = new TalonSRX(EXIT_MOTOR);
     private DeadbandProximity entryProximity = new DeadbandProximity(ENTRY_PROXIMITY, ENTRY_PROXIMITY_MIN_VOLTAGE, ENTRY_PROXIMITY_MAX_VOLTAGE);
@@ -82,7 +82,7 @@ public class Conveyor extends SubsystemBase {
      * @return the current {@link #exitMotor}'s encoder position.
      */
     public double getEncoderPosition() {
-        return model.toTicks(exitMotor.getSelectedSensorPosition());
+        return unitsConverter.toTicks(exitMotor.getSelectedSensorPosition());
     }
 
     /**
