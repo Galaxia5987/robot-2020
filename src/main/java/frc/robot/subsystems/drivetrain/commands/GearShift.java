@@ -7,25 +7,27 @@
 
 package frc.robot.subsystems.drivetrain.commands;
 
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import static frc.robot.RobotContainer.drivetrain;
+import static frc.robot.Constants.Drivetrain.*;
 
 /**
  *
  */
 public class GearShift extends CommandBase {
   private Drivetrain.shiftModes shiftmode;
+  private final Drivetrain drivetrain;
 
   /**
    *
    *
    *
    */
-  public GearShift(Drivetrain.shiftModes shiftmode) {
+  public GearShift(Drivetrain drivetrain, Drivetrain.shiftModes shiftmode) {
     this.shiftmode = shiftmode;
+    this.drivetrain = drivetrain;
   }
 
   // Called when the command is initially scheduled.
@@ -49,6 +51,6 @@ public class GearShift extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return drivetrain.getCooldown() > Constants.Drivetrain.SHIFTER_COOLDOWN;
+    return drivetrain.getCooldown() > SHIFTER_COOLDOWN;
   }
 }
