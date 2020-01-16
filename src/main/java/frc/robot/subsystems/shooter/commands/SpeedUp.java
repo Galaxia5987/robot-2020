@@ -24,8 +24,8 @@ public class SpeedUp extends CommandBase {
         this.shooter = shooter;
     }
 
-    public SpeedUp(Shooter shooter, double distance) {
-        this(shooter, distance, 0);
+    public SpeedUp(Shooter shooter, double timeout) {
+        this(shooter, visionDistance.getDouble(3), timeout);
     }
 
     public SpeedUp(Shooter shooter) {
