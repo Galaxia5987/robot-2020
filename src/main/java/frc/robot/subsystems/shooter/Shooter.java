@@ -2,6 +2,7 @@ package frc.robot.subsystems.shooter;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -44,6 +45,8 @@ public class Shooter extends SubsystemBase {
         // Electrical (slave)
         shooterSlave.configVoltageCompSaturation(12);
         shooterSlave.enableVoltageCompensation(true);
+
+        shooterMaster.setNeutralMode(NeutralMode.Coast);
     }
 
     /**
