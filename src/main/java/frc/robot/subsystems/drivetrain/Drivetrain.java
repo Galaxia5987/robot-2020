@@ -157,14 +157,20 @@ public class Drivetrain extends SubsystemBase {
      * @return the velocity of the right motor
      */
     private double getRightVelocity() {
-        return drivetrainModel.toUnits(rightMaster.getSelectedSensorVelocity());
+        if (isShiftedLow())
+            return lowDrivetrainModel.toUnits(rightMaster.getSelectedSensorVelocity());
+        else
+            return highDrivetrainModel.toUnits(rightMaster.getSelectedSensorVelocity());
     }
 
     /**
      * @return the velocity of the left motor
      */
     private double getLeftVelocity() {
-        return drivetrainModel.toUnits(leftMaster.getSelectedSensorVelocity());
+        if (isShiftedLow())
+            return lowDrivetrainModel.toUnits(leftMaster.getSelectedSensorVelocity());
+        else
+            return highDrivetrainModel.toUnits(leftMaster.getSelectedSensorVelocity());
     }
 
     /**
