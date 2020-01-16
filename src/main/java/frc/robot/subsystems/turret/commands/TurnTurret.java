@@ -1,6 +1,9 @@
 package frc.robot.subsystems.turret.commands;
 
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.turret.Turret;
 
@@ -11,13 +14,19 @@ import static frc.robot.Constants.Turret.*;
  */
 public class TurnTurret extends CommandBase {
 
-    private static Turret turret;
+    private Turret turret;
     private final double angle;
+    public static final NetworkTable turretTable = NetworkTableInstance.getDefault().getTable("shooter");
+    private static final NetworkTableEntry visionAngle = turretTable.getEntry("angle");
 
     public TurnTurret(Turret turret, double angle) {
-        TurnTurret.turret = turret;
+        this.turret = turret;
         addRequirements(turret);
         this.angle = angle;
+    }
+
+    public TurnTurret(Turret turret){
+        this(turret, visionAngle.getDouble(3));
     }
 
 
