@@ -33,9 +33,6 @@ public class Conveyor extends SubsystemBase {
     private boolean movingUp;
 
     public Conveyor() {
-        exitMotor.configFactoryDefault();
-        entryMotor.configFactoryDefault();
-
         exitMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, Constants.TALON_TIMEOUT_MS);
         exitMotor.setSensorPhase(EXIT_SENSOR_PHASED);
         exitMotor.setInverted(EXIT_INVERTED);
