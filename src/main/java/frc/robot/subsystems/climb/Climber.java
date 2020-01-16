@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 
 public class Climber extends SubsystemBase {
@@ -170,8 +171,16 @@ public class Climber extends SubsystemBase {
             engageStopper();
         }
 
-        // Limit the elevators to a certain range.
-        double leftHeight = normalizeSetPoint(getLeftHeight());
+        //prevent climbing before the endgame
+        if (Robot.robotTimer.get() < 120){
+            engageStopper();
+            setLeftHeight(0);
+            setRightHeight(0);
+        }
+
+
+            // Limit the elevators to a certain range.
+            double leftHeight = normalizeSetPoint(getLeftHeight());
         double rightHeight = normalizeSetPoint(getRightHeight());
         setLeftHeight(leftHeight);
         setRightHeight(rightHeight);
