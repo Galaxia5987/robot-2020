@@ -1,7 +1,7 @@
 package frc.robot;
 
 public class Ports {
-    public class Drivetrain {
+    public static class Drivetrain {
         public static final int LEFT_MASTER = 11;
         public static final int LEFT_SLAVE = 12;
         public static final int RIGHT_MASTER = 13;
