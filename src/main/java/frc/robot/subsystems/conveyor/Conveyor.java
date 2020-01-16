@@ -195,7 +195,7 @@ public class Conveyor extends SubsystemBase {
      * @param ballsCount the amount of Power Cell.
      */
     private void setBallsCount(int ballsCount) {
-        this.ballsCount = Math.max(0, Math.min(ballsCount, MAX_BALLS_COUNT));
+        this.ballsCount = Math.min(ballsCount, MAX_BALLS_COUNT);
     }
 
     /**
