@@ -65,7 +65,7 @@ public class Drivetrain extends SubsystemBase {
     public void shiftGear(shiftModes mode) {
         switch (mode) {
             case TOGGLE:
-                if (!isShiftedHigh() && canShiftHigh())
+                if (canShiftHigh())
                     shiftHigh();
                 else if (canShiftLow())
                     shiftLow();
@@ -75,7 +75,7 @@ public class Drivetrain extends SubsystemBase {
                     shiftLow();
                 break;
             case HIGH:
-                if (isShiftedHigh() && canShiftHigh())
+                if (canShiftHigh())
                     shiftHigh();
                 break;
             default:
