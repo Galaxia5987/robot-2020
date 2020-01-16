@@ -9,7 +9,7 @@ public class UtilityFunctions {
     public static void configAllFalcons(FalconConfiguration configurations, TalonFX... falcons) {
         for (TalonFX falcon : falcons) {
             falcon.configAllSettings(configurations.motorConfigs);
-            falcon.setNeutralMode(NeutralMode.Brake);
+            falcon.setNeutralMode(configurations.getNeutralMode());
             falcon.enableVoltageCompensation(configurations.isEnableVoltageCompensation());
             falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
                     , configurations.getSupplyCurrentLimit()
