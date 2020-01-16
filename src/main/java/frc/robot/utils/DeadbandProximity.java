@@ -7,6 +7,7 @@ public class DeadbandProximity {
     private double minDistance;
     private double maxDistance;
     private boolean ballSensed;
+    private boolean ballInside;
 
     public DeadbandProximity(int port, double minDistance, double maxDistance) {
         proximity = new AnalogInput(port);
@@ -18,10 +19,13 @@ public class DeadbandProximity {
      * check whether the ballSensed was sensed by the proximity.
      */
     public void update() {
-        if (isBallAway())
+        if (isBallAway()) {
             ballSensed = false;
-        else if (isBallClose())
+            ballInside = false;
+        }else if (isBallClose() && !ballInside) {
             ballSensed = true;
+            ballInside = true;
+        }
     }
 
     /**
