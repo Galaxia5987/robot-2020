@@ -32,8 +32,8 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
     private FalconConfiguration configurations = new FalconConfiguration();
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
-    private UnitModel lowDrivetrainModel = new UnitModel(LOW_TICKS_PER_METER);
-    private UnitModel highDrivetrainModel = new UnitModel(HIGH_TICKS_PER_METER);
+    private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
+    private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -157,9 +157,9 @@ public class Drivetrain extends SubsystemBase {
      */
     private double getRightVelocity() {
         if (isShiftedLow())
-            return lowDrivetrainModel.toUnits(rightMaster.getSelectedSensorVelocity());
+            return lowGearUnitModel.toUnits(rightMaster.getSelectedSensorVelocity());
         else
-            return highDrivetrainModel.toUnits(rightMaster.getSelectedSensorVelocity());
+            return highGearUnitModel.toUnits(rightMaster.getSelectedSensorVelocity());
     }
 
     /**
@@ -167,9 +167,9 @@ public class Drivetrain extends SubsystemBase {
      */
     private double getLeftVelocity() {
         if (isShiftedLow())
-            return lowDrivetrainModel.toUnits(leftMaster.getSelectedSensorVelocity());
+            return lowGearUnitModel.toUnits(leftMaster.getSelectedSensorVelocity());
         else
-            return highDrivetrainModel.toUnits(leftMaster.getSelectedSensorVelocity());
+            return highGearUnitModel.toUnits(leftMaster.getSelectedSensorVelocity());
     }
 
     /**
