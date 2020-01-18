@@ -77,7 +77,7 @@ public class Constants {
 
         public static final int TICK_PER_METERS = 0;
         public static final double BALL_DROP_TIME = 0.5; // the time it takes to move one ball to the entry
-        public static final int MAX_BALLS_COUNT = 5;
+        public static final int MAX_BALLS_AMOUNT = 5;
 
         public static final double ENTRY_MOTOR_FEED_VELOCITY = 0;
         public static final double EXIT_MOTOR_FEED_VELOCITY = 0;
