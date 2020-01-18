@@ -33,7 +33,7 @@ public class ColorWheel extends SubsystemBase {
     private final Color RedTarget = ColorMatch.makeColor(Constants.ColorWheel.RED_RGB[0], Constants.ColorWheel.RED_RGB[1], Constants.ColorWheel.RED_RGB[2]);
     private final Color YellowTarget = ColorMatch.makeColor(Constants.ColorWheel.YELLOW_RGB[0], Constants.ColorWheel.YELLOW_RGB[1], Constants.ColorWheel.YELLOW_RGB[2]);
 
-    private final VictorSPX spinMotor = new VictorSPX(Ports.ColorWheel.SPIN_MOTOR);
+    private final VictorSPX spinMotor = new VictorSPX(Ports.ColorWheel.MOTOR);
 
     public ColorWheel() {
         colorMatcher.addColorMatch(BlueTarget);
