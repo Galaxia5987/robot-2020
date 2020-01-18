@@ -61,12 +61,12 @@ public class Conveyor extends SubsystemBase {
         if (entryProximity.getState()) {
             if (entryProximity.getToggle())
                 incrementBallsCount(1);
-            startLocation = getEncoderPosition();
+            startLocation = getConveyorPosition();
         }
         if (exitProximity.getState()) {
             if (exitProximity.getToggle() && (getExitVelocity() > 0))
                 decrementBallsCount(1);
-            endLocation = getEncoderPosition();
+            endLocation = getConveyorPosition();
         }
     }
 
@@ -81,7 +81,7 @@ public class Conveyor extends SubsystemBase {
      *
      * @return the current {@link #exitMotor}'s encoder position.
      */
-    public double getEncoderPosition() {
+    public double getConveyorPosition() {
         return unitsConverter.toTicks(exitMotor.getSelectedSensorPosition());
     }
 
@@ -90,7 +90,7 @@ public class Conveyor extends SubsystemBase {
      *
      * @return whether the balls are moving up.
      */
-    public boolean isBallsMovingUp() {
+    public boolean areBallsMovingUp() {
         return movingUp;
     }
 
@@ -132,7 +132,7 @@ public class Conveyor extends SubsystemBase {
      * @param metersPerSecond the metersPerSecond you want the motor to move.
      */
     public void moveConveyor(double location, double metersPerSecond) {
-        setLocationToExitMotor(getEncoderPosition() + location);
+        setLocationToExitMotor(getConveyorPosition() + location);
         setEntryVelocity(metersPerSecond);
     }
 
@@ -195,7 +195,7 @@ public class Conveyor extends SubsystemBase {
      * @param ballsCount the amount of Power Cell.
      */
     private void setBallsCount(int ballsCount) {
-        this.ballsCount = Math.min(ballsCount, MAX_BALLS_AMOUNT);
+        ballsCount = Math.min(ballsCount, MAX_BALLS_AMOUNT);
     }
 
     /**
