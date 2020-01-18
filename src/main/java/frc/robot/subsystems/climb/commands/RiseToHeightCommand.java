@@ -10,13 +10,12 @@ package frc.robot.subsystems.climb.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.subsystems.climb.Climber;
 
 /**
  * An example command that uses an example subsystem.
  */
 public class RiseToHeightCommand extends CommandBase {
-    private final Climber climber;
+    private final frc.robot.subsystems.climb.Climber climber;
     private double setpointHeight;
     private double setpointAngle;
     private double currentHeight;
@@ -29,7 +28,7 @@ public class RiseToHeightCommand extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public RiseToHeightCommand(Climber climber, double setpointHeight) {
+    public RiseToHeightCommand(frc.robot.subsystems.climb.Climber climber, double setpointHeight) {
         this.climber = climber;
         this.setpointHeight = setpointHeight;
         this.setpointAngle = 0;
@@ -42,7 +41,7 @@ public class RiseToHeightCommand extends CommandBase {
      * @param setpointHeight the desired height for the mechanism
      * @param setpointAngle  the desired angle
      */
-    public RiseToHeightCommand(Climber subsystem, double setpointHeight, double setpointAngle) {
+    public RiseToHeightCommand(frc.robot.subsystems.climb.Climber subsystem, double setpointHeight, double setpointAngle) {
         this.climber = subsystem;
         this.setpointHeight = setpointHeight;
         this.setpointAngle = setpointAngle;
@@ -67,7 +66,7 @@ public class RiseToHeightCommand extends CommandBase {
         currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
 
         //If the elevator reaches the target height engage the mechanical stopper to stop it from going up
-        if (Math.abs(setpointHeight - currentHeight) < Constants.Climb.ALLOWED_HEIGHT_TOLERANCE) {
+        if (Math.abs(setpointHeight - currentHeight) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE) {
             climber.engageStopper();
         }
         
@@ -75,11 +74,11 @@ public class RiseToHeightCommand extends CommandBase {
             double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
             //Fix the heights according to the angle of the robot
             if (currentAngleError > 0) {
-                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climb.HEIGHT);
+                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climber.HEIGHT);
                 rightSetpointHeight = heights[0];
                 leftSetpointHeight = heights[1];
             } else {
-                double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climb.HEIGHT);
+                double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climber.HEIGHT);
                 rightSetpointHeight = heights[1];
                 leftSetpointHeight = heights[0];
             }
@@ -103,9 +102,9 @@ public class RiseToHeightCommand extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        boolean isLeftOnSetpoint = Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climb.ALLOWED_HEIGHT_TOLERANCE;
-        boolean isRightOnSetpoint = Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climb.ALLOWED_HEIGHT_TOLERANCE;
-        boolean isAngleOnSetpoint = Math.abs(currentAngleError) < Constants.Climb.ALLOWED_ANGLE_TOLERANCE;
+        boolean isLeftOnSetpoint = Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        boolean isRightOnSetpoint = Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        boolean isAngleOnSetpoint = Math.abs(currentAngleError) < Constants.Climber.ALLOWED_ANGLE_TOLERANCE;
         return isLeftOnSetpoint && isRightOnSetpoint && isAngleOnSetpoint;
     }
 

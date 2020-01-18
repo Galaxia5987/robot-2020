@@ -21,35 +21,35 @@ public class Climber extends SubsystemBase {
     private final TalonSRX leftMotor = new TalonSRX(Ports.climber.LEFT_MOTOR);
     private final TalonSRX rightMotor = new TalonSRX(Ports.climber.RIGHT_MOTOR);
     private final DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
-    private final UnitModel unitModel = new UnitModel(Constants.Climb.TICKS_PER_METER);
+    private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
 
     /**
      * Creates a new climb Subsystem.
      */
     public Climber() {
-        leftMotor.setInverted(Constants.Climb.LEFT_MOTOR_INVERTED);
-        rightMotor.setInverted(Constants.Climb.RIGHT_MOTOR_INVERTED);
+        leftMotor.setInverted(Constants.Climber.LEFT_MOTOR_INVERTED);
+        rightMotor.setInverted(Constants.Climber.RIGHT_MOTOR_INVERTED);
 
-        leftMotor.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
-        rightMotor.configMotionCruiseVelocity(Constants.Climb.MOTION_MAGIC_VELOCITY);
+        leftMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
+        rightMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
 
-        leftMotor.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
-        rightMotor.configMotionAcceleration(Constants.Climb.MOTION_MAGIC_ACCELERATION);
+        leftMotor.configMotionAcceleration(Constants.Climber.MOTION_MAGIC_ACCELERATION);
+        rightMotor.configMotionAcceleration(Constants.Climber.MOTION_MAGIC_ACCELERATION);
 
-        leftMotor.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
-        rightMotor.config_kP(0, Constants.Climb.CLIMB_PIDF[0]);
-        leftMotor.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
-        rightMotor.config_kI(0, Constants.Climb.CLIMB_PIDF[1]);
-        leftMotor.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
-        rightMotor.config_kD(0, Constants.Climb.CLIMB_PIDF[2]);
-        leftMotor.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
-        rightMotor.config_kF(0, Constants.Climb.CLIMB_PIDF[3]);
+        leftMotor.config_kP(0, Constants.Climber.CLIMB_PIDF[0]);
+        rightMotor.config_kP(0, Constants.Climber.CLIMB_PIDF[0]);
+        leftMotor.config_kI(0, Constants.Climber.CLIMB_PIDF[1]);
+        rightMotor.config_kI(0, Constants.Climber.CLIMB_PIDF[1]);
+        leftMotor.config_kD(0, Constants.Climber.CLIMB_PIDF[2]);
+        rightMotor.config_kD(0, Constants.Climber.CLIMB_PIDF[2]);
+        leftMotor.config_kF(0, Constants.Climber.CLIMB_PIDF[3]);
+        rightMotor.config_kF(0, Constants.Climber.CLIMB_PIDF[3]);
 
         leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-        leftMotor.setSensorPhase(Constants.Climb.IS_LEFT_ENCODER_INVERTED);
-        rightMotor.setSensorPhase(Constants.Climb.IS_RIGHT_ENCODER_INVERTED);
+        leftMotor.setSensorPhase(Constants.Climber.IS_LEFT_ENCODER_INVERTED);
+        rightMotor.setSensorPhase(Constants.Climber.IS_RIGHT_ENCODER_INVERTED);
 
         leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         rightMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
@@ -92,7 +92,7 @@ public class Climber extends SubsystemBase {
      * @param height the setpoint height of the left elevator in meters
      */
     public void setLeftHeight(double height) {
-        leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.ARBITRARY_FEEDFORWARD);
+        leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
     }
 
     /**
@@ -108,7 +108,7 @@ public class Climber extends SubsystemBase {
      * @param height the setpoint height of the right elevator in meters
      */
     public void setRightHeight(double height) {
-        rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climb.ARBITRARY_FEEDFORWARD);
+        rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
     }
 
 
@@ -130,14 +130,14 @@ public class Climber extends SubsystemBase {
      * Reset the encoder position to the maximal height of the left side of subsystem, in case it reaches the limit.
      */
     public void resetLeft() {
-        leftMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climb.HEIGHT));
+        leftMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.HEIGHT));
     }
 
     /**
      * Reset the encoder position to the maximal height of right side of the subsystem, in case it reaches the limit.
      */
     public void resetRight() {
-        rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climb.HEIGHT));
+        rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.HEIGHT));
     }
 
     /**
@@ -147,8 +147,8 @@ public class Climber extends SubsystemBase {
      * @return the normalized setpoint.
      */
     public double normalizeSetPoint(double setpoint) {
-        if (setpoint > Constants.Climb.HEIGHT) {
-            return Constants.Climb.HEIGHT;
+        if (setpoint > Constants.Climber.HEIGHT) {
+            return Constants.Climber.HEIGHT;
         } else if (setpoint < 0) {
             return 0;
         }

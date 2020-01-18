@@ -64,7 +64,7 @@ public class Constants {
         //public static final double MAX_VELOCITY = CONST(5);
     }
 
-    public static class Climb {
+    public static class Climber {
         public static final int MOTION_MAGIC_VELOCITY = 0;
         public static final int MOTION_MAGIC_ACCELERATION = 0;
         public static final int TICKS_PER_METER = 1;

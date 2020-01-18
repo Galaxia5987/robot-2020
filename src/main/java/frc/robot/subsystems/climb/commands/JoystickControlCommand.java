@@ -10,14 +10,13 @@ package frc.robot.subsystems.climb.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.climb.Climber;
 
 /**
  * This command would allow the driver to modify the robot's angle manually
  * with the value of the left xbox's joystick.
  */
 public class JoystickControlCommand extends CommandBase {
-    private final Climber climber;
+    private final frc.robot.subsystems.climb.Climber climber;
 
 
     /**
@@ -25,7 +24,7 @@ public class JoystickControlCommand extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public JoystickControlCommand(Climber climber) {
+    public JoystickControlCommand(frc.robot.subsystems.climb.Climber climber) {
         this.climber = climber;
         addRequirements(climber);
     }
@@ -39,8 +38,8 @@ public class JoystickControlCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        climber.setLeftHeight(RobotContainer.getLeftXboxX()*Constants.Climb.MODIFY_JOYSTICK_RATE + climber.getLeftHeight());
-        climber.setRightHeight(-RobotContainer.getLeftXboxX()*Constants.Climb.MODIFY_JOYSTICK_RATE + climber.getRightHeight());
+        climber.setLeftHeight(RobotContainer.getLeftXboxX()* Constants.Climber.MODIFY_JOYSTICK_RATE + climber.getLeftHeight());
+        climber.setRightHeight(-RobotContainer.getLeftXboxX()* Constants.Climber.MODIFY_JOYSTICK_RATE + climber.getRightHeight());
     }
 
 
