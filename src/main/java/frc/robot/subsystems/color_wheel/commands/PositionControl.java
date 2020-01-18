@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 
 import static frc.robot.Constants.ColorWheel.*;
 import static frc.robot.RobotContainer.colorWheel;
@@ -40,10 +39,7 @@ public class PositionControl extends CommandBase {
     public void execute() {
         currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
         int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
-        if (distanceFromTarget < 3)
-            colorWheel.setMotorSpeed(POSITION_CONTROL_SPEED * (distanceFromTarget * kP));
-        else
-            colorWheel.setMotorSpeed(-POSITION_CONTROL_SPEED * (distanceFromTarget * kP));
+        colorWheel.setMotorSpeed(POSITION_CONTROL_SPEED * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
         if (distanceFromTarget == 0 && endTimer.get() != 0)
             endTimer.start();
         else if(distanceFromTarget != 0)
