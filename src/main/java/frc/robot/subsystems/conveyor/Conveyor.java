@@ -64,7 +64,7 @@ public class Conveyor extends SubsystemBase {
             startLocation = getEncoderPosition();
         }
         if (exitProximity.getState()) {
-            if (exitProximity.getToggle() && getSpeed())
+            if (exitProximity.getToggle() && (getExitVelocity() > 0))
                 decrementBallsCount(1);
             endLocation = getEncoderPosition();
         }
