@@ -67,7 +67,7 @@ public class RiseToHeightCommand extends CommandBase {
         currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
 
         //If the elevator reaches the target height engage the mechanical stopper to stop it from going up
-        if (Math.abs(setpointHeight - currentHeight) < Constants.Climb.HEIGHT_TOLERANCE) {
+        if (Math.abs(setpointHeight - currentHeight) < Constants.Climb.ALLOWED_HEIGHT_TOLERANCE) {
             climber.engageStopper();
         }
         
@@ -103,9 +103,9 @@ public class RiseToHeightCommand extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        boolean isLeftOnSetpoint = Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climb.HEIGHT_TOLERANCE;
-        boolean isRightOnSetpoint = Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climb.HEIGHT_TOLERANCE;
-        boolean isAngleOnSetpoint = Math.abs(currentAngleError) < Constants.Climb.ANGLE_TOLERANCE;
+        boolean isLeftOnSetpoint = Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climb.ALLOWED_HEIGHT_TOLERANCE;
+        boolean isRightOnSetpoint = Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climb.ALLOWED_HEIGHT_TOLERANCE;
+        boolean isAngleOnSetpoint = Math.abs(currentAngleError) < Constants.Climb.ALLOWED_ANGLE_TOLERANCE;
         return isLeftOnSetpoint && isRightOnSetpoint && isAngleOnSetpoint;
     }
 
