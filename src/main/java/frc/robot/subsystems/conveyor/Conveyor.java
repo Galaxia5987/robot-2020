@@ -58,15 +58,13 @@ public class Conveyor extends SubsystemBase {
     public void periodic() {
         updateSensors();
         
-        if (entryProximity.isObjectSensed()) {
-            if (isBallsMovingUp())
+        if (entryProximity.getState()) {
+            if (entryProximity.getToggle())
                 incrementBallsCount(1);
-            else
-                decrementBallsCount(1);
             startLocation = getEncoderPosition();
         }
-        if (exitProximity.isObjectSensed()) {
-            if (isBallsMovingUp())
+        if (exitProximity.getState()) {
+            if (exitProximity.getToggle() && getSpeed())
                 decrementBallsCount(1);
             endLocation = getEncoderPosition();
         }
@@ -77,6 +75,14 @@ public class Conveyor extends SubsystemBase {
         integrationProximity.update();
         exitProximity.update();
     }
+
+    /**
+     * @return if the exit motor is moving
+     */
+    private boolean getSpeed() {
+        return getExitVelocity() > 0;
+    }
+
     /**
      * retrieve the current {@link #exitMotor}'s encoder position.
      *
