@@ -10,12 +10,13 @@ package frc.robot.subsystems.climb.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.climb.Climber;
 
 /**
  * An example command that uses an example subsystem.
  */
 public class RiseToHeight extends CommandBase {
-    private final frc.robot.subsystems.climb.Climber climber;
+    private final Climber climber;
     private double setpointHeight;
     private double setpointAngle;
     private double currentHeight;
