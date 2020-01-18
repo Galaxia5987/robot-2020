@@ -10,9 +10,9 @@ public class FeedTurret extends CommandBase {
     private int remainBalls;
     private Timer timer = new Timer();
 
-    public FeedTurret(int remainBalls) {
+    public FeedTurret(int remainingBalls) {
         addRequirements(conveyor);
-        this.remainBalls = remainBalls;
+        this.remainBalls = remainingBalls;
     }
 
     public FeedTurret() {
