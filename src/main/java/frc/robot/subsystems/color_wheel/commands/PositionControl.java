@@ -12,54 +12,47 @@ import static frc.robot.RobotContainer.colorWheel;
 public class PositionControl extends CommandBase {
 
     private final String[] colors = {"Yellow", "Red", "Green", "Blue"};
-    private String targetColor;
+    private char FMSData;
     private int currentColor;
     private Timer endTimer = new Timer();
 
     public PositionControl() {
-        String gameData = DriverStation.getInstance().getGameSpecificMessage();
-        if (gameData.length() > 0) {
-            switch (gameData.charAt(0)) {
-                case ('Y'):
-                    targetColor = "Yellow";
-                case ('R'):
-                    targetColor = "Red";
-                case ('G'):
-                    targetColor = "Green";
-                case ('B'):
-                    targetColor = "Blue";
-                default:
-                    targetColor = "Unknown";
-            }
-        }
+
     }
 
     @Override
     public void initialize() {
+        String gameData = DriverStation.getInstance().getGameSpecificMessage();
+        if (gameData.length() > 0) {
+            if(gameData.charAt(0) == 'Y' || gameData.charAt(0) == 'R' || gameData.charAt(0) == 'G' || gameData.charAt(0) == 'B')
+                FMSData = gameData.charAt(0);
+            else
+                this.cancel();
+        }
+        else
+            this.cancel();
+
         colorWheel.setNeutralMode(NeutralMode.Coast);
         endTimer.reset();
     }
 
     @Override
     public void execute() {
-        int distanceFromTarget = Math.abs(currentColor - colorWheel.indexOfColor(targetColor));
-        if (distanceFromTarget < REVERSE_TILE_THRESHOLD)
+        currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
+        int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
+        if (distanceFromTarget < 3)
             colorWheel.setMotorSpeed(POSITION_CONTROL_SPEED * (distanceFromTarget * kP));
         else
             colorWheel.setMotorSpeed(-POSITION_CONTROL_SPEED * (distanceFromTarget * kP));
-        if (distanceFromTarget == 0){
+        if (distanceFromTarget == 0 && endTimer.get() != 0)
             endTimer.start();
-        }
+        else if(distanceFromTarget != 0)
+            endTimer.reset();
     }
 
     @Override
     public boolean isFinished() {
-        try {
-            return targetColor.equals(colors[colorWheel.indexOfColor(colorWheel.getColorString()) + Constants.ColorWheel.TILES_BEFORE_SENSOR])
-                    && endTimer.get() > 4;
-        } catch (Exception e) {
-            return false;
-        }
+        return endTimer.get() > POSITION_CONTROL_TIMER && Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4) == 0;
     }
 
     @Override
@@ -67,13 +60,5 @@ public class PositionControl extends CommandBase {
         endTimer.stop();
         colorWheel.setMotorSpeed(0);
         colorWheel.setNeutralMode(NeutralMode.Brake);
-    }
-
-    public void getCurrentColor() {
-        try {
-            currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
-        } catch (Exception ignored) {
-
-        }
     }
 }

@@ -29,8 +29,8 @@ public class Constants {
 
         public static final int TILES_BEFORE_SENSOR = 2; //The amount of color tiles between the robot sensor and the field sensor (for example at TBS = 2, the position would aim for RED when the FMS asks for BLUE)
 
+        public static final double POSITION_CONTROL_TIMER = 1;
         public static final double POSITION_CONTROL_SPEED = 0.2;
-        public static final int REVERSE_TILE_THRESHOLD = 2;
         public static double kP = 0.3;
     }
 
