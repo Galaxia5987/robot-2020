@@ -129,14 +129,14 @@ public class Climber extends SubsystemBase {
     /**
      * Reset the encoder position to the height of the subsystem.
      */
-    public void leftReset() {
+    public void resetLeft() {
         leftMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climb.HEIGHT));
     }
 
     /**
      * Reset the encoder position to the height of the subsystem.
      */
-    public void rightReset() {
+    public void resetRight() {
         rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climb.HEIGHT));
     }
 
@@ -159,10 +159,10 @@ public class Climber extends SubsystemBase {
     public void periodic() {
         //Reset if the limit switch is pressed.
         if (isLeftOnLimit()) {
-            leftReset();
+            resetLeft();
         }
         if (isRightOnLimit()) {
-            rightReset();
+            resetRight();
         }
 
         // Engage the stopper to prevent the subsystem from exceeding the limits.
