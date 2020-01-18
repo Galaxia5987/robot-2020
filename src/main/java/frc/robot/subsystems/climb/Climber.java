@@ -157,7 +157,6 @@ public class Climber extends SubsystemBase {
 
     @Override
     public void periodic() {
-
         //Reset if the limit switch is pressed.
         if (isLeftOnLimit()) {
             leftReset();
