@@ -171,7 +171,7 @@ public class Climber extends SubsystemBase {
         }
 
         // Prevent climbing before Endgame starts.
-        if (Robot.robotTimer.get() < 120){
+        if (Robot.robotTimer.get() < 120) {
             engageStopper();
             setLeftHeight(0);
             setRightHeight(0);
