@@ -68,15 +68,15 @@ public class Constants {
         public static final int MAX_CURRENT = 0;
         public static final double RAMP_RATE = 0;
 
-        public static final double ENTRY_PROXIMITY_MAX_VOLTAGE = 0; //The voltage the entry proximity will return, when it senses a Power Cell.
-        public static final double ENTRY_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the entry proximity will return, when it senses a Power Cell.
-        public static final double INTEGRATION_PROXIMITY_MAX_VOLTAGE = 0; //The voltage the integration proximity will return, when it senses a Power Cell.
-        public static final double INTEGRATION_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the integration proximity will return, when it senses a Power Cell.
-        public static final double EXIT_PROXIMITY_MAX_VOLTAGE = 0; //The voltage the exit proximity will return, when it senses a Power Cell.
-        public static final double EXIT_PROXIMITY_MIN_VOLTAGE = 0; //The voltage the exit proximity will return, when it senses a Power Cell.
+        public static final double ENTRY_PROXIMITY_MAX_VOLTAGE = 0; //The maximum voltage for which the ball would still be considered out
+        public static final double ENTRY_PROXIMITY_MIN_VOLTAGE = 0; //The minimum voltage for which the ball would still be considered out
+        public static final double INTEGRATION_PROXIMITY_MAX_VOLTAGE = 0; //The maximum voltage for which the ball would still be considered in
+        public static final double INTEGRATION_PROXIMITY_MIN_VOLTAGE = 0; //The minimum voltage for which the ball would still be considered in
+        public static final double EXIT_PROXIMITY_MAX_VOLTAGE = 0;
+        public static final double EXIT_PROXIMITY_MIN_VOLTAGE = 0;
 
         public static final int TICK_PER_METERS = 0;
-        public static final double BALL_DROP_TIME = 0.5;
+        public static final double BALL_DROP_TIME = 0.5; // the time it takes to move one ball to the entry
         public static final int MAX_BALLS_COUNT = 5;
 
         public static final double ENTRY_MOTOR_FEED_VELOCITY = 0;
