@@ -56,7 +56,8 @@ public class Conveyor extends SubsystemBase {
 
     @Override
     public void periodic() {
-        entryProximity.update();
+        updateSensors();
+        
         if (entryProximity.isBallSensed()) {
             if (isBallsMovingUp())
                 incrementBallsCount(1);
@@ -64,8 +65,6 @@ public class Conveyor extends SubsystemBase {
                 decrementBallsCount(1);
             startLocation = getEncoderPosition();
         }
-        integrationProximity.update();
-        exitProximity.update();
         if (exitProximity.isBallSensed()) {
             if (isBallsMovingUp())
                 decrementBallsCount(1);
@@ -73,6 +72,11 @@ public class Conveyor extends SubsystemBase {
         }
     }
 
+    private void updateSensors(){
+        entryProximity.update();
+        integrationProximity.update();
+        exitProximity.update();
+    }
     /**
      * retrieve the current {@link #exitMotor}'s encoder position.
      *
