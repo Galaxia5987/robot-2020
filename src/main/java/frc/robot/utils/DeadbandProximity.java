@@ -13,6 +13,8 @@ public class DeadbandProximity {
     private double minVoltage;
     private double maxVoltage;
     private boolean objectSensed = false;
+    private boolean toggle = false;
+    private boolean lastState = false;
 
     public DeadbandProximity(int port, double minVoltage, double maxVoltage) {
         proximity = new AnalogInput(port);
@@ -27,11 +29,13 @@ public class DeadbandProximity {
      * this is to ensure that the proximity doesn't toggle rapidly because of sensor noise.
      */
     public void update() {
+        lastState = objectSensed;
         if (isObjectAway()) {
             objectSensed = false;
         } else if (isObjectClose()) {
             objectSensed = true;
         }
+        toggle = objectSensed!=lastState;
     }
 
     /**
@@ -46,27 +50,36 @@ public class DeadbandProximity {
     /**
      * Retrieves whether the proximity is sensing an object.
      *
-     * @return whether the ball was sensed by the proximity.
+     * @return whether the object was sensed by the proximity.
      */
-    public boolean isObjectSensed() {
+    public boolean getState() {
         return objectSensed;
     }
 
     /**
-     * retrieve whether the {@link #proximity} sense a Power Cell.
-     * If you wish to check whether the proximity lost the Power Cell, use {@link #isObjectAway()} ()} instead.
+     * Retrieve whether the proximity sensed and then lost the object
      *
-     * @return whether the {@link #proximity} sense a Power Cell.
+     * @return whether the object passed the proximity sensor
+     */
+    public boolean getToggle(){
+        return toggle;
+    }
+
+    /**
+     * retrieve whether the {@link #proximity} senses an object.
+     * If you wish to check whether the proximity lost the object, use {@link #isObjectAway()} ()} instead.
+     *
+     * @return whether the {@link #proximity} sense a object.
      */
     private boolean isObjectClose() {
         return getRaw() > maxVoltage;
     }
 
     /**
-     * retrieve whether the {@link #proximity} lost the Power Cell.
-     * If you wish to check whether the proximity sense the Power Cell, use {@link #isObjectClose()} instead.
+     * retrieve whether the {@link #proximity} lost the object.
+     * If you wish to check whether the proximity sense the object, use {@link #isObjectClose()} instead.
      *
-     * @return whether the {@link #proximity} lost the Power Cell.
+     * @return whether the {@link #proximity} lost the object.
      */
     private boolean isObjectAway() {
         return getRaw() < minVoltage;
