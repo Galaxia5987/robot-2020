@@ -10,6 +10,7 @@ import frc.robot.subsystems.UnitModel;
 import frc.robot.utils.DeadbandProximity;
 
 import static frc.robot.Constants.Conveyor.*;
+import static frc.robot.Constants.TALON_TIMEOUT_MS;
 import static frc.robot.Ports.Conveyor.*;
 
 /**
@@ -33,17 +34,17 @@ public class Conveyor extends SubsystemBase {
     private boolean movingUp;
 
     public Conveyor() {
-        exitMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, Constants.TALON_TIMEOUT_MS);
+        exitMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
         exitMotor.setSensorPhase(EXIT_SENSOR_INVERTED);
         exitMotor.setInverted(EXIT_MOTOR_INVERTED);
         entryMotor.setInverted(ENTRY_MOTOR_INVERTED);
 
-        exitMotor.config_kP(TALON_PID_SLOT, KP, Constants.TALON_TIMEOUT_MS);
-        exitMotor.config_kI(TALON_PID_SLOT, KI, Constants.TALON_TIMEOUT_MS);
-        exitMotor.config_kD(TALON_PID_SLOT, KD, Constants.TALON_TIMEOUT_MS);
+        exitMotor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);
+        exitMotor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT_MS);
+        exitMotor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT_MS);
 
         exitMotor.configMotionCruiseVelocity(CRUISE_VELOCITY);
-        exitMotor.configMotionAcceleration(CRUISE_ACCELERATION, Constants.TALON_TIMEOUT_MS);
+        exitMotor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT_MS);
         exitMotor.configPeakCurrentLimit(MAX_CURRENT);
         exitMotor.configClosedloopRamp(RAMP_RATE);
 
