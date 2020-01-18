@@ -39,15 +39,6 @@ public class DeadbandProximity {
     }
 
     /**
-     * Retrieve the proximity's voltage.
-     *
-     * @return the proximity's voltage.
-     */
-    public double getRaw() {
-        return proximity.getVoltage();
-    }
-
-    /**
      * Retrieves whether the proximity is sensing an object.
      *
      * @return whether the object was sensed by the proximity.
@@ -63,6 +54,15 @@ public class DeadbandProximity {
      */
     public boolean getToggle(){
         return toggle;
+    }
+
+    /**
+     * Retrieve the proximity's voltage.
+     *
+     * @return the proximity's voltage.
+     */
+    private double getRaw() {
+        return proximity.getVoltage();
     }
 
     /**
