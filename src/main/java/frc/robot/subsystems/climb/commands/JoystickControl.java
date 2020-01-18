@@ -21,7 +21,7 @@ public class JoystickControl extends CommandBase {
 
 
     /**
-     * Creates a new JoystickControl.
+     * Creates a new joystick control command.
      *
      * @param climber The subsystem used by this command.
      */
