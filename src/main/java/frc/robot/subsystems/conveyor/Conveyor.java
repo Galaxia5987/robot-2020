@@ -62,6 +62,7 @@ public class Conveyor extends SubsystemBase {
                 incrementBallsCount(1);
             startLocation = getConveyorPosition();
         }
+
         if (exitProximity.getState()) {
             if (exitProximity.getToggle() && (getExitVelocity() > 0))
                 decrementBallsCount(1);
@@ -167,6 +168,10 @@ public class Conveyor extends SubsystemBase {
      */
     private void setBallsCount(int ballsCount) {
         ballsCount = Math.min(ballsCount, MAX_BALLS_AMOUNT);
+    }
+
+    public boolean entrySensedObject() {
+        return entryProximity.getState();
     }
 
     /**
