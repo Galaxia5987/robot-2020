@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utils.DeadbandProximity;
 
@@ -31,7 +30,6 @@ public class Conveyor extends SubsystemBase {
     private DeadbandProximity exitProximity = new DeadbandProximity(EXIT_PROXIMITY, EXIT_PROXIMITY_MIN_VOLTAGE, EXIT_PROXIMITY_MAX_VOLTAGE);
     private int ballsCount = 3;
     private double startLocation, endLocation;
-    private boolean movingUp;
 
     public Conveyor() {
         exitMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
@@ -58,7 +56,7 @@ public class Conveyor extends SubsystemBase {
     @Override
     public void periodic() {
         updateSensors();
-        
+
         if (entryProximity.getState()) {
             if (entryProximity.getToggle())
                 incrementBallsCount(1);
@@ -71,7 +69,7 @@ public class Conveyor extends SubsystemBase {
         }
     }
 
-    private void updateSensors(){
+    private void updateSensors() {
         entryProximity.update();
         integrationProximity.update();
         exitProximity.update();
@@ -102,7 +100,6 @@ public class Conveyor extends SubsystemBase {
      *                 be noted you should enter a value between -1 to 1.
      */
     public void setEntryVelocity(double velocity) {
-        movingUp = (velocity >= 0);
         entryMotor.set(ControlMode.PercentOutput, velocity);
     }
 
@@ -121,7 +118,6 @@ public class Conveyor extends SubsystemBase {
      * @param location the relative location you want the conveyor to move.
      */
     public void setLocationToExitMotor(double location) {
-        movingUp = (location >= 0);
         exitMotor.set(ControlMode.MotionMagic, location);
     }
 
@@ -171,7 +167,17 @@ public class Conveyor extends SubsystemBase {
         return ballsCount;
     }
 
-    //TODO choose reasonable value
+    /**
+     * change the amount of Power Cells in the conveyor.
+     * notice that this method will only change the variable {@link #ballsCount},
+     * if you wish to move the conveyor, use {@link #feed()} instead.
+     *
+     * @param ballsCount the amount of Power Cell.
+     */
+    private void setBallsCount(int ballsCount) {
+        ballsCount = Math.min(ballsCount, MAX_BALLS_AMOUNT);
+    }
+
     /**
      * feed the conveyor in one Power Cell per run.
      */
@@ -186,17 +192,6 @@ public class Conveyor extends SubsystemBase {
     public void stop() {
         exitMotor.set(ControlMode.PercentOutput, 0);
         entryMotor.set(ControlMode.PercentOutput, 0);
-    }
-
-    /**
-     * change the amount of Power Cells in the conveyor.
-     * notice that this method will only change the variable {@link #ballsCount},
-     * if you wish to move the conveyor, use {@link #feed()} instead.
-     *
-     * @param ballsCount the amount of Power Cell.
-     */
-    private void setBallsCount(int ballsCount) {
-        ballsCount = Math.min(ballsCount, MAX_BALLS_AMOUNT);
     }
 
     /**
