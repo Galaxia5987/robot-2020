@@ -38,8 +38,9 @@ public class JoystickControl extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        climber.setLeftHeight(RobotContainer.getLeftXboxX()* Constants.Climber.MODIFY_JOYSTICK_RATE + climber.getLeftHeight());
-        climber.setRightHeight(-RobotContainer.getLeftXboxX()* Constants.Climber.MODIFY_JOYSTICK_RATE + climber.getRightHeight());
+        double input = RobotContainer.getLeftXboxX()* Constants.Climber.MODIFY_JOYSTICK_RATE + climber.getLeftHeight();
+        climber.setLeftHeight(input);
+        climber.setRightHeight(-input);
     }
 
 
