@@ -13,7 +13,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 
 /**
- * This command would allow the driver to modify the robot's angel manually
+ * This command would allow the driver to modify the robot's angle manually
  * with the value of the left xbox's joystick.
  */
 public class JoystickControlCommand extends CommandBase {
