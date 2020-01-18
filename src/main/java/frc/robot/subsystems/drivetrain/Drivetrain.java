@@ -20,7 +20,6 @@ import frc.robot.utilities.FalconConfiguration;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
-import static frc.robot.Robot.drivetrain;
 import static frc.robot.Robot.navx;
 
 public class Drivetrain extends SubsystemBase {
@@ -111,7 +110,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     private void shiftHigh(){
-        drivetrain.startCooldown();
+        startCooldown();
         if(Robot.isRobotA)
             gearShifterA.set(DoubleSolenoid.Value.kForward);
         else
@@ -119,7 +118,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     private void shiftLow(){
-        drivetrain.startCooldown();
+        startCooldown();
         if(Robot.isRobotA)
             gearShifterA.set(DoubleSolenoid.Value.kReverse);
         else
