@@ -49,12 +49,16 @@ public class ColorWheel extends SubsystemBase {
     public int indexOfColor(String color) {
         switch (color) {
             case ("Yellow"):
+            case ("Y"):
                 return 0;
             case ("Red"):
+            case ("R"):
                 return 1;
             case ("Green"):
+            case ("G"):
                 return 2;
             case ("Blue"):
+            case ("B"):
                 return 3;
             default:
                 throw new IllegalArgumentException(String.format("Color %s does not have an index", color));
