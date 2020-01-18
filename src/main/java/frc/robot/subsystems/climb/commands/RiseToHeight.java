@@ -25,7 +25,7 @@ public class RiseToHeight extends CommandBase {
     private double rightSetpointHeight;
 
     /**
-     * Creates a new RiseToHeight.
+     * Creates a new rise to height command.
      *
      * @param climber The subsystem used by this command.
      */
