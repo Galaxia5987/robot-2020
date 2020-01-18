@@ -175,14 +175,12 @@ public class Climber extends SubsystemBase {
             engageStopper();
             setLeftHeight(0);
             setRightHeight(0);
-        }
-
-
+        } else {
             // Limit the elevators to a certain range.
             double leftHeight = normalizeSetPoint(getLeftHeight());
-        double rightHeight = normalizeSetPoint(getRightHeight());
-        setLeftHeight(leftHeight);
-        setRightHeight(rightHeight);
-
+            double rightHeight = normalizeSetPoint(getRightHeight());
+            setLeftHeight(leftHeight);
+            setRightHeight(rightHeight);
+        }
     }
 }
