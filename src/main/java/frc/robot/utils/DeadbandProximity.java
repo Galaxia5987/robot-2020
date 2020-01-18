@@ -2,6 +2,12 @@ package frc.robot.utils;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
+/**
+ * This class is a modification of the regular proximity class, which adds a deadband, to insure that the sensor
+ * does not toggle multiple times.
+ * this is crucial for the conveyer, because the amount of balls that enter are counted by the amount of times
+ * the sensor switches from false to true.
+ */
 public class DeadbandProximity {
     private AnalogInput proximity;
     private double minDistance;
@@ -35,11 +41,11 @@ public class DeadbandProximity {
     }
 
     /**
-     * Retrieve whether the ball was sensed by the proximity.
+     * Retrieves whether the proximity is sensing an object.
      *
      * @return whether the ball was sensed by the proximity.
      */
-    public boolean isBallSensed() {
+    public boolean isObjectSensed() {
         return ballSensed;
     }
 
