@@ -68,10 +68,10 @@ public class Constants {
         public static final int MAX_CURRENT = 0;
         public static final double RAMP_RATE = 0;
 
-        public static final double ENTRY_PROXIMITY_MAX_VOLTAGE = 0; //The maximum voltage for which the ball would still be considered out
-        public static final double ENTRY_PROXIMITY_MIN_VOLTAGE = 0; //The minimum voltage for which the ball would still be considered out
-        public static final double INTEGRATION_PROXIMITY_MAX_VOLTAGE = 0; //The maximum voltage for which the ball would still be considered in
-        public static final double INTEGRATION_PROXIMITY_MIN_VOLTAGE = 0; //The minimum voltage for which the ball would still be considered in
+        public static final double ENTRY_PROXIMITY_MAX_VOLTAGE = 2; //The minimum voltage for which the sensor would see a ball
+        public static final double ENTRY_PROXIMITY_MIN_VOLTAGE = 1.2; //The minimum voltage which the sensor would see in between two balls
+        public static final double INTEGRATION_PROXIMITY_MAX_VOLTAGE = 0;
+        public static final double INTEGRATION_PROXIMITY_MIN_VOLTAGE = 0;
         public static final double EXIT_PROXIMITY_MAX_VOLTAGE = 0;
         public static final double EXIT_PROXIMITY_MIN_VOLTAGE = 0;
 
