@@ -7,16 +7,16 @@ import static frc.robot.Constants.Conveyor.BALL_DROP_TIME;
 import static frc.robot.Constants.Conveyor.MAX_BALLS_AMOUNT;
 import static frc.robot.RobotContainer.conveyor;
 
-public class MoveBallsToEntry extends CommandBase {
+public class ReturnBalls extends CommandBase {
     private int balls;
     private Timer timer = new Timer();
 
-    public MoveBallsToEntry(int balls) {
+    public ReturnBalls(int balls) {
         addRequirements(conveyor);
         this.balls = balls;
     }
 
-    public MoveBallsToEntry() {
+    public ReturnBalls() {
         this(MAX_BALLS_AMOUNT);
     }
 
