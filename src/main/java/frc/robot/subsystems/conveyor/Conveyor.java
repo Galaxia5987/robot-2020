@@ -85,15 +85,6 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * return whether the balls are moving up.
-     *
-     * @return whether the balls are moving up.
-     */
-    public boolean areBallsMovingUp() {
-        return movingUp;
-    }
-
-    /**
      * set the velocity for the {@link #entryMotor}.
      *
      * @param velocity the speed to apply on {@link #entryMotor}.
