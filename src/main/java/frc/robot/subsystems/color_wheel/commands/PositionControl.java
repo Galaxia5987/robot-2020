@@ -44,9 +44,9 @@ public class PositionControl extends CommandBase {
     public void execute() {
         int distanceFromTarget = Math.abs(currentColor - colorWheel.indexOfColor(targetColor));
         if (distanceFromTarget < REVERSE_TILE_THRESHOLD)
-            colorWheel.setMotorSpeed(POSITION_SPEED * (distanceFromTarget * kP));
+            colorWheel.setMotorSpeed(POSITION_CONTROL_SPEED * (distanceFromTarget * kP));
         else
-            colorWheel.setMotorSpeed(-POSITION_SPEED * (distanceFromTarget * kP));
+            colorWheel.setMotorSpeed(-POSITION_CONTROL_SPEED * (distanceFromTarget * kP));
         if (distanceFromTarget == 0){
             endTimer.start();
         }
