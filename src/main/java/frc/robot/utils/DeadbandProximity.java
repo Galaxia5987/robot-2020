@@ -10,24 +10,27 @@ import edu.wpi.first.wpilibj.AnalogInput;
  */
 public class DeadbandProximity {
     private AnalogInput proximity;
-    private double minDistance;
-    private double maxDistance;
-    private boolean ballSensed = false;
+    private double minVoltage;
+    private double maxVoltage;
+    private boolean objectSensed = false;
 
-    public DeadbandProximity(int port, double minDistance, double maxDistance) {
+    public DeadbandProximity(int port, double minVoltage, double maxVoltage) {
         proximity = new AnalogInput(port);
-        this.maxDistance = maxDistance;
-        this.minDistance = minDistance;
+        this.maxVoltage = maxVoltage;
+        this.minVoltage = minVoltage;
     }
 
     /**
-     * check whether the ballSensed was sensed by the proximity.
+     * check whether the objectSensed was sensed by the proximity.
+     * An object is sensed by the proximity sensor once the proximity value goes above maxVoltage
+     * It will only say that it does not see a target anymore, when the value goes under minVoltage
+     * this is to ensure that the proximity doesn't toggle rapidly because of sensor noise.
      */
     public void update() {
-        if (isBallAway()) {
-            ballSensed = false;
-        }else if (isBallClose() && !ballSensed) {
-            ballSensed = true;
+        if (isObjectAway()) {
+            objectSensed = false;
+        } else if (isObjectClose()) {
+            objectSensed = true;
         }
     }
 
@@ -46,26 +49,26 @@ public class DeadbandProximity {
      * @return whether the ball was sensed by the proximity.
      */
     public boolean isObjectSensed() {
-        return ballSensed;
+        return objectSensed;
     }
 
     /**
      * retrieve whether the {@link #proximity} sense a Power Cell.
-     * If you wish to check whether the proximity lost the Power Cell, use {@link #isBallAway()} ()} instead.
+     * If you wish to check whether the proximity lost the Power Cell, use {@link #isObjectAway()} ()} instead.
      *
      * @return whether the {@link #proximity} sense a Power Cell.
      */
-    private boolean isBallClose() {
-        return getRaw() > maxDistance;
+    private boolean isObjectClose() {
+        return getRaw() > maxVoltage;
     }
 
     /**
      * retrieve whether the {@link #proximity} lost the Power Cell.
-     * If you wish to check whether the proximity sense the Power Cell, use {@link #isBallClose()} instead.
+     * If you wish to check whether the proximity sense the Power Cell, use {@link #isObjectClose()} instead.
      *
      * @return whether the {@link #proximity} lost the Power Cell.
      */
-    private boolean isBallAway() {
-        return getRaw() < minDistance;
+    private boolean isObjectAway() {
+        return getRaw() < minVoltage;
     }
 }
