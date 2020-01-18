@@ -1,6 +1,6 @@
 package frc.robot.subsystems.climb;
 
-import frc.robot.subsystems.climb.commands.RiseToHeightCommand;
+import frc.robot.subsystems.climb.commands.RiseToHeight;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,11 +8,11 @@ import org.junit.Test;
 import static frc.robot.RobotContainer.climber;
 
 public class climbTest {
-    RiseToHeightCommand rise;
+    RiseToHeight rise;
 
     @Before
     public void setClimber() throws Exception {
-        rise = new RiseToHeightCommand(climber, 2);
+        rise = new RiseToHeight(climber, 2);
     }
 
     @Test
