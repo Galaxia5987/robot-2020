@@ -83,7 +83,7 @@ public class Conveyor extends SubsystemBase {
      *
      * @param location the relative location you want the conveyor to move.
      */
-    public void setConveyorPosition(double location) {
+    private void setConveyorPosition(double location) {
         motor.set(ControlMode.MotionMagic, location);
     }
 
