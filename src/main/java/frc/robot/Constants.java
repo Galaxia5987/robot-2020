@@ -24,9 +24,13 @@ public class Constants {
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KF = 0;
-        public static final RamseteController follower = new RamseteController(0, 0);
-        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(TRACK_WIDTH);
-        public static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0, 0);
+        //Follower constants
+        public static final double kBeta = 0;
+        public static final double kZeta = 0;
+        //Drivetrain characterization constants
+        public static final double Ks = 0;
+        public static final double Kv = 0;
+        public static final double Ka = 0;
     }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
