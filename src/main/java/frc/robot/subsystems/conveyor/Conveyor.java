@@ -28,7 +28,6 @@ public class Conveyor extends SubsystemBase {
     private DeadbandProximity conveyorProximity = new DeadbandProximity(CONVEYOR_PROXIMITY, CONVEYOR_PROXIMITY_MIN_VOLTAGE, CONVEYOR_PROXIMITY_MAX_VOLTAGE);
     private Solenoid solenoid = new Solenoid(SOLENOID);
     private int ballsCount = 3;
-    private double startLocation, endLocation;
 
     public Conveyor() {
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
@@ -56,13 +55,11 @@ public class Conveyor extends SubsystemBase {
         if (feederProximity.getState()) {
             if (feederProximity.getToggle())
                 incrementBallsCount(1);
-            startLocation = getConveyorPosition();
         }
 
         if (conveyorProximity.getState()) {
             if (conveyorProximity.getToggle() && (getConveyorVelocity() > 0))
                 decrementBallsCount(1);
-            endLocation = getConveyorPosition();
         }
     }
 
@@ -106,22 +103,6 @@ public class Conveyor extends SubsystemBase {
     public void moveConveyor(double location) {
         if (solenoid.get()) return; //TODO Check
         setConveyorVelocity(getConveyorPosition() + location);
-    }
-
-    /**
-     * move the the last Power Cell to the lower end of the conveyor.
-     * note that the other Power Cells still move until the last Power Cell will reach to the {@link #feederProximity}.
-     */
-    public void minimizeConveyor() {
-        moveConveyor(startLocation); //TODO choose real number
-    }
-
-    /**
-     * move the first Power Cell to the higher end of the conveyor.
-     * note that the other Power Cells still move until the first Power Cell will reach to the {@link #conveyorProximity}.
-     */
-    public void maximizeConveyor() {
-        moveConveyor(endLocation); //TODO choose real number
     }
 
     /**

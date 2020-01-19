@@ -12,12 +12,12 @@ public class MinimizeConveyor extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.minimizeConveyor();
+        conveyor.moveConveyor(-1);
     }
 
     @Override
     public void execute() {
-        conveyor.minimizeConveyor();
+
     }
 
     @Override
