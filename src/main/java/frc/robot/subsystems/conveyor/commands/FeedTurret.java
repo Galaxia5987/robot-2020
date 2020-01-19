@@ -12,11 +12,11 @@ public class FeedTurret extends CommandBase {
 
     public FeedTurret(int balls) {
         addRequirements(conveyor);
-        this.remainBalls = remainingBalls;
+        this.balls = MAX_BALLS_AMOUNT - balls;
     }
 
     public FeedTurret() {
-        this(MAX_BALLS_AMOUNT);
+        this(Math.max(MAX_BALLS_AMOUNT,conveyor.getBallsCount())); //In case there are more than 5..
     }
 
     @Override
