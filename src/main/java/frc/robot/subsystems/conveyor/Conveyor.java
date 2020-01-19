@@ -94,8 +94,8 @@ public class Conveyor extends SubsystemBase {
      *
      * @return the velocity of the {@link #motor}.
      */
-    public int getConveyorVelocity() {
-        return motor.getSelectedSensorVelocity() * 10 * TICK_PER_METERS; //TODO change to unitModel once unitmodel is fixed.
+    public double getConveyorVelocity() {
+        return motor.getMotorOutputPercent(); //TODO change to unitModel once unitmodel is fixed.
     }
 
     /**
