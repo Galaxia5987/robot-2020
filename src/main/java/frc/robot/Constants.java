@@ -56,9 +56,8 @@ public class Constants {
 
     //TODO: Change values for all of the constants
     public static class Conveyor {
-        public static final boolean CONVEYOR_SENSOR_INVERTED = false;
-        public static final boolean CONVEYOR_MOTOR_INVERTED = false;
-        public static final boolean FEEDER_MOTOR_INVERTED = false;
+        public static final boolean SENSOR_INVERTED = false;
+        public static final boolean MOTOR_INVERTED = false;
         public static final double KP = 0.0;
         public static final double KI = 0.0;
         public static final double KD = 0.0;
@@ -70,16 +69,12 @@ public class Constants {
 
         public static final double FEEDER_PROXIMITY_MAX_VOLTAGE = 2; //The minimum voltage for which the sensor would see a ball
         public static final double FEEDER_PROXIMITY_MIN_VOLTAGE = 1.2; //The minimum voltage which the sensor would see in between two balls
-        public static final double INTEGRATION_PROXIMITY_MAX_VOLTAGE = 0;
-        public static final double INTEGRATION_PROXIMITY_MIN_VOLTAGE = 0;
         public static final double CONVEYOR_PROXIMITY_MAX_VOLTAGE = 0;
         public static final double CONVEYOR_PROXIMITY_MIN_VOLTAGE = 0;
 
         public static final int TICK_PER_METERS = 0;
-        public static final double BALL_DROP_TIME = 0.5; // the time it takes to move one ball to the feeder
         public static final int MAX_BALLS_AMOUNT = 5;
 
-        public static final double FEEDER_MOTOR_FEED_VELOCITY = 0;
         public static final double CONVEYOR_MOTOR_FEED_VELOCITY = 0;
     }
 }

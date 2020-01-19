@@ -3,7 +3,6 @@ package frc.robot.subsystems.conveyor;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utils.DeadbandProximity;
@@ -23,34 +22,29 @@ import static frc.robot.Ports.Conveyor.*;
  */
 public class Conveyor extends SubsystemBase {
     UnitModel unitsConverter = new UnitModel(TICK_PER_METERS);
-    private VictorSPX feederMotor = new VictorSPX(FEEDER_MOTOR);
-    private TalonSRX conveyorMotor = new TalonSRX(CONVEYOR_MOTOR);
+    private TalonSRX motor = new TalonSRX(MOTOR);
     private DeadbandProximity feederProximity = new DeadbandProximity(FEEDER_PROXIMITY, FEEDER_PROXIMITY_MIN_VOLTAGE, FEEDER_PROXIMITY_MAX_VOLTAGE);
-    private DeadbandProximity integrationProximity = new DeadbandProximity(INTEGRATION_PROXIMITY, INTEGRATION_PROXIMITY_MIN_VOLTAGE, INTEGRATION_PROXIMITY_MAX_VOLTAGE);
     private DeadbandProximity conveyorProximity = new DeadbandProximity(CONVEYOR_PROXIMITY, CONVEYOR_PROXIMITY_MIN_VOLTAGE, CONVEYOR_PROXIMITY_MAX_VOLTAGE);
     private int ballsCount = 3;
     private double startLocation, endLocation;
 
     public Conveyor() {
-        conveyorMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
-        conveyorMotor.setSensorPhase(CONVEYOR_SENSOR_INVERTED);
-        conveyorMotor.setInverted(CONVEYOR_MOTOR_INVERTED);
-        feederMotor.setInverted(FEEDER_MOTOR_INVERTED);
+        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
+        motor.setSensorPhase(SENSOR_INVERTED);
+        motor.setInverted(MOTOR_INVERTED);
 
-        conveyorMotor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);
-        conveyorMotor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT_MS);
-        conveyorMotor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT_MS);
+        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);
+        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT_MS);
+        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT_MS);
 
-        conveyorMotor.configMotionCruiseVelocity(CRUISE_VELOCITY);
-        conveyorMotor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT_MS);
-        conveyorMotor.configPeakCurrentLimit(MAX_CURRENT);
-        conveyorMotor.configClosedloopRamp(RAMP_RATE);
+        motor.configMotionCruiseVelocity(CRUISE_VELOCITY);
+        motor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT_MS);
+        motor.configPeakCurrentLimit(MAX_CURRENT);
+        motor.configClosedloopRamp(RAMP_RATE);
 
-        conveyorMotor.configVoltageCompSaturation(12);
-        feederMotor.configVoltageCompSaturation(12);
-        conveyorMotor.enableVoltageCompensation(true);
-        feederMotor.enableVoltageCompensation(true);
-        conveyorMotor.setSelectedSensorPosition(0);
+        motor.configVoltageCompSaturation(12);
+        motor.enableVoltageCompensation(true);
+        motor.setSelectedSensorPosition(0);
     }
 
     @Override
@@ -72,66 +66,43 @@ public class Conveyor extends SubsystemBase {
 
     private void updateSensors() {
         feederProximity.update();
-        integrationProximity.update();
         conveyorProximity.update();
     }
 
     /**
-     * retrieve the current {@link #conveyorMotor}'s encoder position.
+     * retrieve the current {@link #motor}'s encoder position.
      *
-     * @return the current {@link #conveyorMotor}'s encoder position.
+     * @return the current {@link #motor}'s encoder position.
      */
     public double getConveyorPosition() {
-        return unitsConverter.toTicks(conveyorMotor.getSelectedSensorPosition());
+        return unitsConverter.toTicks(motor.getSelectedSensorPosition());
     }
 
     /**
-     * set the speed for the {@link #feederMotor}.
-     *
-     * @param speed the speed to apply on {@link #feederMotor}.
-     *                 be noted you should enter a value between -1 to 1.
-     */
-    public void setFeederSpeed(double speed) {
-        feederMotor.set(ControlMode.PercentOutput, speed);
-    }
-
-    /**
-     * retrieve the current {@link #conveyorMotor}'s velocity.
-     *
-     * @return the velocity of the {@link #conveyorMotor}.
-     */
-    public int getConveyorVelocity() {
-        return conveyorMotor.getSelectedSensorVelocity() * 10 * TICK_PER_METERS; //TODO change to unitModel once unitmodel is fixed.
-    }
-
-    /**
-     * set the relative location for the {@link #conveyorMotor}.
+     * set the relative location for the {@link #motor}.
      *
      * @param location the relative location you want the conveyor to move.
      */
     public void setConveyorPosition(double location) {
-        conveyorMotor.set(ControlMode.MotionMagic, location);
+        motor.set(ControlMode.MotionMagic, location);
+    }
+
+    /**
+     * retrieve the current {@link #motor}'s velocity.
+     *
+     * @return the velocity of the {@link #motor}.
+     */
+    public int getConveyorVelocity() {
+        return motor.getSelectedSensorVelocity() * 10 * TICK_PER_METERS; //TODO change to unitModel once unitmodel is fixed.
     }
 
     /**
      * move the conveyor to the desired relative location.
-     * if you wish to use the default, use {@link #moveConveyor(double)} instead.
-     *
-     * @param location        the desired relative location.
-     * @param feederSpeed the percent speed for the funnel to spin.
-     */
-    public void moveConveyor(double location, double feederSpeed) {
-        setConveyorPosition(getConveyorPosition() + location);
-        setFeederSpeed(feederSpeed);
-    }
-
-    /**
-     * the default moveConveyor method, it move the conveyor to the desired relative location.
      *
      * @param location the desired relative location.
      */
     public void moveConveyor(double location) {
-        moveConveyor(location, 0.5); //TODO Change the speed to reasonable value
+        setConveyorPosition(getConveyorPosition() + location);
     }
 
     /**
@@ -139,7 +110,7 @@ public class Conveyor extends SubsystemBase {
      * note that the other Power Cells still move until the last Power Cell will reach to the {@link #feederProximity}.
      */
     public void minimizeConveyor() {
-        moveConveyor(startLocation, -0.1); //TODO choose real number
+        moveConveyor(startLocation); //TODO choose real number
     }
 
     /**
@@ -154,16 +125,14 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        conveyorMotor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
-        feederMotor.set(ControlMode.PercentOutput, FEEDER_MOTOR_FEED_VELOCITY);
+        motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
     }
 
     /**
      * stop the conveyor's motors from moving.
      */
     public void stop() {
-        conveyorMotor.set(ControlMode.PercentOutput, 0);
-        feederMotor.set(ControlMode.PercentOutput, 0);
+        motor.set(ControlMode.PercentOutput, 0);
     }
 
     /**
@@ -185,6 +154,15 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
+     * retrieve the Power Cells count that the proximities noticed.
+     *
+     * @return the Power Cells count that the proximities noticed.
+     */
+    public int getBallsCount() {
+        return ballsCount;
+    }
+
+    /**
      * change the amount of Power Cells in the conveyor.
      * notice that this method will only change the variable {@link #ballsCount},
      * if you wish to move the conveyor, use {@link #feed()} instead.
@@ -193,15 +171,6 @@ public class Conveyor extends SubsystemBase {
      */
     private void setBallsCount(int ballsCount) {
         this.ballsCount = ballsCount;
-    }
-
-    /**
-     * retrieve the Power Cells count that the proximities noticed.
-     *
-     * @return the Power Cells count that the proximities noticed.
-     */
-    public int getBallsCount() {
-        return ballsCount;
     }
 
     public boolean feederSensedObject() {
