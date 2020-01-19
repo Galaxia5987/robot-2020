@@ -26,6 +26,8 @@ public class DeadbandProximity extends AnalogInput {
      * An object is sensed by the proximity sensor once the proximity value goes above maxVoltage
      * It will only say that it does not see a target anymore, when the value goes under minVoltage
      * this is to ensure that the proximity doesn't toggle rapidly because of sensor noise.
+     *
+     * Side note: for the Toggle to work correctly, the update needs to be called only once per robot loop. (sorry dan!)
      */
     public void update() {
         lastState = objectSensed;

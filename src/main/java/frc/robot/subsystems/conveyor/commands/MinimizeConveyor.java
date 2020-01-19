@@ -9,7 +9,7 @@ import static frc.robot.Constants.Conveyor.*;
 public class MinimizeConveyor extends CommandBase {
     private Timer timer = new Timer(); //timeout incase the sensor misses the power cells.
     private double timeout;
-    
+
     public MinimizeConveyor(double timeout) {
         addRequirements(conveyor);
         this.timeout = timeout;
