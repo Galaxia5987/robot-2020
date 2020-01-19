@@ -76,6 +76,8 @@ public class Constants {
 
         public static final double CONVEYOR_MOTOR_FEED_VELOCITY = 0;
         public static final double CONVEYOR_MOTOR_RETURN_VELOCITY = 0;
+
+        public static final double FEED_TIMEOUT = 5;
     }
 }
 
