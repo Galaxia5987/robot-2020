@@ -82,7 +82,7 @@ public class Conveyor extends SubsystemBase {
      *
      * @param speed the relative speed you want the conveyor to move.
      */
-    public void setConveyorVelocity(double speed) {
+    public void setConveyorSpeed(double speed) {
         motor.set(ControlMode.PercentOutput, speed);
     }
 

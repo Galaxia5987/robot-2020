@@ -13,7 +13,7 @@ public class MinimizeConveyor extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.setConveyorVelocity(CONVEYOR_MOTOR_RETURN_VELOCITY);
+        conveyor.setConveyorSpeed(CONVEYOR_MOTOR_RETURN_VELOCITY);
     }
 
     @Override
