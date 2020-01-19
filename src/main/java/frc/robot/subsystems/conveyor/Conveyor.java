@@ -3,6 +3,7 @@ package frc.robot.subsystems.conveyor;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utils.DeadbandProximity;
@@ -25,6 +26,7 @@ public class Conveyor extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DeadbandProximity feederProximity = new DeadbandProximity(FEEDER_PROXIMITY, FEEDER_PROXIMITY_MIN_VOLTAGE, FEEDER_PROXIMITY_MAX_VOLTAGE);
     private DeadbandProximity conveyorProximity = new DeadbandProximity(CONVEYOR_PROXIMITY, CONVEYOR_PROXIMITY_MIN_VOLTAGE, CONVEYOR_PROXIMITY_MAX_VOLTAGE);
+    private Solenoid solenoid = new Solenoid(SOLENOID);
     private int ballsCount = 3;
     private double startLocation, endLocation;
 
@@ -102,6 +104,7 @@ public class Conveyor extends SubsystemBase {
      * @param location the desired relative location.
      */
     public void moveConveyor(double location) {
+        if (solenoid.get()) return; //TODO Check
         setConveyorPosition(getConveyorPosition() + location);
     }
 
@@ -125,6 +128,7 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
+        if(solenoid.get()) return;//TODO Check
         motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
     }
 
