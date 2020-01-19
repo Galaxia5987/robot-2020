@@ -24,7 +24,7 @@ public class TalonConfiguration {
     public TalonConfiguration() {
 
         neutralMode = NeutralMode.Coast;
-        feedbackDevice = FeedbackDevice.CTRE_MagEncoder_Absolute;
+        feedbackDevice = FeedbackDevice.CTRE_MagEncoder_Relative;
         enableVoltageCompensation = false;
 
 
