@@ -87,8 +87,8 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
-        leftMaster.set(ControlMode.Velocity, left, DemandType.ArbitraryFeedForward, leftFF);
-        leftMaster.set(ControlMode.Velocity, right, DemandType.ArbitraryFeedForward, rightFF);
+        leftMaster.set(ControlMode.Velocity, leftVelocity, DemandType.ArbitraryFeedForward, leftFF);
+        leftMaster.set(ControlMode.Velocity, rightVelocity, DemandType.ArbitraryFeedForward, rightFF);
     }
 
     @Override
