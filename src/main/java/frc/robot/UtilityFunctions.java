@@ -35,7 +35,6 @@ public class UtilityFunctions {
         for (VictorSPX victor : victors) {
             victor.configAllSettings(configs.motorConfigs);
             victor.setNeutralMode(configs.getNeutralMode());
-            victor.configSelectedFeedbackSensor(configs.getFeedbackDevice());
             victor.enableVoltageCompensation(configs.isEnableVoltageCompensation());
 
 

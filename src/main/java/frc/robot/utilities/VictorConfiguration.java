@@ -13,7 +13,6 @@ public class VictorConfiguration {
      */
 
     private NeutralMode neutralMode;
-    private FeedbackDevice feedbackDevice;
     private boolean enableVoltageCompensation;
     public VictorSPXConfiguration motorConfigs = new VictorSPXConfiguration();
 
@@ -21,7 +20,6 @@ public class VictorConfiguration {
     public VictorConfiguration() {
 
         neutralMode = NeutralMode.Coast;
-        feedbackDevice = FeedbackDevice.CTRE_MagEncoder_Absolute;
         enableVoltageCompensation = false;
 
 
@@ -31,9 +29,6 @@ public class VictorConfiguration {
         return neutralMode;
     }
 
-    public FeedbackDevice getFeedbackDevice() {
-        return feedbackDevice;
-    }
 
     public boolean isEnableVoltageCompensation() {
         return enableVoltageCompensation;
@@ -43,9 +38,6 @@ public class VictorConfiguration {
         this.neutralMode = neutralMode;
     }
 
-    public void setFeedbackDevice(FeedbackDevice feedbackDevice) {
-        this.feedbackDevice = feedbackDevice;
-    }
 
     public void setEnableVoltageCompensation(boolean enableVoltageCompensation) {
         this.enableVoltageCompensation = enableVoltageCompensation;
