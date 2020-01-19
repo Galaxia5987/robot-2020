@@ -58,7 +58,7 @@ public class Conveyor extends SubsystemBase {
         }
 
         if (conveyorProximity.getState()) {
-            if (conveyorProximity.getToggle() && (getConveyorVelocity() > 0))
+            if (conveyorProximity.getToggle() && (getConveyorSpeed() > 0))
                 decrementBallsCount(1);
         }
     }
@@ -78,12 +78,12 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * set the relative velocity for the {@link #motor}.
+     * set the relative speed for the {@link #motor}.
      *
-     * @param velocity the relative velocity you want the conveyor to move.
+     * @param speed the relative speed you want the conveyor to move.
      */
-    private void setConveyorVelocity(double velocity) {
-        motor.set(ControlMode.PercentOutput, velocity);
+    private void setConveyorVelocity(double speed) {
+        motor.set(ControlMode.PercentOutput, speed);
     }
 
     /**
@@ -91,7 +91,7 @@ public class Conveyor extends SubsystemBase {
      *
      * @return the velocity of the {@link #motor}.
      */
-    public double getConveyorVelocity() {
+    public double getConveyorSpeed() {
         return motor.getMotorOutputPercent(); //TODO change to unitModel once unitmodel is fixed.
     }
 
