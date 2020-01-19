@@ -92,6 +92,9 @@ public class Climber extends SubsystemBase {
      * @param height the setpoint height of the left elevator in meters
      */
     public void setLeftHeight(double height) {
+        if (unsafeToClimb()){
+            return;
+        }
         leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
     }
 
@@ -108,9 +111,20 @@ public class Climber extends SubsystemBase {
      * @param height the setpoint height of the right elevator in meters
      */
     public void setRightHeight(double height) {
+        if (unsafeToClimb()){
+            return;
+        }
         rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
     }
 
+    /**
+     * All cases where we want to prevent the drivers from climbing should return false here. whether it's by game time or localisation
+     * We may allow the drivers to override this.
+     * @return whether the robot should not climb
+     */
+    private boolean unsafeToClimb() {
+        return Robot.robotTimer.get() < 120;
+    }
 
     /**
      * @return whether the left elevator reached its limit.
@@ -170,17 +184,6 @@ public class Climber extends SubsystemBase {
             engageStopper();
         }
 
-        // Prevent climbing before Endgame starts.
-        if (Robot.robotTimer.get() < 120) {
-            engageStopper();
-            setLeftHeight(0);
-            setRightHeight(0);
-        } else {
-            // Limit the elevators to a certain range.
-            double leftHeight = normalizeSetPoint(getLeftHeight());
-            double rightHeight = normalizeSetPoint(getRightHeight());
-            setLeftHeight(leftHeight);
-            setRightHeight(rightHeight);
-        }
+
     }
 }
