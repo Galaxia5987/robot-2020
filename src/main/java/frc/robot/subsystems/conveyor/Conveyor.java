@@ -96,16 +96,6 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * move the conveyor to the desired relative location.
-     *
-     * @param location the desired relative location.
-     */
-    public void moveConveyor(double location) {
-        if (solenoid.get()) return; //TODO Check
-        setConveyorVelocity(getConveyorPosition() + location);
-    }
-
-    /**
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
