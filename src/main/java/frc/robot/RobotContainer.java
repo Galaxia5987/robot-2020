@@ -24,7 +24,8 @@ public class RobotContainer {
     private final Command m_autoCommand = null;
     public static XboxController xbox = new XboxController(2);
     public static int leftXStick = 0;
-
+    public static int leftYStick = 1;
+    public static int rightYStick = 5;
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -54,8 +55,16 @@ public class RobotContainer {
         return m_autoCommand;
     }
 
-    public static double getLeftXboxX(){
+    public static double getLeftXboxX() {
         return xbox.getRawAxis(leftXStick);
+    }
+
+    public static double getLeftXboxY() {
+        return xbox.getRawAxis(leftYStick);
+    }
+
+    public static double getRightXboxY() {
+        return xbox.getRawAxis(rightYStick);
     }
 
 }
