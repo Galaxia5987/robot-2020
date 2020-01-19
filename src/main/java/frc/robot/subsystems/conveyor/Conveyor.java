@@ -118,11 +118,11 @@ public class Conveyor extends SubsystemBase {
      * if you wish to use the default, use {@link #moveConveyor(double)} instead.
      *
      * @param location        the desired relative location.
-     * @param metersPerSecond the metersPerSecond you want the motor to move.
+     * @param feederSpeed the percent speed for the funnel to spin.
      */
-    public void moveConveyor(double location, double metersPerSecond) {
+    public void moveConveyor(double location, double feederSpeed) {
         setConveyorPosition(getConveyorPosition() + location);
-        setFeederSpeed(metersPerSecond);
+        setFeederSpeed(feederSpeed);
     }
 
     /**
