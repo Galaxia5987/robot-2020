@@ -30,13 +30,13 @@ public class Constants {
     }
 
     public static class Autonomous {
+        //Drivetrain characterization constants
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
         //Follower constants
         public static final double kBeta = 0;
         public static final double kZeta = 0;
-        //Drivetrain characterization constants
-        public static final double Ks = 0;
-        public static final double Kv = 0;
-        public static final double Ka = 0;
     }
 
     public static class ExampleSubsystem1 {
