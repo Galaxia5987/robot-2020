@@ -26,7 +26,7 @@ public class Conveyor extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DeadbandProximity feederProximity = new DeadbandProximity(FEEDER_PROXIMITY, FEEDER_PROXIMITY_MIN_VOLTAGE, FEEDER_PROXIMITY_MAX_VOLTAGE);
     private DeadbandProximity conveyorProximity = new DeadbandProximity(CONVEYOR_PROXIMITY, CONVEYOR_PROXIMITY_MIN_VOLTAGE, CONVEYOR_PROXIMITY_MAX_VOLTAGE);
-    private Solenoid solenoid = new Solenoid(SOLENOID);
+    private Solenoid gate = new Solenoid(GATE); //mechanical stop
     private int ballsCount = 3;
 
     public Conveyor() {
@@ -99,7 +99,7 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if(solenoid.get()) return;//TODO Check
+        if(gate.get()) return;//TODO Check
         motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
     }
 

@@ -7,6 +7,6 @@ public class Ports {
         public static final int FEEDER_PROXIMITY = 0;
         public static final int CONVEYOR_PROXIMITY = 0;
 
-        public static final int SOLENOID = 0;
+        public static final int GATE = 0;
     }
 }
