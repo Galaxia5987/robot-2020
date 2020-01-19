@@ -33,7 +33,7 @@ public class Constants {
         //Follower constants
         public static final double kBeta = 0;
         public static final double kZeta = 0;
-        //Drivetrain characterization constants
+        // Drivetrain characterization constants
         public static final double Ks = 0;
         public static final double Kv = 0;
         public static final double Ka = 0;
