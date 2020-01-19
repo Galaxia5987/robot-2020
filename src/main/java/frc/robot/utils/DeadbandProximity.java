@@ -5,11 +5,10 @@ import edu.wpi.first.wpilibj.AnalogInput;
 /**
  * This class is a modification of the regular proximity class, which adds a deadband, to insure that the sensor
  * does not toggle multiple times.
- * this is crucial for the conveyer, because the amount of balls that enter are counted by the amount of times
+ * this is crucial for the conveyor, because the amount of balls that enter are counted by the amount of times
  * the sensor switches from false to true.
  */
-public class DeadbandProximity {
-    private AnalogInput proximity;
+public class DeadbandProximity extends AnalogInput {
     private double minVoltage;
     private double maxVoltage;
     private boolean objectSensed = false;
@@ -17,7 +16,7 @@ public class DeadbandProximity {
     private boolean lastState = false;
 
     public DeadbandProximity(int port, double minVoltage, double maxVoltage) {
-        proximity = new AnalogInput(port);
+        super(port);
         this.maxVoltage = maxVoltage;
         this.minVoltage = minVoltage;
     }
@@ -62,24 +61,24 @@ public class DeadbandProximity {
      * @return the proximity's voltage.
      */
     private double getRaw() {
-        return proximity.getVoltage();
+        return getVoltage();
     }
 
     /**
-     * retrieve whether the {@link #proximity} senses an object.
+     * retrieve whether the proximity senses an object.
      * If you wish to check whether the proximity lost the object, use {@link #isObjectAway()} ()} instead.
      *
-     * @return whether the {@link #proximity} sense a object.
+     * @return whether the proximity sense a object.
      */
     private boolean isObjectClose() {
         return getRaw() > maxVoltage;
     }
 
     /**
-     * retrieve whether the {@link #proximity} lost the object.
+     * retrieve whether the proximity lost the object.
      * If you wish to check whether the proximity sense the object, use {@link #isObjectClose()} instead.
      *
-     * @return whether the {@link #proximity} lost the object.
+     * @return whether the proximity lost the object.
      */
     private boolean isObjectAway() {
         return getRaw() < minVoltage;
