@@ -23,94 +23,94 @@ import static frc.robot.Ports.Conveyor.*;
  */
 public class Conveyor extends SubsystemBase {
     UnitModel unitsConverter = new UnitModel(TICK_PER_METERS);
-    private VictorSPX entryMotor = new VictorSPX(ENTRY_MOTOR);
-    private TalonSRX exitMotor = new TalonSRX(EXIT_MOTOR);
-    private DeadbandProximity entryProximity = new DeadbandProximity(ENTRY_PROXIMITY, ENTRY_PROXIMITY_MIN_VOLTAGE, ENTRY_PROXIMITY_MAX_VOLTAGE);
-    private DeadbandProximity integrationProximity = new DeadbandProximity(INTEGRATION_PROXIMITY, INTEGRATION_PROXIMITY_MIN_VOLTAGE, ENTRY_PROXIMITY_MAX_VOLTAGE);
-    private DeadbandProximity exitProximity = new DeadbandProximity(EXIT_PROXIMITY, EXIT_PROXIMITY_MIN_VOLTAGE, EXIT_PROXIMITY_MAX_VOLTAGE);
+    private VictorSPX feederMotor = new VictorSPX(FEEDER_MOTOR);
+    private TalonSRX conveyorMotor = new TalonSRX(CONVEYOR_MOTOR);
+    private DeadbandProximity feederProximity = new DeadbandProximity(FEEDER_PROXIMITY, FEEDER_PROXIMITY_MIN_VOLTAGE, FEEDER_PROXIMITY_MAX_VOLTAGE);
+    private DeadbandProximity integrationProximity = new DeadbandProximity(INTEGRATION_PROXIMITY, INTEGRATION_PROXIMITY_MIN_VOLTAGE, INTEGRATION_PROXIMITY_MAX_VOLTAGE);
+    private DeadbandProximity conveyorProximity = new DeadbandProximity(CONVEYOR_PROXIMITY, CONVEYOR_PROXIMITY_MIN_VOLTAGE, CONVEYOR_PROXIMITY_MAX_VOLTAGE);
     private int ballsCount = 3;
     private double startLocation, endLocation;
 
     public Conveyor() {
-        exitMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
-        exitMotor.setSensorPhase(EXIT_SENSOR_INVERTED);
-        exitMotor.setInverted(EXIT_MOTOR_INVERTED);
-        entryMotor.setInverted(ENTRY_MOTOR_INVERTED);
+        conveyorMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
+        conveyorMotor.setSensorPhase(CONVEYOR_SENSOR_INVERTED);
+        conveyorMotor.setInverted(CONVEYOR_MOTOR_INVERTED);
+        feederMotor.setInverted(FEEDER_MOTOR_INVERTED);
 
-        exitMotor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);
-        exitMotor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT_MS);
-        exitMotor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT_MS);
+        conveyorMotor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);
+        conveyorMotor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT_MS);
+        conveyorMotor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT_MS);
 
-        exitMotor.configMotionCruiseVelocity(CRUISE_VELOCITY);
-        exitMotor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT_MS);
-        exitMotor.configPeakCurrentLimit(MAX_CURRENT);
-        exitMotor.configClosedloopRamp(RAMP_RATE);
+        conveyorMotor.configMotionCruiseVelocity(CRUISE_VELOCITY);
+        conveyorMotor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT_MS);
+        conveyorMotor.configPeakCurrentLimit(MAX_CURRENT);
+        conveyorMotor.configClosedloopRamp(RAMP_RATE);
 
-        exitMotor.configVoltageCompSaturation(12);
-        entryMotor.configVoltageCompSaturation(12);
-        exitMotor.enableVoltageCompensation(true);
-        entryMotor.enableVoltageCompensation(true);
-        exitMotor.setSelectedSensorPosition(0);
+        conveyorMotor.configVoltageCompSaturation(12);
+        feederMotor.configVoltageCompSaturation(12);
+        conveyorMotor.enableVoltageCompensation(true);
+        feederMotor.enableVoltageCompensation(true);
+        conveyorMotor.setSelectedSensorPosition(0);
     }
 
     @Override
     public void periodic() {
         updateSensors();
 
-        if (entryProximity.getState()) {
-            if (entryProximity.getToggle())
+        if (feederProximity.getState()) {
+            if (feederProximity.getToggle())
                 incrementBallsCount(1);
             startLocation = getConveyorPosition();
         }
 
-        if (exitProximity.getState()) {
-            if (exitProximity.getToggle() && (getExitVelocity() > 0))
+        if (conveyorProximity.getState()) {
+            if (conveyorProximity.getToggle() && (getConveyorVelocity() > 0))
                 decrementBallsCount(1);
             endLocation = getConveyorPosition();
         }
     }
 
     private void updateSensors() {
-        entryProximity.update();
+        feederProximity.update();
         integrationProximity.update();
-        exitProximity.update();
+        conveyorProximity.update();
     }
 
     /**
-     * retrieve the current {@link #exitMotor}'s encoder position.
+     * retrieve the current {@link #conveyorMotor}'s encoder position.
      *
-     * @return the current {@link #exitMotor}'s encoder position.
+     * @return the current {@link #conveyorMotor}'s encoder position.
      */
     public double getConveyorPosition() {
-        return unitsConverter.toTicks(exitMotor.getSelectedSensorPosition());
+        return unitsConverter.toTicks(conveyorMotor.getSelectedSensorPosition());
     }
 
     /**
-     * set the velocity for the {@link #entryMotor}.
+     * set the velocity for the {@link #feederMotor}.
      *
-     * @param velocity the speed to apply on {@link #entryMotor}.
+     * @param velocity the speed to apply on {@link #feederMotor}.
      *                 be noted you should enter a value between -1 to 1.
      */
-    public void setEntryVelocity(double velocity) {
-        entryMotor.set(ControlMode.PercentOutput, velocity);
+    public void setFeederVelocity(double velocity) {
+        feederMotor.set(ControlMode.PercentOutput, velocity);
     }
 
     /**
-     * retrieve the current {@link #exitMotor}'s velocity.
+     * retrieve the current {@link #conveyorMotor}'s velocity.
      *
-     * @return the velocity of the {@link #exitMotor}.
+     * @return the velocity of the {@link #conveyorMotor}.
      */
-    public int getExitVelocity() {
-        return exitMotor.getSelectedSensorVelocity();
+    public int getConveyorVelocity() {
+        return conveyorMotor.getSelectedSensorVelocity();
     }
 
     /**
-     * set the relative location for the {@link #exitMotor}.
+     * set the relative location for the {@link #conveyorMotor}.
      *
      * @param location the relative location you want the conveyor to move.
      */
-    public void setLocationToExitMotor(double location) {
-        exitMotor.set(ControlMode.MotionMagic, location);
+    public void setConveyorPosition(double location) {
+        conveyorMotor.set(ControlMode.MotionMagic, location);
     }
 
     /**
@@ -121,8 +121,8 @@ public class Conveyor extends SubsystemBase {
      * @param metersPerSecond the metersPerSecond you want the motor to move.
      */
     public void moveConveyor(double location, double metersPerSecond) {
-        setLocationToExitMotor(getConveyorPosition() + location);
-        setEntryVelocity(metersPerSecond);
+        setConveyorPosition(getConveyorPosition() + location);
+        setFeederVelocity(metersPerSecond);
     }
 
     /**
@@ -136,7 +136,7 @@ public class Conveyor extends SubsystemBase {
 
     /**
      * move the the last Power Cell to the lower end of the conveyor.
-     * note that the other Power Cells still move until the last Power Cell will reach to the {@link #entryProximity}.
+     * note that the other Power Cells still move until the last Power Cell will reach to the {@link #feederProximity}.
      */
     public void minimizeConveyor() {
         moveConveyor(startLocation, -0.1); //TODO choose real number
@@ -144,7 +144,7 @@ public class Conveyor extends SubsystemBase {
 
     /**
      * move the first Power Cell to the higher end of the conveyor.
-     * note that the other Power Cells still move until the first Power Cell will reach to the {@link #exitProximity}.
+     * note that the other Power Cells still move until the first Power Cell will reach to the {@link #conveyorProximity}.
      */
     public void maximizeConveyor() {
         moveConveyor(endLocation); //TODO choose real number
@@ -154,16 +154,16 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        exitMotor.set(ControlMode.PercentOutput, EXIT_MOTOR_FEED_VELOCITY);
-        entryMotor.set(ControlMode.PercentOutput, ENTRY_MOTOR_FEED_VELOCITY);
+        conveyorMotor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
+        feederMotor.set(ControlMode.PercentOutput, FEEDER_MOTOR_FEED_VELOCITY);
     }
 
     /**
      * stop the conveyor's motors from moving.
      */
     public void stop() {
-        exitMotor.set(ControlMode.PercentOutput, 0);
-        entryMotor.set(ControlMode.PercentOutput, 0);
+        conveyorMotor.set(ControlMode.PercentOutput, 0);
+        feederMotor.set(ControlMode.PercentOutput, 0);
     }
 
     /**
@@ -203,8 +203,8 @@ public class Conveyor extends SubsystemBase {
     public int getBallsCount() {
         return ballsCount;
     }
-    
-    public boolean entrySensedObject() {
-        return entryProximity.getState();
+
+    public boolean feederSensedObject() {
+        return feederProximity.getState();
     }
 }
