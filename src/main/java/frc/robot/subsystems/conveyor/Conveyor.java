@@ -9,7 +9,7 @@ import frc.robot.subsystems.UnitModel;
 import frc.robot.utils.DeadbandProximity;
 
 import static frc.robot.Constants.Conveyor.*;
-import static frc.robot.Constants.TALON_TIMEOUT_MS;
+import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Conveyor.*;
 
 /**
@@ -32,12 +32,12 @@ public class Conveyor extends SubsystemBase {
     public Conveyor() {
         motor.setInverted(MOTOR_INVERTED);
 
-        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);
-        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT_MS);
-        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT_MS);
+        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
+        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
+        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
 
         motor.configMotionCruiseVelocity(CRUISE_VELOCITY);
-        motor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT_MS);
+        motor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT);
         motor.configPeakCurrentLimit(MAX_CURRENT);
         motor.configClosedloopRamp(RAMP_RATE);
 

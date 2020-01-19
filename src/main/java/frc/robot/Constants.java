@@ -13,11 +13,12 @@ import java.util.Optional;
 
 
 public final class Constants {
+    public static final int TALON_TIMEOUT = 10;
+
     public static final class Intake {
         public static final boolean MASTER_INVERTED = true;
-    }
 
-    public static final int TALON_TIMEOUT = 10;
+    }
 
     public static class Turret {
         public static final int TALON_PID_SLOT = 0;
