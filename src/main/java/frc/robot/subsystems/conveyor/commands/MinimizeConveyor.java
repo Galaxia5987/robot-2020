@@ -7,18 +7,13 @@ import static frc.robot.RobotContainer.conveyor;
 import static frc.robot.Constants.Conveyor.*;
 
 public class MinimizeConveyor extends CommandBase {
-    private Timer timer = new Timer(); //timeout incase the sensor misses the power cells.
-    private double timeout;
 
-    public MinimizeConveyor(double timeout) {
+    public MinimizeConveyor() {
         addRequirements(conveyor);
-        this.timeout = timeout;
     }
 
     @Override
     public void initialize() {
-        timer.reset();
-        timer.start();
         conveyor.setConveyorSpeed(CONVEYOR_MOTOR_RETURN_VELOCITY);
     }
 
@@ -29,13 +24,12 @@ public class MinimizeConveyor extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return conveyor.feederSensedObject() || timer.get() >= timeout;
+        return conveyor.feederSensedObject();
     }
 
     @Override
     public void end(boolean interrupted) {
         conveyor.stop();
-        timer.stop();
     }
 
 }

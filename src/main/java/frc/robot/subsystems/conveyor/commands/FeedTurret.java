@@ -9,18 +9,10 @@ import static frc.robot.RobotContainer.conveyor;
 
 public class FeedTurret extends CommandBase {
     private int balls; //Shoot out X balls!
-    private Timer timer = new Timer(); //Timer for the timeout of the turret, incase the ball count does not work
-    private double timeout;
-
-    public FeedTurret(int balls, double timeout) {
-        addRequirements(conveyor);
-        this.balls = MAX_BALLS_AMOUNT - balls;
-        this.timeout = timeout;
-    }
-
 
     public FeedTurret(int balls) {
-        this(balls, FEED_TIMEOUT);
+        addRequirements(conveyor);
+        this.balls = MAX_BALLS_AMOUNT - balls;
     }
 
     public FeedTurret() {
@@ -29,8 +21,6 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        timer.reset();
-        timer.start();
         conveyor.feed();
     }
 
@@ -41,12 +31,11 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return conveyor.getBallsCount() <= balls || timer.get() >= timeout;
+        return conveyor.getBallsCount() <= balls;
     }
 
     @Override
     public void end(boolean interrupted) {
-        timer.stop();
         conveyor.stop();
     }
 }
