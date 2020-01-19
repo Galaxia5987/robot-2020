@@ -25,7 +25,7 @@ public class JoystickControl extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public JoystickControl(frc.robot.subsystems.climb.Climber climber) {
+    public JoystickControl(Climber climber) {
         this.climber = climber;
         addRequirements(climber);
     }

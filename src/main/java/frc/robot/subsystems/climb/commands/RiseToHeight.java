@@ -30,7 +30,7 @@ public class RiseToHeight extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public RiseToHeight(frc.robot.subsystems.climb.Climber climber, double setpointHeight) {
+    public RiseToHeight(Climber climber, double setpointHeight) {
         this.climber = climber;
         this.setpointHeight = setpointHeight;
         this.setpointAngle = 0;
@@ -43,7 +43,7 @@ public class RiseToHeight extends CommandBase {
      * @param setpointHeight the desired height for the mechanism
      * @param setpointAngle  the desired angle
      */
-    public RiseToHeight(frc.robot.subsystems.climb.Climber subsystem, double setpointHeight, double setpointAngle) {
+    public RiseToHeight(Climber subsystem, double setpointHeight, double setpointAngle) {
         this.climber = subsystem;
         this.setpointHeight = setpointHeight;
         this.setpointAngle = setpointAngle;
