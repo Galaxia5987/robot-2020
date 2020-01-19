@@ -151,30 +151,6 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * retrieve the Power Cells count that the proximities noticed.
-     *
-     * @return the Power Cells count that the proximities noticed.
-     */
-    public int getBallsCount() {
-        return ballsCount;
-    }
-
-    /**
-     * change the amount of Power Cells in the conveyor.
-     * notice that this method will only change the variable {@link #ballsCount},
-     * if you wish to move the conveyor, use {@link #feed()} instead.
-     *
-     * @param ballsCount the amount of Power Cell.
-     */
-    private void setBallsCount(int ballsCount) {
-        ballsCount = Math.min(ballsCount, MAX_BALLS_AMOUNT);
-    }
-
-    public boolean entrySensedObject() {
-        return entryProximity.getState();
-    }
-
-    /**
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
@@ -206,5 +182,29 @@ public class Conveyor extends SubsystemBase {
      */
     private void decrementBallsCount(int amount) {
         setBallsCount(ballsCount - amount);
+    }
+
+    /**
+     * change the amount of Power Cells in the conveyor.
+     * notice that this method will only change the variable {@link #ballsCount},
+     * if you wish to move the conveyor, use {@link #feed()} instead.
+     *
+     * @param ballsCount the amount of Power Cell.
+     */
+    private void setBallsCount(int ballsCount) {
+        ballsCount = Math.min(ballsCount, MAX_BALLS_AMOUNT);
+    }
+
+    /**
+     * retrieve the Power Cells count that the proximities noticed.
+     *
+     * @return the Power Cells count that the proximities noticed.
+     */
+    public int getBallsCount() {
+        return ballsCount;
+    }
+    
+    public boolean entrySensedObject() {
+        return entryProximity.getState();
     }
 }
