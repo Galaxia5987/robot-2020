@@ -30,8 +30,6 @@ public class Conveyor extends SubsystemBase {
     private int ballsCount = 3;
 
     public Conveyor() {
-        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, TALON_PID_SLOT, TALON_TIMEOUT_MS);
-        motor.setSensorPhase(SENSOR_INVERTED);
         motor.setInverted(MOTOR_INVERTED);
 
         motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT_MS);

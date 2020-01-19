@@ -56,7 +56,6 @@ public class Constants {
 
     //TODO: Change values for all of the constants
     public static class Conveyor {
-        public static final boolean SENSOR_INVERTED = false;
         public static final boolean MOTOR_INVERTED = false;
         public static final double KP = 0.0;
         public static final double KI = 0.0;
