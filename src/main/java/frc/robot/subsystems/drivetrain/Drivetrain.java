@@ -23,23 +23,8 @@ import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 
-import static frc.robot.Constants.Drivetrain.GRAVITY_ACCELERATION;
-import static frc.robot.Constants.Drivetrain.HIGH_ACCELERATION_THRESHOLD;
-import static frc.robot.Constants.Drivetrain.HIGH_GEAR_MIN_VELOCITY;
-import static frc.robot.Constants.Drivetrain.HIGH_TICKS_PER_METER;
-import static frc.robot.Constants.Drivetrain.LOW_ACCELERATION_THRESHOLD;
-import static frc.robot.Constants.Drivetrain.LOW_GEAR_MIN_OUTPUT;
-import static frc.robot.Constants.Drivetrain.LOW_TICKS_PER_METER;
-import static frc.robot.Constants.Drivetrain.SHIFTER_COOLDOWN;
-import static frc.robot.Constants.Drivetrain.TURNING_TOLERANCE;
-import static frc.robot.Constants.Drivetrain.VELOCITY_PID_SET;
-import static frc.robot.Ports.Drivetrain.LEFT_MASTER;
-import static frc.robot.Ports.Drivetrain.LEFT_SLAVE;
-import static frc.robot.Ports.Drivetrain.RIGHT_MASTER;
-import static frc.robot.Ports.Drivetrain.RIGHT_SLAVE;
-import static frc.robot.Ports.Drivetrain.SHIFTER_FORWARD_PORT;
-import static frc.robot.Ports.Drivetrain.SHIFTER_PORT;
-import static frc.robot.Ports.Drivetrain.SHIFTER_REVERSE_PORT;
+import static frc.robot.Constants.Drivetrain.*;
+import static frc.robot.Ports.Drivetrain.*;
 import static frc.robot.Robot.navx;
 
 public class Drivetrain extends SubsystemBase {
