@@ -1,7 +1,5 @@
 package frc.robot;
 
-import frc.robot.Robot;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -25,6 +23,8 @@ public class Constants {
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
         public static final double GRAVITY_ACCELERATION = 9.80665;
+        public static final boolean RIGHT_MASTER_INVERTED = true;
+        public static final boolean RIGHT_SLAVE_INVERTED = true;
     }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
