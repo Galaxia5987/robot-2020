@@ -28,8 +28,8 @@ public class FollowPath extends CommandBase {
     private DifferentialDriveWheelSpeeds prevSpeeds;
     private double prevTime;
 
-    private static final RamseteController follower = new RamseteController(Constants.Drivetrain.kBeta, Constants.Drivetrain.kZeta);
-    private static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Drivetrain.Ks, Constants.Drivetrain.Kv, Constants.Drivetrain.Ka);
+    private static final RamseteController follower = new RamseteController(Constants.Autonomous.kBeta, Constants.Autonomous.kZeta);
+    private static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Autonomous.Ks, Constants.Autonomous.Kv, Constants.Autonomous.Ka);
     private static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH);
 
     private final Drivetrain drivetrain;

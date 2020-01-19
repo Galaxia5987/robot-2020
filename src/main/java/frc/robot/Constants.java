@@ -1,9 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -16,6 +12,8 @@ import java.util.Optional;
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
 public class Constants {
+    //All general constants go here
+    //public static final double TIME_STEP = CONST(0.02);
 
     public static class Drivetrain {
         public static final double[] VELOCITY_PID_SET = {0, 0, 0, 0};//PID set for the velocity drive of the wheels
@@ -28,13 +26,10 @@ public class Constants {
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
         public static final double GRAVITY_ACCELERATION = 9.80665;
-
         public static final double TRACK_WIDTH = 0;
+    }
 
-        public static final double KP = 0;
-        public static final double KI = 0;
-        public static final double KD = 0;
-        public static final double KF = 0;
+    public static class Autonomous {
         //Follower constants
         public static final double kBeta = 0;
         public static final double kZeta = 0;
@@ -43,8 +38,6 @@ public class Constants {
         public static final double Kv = 0;
         public static final double Ka = 0;
     }
-    //All general constants go here
-    //public static final double TIME_STEP = CONST(0.02);
 
     public static class ExampleSubsystem1 {
         //All of the Subsystem specific constants go here,and need to be static.
