@@ -86,13 +86,13 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * set the velocity for the {@link #feederMotor}.
+     * set the speed for the {@link #feederMotor}.
      *
-     * @param velocity the speed to apply on {@link #feederMotor}.
+     * @param speed the speed to apply on {@link #feederMotor}.
      *                 be noted you should enter a value between -1 to 1.
      */
-    public void setFeederVelocity(double velocity) {
-        feederMotor.set(ControlMode.PercentOutput, velocity);
+    public void setFeederSpeed(double speed) {
+        feederMotor.set(ControlMode.PercentOutput, speed);
     }
 
     /**
@@ -122,7 +122,7 @@ public class Conveyor extends SubsystemBase {
      */
     public void moveConveyor(double location, double metersPerSecond) {
         setConveyorPosition(getConveyorPosition() + location);
-        setFeederVelocity(metersPerSecond);
+        setFeederSpeed(metersPerSecond);
     }
 
     /**
