@@ -78,7 +78,7 @@ public class TalonConfiguration {
         this.enableVoltageCompensation = enableVoltageCompensation;
     }
 
-    public void setPrimaryPID(TalonSRXPIDSetConfiguration primaryPID) {
+    public void setPrimaryPID(TalonSRXPIDSetConfiguration primaryPIDConfiguration) {
         this.motorConfigs.primaryPID = primaryPID;
     }
 
