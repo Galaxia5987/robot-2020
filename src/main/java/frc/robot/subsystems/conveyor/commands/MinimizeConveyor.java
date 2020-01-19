@@ -3,6 +3,7 @@ package frc.robot.subsystems.conveyor.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static frc.robot.RobotContainer.conveyor;
+import static frc.robot.Constants.Conveyor.*;
 
 public class MinimizeConveyor extends CommandBase {
 
@@ -12,7 +13,7 @@ public class MinimizeConveyor extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.moveConveyor(-1);
+        conveyor.setConveyorVelocity(CONVEYOR_MOTOR_RETURN_VELOCITY);
     }
 
     @Override
