@@ -86,7 +86,7 @@ public class Drivetrain extends SubsystemBase {
         return odometry.getPoseMeters();
     }
 
-    public void setVelocityAndFeedForward(double left, double right, double leftFF, double rightFF) {
+    public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
         leftMaster.set(ControlMode.Velocity, left, DemandType.ArbitraryFeedForward, leftFF);
         leftMaster.set(ControlMode.Velocity, right, DemandType.ArbitraryFeedForward, rightFF);
     }
