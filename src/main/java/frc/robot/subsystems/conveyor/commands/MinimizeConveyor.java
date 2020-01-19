@@ -28,7 +28,7 @@ public class MinimizeConveyor extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return conveyor.feederSensedObject() || timer.get() >= timeout || timeout == 0;
+        return conveyor.feederSensedObject() || timer.get() >= timeout;
     }
 
     @Override
