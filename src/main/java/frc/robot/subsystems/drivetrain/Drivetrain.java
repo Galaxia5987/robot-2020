@@ -50,6 +50,8 @@ public class Drivetrain extends SubsystemBase {
 
 
     public Drivetrain() {
+        rightMaster.setInverted(RIGHT_MASTER_INVERTED);
+        rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
         rightSlave.follow(rightMaster);
         leftSlave.follow(leftMaster);
         configurations.setNeutralMode(NeutralMode.Coast);

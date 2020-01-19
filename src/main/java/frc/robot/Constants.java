@@ -26,6 +26,8 @@ public class Constants {
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
         public static final double GRAVITY_ACCELERATION = 9.80665;
+        public static final boolean RIGHT_MASTER_INVERTED = true;
+        public static final boolean RIGHT_SLAVE_INVERTED = true;
         public static final double TRACK_WIDTH = 0;
     }
 
