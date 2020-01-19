@@ -19,13 +19,10 @@ import static frc.robot.Ports.Intake.*;
  */
 public class Intake extends SubsystemBase {
     private VictorSPX masterMotor = new VictorSPX(MASTER);
-    private VictorSPX slaveMotor = new VictorSPX(SLAVE);
     private DoubleSolenoid redactor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
 
     public Intake() {
         masterMotor.setInverted(MASTER_INVERTED);
-        slaveMotor.setInverted(SLAVE_INVERTED);
-        slaveMotor.follow(masterMotor);
     }
 
     /**
