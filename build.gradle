@@ -54,9 +54,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 
-    implementation group: 'org.json', name: 'json', version: '20190722'
-
-
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
