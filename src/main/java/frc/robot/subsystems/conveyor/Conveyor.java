@@ -81,12 +81,12 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * set the relative location for the {@link #motor}.
+     * set the relative velocity for the {@link #motor}.
      *
-     * @param location the relative location you want the conveyor to move.
+     * @param velocity the relative velocity you want the conveyor to move.
      */
-    private void setConveyorPosition(double location) {
-        motor.set(ControlMode.MotionMagic, location);
+    private void setConveyorVelocity(double velocity) {
+        motor.set(ControlMode.PercentOutput, velocity);
     }
 
     /**
@@ -105,7 +105,7 @@ public class Conveyor extends SubsystemBase {
      */
     public void moveConveyor(double location) {
         if (solenoid.get()) return; //TODO Check
-        setConveyorPosition(getConveyorPosition() + location);
+        setConveyorVelocity(getConveyorPosition() + location);
     }
 
     /**
@@ -145,7 +145,7 @@ public class Conveyor extends SubsystemBase {
      * @param amount the number of Power Cells you want to increment.
      */
     private void incrementBallsCount(int amount) {
-        setBallsCount(ballsCount + amount);
+        setBallsCount(getBallsCount() + amount);
     }
 
     /**
@@ -154,7 +154,7 @@ public class Conveyor extends SubsystemBase {
      * @param amount the number of Power Cells you want to decrement.
      */
     private void decrementBallsCount(int amount) {
-        setBallsCount(ballsCount - amount);
+        setBallsCount(getBallsCount() - amount);
     }
 
     /**
