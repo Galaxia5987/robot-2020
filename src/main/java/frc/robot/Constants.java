@@ -76,6 +76,7 @@ public class Constants {
         public static final int MAX_BALLS_AMOUNT = 5;
 
         public static final double CONVEYOR_MOTOR_FEED_VELOCITY = 0;
+        public static final double CONVEYOR_MOTOR_RETURN_VELOCITY = 0;
     }
 }
 
