@@ -7,13 +7,11 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.commands.RamseteCommand;
+import frc.robot.subsystems.drivetrain.auto.FollowPath;
 import frc.robot.utilities.TrajectoryLoader;
 
 /**
@@ -23,8 +21,8 @@ import frc.robot.utilities.TrajectoryLoader;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final Drivetrain drivetrain = new Drivetrain();
+    // The robot's subsystems and commands are defined here...
+    private final Drivetrain drivetrain = new Drivetrain();
 
 
     /**
@@ -51,6 +49,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new RamseteCommand(TrajectoryLoader.getTrajectory("middle"));
+        return new FollowPath(drivetrain, TrajectoryLoader.getTrajectory("middle"));
     }
 }

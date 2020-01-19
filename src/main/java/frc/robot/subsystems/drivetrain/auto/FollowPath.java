@@ -16,8 +16,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-
-import static frc.robot.RobotContainer.drivetrain;
+import frc.robot.subsystems.drivetrain.Drivetrain;
 
 /**
  * This command handles trajectory-following.
@@ -33,8 +32,11 @@ public class FollowPath extends CommandBase {
     private static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Drivetrain.Ks, Constants.Drivetrain.Kv, Constants.Drivetrain.Ka);
     private static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH);
 
-    public FollowPath(Trajectory trajectory) {
+    private final Drivetrain drivetrain;
+
+    public FollowPath(Drivetrain drivetrain, Trajectory trajectory) {
         this.trajectory = trajectory;
+        this.drivetrain = drivetrain;
     }
 
     @Override

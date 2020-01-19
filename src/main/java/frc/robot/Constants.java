@@ -30,7 +30,6 @@ public class Constants {
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double TRACK_WIDTH = 0;
-        public static final int TICKS_PER_METER = 0;
 
         public static final double KP = 0;
         public static final double KI = 0;
