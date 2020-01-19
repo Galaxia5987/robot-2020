@@ -30,11 +30,11 @@ public class Constants {
     }
 
     public static class Autonomous {
-        //Drivetrain characterization constants
+        // Drivetrain characterization constants
         public static final double kS = 0;
         public static final double kV = 0;
         public static final double kA = 0;
-        //Follower constants
+        // Follower constants
         public static final double kBeta = 0;
         public static final double kZeta = 0;
     }
