@@ -235,7 +235,7 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() { // This method will be called once per scheduler run
-        UnitModel unitModel = lowGearUnitModel; //TODO: Figure this out
+        UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
         odometry.update(
                 Rotation2d.fromDegrees(getHeading()),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
