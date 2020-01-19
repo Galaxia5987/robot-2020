@@ -53,7 +53,7 @@ public class Conveyor extends SubsystemBase {
         updateSensors();
 
         if (feederProximity.getState()) {
-            if (feederProximity.getToggle())
+            if (feederProximity.getToggle() && (getConveyorSpeed() > 0))
                 incrementBallsCount(1);
         }
 
