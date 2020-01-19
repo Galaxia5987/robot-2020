@@ -17,7 +17,7 @@ import frc.robot.subsystems.climb.Climber;
  */
 public class RiseToHeight extends CommandBase {
     private final Climber climber;
-    private boolean startMotors = false;
+    private boolean startBalance = false;
     private double setpointHeight;
     private double setpointAngle;
     private double currentHeight;
@@ -69,10 +69,10 @@ public class RiseToHeight extends CommandBase {
 
         //If the elevator reaches the target height engage the mechanical stopper to stop it from going up
         if (Math.abs(setpointHeight - currentHeight) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE) {
-            startMotors = true;
+            startBalance = true;
         }
 
-        if (startMotors && !climber.isStopperEngaged()) {
+        if (startBalance && !climber.isStopperEngaged()) {
             double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
             //Fix the heights according to the angle of the robot
             if (currentAngleError > 0) {
@@ -94,7 +94,7 @@ public class RiseToHeight extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         climber.engageStopper();
-        startMotors = false;
+        startBalance = false;
     }
 
 
