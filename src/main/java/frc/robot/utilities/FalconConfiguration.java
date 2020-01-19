@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
 
 public class FalconConfiguration {
     private NeutralMode neutralMode;
-    private FeedbackDevice feedbackDevice;
     private boolean enableVoltageCompensation;
     private double supplyCurrentLimit = 0;
     private boolean enableCurrentLimit = false;
@@ -22,7 +21,6 @@ public class FalconConfiguration {
     public FalconConfiguration() {
 
         neutralMode = NeutralMode.Coast;
-        feedbackDevice = FeedbackDevice.CTRE_MagEncoder_Absolute;
         enableVoltageCompensation = false;
 
 
@@ -64,20 +62,12 @@ public class FalconConfiguration {
         return this.neutralMode;
     }
 
-    public FeedbackDevice getFeedbackDevice() {
-        return feedbackDevice;
-    }
-
     public boolean isEnableVoltageCompensation() {
         return enableVoltageCompensation;
     }
 
     public void setNeutralMode(NeutralMode neutralMode) {
         this.neutralMode = neutralMode;
-    }
-
-    public void setFeedbackDevice(FeedbackDevice feedbackDevice) {
-        this.feedbackDevice = feedbackDevice;
     }
 
     public void setEnableVoltageCompensation(boolean enableVoltageCompensation) {
@@ -124,19 +114,4 @@ public class FalconConfiguration {
         this.motorConfigs.reverseLimitSwitchNormal = reverseLimitSwitchNormal;
     }
 
-    public void setSum0Term(FeedbackDevice sum0Term) {
-        this.motorConfigs.sum0Term = sum0Term;
-    }
-
-    public void setSum1Term(FeedbackDevice sum1Term) {
-        this.motorConfigs.sum1Term = sum1Term;
-    }
-
-    public void setDiff0Term(FeedbackDevice diff0Term) {
-        this.motorConfigs.diff0Term = diff0Term;
-    }
-
-    public void setDiff1Term(FeedbackDevice diff1Term) {
-        this.motorConfigs.diff1Term = diff1Term;
-    }
 }
