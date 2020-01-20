@@ -48,8 +48,8 @@ public class Climber extends SubsystemBase {
         leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-        leftMotor.setSensorPhase(Constants.Climber.IS_LEFT_ENCODER_INVERTED);
-        rightMotor.setSensorPhase(Constants.Climber.IS_RIGHT_ENCODER_INVERTED);
+        leftMotor.setSensorPhase(Constants.Climber.LEFT_ENCODER_INVERTED);
+        rightMotor.setSensorPhase(Constants.Climber.RIGHT_ENCODER_INVERTED);
 
         leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         rightMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);

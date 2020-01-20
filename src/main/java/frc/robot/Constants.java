@@ -72,8 +72,8 @@ public class Constants {
         public static final double ARBITRARY_FEEDFORWARD = 0;
         public static final boolean LEFT_MOTOR_INVERTED = false;
         public static final boolean RIGHT_MOTOR_INVERTED = false;
-        public static final boolean IS_LEFT_ENCODER_INVERTED = false;
-        public static final boolean IS_RIGHT_ENCODER_INVERTED = false;
+        public static final boolean LEFT_ENCODER_INVERTED = false;
+        public static final boolean RIGHT_ENCODER_INVERTED = false;
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0; // The allowed tolerance between the current height to the desired height
         public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle
         public static final double HEIGHT = 2; // The allowed maximum height of the subsystem
