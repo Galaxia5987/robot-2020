@@ -15,7 +15,7 @@ import frc.robot.subsystems.climb.Climber;
 /**
  * An example command that uses an example subsystem.
  */
-public class RiseToHeight extends CommandBase {
+public class BalanceRobot extends CommandBase {
     private final Climber climber;
     private boolean startBalancing = false;
     private double setpointHeight;
@@ -30,7 +30,7 @@ public class RiseToHeight extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public RiseToHeight(Climber climber, double setpointHeight) {
+    public BalanceRobot(Climber climber, double setpointHeight) {
         this.climber = climber;
         this.setpointHeight = setpointHeight;
         this.setpointAngle = 0;
@@ -43,7 +43,7 @@ public class RiseToHeight extends CommandBase {
      * @param setpointHeight the desired height for the mechanism
      * @param setpointAngle  the desired angle
      */
-    public RiseToHeight(Climber subsystem, double setpointHeight, double setpointAngle) {
+    public BalanceRobot(Climber subsystem, double setpointHeight, double setpointAngle) {
         this.climber = subsystem;
         this.setpointHeight = setpointHeight;
         this.setpointAngle = setpointAngle;
