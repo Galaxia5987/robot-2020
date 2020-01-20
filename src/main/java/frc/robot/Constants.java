@@ -35,6 +35,7 @@ public final class Constants {
         public static double KI = 0;
         public static double KD = 0;
         public static double KF = 0;
+        public static final boolean STOP_TURRET = false;
       }
 
     static { // Runs alongside main
@@ -100,6 +101,8 @@ public final class Constants {
         public static final double CONVEYOR_MOTOR_RETURN_VELOCITY = 0;
 
         public static final double FEED_TIMEOUT = 5;
+        public static final boolean CLOSE_GATE = true;
+        public static final boolean OPEN_GATE = false;
     }
     public static class Shooter {
         public static final double KP = 0.085; // 0.13
@@ -110,6 +113,7 @@ public final class Constants {
         public static final int TICKS_PER_ROTATION = 36;
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double MAX_ACCELERATION = 2;
+        public static final boolean STOP_SHOOTER = false;
     }
 }
 
