@@ -1,5 +1,6 @@
 package frc.robot.subsystems.drivetrain.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.drivetrain.Drivetrain;
@@ -28,11 +29,16 @@ public class VelocityDrive extends CommandBase {
     @Override
     public void execute() {
         if (Robot.debug) {
-            FireLog.log("driveLeftSetpoint", desiredLeftVelocity);
-            FireLog.log("driveRightSetpoint", desiredRightVelocity);
+            FireLog.log("driveLeftSetpoint", desiredLeftVelocity.get());
+            FireLog.log("driveRightSetpoint", desiredRightVelocity.get());
             FireLog.log("rightVelocity", drivetrain.getRightVelocity());
             FireLog.log("leftVelocity", drivetrain.getLeftVelocity());
+            SmartDashboard.putNumber("leftVelocity", drivetrain.getLeftVelocity());
+            SmartDashboard.putNumber("rightVelocity", drivetrain.getRightVelocity());
         }
+
+        drivetrain.setVelocityAndFeedForward(desiredLeftVelocity.get(), desiredRightVelocity.get(), 0, 0);
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
