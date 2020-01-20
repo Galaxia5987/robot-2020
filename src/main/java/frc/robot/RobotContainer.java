@@ -23,9 +23,9 @@ public class RobotContainer {
     public static final Climber climber = new Climber();
     private final Command m_autoCommand = null;
     public static XboxController xbox = new XboxController(2);
-    public static int leftXStick = 0;
-    public static int leftYStick = 1;
-    public static int rightYStick = 5;
+    public static final int leftXStick = 0;
+    public static final int leftYStick = 1;
+    public static final int rightYStick = 5;
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
