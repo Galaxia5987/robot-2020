@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Value tuner</title>
 </head>
 <body>
@@ -21,17 +20,24 @@
 <br>
 
 <script>
+
+    function post(url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.send();
+    }
+
     function update() {
         Array.prototype.slice.call(
                 document.getElementsByTagName('input'))
                 .forEach(function (el) {
                     var ctype = el.getAttribute("ctype");
                     if(ctype === "normal") {
-                        $.post(encodeURI(`${window.location.href}set?key=${el.name}&value=${el.value}`));
+                        post(encodeURI(`${window.location.href}set?key=${el.name}&value=${el.value}`));
                     }
                     else if(ctype === "talon") {
                         var split = el.name.split("-");
-                        $.post(encodeURI(`${window.location.href}setTalon?key=${split[0]}&${split[1]}=${el.value}`));
+                        post(encodeURI(`${window.location.href}setTalon?key=${split[0]}&${split[1]}=${el.value}`));
                     }
                 });
     }
