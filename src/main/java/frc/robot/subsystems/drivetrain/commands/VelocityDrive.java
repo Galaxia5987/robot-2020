@@ -14,11 +14,13 @@ public class VelocityDrive extends CommandBase {
     private WebConstant desiredRightVelocity = new WebConstant("desiredRightVelocity", 1);
 
     public VelocityDrive(Drivetrain drivetrain) {
+        this.drivetrain = drivetrain;
     }
 
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
+        drivetrain.setVelocityAndFeedForward(desiredLeftVelocity.get(), desiredRightVelocity.get(), 0, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,6 +37,7 @@ public class VelocityDrive extends CommandBase {
     // Called once after isFinished returns true
 
     public void end(boolean interrupted) {
+        drivetrain.setVelocityAndFeedForward(0, 0, 0, 0);
     }
 
 }
