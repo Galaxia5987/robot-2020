@@ -21,6 +21,7 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
  * project.
  */
 public class Robot extends TimedRobot {
+  static final boolean debug = true;
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
   public static boolean isRobotA = true;
     private Command m_autonomousCommand;
