@@ -97,7 +97,7 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if(gate.get()) return;//TODO Check
+        if(!gate.get()) return;//TODO Check
         motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
     }
 
