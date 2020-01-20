@@ -33,6 +33,7 @@ public class Drivetrain extends SubsystemBase {
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
+    public UnitModel unitModel = lowGearUnitModel;
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -195,6 +196,7 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
+        unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
         // This method will be called once per scheduler run
