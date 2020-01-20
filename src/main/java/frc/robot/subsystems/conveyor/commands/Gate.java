@@ -6,16 +6,16 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import static frc.robot.subsystems.conveyor.Conveyor.gate;
 
 public class Gate extends CommandBase {
-    private boolean direction;
+    private boolean open;
 
-    public Gate(Conveyor conveyor, boolean direction){
+    public Gate(Conveyor conveyor, boolean open){
         addRequirements(conveyor);
-        this.direction = direction;
+        this.open = open;
     }
 
     @Override
     public void initialize() {
-        gate.set(direction);
+        gate.set(open);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Gate extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return direction == gate.get();
+        return open == gate.get();
     }
 
     @Override
