@@ -136,5 +136,4 @@ public class RiseToHeight extends CommandBase {
         }
         return new double[]{firstHeight, secondHeight};
     }
-
 }
