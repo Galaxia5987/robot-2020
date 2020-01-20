@@ -25,24 +25,27 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private static final boolean debug = true;
-
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    if(debug) {
-      try {
-        new Webserver();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+    if(Robot.debug) {
+      startFireLog();
     }
   }
 
+  /**
+   * Initiates the port of team 225s Fire-Logger.
+   */
+  private void startFireLog(){
+    try {
+      new Webserver();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
