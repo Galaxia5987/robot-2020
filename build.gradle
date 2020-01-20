@@ -42,6 +42,9 @@ def includeDesktopSupport = false
 
 repositories {
     maven { url 'https://jitpack.io' }
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
@@ -57,7 +60,7 @@ dependencies {
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
     implementation "com.github.Oblarg.Oblog:lib:3.1.0"
-    implementation group: 'org.eclipse.jetty.aggregate', name: 'jetty-all', version: '9.4.26.v20200117'
+    implementation name: 'jetty-all-9.4.0.v20161208-uber'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
 
     testImplementation 'junit:junit:4.12'
