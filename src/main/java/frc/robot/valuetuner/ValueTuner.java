@@ -14,7 +14,6 @@ import static spark.Spark.port;
 public class ValueTuner {
 
     public void start() {
-        port(5802);
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             List<ConstantObject> constants = new ArrayList<>(WebConstant.getConstantMap().values());
