@@ -157,7 +157,7 @@ public class Drivetrain extends SubsystemBase {
     /**
      * @return the velocity of the right motor
      */
-    private double getRightVelocity() {
+    public double getRightVelocity() {
         if (isShiftedLow())
             return lowGearUnitModel.toUnits(rightMaster.getSelectedSensorVelocity());
         else
@@ -167,7 +167,7 @@ public class Drivetrain extends SubsystemBase {
     /**
      * @return the velocity of the left motor
      */
-    private double getLeftVelocity() {
+    public double getLeftVelocity() {
         if (isShiftedLow())
             return lowGearUnitModel.toUnits(leftMaster.getSelectedSensorVelocity());
         else
@@ -199,7 +199,8 @@ public class Drivetrain extends SubsystemBase {
         unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
-        // This method will be called once per scheduler run
+
+
     }
 
     public enum shiftModes{
