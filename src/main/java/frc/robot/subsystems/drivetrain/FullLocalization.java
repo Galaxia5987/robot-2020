@@ -1,15 +1,12 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.drivetrain;
 
 
-import edu.wpi.first.hal.FRCNetComm;
-import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Twist2d;
 
-import frc.robot.EKF.KalmanFilter;
-import frc.robot.KalmanLocalization.OdometryInertialObservation;
-import frc.robot.KalmanLocalization.OdometryInertialProcess;
+import frc.robot.subsystems.drivetrain.EKF.KalmanFilter;
+import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialObservation;
+import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialProcess;
 
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
@@ -18,15 +15,7 @@ import frc.robot.KalmanLocalization.OdometryInertialProcess;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-import edu.wpi.first.hal.FRCNetComm.tInstances;
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.hal.HAL;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Twist2d;
-
 import static java.lang.Math.abs;
-import static java.lang.Math.toRadians;
 
 /**
  * Class for localization using differntial drive odometry and inertial sensors. Odometry allows you to track the
