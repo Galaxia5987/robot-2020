@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.valuetuner.WebConstant;
+import org.techfire225.webapp.FireLog;
 
 /**
  *
@@ -26,6 +27,12 @@ public class VelocityDrive extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
+        if (Robot.debug) {
+            FireLog.log("driveLeftSetpoint", desiredLeftVelocity);
+            FireLog.log("driveRightSetpoint", desiredRightVelocity);
+            FireLog.log("rightVelocity", drivetrain.getRightVelocity());
+            FireLog.log("leftVelocity", drivetrain.getLeftVelocity());
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
