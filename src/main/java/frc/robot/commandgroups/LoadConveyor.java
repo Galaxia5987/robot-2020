@@ -14,8 +14,9 @@ public class LoadConveyor extends SequentialCommandGroup {
     public LoadConveyor(Intake intake, Conveyor conveyor, boolean down, boolean gate, double speed, double timeout){
         addRequirements(intake, conveyor);
         addCommands(
+                // fold the intake out
                 new ToggleIntake(down),
-                // move the power cells to the turret and
+                // move the power cells towards the turret and close the gate
                 new ParallelCommandGroup(new IntakePowerCell(speed, timeout), new FeedTurret(), new Gate(conveyor, gate))
         );
     }
