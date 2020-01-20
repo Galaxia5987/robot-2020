@@ -12,10 +12,10 @@ public class AutoFeed extends ParallelCommandGroup {
     public AutoFeed(Conveyor conveyor){
         addRequirements(conveyor);
         addCommands(
-                // feed the power cells to the turret
-                new FeedTurret(),
                 // move the gate and let the power cells move into the turret
-                new Gate(conveyor, OPEN_GATE)
+                new Gate(conveyor, OPEN_GATE),
+                // feed the power cells to the turret
+                new FeedTurret()
         );
     }
 }
