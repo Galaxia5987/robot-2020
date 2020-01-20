@@ -16,7 +16,7 @@ public class Constants {
     //public static final double TIME_STEP = CONST(0.02);
 
     public static class Drivetrain {
-        public static final double[] VELOCITY_PID_SET = {0, 0, 0, 0};//PID set for the velocity drive of the wheels
+        public static final double[] VELOCITY_PID_SET = {0.000705, 0, 8.3, 0};//PID set for the velocity drive of the wheels
         public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
         public static final double HIGH_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into high gear
         public static final double LOW_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into low gear
