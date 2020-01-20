@@ -38,7 +38,7 @@ public class Wait extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return shooter.getSpeed() >= shooter.approximateVelocity(distance) && Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD;
+        return (shooter.getSpeed() >= shooter.approximateVelocity(distance)) && (Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD);
     }
 
     @Override
