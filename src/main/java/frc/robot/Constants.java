@@ -102,8 +102,8 @@ public final class Constants {
         public static final double CONVEYOR_MOTOR_RETURN_VELOCITY = 0;
 
         public static final double FEED_TIMEOUT = 5;
-        public static final boolean CLOSE_GATE = true;
-        public static final boolean OPEN_GATE = false;
+        public static final boolean CLOSE_GATE = false;
+        public static final boolean OPEN_GATE = true;
     }
     public static class Shooter {
         public static final double KP = 0.085; // 0.13
