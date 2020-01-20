@@ -3,7 +3,6 @@ package frc.robot.subsystems.conveyor.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 
-import static frc.robot.Constants.Conveyor.GATE_DIRECTION;
 import static frc.robot.subsystems.conveyor.Conveyor.gate;
 
 public class Gate extends CommandBase {

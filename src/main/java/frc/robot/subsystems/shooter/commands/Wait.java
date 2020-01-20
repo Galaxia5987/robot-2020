@@ -16,12 +16,13 @@ public class Wait extends CommandBase {
     private double angle;
     public static final NetworkTable waitTable = NetworkTableInstance.getDefault().getTable("shooter");
     private static final NetworkTableEntry visionAngle = waitTable.getEntry("angle");
+    private static final NetworkTableEntry visionDistance = waitTable.getEntry("distance");
 
-    public Wait(Shooter shooter, Turret turret, double distance) {
+    public Wait(Shooter shooter, Turret turret) {
         addRequirements(shooter, turret);
         this.shooter = shooter;
         this.turret = turret;
-        this.distance = distance;
+        this.distance = visionDistance.getDouble(3);
         this.angle = visionAngle.getDouble(3);
     }
 
