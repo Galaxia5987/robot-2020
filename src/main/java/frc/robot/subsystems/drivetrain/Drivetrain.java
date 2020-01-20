@@ -51,6 +51,8 @@ public class Drivetrain extends SubsystemBase {
 
 
     public Drivetrain() {
+        rightMaster.setSelectedSensorPosition(0);
+        leftMaster.setSelectedSensorPosition(0);
         rightMaster.setInverted(RIGHT_MASTER_INVERTED);
         rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
         rightSlave.follow(rightMaster);
