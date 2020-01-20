@@ -51,6 +51,8 @@ public class Drivetrain extends SubsystemBase {
 
 
     public Drivetrain() {
+        new WebConstantPIDTalon("drivetrainLeft", pidSet[0], pidSet[1], pidSet[2], pidSet[3], leftMaster);
+        new WebConstantPIDTalon("drivetrainRight", pidSet[0], pidSet[1], pidSet[2], pidSet[3], rightMaster);
         rightMaster.setSelectedSensorPosition(0);
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setInverted(RIGHT_MASTER_INVERTED);
