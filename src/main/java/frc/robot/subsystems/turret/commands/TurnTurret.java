@@ -15,7 +15,8 @@ import static frc.robot.Constants.Turret.*;
 public class TurnTurret extends CommandBase {
 
     private Turret turret;
-    private final double angle;
+    private double angle;
+    private boolean stop = false;
     public static final NetworkTable turretTable = NetworkTableInstance.getDefault().getTable("shooter");
     private static final NetworkTableEntry visionAngle = turretTable.getEntry("angle");
 
@@ -29,6 +30,11 @@ public class TurnTurret extends CommandBase {
         this(turret, visionAngle.getDouble(3));
     }
 
+    public TurnTurret(Turret turret, boolean stop){
+        addRequirements(turret);
+        this.turret = turret;
+        this.stop = stop;
+    }
 
     // Called just before this Command runs the first time
     @Override
@@ -44,7 +50,7 @@ public class TurnTurret extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD;
+        return Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD || stop;
     }
 
     @Override

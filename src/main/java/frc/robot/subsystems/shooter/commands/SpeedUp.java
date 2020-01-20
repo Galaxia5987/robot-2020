@@ -10,12 +10,13 @@ import frc.robot.subsystems.shooter.Shooter;
 public class SpeedUp extends CommandBase {
     public static final NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
     private double distance;
-    private final double timeout;
+    private double timeout;
     private final Shooter shooter;
     private final Timer timer = new Timer();
     private final NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
     private static final NetworkTableEntry visionDistance = shooterTable.getEntry("distance");
     private boolean isVisionActive = false;
+    private boolean stop = false;
 
     public SpeedUp(Shooter shooter, double distance, double timeout) {
         addRequirements(shooter);
@@ -31,6 +32,13 @@ public class SpeedUp extends CommandBase {
     public SpeedUp(Shooter shooter) {
         this(shooter, visionDistance.getDouble(3), 0); //TODO replace 3 with the vision distance output value
         isVisionActive = true;
+    }
+
+    public SpeedUp(Shooter shooter, double distance, boolean stop) {
+        addRequirements(shooter);
+        this.shooter = shooter;
+        this.distance = distance;
+        this.stop = stop;
     }
 
     // Called just before this Command runs the first time
@@ -61,7 +69,7 @@ public class SpeedUp extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return timeout > 0 && timer.get() >= timeout; //TODO: Check if timeout == 0 works instead, depending on how whileHeld works.
+        return timeout == 0 || timer.get() >= timeout || stop; //TODO: Check if timeout == 0 works instead, depending on how whileHeld works.
     }
 
     // Called once after isFinished returns true
