@@ -1,13 +1,11 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.conveyor.Conveyor;
-import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
-import frc.robot.subsystems.shooter.commands.Wait;
+import frc.robot.subsystems.shooter.commands.NetworkTablesReached;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 
@@ -24,7 +22,7 @@ public class AutoShoot extends ParallelCommandGroup {
                 new TurnTurret(turret, STOP_TURRET),
                 new SpeedUp(shooter, STOP_SHOOTER),
                 // when the flywheel and the turret are at the target speed and angle start feeding the power cells
-                new SequentialCommandGroup(new Wait(shooter, turret), new AutoFeed(conveyor)));
+                new SequentialCommandGroup(new NetworkTablesReached(shooter, turret), new AutoFeed(conveyor)));
     }
 
 }
