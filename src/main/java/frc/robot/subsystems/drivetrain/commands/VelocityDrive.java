@@ -1,12 +1,17 @@
 package frc.robot.subsystems.drivetrain.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.valuetuner.WebConstant;
 
 /**
  *
  */
 public class VelocityDrive extends CommandBase {
+    private Drivetrain drivetrain;
+    private WebConstant desiredLeftVelocity = new WebConstant("desiredLeftVelocity", 1);
+    private WebConstant desiredRightVelocity = new WebConstant("desiredRightVelocity", 1);
 
     public VelocityDrive(Drivetrain drivetrain) {
     }
