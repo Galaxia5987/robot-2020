@@ -29,9 +29,9 @@ import frc.robot.subsystems.shooter.Shooter;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    public static Conveyor conveyor = new Conveyor();
 
     // The robot's subsystems and commands are defined here...
+    public static Conveyor conveyor = new Conveyor();
     public static final Intake intake = new Intake();
     private static final Turret turret = new Turret();
     private final Shooter shooter = new Shooter();
