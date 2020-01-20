@@ -136,5 +136,4 @@ public class BalanceRobot extends CommandBase {
         }
         return new double[]{firstHeight, secondHeight};
     }
-
 }
