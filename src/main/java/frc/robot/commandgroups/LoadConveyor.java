@@ -9,15 +9,18 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakePowerCell;
 import frc.robot.subsystems.intake.commands.ToggleIntake;
 
+import static frc.robot.Constants.Conveyor.CLOSE_GATE;
+import static frc.robot.Constants.Intake.INTAKE_SPEED;
+
 public class LoadConveyor extends SequentialCommandGroup {
 
-    public LoadConveyor(Intake intake, Conveyor conveyor, boolean down, boolean gate, double speed, double timeout){
+    public LoadConveyor(Intake intake, Conveyor conveyor, double timeout){
         addRequirements(intake, conveyor);
         addCommands(
                 // fold the intake out
-                new ToggleIntake(down),
+                new ToggleIntake(),
                 // move the power cells towards the turret and close the gate
-                new ParallelCommandGroup(new IntakePowerCell(speed, timeout), new FeedTurret(), new Gate(conveyor, gate))
+                new ParallelCommandGroup(new IntakePowerCell(INTAKE_SPEED, timeout), new FeedTurret(), new Gate(conveyor, CLOSE_GATE))
         );
     }
 
