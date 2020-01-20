@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import frc.robot.subsystems.conveyor.Conveyor;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.intake.Intake;
 
@@ -19,7 +21,6 @@ import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.subsystems.shooter.Shooter;
 
-
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -27,7 +28,10 @@ import frc.robot.subsystems.shooter.Shooter;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-   // The robot's subsystems and commands are defined here...
+    // The robot's subsystems and commands are defined here...
+
+    // The robot's subsystems and commands are defined here...
+    public static Conveyor conveyor = new Conveyor();
     public static final Intake intake = new Intake();
     private static final Turret turret = new Turret();
     private final Shooter shooter = new Shooter();

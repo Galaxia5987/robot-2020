@@ -1,7 +1,16 @@
 package frc.robot;
 
 
-public final class Ports {
+public class Ports {
+    public static class Conveyor {
+        public static final int MOTOR = 22;
+
+        public static final int FEEDER_PROXIMITY = 0;
+        public static final int CONVEYOR_PROXIMITY = 0;
+
+        public static final int GATE = 0;
+    }
+
     public static final int TALON_PID_SLOT = 0;
 
     public static final class Intake {
