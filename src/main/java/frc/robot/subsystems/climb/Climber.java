@@ -57,6 +57,7 @@ public class Climber extends SubsystemBase {
 
     /**
      * Release the mechanical stopper of the climber.
+     
      * This would allow it to extend.
      */
     public void releaseStopper() {
