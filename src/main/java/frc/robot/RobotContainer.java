@@ -61,27 +61,27 @@ public class RobotContainer {
         return xbox.getRawAxis(rightYStick);
     }
 
-
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-    if(Robot.debug) {
-      startFireLog();
+    /**
+     * The container for the robot.  Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        // Configure the button bindings
+        configureButtonBindings();
+        if (Robot.debug) {
+            startFireLog();
+        }
     }
-  }
 
-  /**
-   * Initiates the port of team 225s Fire-Logger.
-   */
-  private void startFireLog(){
-    try {
-      new Webserver();
-    } catch (Exception e) {
-      e.printStackTrace();
+    /**
+     * Initiates the port of team 225s Fire-Logger.
+     */
+    private void startFireLog() {
+        try {
+            new Webserver();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-  }
 
 }
 
