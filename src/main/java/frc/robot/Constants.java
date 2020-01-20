@@ -21,7 +21,7 @@ public class Constants {
         public static final double HIGH_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into high gear
         public static final double LOW_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into low gear
         public static final double TURNING_TOLERANCE = 0;//Stops the robot from shifting while the robot is turning
-        public static final int LOW_TICKS_PER_METER = 0;//unit conversion while the robot is on low gear
+        public static final int LOW_TICKS_PER_METER = 28914;//unit conversion while the robot is on low gear
         public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
