@@ -39,12 +39,12 @@ public class TurnTurret extends CommandBase {
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
+        turret.setAngle(angle);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        turret.setAngle(angle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
