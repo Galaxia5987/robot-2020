@@ -109,7 +109,7 @@ public class Climber extends SubsystemBase {
     /**
      * Move the right side of the climber to a given height.
      *
-     * @param height the setpoint height of the right elevator in meters
+     * @param height the height setpoint of the right elevator in meters
      */
     public void setRightHeight(double height) {
         if (unsafeToClimb()){
