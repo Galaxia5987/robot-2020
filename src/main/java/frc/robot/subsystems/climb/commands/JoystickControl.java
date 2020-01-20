@@ -19,7 +19,7 @@ import frc.robot.subsystems.climb.Climber;
 public class JoystickControl extends CommandBase {
     private final Climber climber;
     private boolean controlEachSide;
-
+    private double rightInput, leftInput;
 
     /**
      * Creates a new joystick control command.
@@ -42,15 +42,15 @@ public class JoystickControl extends CommandBase {
     @Override
     public void execute() {
         if (controlEachSide) {
-            double leftInput = RobotContainer.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE + climber.getLeftHeight();
-            double rightInput = RobotContainer.getRightXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE + climber.getRightHeight();
-            climber.setLeftHeight(leftInput);
-            climber.setRightHeight(rightInput);
-        } else {
-            double input = RobotContainer.getLeftXboxX() * Constants.Climber.MODIFY_JOYSTICK_RATE;
-            climber.setLeftHeight(input + climber.getLeftHeight());
-            climber.setRightHeight(-input + climber.getRightHeight());
+            leftInput = RobotContainer.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
+            rightInput = RobotContainer.getRightXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
         }
+        else {
+            leftInput = RobotContainer.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
+            rightInput = -leftInput;
+        }
+        climber.setLeftHeight(leftInput + climber.getLeftHeight());
+        climber.setRightHeight(rightInput + climber.getRightHeight());
     }
 
 
