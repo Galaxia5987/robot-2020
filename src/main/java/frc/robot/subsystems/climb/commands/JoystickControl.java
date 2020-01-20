@@ -18,7 +18,7 @@ import frc.robot.subsystems.climb.Climber;
  */
 public class JoystickControl extends CommandBase {
     private final Climber climber;
-    private boolean rawMode;
+    private boolean controlEachSide;
 
 
     /**
@@ -26,9 +26,9 @@ public class JoystickControl extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public JoystickControl(Climber climber, boolean rawMode) {
+    public JoystickControl(Climber climber, boolean controlEachSide) {
         this.climber = climber;
-        this.rawMode = rawMode;
+        this.controlEachSide = controlEachSide;
         addRequirements(climber);
     }
 
@@ -41,7 +41,7 @@ public class JoystickControl extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (rawMode) {
+        if (controlEachSide) {
             double leftInput = RobotContainer.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE + climber.getLeftHeight();
             double rightInput = RobotContainer.getRightXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE + climber.getRightHeight();
             climber.setLeftHeight(leftInput);
