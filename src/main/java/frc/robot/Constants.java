@@ -78,6 +78,7 @@ public class Constants {
         public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle
         public static final double HEIGHT = 2; // The allowed maximum height of the subsystem
         public static final double MODIFY_JOYSTICK_RATE = 0;
+        public static final double MAX_DIFFERENCE = 0; // The maximal difference between the two sides of the climber
     }
 
 }

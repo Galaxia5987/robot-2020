@@ -57,7 +57,7 @@ public class Climber extends SubsystemBase {
 
     /**
      * Release the mechanical stopper of the climber.
-     
+     * <p>
      * This would allow it to extend.
      */
     public void releaseStopper() {
@@ -93,7 +93,7 @@ public class Climber extends SubsystemBase {
      * @param height the height setpoint of the left elevator in meters
      */
     public void setLeftHeight(double height) {
-        if (unsafeToClimb()){
+        if (unsafeToClimb(height, true)) {
             return;
         }
         leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
@@ -112,7 +112,7 @@ public class Climber extends SubsystemBase {
      * @param height the height setpoint of the right elevator in meters
      */
     public void setRightHeight(double height) {
-        if (unsafeToClimb()){
+        if (unsafeToClimb(height, false)) {
             return;
         }
         rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
@@ -121,10 +121,14 @@ public class Climber extends SubsystemBase {
     /**
      * All cases where we want to prevent the drivers from climbing should return false here. whether it's by game time or localisation
      * We may allow the drivers to override this.
+     * It would also check that the difference between the motors doesn't exceed the limit.
      * @return whether the robot should not climb
      */
-    private boolean unsafeToClimb() {
-        return Robot.robotTimer.get() < 120;
+    private boolean unsafeToClimb(double setpoint, boolean isLeftSide) {
+        double currentHeight = isLeftSide ? getLeftHeight() : getRightHeight();
+        double otherSideHeight = isLeftSide ? getRightHeight() : getLeftHeight();
+        boolean difference = Math.abs((currentHeight + setpoint) - otherSideHeight) >= Constants.Climber.MAX_DIFFERENCE;
+        return Robot.robotTimer.get() < 120 && difference;
     }
 
     /**
@@ -169,6 +173,7 @@ public class Climber extends SubsystemBase {
         }
         return setpoint;
     }
+
 
     @Override
     public void periodic() {
