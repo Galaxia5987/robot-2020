@@ -10,7 +10,6 @@ import frc.robot.subsystems.shooter.commands.NetworkTablesReached;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 
-import static frc.robot.Constants.Shooter.STOP_SHOOTER;
 import static frc.robot.Constants.Turret.STOP_TURRET;
 
 public class AutoShoot extends ParallelDeadlineGroup {
