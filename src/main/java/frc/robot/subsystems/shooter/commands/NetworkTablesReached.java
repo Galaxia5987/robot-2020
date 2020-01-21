@@ -22,8 +22,8 @@ public class NetworkTablesReached extends CommandBase {
         addRequirements(shooter, turret);
         this.shooter = shooter;
         this.turret = turret;
-        this.distance = visionDistance.getDouble(3);
-        this.angle = visionAngle.getDouble(3);
+        this.distance = visionDistance.getDouble(0);
+        this.angle = visionAngle.getDouble(0);
     }
 
     @Override

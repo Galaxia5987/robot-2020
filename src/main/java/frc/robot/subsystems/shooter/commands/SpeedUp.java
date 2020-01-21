@@ -52,7 +52,7 @@ public class SpeedUp extends CommandBase {
     @Override
     public void execute() {
         if (isVisionActive) {
-            distance = visionDistance.getDouble(3);
+            distance = visionDistance.getDouble(0);
         }
         shooter.setSpeed(shooter.approximateVelocity(distance));
         setNetworkTable();
