@@ -20,7 +20,6 @@ public class BalanceRobot extends CommandBase {
     private boolean startBalancing = false;
     private double setpointHeight;
     private double setpointAngle;
-    private double currentHeight;
     private double currentAngleError;
     private double leftSetpointHeight;
     private double rightSetpointHeight;
@@ -65,14 +64,8 @@ public class BalanceRobot extends CommandBase {
 
         //Calculate the error angle and the current height
         currentAngleError = setpointAngle - Robot.navx.getRoll();
-        currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
 
-        //If the elevator reaches the target height engage the mechanical stopper to stop it from going up
-        if (Math.abs(setpointHeight - currentHeight) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE) {
-            startBalancing = true;
-        }
-
-        if (startBalancing && !climber.isStopperEngaged()) {
+        if (!climber.isStopperEngaged()) {
             double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
             //Fix the heights according to the angle of the robot
             if (currentAngleError > 0) {
@@ -94,7 +87,6 @@ public class BalanceRobot extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         climber.engageStopper();
-        startBalancing = false;
     }
 
 
