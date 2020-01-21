@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.conveyor.Conveyor;
 
 
-public class Gate extends InstantCommand {
+public class MoveGate extends InstantCommand {
     private boolean open;
     private Conveyor conveyor;
 
-    public Gate(Conveyor conveyor, boolean open){
+    public MoveGate(Conveyor conveyor, boolean open){
         addRequirements(conveyor);
         this.open = open;
         this.conveyor = conveyor;
