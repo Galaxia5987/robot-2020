@@ -60,8 +60,8 @@ public class BalanceRobot extends CommandBase {
     @Override
     public void execute() {
         //Update the target height of each side
-        leftSetpointHeight = setpointHeight - climber.getLeftHeight();
-        rightSetpointHeight = setpointHeight - climber.getRightHeight();
+        leftSetpointHeight = setpointHeight / 2;
+        rightSetpointHeight = setpointHeight / 2;
 
         //Calculate the error angle and the current height
         currentAngleError = setpointAngle - Robot.navx.getRoll();
