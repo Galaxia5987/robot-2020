@@ -122,12 +122,12 @@ public class Climber extends SubsystemBase {
      * All cases where we want to prevent the drivers from climbing should return false here. whether it's by game time or localisation
      * We may allow the drivers to override this.
      * It would also check that the difference between the motors doesn't exceed the limit.
+     *
      * @return whether the robot should not climb
      */
     private boolean unsafeToClimb(double setpoint, boolean isLeftSide) {
-        double currentHeight = isLeftSide ? getLeftHeight() : getRightHeight();
         double otherSideHeight = isLeftSide ? getRightHeight() : getLeftHeight();
-        boolean difference = Math.abs((currentHeight + setpoint) - otherSideHeight) >= Constants.Climber.MAX_DIFFERENCE;
+        boolean difference = Math.abs(setpoint - otherSideHeight) >= Constants.Climber.MAX_DIFFERENCE;
         return Robot.robotTimer.get() < 120 && difference;
     }
 
