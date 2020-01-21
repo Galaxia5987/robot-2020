@@ -132,7 +132,7 @@ public class Climber extends SubsystemBase {
     private boolean unsafeToClimb(double setpoint, boolean isLeftSide) {
         double otherSideHeight = isLeftSide ? getRightHeight() : getLeftHeight();
         boolean difference = Math.abs(setpoint - otherSideHeight) >= Constants.Climber.MAX_DIFFERENCE;
-        return Robot.robotTimer.get() < 120 && difference;
+        return Robot.robotTimer.get() < 120 || difference;
     }
 
     /**
