@@ -23,6 +23,7 @@ import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.valuetuner.WebConstantPIDTalon;
+import org.ghrobotics.lib.debug.FalconDashboard;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
@@ -60,7 +61,7 @@ public class Drivetrain extends SubsystemBase {
         rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
         rightSlave.follow(rightMaster);
         leftSlave.follow(leftMaster);
-        configurations.setNeutralMode(NeutralMode.Coast);
+        configurations.setNeutralMode(NeutralMode.Brake);
         configurations.setEnableVoltageCompensation(true);
         configurations.configureVoltageCompensationSaturation(12.0);
         configurations.setPidSet(pidSet);
@@ -68,10 +69,10 @@ public class Drivetrain extends SubsystemBase {
         configurations.setEnableCurrentLimit(true);
         configurations.setSupplyCurrentLimit(40);
         UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
-        if (Robot.isRobotA)
-            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
-        else
-            gearShifterB = new Solenoid(1, SHIFTER_PORT);
+//        if (Robot.isRobotA)
+//            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+//        else
+//            gearShifterB = new Solenoid(1, SHIFTER_PORT);
 
     }
 
@@ -173,7 +174,7 @@ public class Drivetrain extends SubsystemBase {
      */
     public double getRightVelocity() {
         if (isShiftedLow())
-            return lowGearUnitModel.toUnits(rightMaster.getSelectedSensorVelocity());
+            return lowGearUnitModel.toVelocity(rightMaster.getSelectedSensorVelocity());
         else
             return highGearUnitModel.toUnits(rightMaster.getSelectedSensorVelocity());
     }
@@ -183,7 +184,7 @@ public class Drivetrain extends SubsystemBase {
      */
     public double getLeftVelocity() {
         if (isShiftedLow())
-            return lowGearUnitModel.toUnits(leftMaster.getSelectedSensorVelocity());
+            return lowGearUnitModel.toVelocity(leftMaster.getSelectedSensorVelocity());
         else
             return highGearUnitModel.toUnits(leftMaster.getSelectedSensorVelocity());
     }
@@ -194,10 +195,7 @@ public class Drivetrain extends SubsystemBase {
      * @return
      */
     public boolean isShiftedHigh() {
-        if (Robot.isRobotA)
-            return gearShifterA.get() == DoubleSolenoid.Value.kForward;
-        else
-            return gearShifterB.get();
+        return false;
     }
 
     /**
@@ -206,7 +204,7 @@ public class Drivetrain extends SubsystemBase {
      * @return
      */
     public boolean isShiftedLow() {
-        return !isShiftedHigh();
+        return true;
     }
 
     /**
@@ -215,11 +213,18 @@ public class Drivetrain extends SubsystemBase {
      * @return the robot's heading in degrees, from -180 to 180
      */
     public double getHeading() {
-        return Math.IEEEremainder(navx.getAngle(), 360);
+        return Math.IEEEremainder(navx.getAngle(), 360) * (GYRO_INVERTED ? -1 : 1);
     }
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
+    }
+
+    public void setPose(Pose2d pose, Rotation2d rotation) {
+        leftMaster.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
+        navx.reset();
+        odometry.resetPosition(pose, rotation);
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
@@ -229,8 +234,9 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() { // This method will be called once per scheduler run
-        unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
-        odometry.update(
+//        unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
+        unitModel = lowGearUnitModel;
+        Pose2d current = odometry.update(
                 Rotation2d.fromDegrees(getHeading()),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition())
@@ -238,7 +244,9 @@ public class Drivetrain extends SubsystemBase {
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
 
-
+        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
+        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
     }
 
     public enum shiftModes {

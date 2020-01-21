@@ -28,17 +28,29 @@ public class Constants {
         public static final double GRAVITY_ACCELERATION = 9.80665;
         public static final boolean RIGHT_MASTER_INVERTED = true;
         public static final boolean RIGHT_SLAVE_INVERTED = true;
-        public static final double TRACK_WIDTH = 0;
+        public static final double TRACK_WIDTH = 0.72;
+        public static final boolean GYRO_INVERTED = true;
+        public static final double WHEEL_DIAMETER = 0.1016;
     }
 
     public static class Autonomous {
         // Drivetrain characterization constants
-        public static final double kS = 0;
-        public static final double kV = 0;
-        public static final double kA = 0;
+        public static final double leftkS = mToR(0.367);
+        public static final double leftkV = mToR(1.6);
+        public static final double leftkA = mToR(0.0527);
+
+        public static final double rightkS = mToR(0.361);
+        public static final double rightkV = mToR(1.59);
+        public static final double rightkA = mToR(0.0667);
+
         // Follower constants
-        public static final double kBeta = 0;
-        public static final double kZeta = 0;
+        public static final double kBeta = 2;
+        public static final double kZeta = 0.7;
+    }
+
+    public static double mToR(double in) {
+        return 0;
+//        return in * Drivetrain.WHEEL_DIAMETER / 2;
     }
 
     public static class ExampleSubsystem1 {
