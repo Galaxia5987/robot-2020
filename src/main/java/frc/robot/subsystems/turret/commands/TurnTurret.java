@@ -16,7 +16,7 @@ public class TurnTurret extends CommandBase {
 
     private Turret turret;
     private double angle;
-    private boolean stop = false;
+    private boolean stop = true;
     public static final NetworkTable turretTable = NetworkTableInstance.getDefault().getTable("shooter");
     private static final NetworkTableEntry visionAngle = turretTable.getEntry("angle");
 
