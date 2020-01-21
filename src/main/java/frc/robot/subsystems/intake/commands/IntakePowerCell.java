@@ -1,29 +1,20 @@
 package frc.robot.subsystems.intake.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.intake.Intake;
 
 import static frc.robot.RobotContainer.intake;
 
 public class IntakePowerCell extends CommandBase {
-    private Timer timer = new Timer();
     private double speed;
-    private double timeout;
 
-    public IntakePowerCell(double speed, double timeout) {
+    public IntakePowerCell(Intake intake, double speed) {
         addRequirements(intake);
         this.speed = speed;
-        this.timeout = timeout;
-    }
-
-    public IntakePowerCell(double speed) {
-        this(speed, 0);
     }
 
     @Override
     public void initialize() {
-        timer.reset();
-        timer.start();
         intake.setPosition(false);
         intake.powerWheels(speed);
     }
@@ -35,12 +26,11 @@ public class IntakePowerCell extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= timeout || timeout == 0;
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
-        timer.stop();
         intake.powerWheels(0);
     }
 }

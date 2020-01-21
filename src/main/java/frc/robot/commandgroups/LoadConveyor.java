@@ -20,7 +20,7 @@ public class LoadConveyor extends SequentialCommandGroup {
                 // fold the intake out
                 new ToggleIntake(),
                 // move the power cells towards the turret and close the gate
-                new ParallelCommandGroup(new IntakePowerCell(INTAKE_SPEED, timeout), new FeedTurret(), new MoveGate(conveyor, CLOSE_GATE))
+                new ParallelCommandGroup(new IntakePowerCell(intake, INTAKE_SPEED).withTimeout(timeout), new FeedTurret(), new MoveGate(conveyor, CLOSE_GATE))
         );
     }
 

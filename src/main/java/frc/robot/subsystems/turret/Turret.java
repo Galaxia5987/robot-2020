@@ -9,7 +9,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Utils;
 import frc.robot.subsystems.UnitModel;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -27,12 +26,12 @@ import static frc.robot.Ports.Turret.*;
  */
 public class Turret extends SubsystemBase {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
-    private TalonSRX motor = new TalonSRX(MOTOR);
-    private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
     private final NetworkTableEntry kPentry = table.getEntry("kP");
     private final NetworkTableEntry kIentry = table.getEntry("kI");
     private final NetworkTableEntry kDentry = table.getEntry("kD");
     private final NetworkTableEntry kFentry = table.getEntry("kF");
+    private TalonSRX motor = new TalonSRX(MOTOR);
+    private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
 
     /**
      * configures the encoder and PID constants.
@@ -52,7 +51,6 @@ public class Turret extends SubsystemBase {
         motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         motor.setSelectedSensorPosition((int) HALL_EFFECT_POSITION_1, 0, TALON_TIMEOUT);
     }
-
 
 
     /**
@@ -101,11 +99,14 @@ public class Turret extends SubsystemBase {
 
     /**
      * sets the target angle to the corresponding angle between 0 and 360.
+     *
      * @param targetAngle the setpoint angle.
      * @return the angle between 0 and 360.
      */
     private double mathFloor(double targetAngle) {
-        targetAngle%=360; targetAngle+=360; targetAngle%=360;
+        targetAngle %= 360;
+        targetAngle += 360;
+        targetAngle %= 360;
         return targetAngle;
     }
 
@@ -135,9 +136,10 @@ public class Turret extends SubsystemBase {
 
     /**
      * sets the position of the turret to the joystick position.
+     *
      * @param position the setpoint position indicated by the joystick.
      */
-    public void setJoystickPosition(double position){
+    public void setJoystickPosition(double position) {
         motor.set(ControlMode.Position, unitModel.toTicks(position));
     }
 

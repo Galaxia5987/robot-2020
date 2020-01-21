@@ -13,7 +13,7 @@ public class DropPowerCell extends ParallelCommandGroup {
         addCommands(
                 // move the conveyor and the intake backwards to drop power cells
                 new MinimizeConveyor(),
-                new OuttakeBall(speed, timeout)
+                new OuttakeBall(speed).withTimeout(timeout)
         );
     }
 }

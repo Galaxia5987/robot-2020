@@ -16,7 +16,7 @@ public class TurnAndShoot extends SequentialCommandGroup {
         addCommands(
                 // turn the turret to the setpoint angle
                 // ready the flywheel to shoot the balls to the target distance for the desired amount of time
-                new ParallelCommandGroup(new TurnTurret(turret), new SpeedUp(shooter, timeout)),
+                new ParallelCommandGroup(new TurnTurret(turret), new SpeedUp(shooter).withTimeout(timeout)),
                 // shoot the balls until the feed command ends
                 new ParallelDeadlineGroup(new FeedTurret(), new SpeedUp(shooter))
         );
