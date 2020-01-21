@@ -53,6 +53,10 @@ public class Climber extends SubsystemBase {
 
         leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         rightMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+
+        leftMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
+        rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
+
     }
 
     /**
