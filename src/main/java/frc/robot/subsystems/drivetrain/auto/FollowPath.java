@@ -73,7 +73,7 @@ public class FollowPath extends CommandBase {
                 feedforward.calculate(rightSpeedSetpoint,
                         (rightSpeedSetpoint - prevSpeeds.rightMetersPerSecond) / dt);
 
-        drivetrain.setVelocityAndFeedForward(leftSpeedSetpoint, rightSpeedSetpoint, leftFeedforward, rightFeedforward);
+        drivetrain.setVelocityAndFeedForward(leftSpeedSetpoint, rightSpeedSetpoint, leftFeedforward / 12, rightFeedforward / 12);
 
         prevTime = curTime;
         prevSpeeds = targetWheelSpeeds;

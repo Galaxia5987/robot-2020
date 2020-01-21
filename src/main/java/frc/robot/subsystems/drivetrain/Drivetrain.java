@@ -22,6 +22,7 @@ import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
+import frc.robot.valuetuner.WebConstantPIDTalon;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
@@ -61,6 +62,7 @@ public class Drivetrain extends SubsystemBase {
         leftSlave.follow(leftMaster);
         configurations.setNeutralMode(NeutralMode.Coast);
         configurations.setEnableVoltageCompensation(true);
+        configurations.configureVoltageCompensationSaturation(12.0);
         configurations.setPidSet(pidSet);
         configurations.setEnableCurrentLimit(true);
         configurations.setEnableCurrentLimit(true);

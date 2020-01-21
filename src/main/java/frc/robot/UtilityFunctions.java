@@ -1,6 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import frc.robot.utilities.FalconConfiguration;
@@ -9,6 +8,7 @@ public class UtilityFunctions {
     public static void configAllFalcons(FalconConfiguration configurations, TalonFX... falcons) {
         for (TalonFX falcon : falcons) {
             falcon.configAllSettings(configurations.motorConfigs);
+            falcon.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
             falcon.setNeutralMode(configurations.getNeutralMode());
             falcon.enableVoltageCompensation(configurations.isEnableVoltageCompensation());
             falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
