@@ -27,13 +27,6 @@ public class SpeedUp extends CommandBase {
         isVisionActive = true;
     }
 
-    public SpeedUp(Shooter shooter, boolean stop) {
-        addRequirements(shooter);
-        this.shooter = shooter;
-        this.stop = stop;
-        this.distance = visionDistance.getDouble(0);
-    }
-
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
@@ -60,7 +53,7 @@ public class SpeedUp extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return stop; //TODO: Check if timeout == 0 works instead, depending on how whileHeld works.
+        return false;
     }
 
     // Called once after isFinished returns true
