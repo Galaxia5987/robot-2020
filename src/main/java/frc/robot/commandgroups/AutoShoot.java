@@ -20,6 +20,7 @@ public class AutoShoot extends ParallelDeadlineGroup {
                 // turn the turret to the setpoint angle
                 // ready the flywheel to shoot the balls to the target distance for the desired amount of time
                 new TurnTurret(turret, STOP_TURRET),
+
                 new SpeedUp(shooter),
                 // when the flywheel and the turret are at the target speed and angle start feeding the power cells
                 new SequentialCommandGroup(new WaitForShootingVision(shooter, turret), new AutoFeed(conveyor))
