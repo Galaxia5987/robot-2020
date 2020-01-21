@@ -10,13 +10,13 @@ import frc.robot.subsystems.turret.Turret;
 import static frc.robot.Constants.Shooter.SPEED_THRESHOLD;
 import static frc.robot.Constants.Turret.ANGLE_THRESHOLD;
 
-public class NetworkTablesReached extends CommandBase {
+public class WaitForShootingVision extends CommandBase {
     private Shooter shooter;
     private Turret turret;
     private double distance;
     private double angle;
 
-    public NetworkTablesReached(Shooter shooter, Turret turret) {
+    public WaitForShootingVision(Shooter shooter, Turret turret) {
         addRequirements(shooter, turret);
         this.shooter = shooter;
         this.turret = turret;
