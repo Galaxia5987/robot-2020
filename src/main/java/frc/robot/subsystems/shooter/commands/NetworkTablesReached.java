@@ -7,16 +7,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
 
+import static frc.robot.Constants.Shooter.SPEED_THRESHOLD;
 import static frc.robot.Constants.Turret.ANGLE_THRESHOLD;
 
 public class NetworkTablesReached extends CommandBase {
+    public static final NetworkTable waitTable = NetworkTableInstance.getDefault().getTable("shooter");
+    private static final NetworkTableEntry visionAngle = waitTable.getEntry("angle");
+    private static final NetworkTableEntry visionDistance = waitTable.getEntry("distance");
     private Shooter shooter;
     private Turret turret;
     private double distance;
     private double angle;
-    public static final NetworkTable waitTable = NetworkTableInstance.getDefault().getTable("shooter");
-    private static final NetworkTableEntry visionAngle = waitTable.getEntry("angle");
-    private static final NetworkTableEntry visionDistance = waitTable.getEntry("distance");
 
     public NetworkTablesReached(Shooter shooter, Turret turret) {
         addRequirements(shooter, turret);
@@ -38,7 +39,9 @@ public class NetworkTablesReached extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return (shooter.getSpeed() >= shooter.approximateVelocity(distance)) && (Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD);
+        boolean isShooterReady = shooter.getSpeed() - SPEED_THRESHOLD >= shooter.approximateVelocity(distance);
+        boolean isTurretReady = Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD;
+        return isShooterReady && isTurretReady;
     }
 
     @Override
