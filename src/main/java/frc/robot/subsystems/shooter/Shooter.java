@@ -5,6 +5,9 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
 
@@ -16,6 +19,8 @@ import static frc.robot.Ports.TALON_PID_SLOT;
 public class Shooter extends SubsystemBase {
     private final TalonSRX shooterMaster = new TalonSRX(MASTER);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);
+    public static final NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
+    private static final NetworkTableEntry visionDistance = shooterTable.getEntry("distance");
 
     public Shooter() {
         // Basic motor configurations
@@ -70,5 +75,9 @@ public class Shooter extends SubsystemBase {
      */
     public double approximateVelocity(double distance) {
         return (8.68 * Math.exp(0.1685 * distance));
+    }
+
+    public double getVisionDistance(){
+        return visionDistance.getDouble(0);
     }
 }
