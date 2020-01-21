@@ -19,8 +19,8 @@ import static frc.robot.Ports.TALON_PID_SLOT;
 public class Shooter extends SubsystemBase {
     private final TalonSRX shooterMaster = new TalonSRX(MASTER);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);
-    public static final NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
-    private static final NetworkTableEntry visionDistance = shooterTable.getEntry("distance");
+    private static final NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("shooter");
+    private static final NetworkTableEntry visionDistance = visionTable.getEntry("distance");
 
     public Shooter() {
         // Basic motor configurations

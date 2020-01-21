@@ -27,7 +27,7 @@ import static frc.robot.Ports.Turret.*;
 public class Turret extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
-    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("visionTable");
+    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
     private NetworkTableEntry visionAngle = visionTable.getEntry("visionAngle");
 
     /**
