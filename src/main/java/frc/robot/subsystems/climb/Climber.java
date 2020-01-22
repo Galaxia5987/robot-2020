@@ -153,14 +153,14 @@ public class Climber extends SubsystemBase {
      * Reset the encoder position to the maximal height of the left side of subsystem, in case it reaches the limit.
      */
     public void resetLeft() {
-        leftMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.HEIGHT));
+        leftMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
     }
 
     /**
      * Reset the encoder position to the maximal height of right side of the subsystem, in case it reaches the limit.
      */
     public void resetRight() {
-        rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.HEIGHT));
+        rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
     }
 
     /**
@@ -170,8 +170,8 @@ public class Climber extends SubsystemBase {
      * @return the normalized setpoint.
      */
     public double normalizeSetPoint(double setpoint) {
-        if (setpoint > Constants.Climber.HEIGHT) {
-            return Constants.Climber.HEIGHT;
+        if (setpoint > Constants.Climber.MAX_HEIGHT) {
+            return Constants.Climber.MAX_HEIGHT;
         } else if (setpoint < 0) {
             return 0;
         }

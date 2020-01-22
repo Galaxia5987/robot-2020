@@ -9,7 +9,6 @@ package frc.robot.subsystems.climb.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 
@@ -70,11 +69,11 @@ public class BalanceRobot extends CommandBase {
             double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
             //Fix the heights according to the angle of the robot
             if (currentAngleError > 0) {
-                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climber.HEIGHT);
+                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climber.MAX_HEIGHT);
                 rightSetpointHeight = heights[0];
                 leftSetpointHeight = heights[1];
             } else {
-                double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climber.HEIGHT);
+                double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climber.MAX_HEIGHT);
                 rightSetpointHeight = heights[1];
                 leftSetpointHeight = heights[0];
             }
