@@ -27,6 +27,8 @@ import static frc.robot.Ports.Turret.*;
 public class Turret extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
+    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("visionTable");
+    private NetworkTableEntry visionAngle = visionTable.getEntry("visionAngle");
 
     /**
      * configures the encoder and PID constants.
@@ -164,4 +166,7 @@ public class Turret extends SubsystemBase {
         motor.setSelectedSensorPosition(unitModel.toTicks(resetAngle), 0, TALON_TIMEOUT);
     }
 
+    public double getVisionAngle(){
+        return visionAngle.getDouble(0);
+    }
 }
