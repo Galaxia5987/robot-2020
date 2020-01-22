@@ -39,7 +39,7 @@ public class NetworkTablesReached extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        boolean isShooterReady = shooter.getSpeed() - SPEED_THRESHOLD >= shooter.approximateVelocity(distance);
+        boolean isShooterReady = Math.abs(shooter.getSpeed() - shooter.approximateVelocity(distance)) >= SPEED_THRESHOLD;
         boolean isTurretReady = Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD;
         return isShooterReady && isTurretReady;
     }
