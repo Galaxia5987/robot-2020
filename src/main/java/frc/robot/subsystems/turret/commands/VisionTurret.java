@@ -26,7 +26,7 @@ public class VisionTurret extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        turret.stop();
     }
 
     @Override
