@@ -38,6 +38,7 @@ public class Drivetrain extends SubsystemBase {
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
+    public UnitModel unitModel = lowGearUnitModel;
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -164,7 +165,7 @@ public class Drivetrain extends SubsystemBase {
     /**
      * @return the velocity of the right motor
      */
-    private double getRightVelocity() {
+    public double getRightVelocity() {
         if (isShiftedLow())
             return lowGearUnitModel.toUnits(rightMaster.getSelectedSensorVelocity());
         else
@@ -174,7 +175,7 @@ public class Drivetrain extends SubsystemBase {
     /**
      * @return the velocity of the left motor
      */
-    private double getLeftVelocity() {
+    public double getLeftVelocity() {
         if (isShiftedLow())
             return lowGearUnitModel.toUnits(leftMaster.getSelectedSensorVelocity());
         else
