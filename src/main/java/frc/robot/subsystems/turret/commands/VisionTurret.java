@@ -25,7 +25,6 @@ public class VisionTurret extends CommandBase {
     @Override
     public void execute() {
         anglePid.setSetpoint(VISION_SETPOINT);
-        anglePid.setPID(VISION_KP, VISION_KI, VISION_KD);
         turret.setAngle(anglePid.getSetpoint());
     }
 
