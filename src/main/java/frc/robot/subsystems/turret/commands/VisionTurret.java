@@ -1,6 +1,6 @@
 package frc.robot.subsystems.turret.commands;
 
-import com.stormbots.MiniPID;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.turret.Turret;
 
@@ -8,7 +8,7 @@ import static frc.robot.Constants.Turret.*;
 
 public class VisionTurret extends CommandBase {
     private Turret turret;
-    private MiniPID anglePid = new MiniPID(VISION_KP, VISION_KI, VISION_KD);
+    private PIDController anglePid = new PIDController(VISION_KP, VISION_KI, VISION_KD);
 
     public VisionTurret(Turret turret) {
         addRequirements(turret);
@@ -17,14 +17,16 @@ public class VisionTurret extends CommandBase {
 
     @Override
     public void initialize() {
+        anglePid.setSetpoint(VISION_SETPOINT);
 
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
+        anglePid.setSetpoint(VISION_SETPOINT);
         anglePid.setPID(VISION_KP, VISION_KI, VISION_KD);
-        turret.setAngle(anglePid.getOutput(turret.getVisionAngle(), VISION_SETPOINT));
+        turret.setAngle(anglePid.getSetpoint());
     }
 
     @Override
