@@ -150,8 +150,11 @@ public class Conveyor extends SubsystemBase {
         return feederProximity.getState();
     }
 
-    public Solenoid getGate(){
-        Solenoid gate = new Solenoid(GATE);
-        return gate;
+    public boolean isGateOpen(){
+        return gate.get();
+    }
+
+    public void setGate(boolean open){
+        gate.set(open);
     }
 }
