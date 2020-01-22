@@ -37,7 +37,6 @@ public final class Constants {
         public static double KD = 0;
         public static double KF = 0;
         public static final boolean STOP_TURRET = false;
-        public static final double VISION_ANGLE_THRESHOLD = 1;
         public static final double VISION_KP = 0;
         public static final double VISION_KI = 0;
         public static final double VISION_KD = 0;
