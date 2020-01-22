@@ -17,7 +17,6 @@ public class VisionTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        anglePid.setSetpoint(VISION_SETPOINT);
 
     }
 
@@ -25,16 +24,16 @@ public class VisionTurret extends CommandBase {
     @Override
     public void execute() {
         anglePid.setSetpoint(VISION_SETPOINT);
-        turret.setAngle(anglePid.getSetpoint());
+        if (VISION_SETPOINT - turret.getVisionAngle() > ANGLE_THRESHOLD)
+            turret.setTurretSpeed();
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(VISION_SETPOINT - turret.getVisionAngle()) <= ANGLE_THRESHOLD;
+        return false; // TODO use interruptOn decorator
     }
 
     @Override
     public void end(boolean interrupted) {
-        turret.stop();
     }
 }
