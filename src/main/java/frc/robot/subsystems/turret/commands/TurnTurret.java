@@ -27,7 +27,7 @@ public class TurnTurret extends CommandBase {
     }
 
     public TurnTurret(Turret turret){
-        this(turret, visionAngle.getDouble(3));
+        this(turret, visionAngle.getDouble(0));
     }
 
     public TurnTurret(Turret turret, boolean stop){
