@@ -38,10 +38,8 @@ public class Drivetrain extends SubsystemBase {
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
-    public UnitModel unitModel = lowGearUnitModel;
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
-    public UnitModel unitModel = lowGearUnitModel;
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -192,20 +190,21 @@ public class Drivetrain extends SubsystemBase {
 
     /**
      * Indicates whether the shifter is on a high gear
-     *
      * @return
      */
     public boolean isShiftedHigh() {
-        return false;
+        if (Robot.isRobotA)
+            return gearShifterA.get() == DoubleSolenoid.Value.kForward;
+        else
+            return gearShifterB.get();
     }
 
     /**
      * Indicates whether the shifter is on a low gear
-     *
      * @return
      */
     public boolean isShiftedLow() {
-        return true;
+        return !isShiftedHigh();
     }
 
     /**
@@ -229,13 +228,14 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
+        UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
         leftMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(leftVelocity), DemandType.ArbitraryFeedForward, leftFF);
         rightMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(rightVelocity), DemandType.ArbitraryFeedForward, rightFF);
     }
 
     @Override
     public void periodic() { // This method will be called once per scheduler run
-//        unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
+        UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
         unitModel = lowGearUnitModel;
         Pose2d current = odometry.update(
                 Rotation2d.fromDegrees(getHeading()),
