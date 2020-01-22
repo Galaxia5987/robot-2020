@@ -15,6 +15,7 @@ import org.techfire225.webapp.Webserver;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.auto.FollowPath;
+import frc.robot.subsystems.drivetrain.commands.VelocityDrive;
 import frc.robot.utilities.TrajectoryLoader;
 
 /**
@@ -34,19 +35,12 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
+        if (Robot.debug) {
+            startValueTuner();
+            startFireLog();
+            new ValueTuner().start();
+        }
     }
-
-  /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-    if(Robot.debug) {
-      startValueTuner();
-      startFireLog();
-    }
-  }
 
   /**
    * Initiates the value tuner.

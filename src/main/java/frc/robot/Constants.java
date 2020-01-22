@@ -16,29 +16,41 @@ public class Constants {
     //public static final double TIME_STEP = CONST(0.02);
 
     public static class Drivetrain {
-        public static final double[] VELOCITY_PID_SET = {0, 0, 0, 0};//PID set for the velocity drive of the wheels
+        public static final double[] VELOCITY_PID_SET = {0.0001, 0, 2, 0};//PID set for the velocity drive of the wheels
         public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
         public static final double HIGH_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into high gear
         public static final double LOW_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into low gear
         public static final double TURNING_TOLERANCE = 0;//Stops the robot from shifting while the robot is turning
-        public static final int LOW_TICKS_PER_METER = 0;//unit conversion while the robot is on low gear
+        public static final int LOW_TICKS_PER_METER = 28914;//unit conversion while the robot is on low gear
         public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
         public static final double GRAVITY_ACCELERATION = 9.80665;
         public static final boolean RIGHT_MASTER_INVERTED = true;
         public static final boolean RIGHT_SLAVE_INVERTED = true;
-        public static final double TRACK_WIDTH = 0;
+        public static final double TRACK_WIDTH = 0.72;
+        public static final boolean GYRO_INVERTED = true;
+        public static final double WHEEL_DIAMETER = 0.1016;
     }
 
     public static class Autonomous {
         // Drivetrain characterization constants
-        public static final double kS = 0;
-        public static final double kV = 0;
-        public static final double kA = 0;
+        public static final double leftkS = mToR(0.367);
+        public static final double leftkV = mToR(1.6);
+        public static final double leftkA = mToR(0.0527);
+
+        public static final double rightkS = mToR(0.361);
+        public static final double rightkV = mToR(1.59);
+        public static final double rightkA = mToR(0.0667);
+
         // Follower constants
-        public static final double kBeta = 0;
-        public static final double kZeta = 0;
+        public static final double kBeta = 2;
+        public static final double kZeta = 0.7;
+    }
+
+    public static double mToR(double in) {
+        return in;
+//        return in * Drivetrain.WHEEL_DIAMETER / 2;
     }
 
     public static class ExampleSubsystem1 {

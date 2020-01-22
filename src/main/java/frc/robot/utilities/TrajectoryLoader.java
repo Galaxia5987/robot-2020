@@ -13,10 +13,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TrajectoryLoader {
     private static Map<String, Trajectory> trajectories = new ConcurrentHashMap<>();
 
-    static {
+    public static void loadTrajectories() {
         for (File file : Objects.requireNonNull(new File(Filesystem.getDeployDirectory() + "/trajectories").listFiles())) {
             try {
-                trajectories.put(file.getName(), TrajectoryUtil.fromPathweaverJson(file.toPath()));
+                trajectories.put(file.getName().replace(".json", ""), TrajectoryUtil.fromPathweaverJson(file.toPath()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -26,5 +26,6 @@ public class TrajectoryLoader {
     public static Trajectory getTrajectory(String name) {
         return trajectories.get(name);
     }
+
 
 }
