@@ -114,7 +114,6 @@ public final class Constants {
         public static final int TICKS_PER_ROTATION = 36;
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double MAX_ACCELERATION = 2;
-        public static final boolean STOP_SHOOTER = false;
         public static final double SPEED_THRESHOLD = 0;
     }
 }
