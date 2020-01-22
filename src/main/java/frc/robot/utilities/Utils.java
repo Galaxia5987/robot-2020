@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.utilities;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -22,5 +22,5 @@ public class Utils {
     public static void setValue(NetworkTableEntry entry, double value) {
         entry.setValue(value);
     }
-
+    
 }
