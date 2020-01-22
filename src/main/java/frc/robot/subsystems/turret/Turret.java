@@ -46,18 +46,13 @@ public class Turret extends SubsystemBase {
         motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
         motor.configPeakCurrentLimit(MAX_CURRENT);
         motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-        motor.setSelectedSensorPosition((int) HALL_EFFECT_POSITION_1, 0, TALON_TIMEOUT);
     }
-
 
     /**
      * runs periodically, updates the constants and resets encoder position if the hall effect is closed
      */
     @Override
     public void periodic() {
-        if (isLimitSwitchClosed()) {
-            resetEncoderPosition();
-        }
     }
 
 
@@ -145,25 +140,6 @@ public class Turret extends SubsystemBase {
      */
     public void stop() {
         motor.set(ControlMode.MotionMagic, getEncoderPosition());
-    }
-
-    /**
-     * @return return if the state of the Hall Effect sensor is Closed.
-     */
-    public boolean isLimitSwitchClosed() {
-        return motor.getSensorCollection().isRevLimitSwitchClosed();
-    }
-
-    /**
-     * set encoder position to the nearest Hall Effect position.
-     */
-    public void resetEncoderPosition() {
-        double resetAngle;
-        if (Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_1) < Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_2))
-            resetAngle = HALL_EFFECT_POSITION_1;
-        else
-            resetAngle = HALL_EFFECT_POSITION_2;
-        motor.setSelectedSensorPosition(unitModel.toTicks(resetAngle), 0, TALON_TIMEOUT);
     }
 
     public double getVisionAngle(){
