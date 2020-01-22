@@ -10,6 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.valuetuner.ValueTuner;
+import org.techfire225.webapp.Webserver;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.auto.FollowPath;
 import frc.robot.utilities.TrajectoryLoader;
@@ -33,21 +36,50 @@ public class RobotContainer {
         configureButtonBindings();
     }
 
-    /**
-     * Use this method to define your button->command mappings.  Buttons can be created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-     * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
+  /**
+   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   */
+  public RobotContainer() {
+    // Configure the button bindings
+    configureButtonBindings();
+    if(Robot.debug) {
+      startValueTuner();
+      startFireLog();
     }
+  }
+
+  /**
+   * Initiates the value tuner.
+   */
+  private void startValueTuner() {
+    new ValueTuner().start();
+  }
+
+  /**
+   * Initiates the port of team 225s Fire-Logger.
+   */
+  private void startFireLog(){
+    try {
+      new Webserver();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  /**
+   * Use this method to define your button->command mappings.  Buttons can be created by
+   * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
+   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   */
+  private void configureButtonBindings() {
+  }
 
 
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
     public Command getAutonomousCommand() {
         return new FollowPath(drivetrain, TrajectoryLoader.getTrajectory("middle"));
     }
