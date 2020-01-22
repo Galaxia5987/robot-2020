@@ -11,9 +11,6 @@ import static frc.robot.Constants.Shooter.SPEED_THRESHOLD;
 import static frc.robot.Constants.Turret.ANGLE_THRESHOLD;
 
 public class NetworkTablesReached extends CommandBase {
-    public static final NetworkTable waitTable = NetworkTableInstance.getDefault().getTable("shooter");
-    private static final NetworkTableEntry visionAngle = waitTable.getEntry("angle");
-    private static final NetworkTableEntry visionDistance = waitTable.getEntry("distance");
     private Shooter shooter;
     private Turret turret;
     private double distance;
@@ -23,8 +20,8 @@ public class NetworkTablesReached extends CommandBase {
         addRequirements(shooter, turret);
         this.shooter = shooter;
         this.turret = turret;
-        this.distance = visionDistance.getDouble(0);
-        this.angle = visionAngle.getDouble(0);
+        this.distance = shooter.getVisionDistance();
+        this.angle = turret.getVisionAngle();
     }
 
     @Override
