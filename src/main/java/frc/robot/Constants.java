@@ -80,6 +80,7 @@ public class Constants {
         public static final double MODIFY_JOYSTICK_RATE = 0;
         public static final double MAX_DIFFERENCE = 0; // The maximal difference between the two sides of the climber
         public static final double RAMP_RATE = 0;
+        public static final long DELAY_BETWEEN_COMMANDS = 0;
     }
 
 }

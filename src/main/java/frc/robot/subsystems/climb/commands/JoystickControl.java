@@ -58,6 +58,11 @@ public class JoystickControl extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         climber.engageStopper();
+        try {
+            wait(Constants.Climber.DELAY_BETWEEN_COMMANDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
