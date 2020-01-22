@@ -38,10 +38,10 @@ public class Turret extends SubsystemBase {
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         motor.setInverted(IS_MOTOR_INVERTED);
         motor.setSensorPhase(IS_ENCODER_INVERTED);
-        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
-        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
-        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
-        motor.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
+        motor.config_kP(0, KP, TALON_TIMEOUT);
+        motor.config_kI(0, KI, TALON_TIMEOUT);
+        motor.config_kD(0, KD, TALON_TIMEOUT);
+        motor.config_kF(0, KF, TALON_TIMEOUT);
         motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
         motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
         motor.configPeakCurrentLimit(MAX_CURRENT);

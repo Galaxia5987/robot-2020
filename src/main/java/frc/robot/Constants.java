@@ -22,7 +22,6 @@ public final class Constants {
     }
 
     public static class Turret {
-        public static final int TALON_PID_SLOT = 0;
         public static final int MAX_CURRENT = 35; // [A]
         public static final int TICKS_PER_DEGREE = 1;
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 0;
@@ -88,7 +87,6 @@ public final class Constants {
         public static final double KP = 0.0;
         public static final double KI = 0.0;
         public static final double KD = 0.0;
-        public static final int TALON_PID_SLOT = 0;
         public static final int CRUISE_VELOCITY = 0;
         public static final int CRUISE_ACCELERATION = 0;
         public static final int MAX_CURRENT = 0;
