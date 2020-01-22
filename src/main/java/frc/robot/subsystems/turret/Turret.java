@@ -113,15 +113,6 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * sets the position of the turret to the joystick position.
-     *
-     * @param position the setpoint position indicated by the joystick.
-     */
-    public void setJoystickPosition(double position) {
-        motor.set(ControlMode.Position, unitModel.toTicks(position));
-    }
-
-    /**
      * set the position to the current position to stop the turret at the target position.
      */
     public void stop() {
