@@ -25,11 +25,6 @@ import static frc.robot.Ports.Turret.*;
  * {@using Hall Effect}
  */
 public class Turret extends SubsystemBase {
-    public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
-    private final NetworkTableEntry kPentry = table.getEntry("kP");
-    private final NetworkTableEntry kIentry = table.getEntry("kI");
-    private final NetworkTableEntry kDentry = table.getEntry("kD");
-    private final NetworkTableEntry kFentry = table.getEntry("kF");
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
 
