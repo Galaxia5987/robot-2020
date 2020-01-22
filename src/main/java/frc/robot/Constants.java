@@ -35,22 +35,17 @@ public class Constants {
 
     public static class Autonomous {
         // Drivetrain characterization constants
-        public static final double leftkS = mToR(0.367);
-        public static final double leftkV = mToR(1.6);
-        public static final double leftkA = mToR(0.0527);
+        public static final double leftkS = 0.367;
+        public static final double leftkV = 1.6;
+        public static final double leftkA = 0.0527;
 
-        public static final double rightkS = mToR(0.361);
-        public static final double rightkV = mToR(1.59);
-        public static final double rightkA = mToR(0.0667);
+        public static final double rightkS = 0.361;
+        public static final double rightkV = 1.59;
+        public static final double rightkA = 0.0667;
 
         // Follower constants
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
-    }
-
-    public static double mToR(double in) {
-        return in;
-//        return in * Drivetrain.WHEEL_DIAMETER / 2;
     }
 
     public static class ExampleSubsystem1 {
