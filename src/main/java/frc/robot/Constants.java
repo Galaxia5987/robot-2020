@@ -35,11 +35,11 @@ public final class Constants {
         public static double KD = 0;
         public static double KF = 0;
         public static final boolean STOP_TURRET = false;
-        public static final double VISION_ANGLE_THRESHOLD = 1;
+        public static final double TURRET_SPEED = 0.5;
         public static final double VISION_KP = 0;
         public static final double VISION_KI = 0;
         public static final double VISION_KD = 0;
-        public static final double VISION_SETPOINT = 0;
+        public static final double VISION_SETPOINT = 0; // the setpoint angle to the target
       }
 
     static { // Runs alongside main
@@ -116,7 +116,7 @@ public final class Constants {
         public static final int TICKS_PER_ROTATION = 36;
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double MAX_ACCELERATION = 2;
-        public static final double SPEED_THRESHOLD = 0;
+        public static final double VELOCITY_THRESHOLD = 0; // the acceptable velocity threshold error of the shooter
     }
 }
 
