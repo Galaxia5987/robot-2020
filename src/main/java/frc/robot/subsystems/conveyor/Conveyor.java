@@ -39,10 +39,6 @@ public class Conveyor extends SubsystemBase {
         motor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT);
         motor.configPeakCurrentLimit(MAX_CURRENT);
         motor.configClosedloopRamp(RAMP_RATE);
-
-        motor.configVoltageCompSaturation(12);
-        motor.enableVoltageCompensation(true);
-        motor.setSelectedSensorPosition(0);
     }
 
     @Override
