@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.CommandGroup;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ParallelGroup;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Test;
@@ -29,6 +30,7 @@ public class RobotContainer {
   private Test test = new Test();
   private double timeout = 3;
   private CommandGroup commandGroup = new CommandGroup(test, timeout);
+  private ParallelGroup parallelGroup = new ParallelGroup(test);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
