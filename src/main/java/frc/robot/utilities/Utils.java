@@ -38,4 +38,16 @@ public class Utils {
         value %= mod;
         return value;
     }
+
+    public static double map(double x, double in_min, double in_max, double out_min, double out_max) {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+    public static double constrainedMap(double x, double in_min, double in_max, double out_min, double out_max) {
+        return constrain( map(x, in_min, in_max, out_min, out_max), out_min, out_max);
+    }
+
+    public static double constrain(double x, double min, double max){
+        return Math.max(min, Math.min(x, max));
+    }
 }
