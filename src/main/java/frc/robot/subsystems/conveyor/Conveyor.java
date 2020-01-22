@@ -54,7 +54,7 @@ public class Conveyor extends SubsystemBase {
                 incrementBallsCount(1);
         }
 
-        if (conveyorProximity.getState()) {
+        if (!conveyorProximity.getState()) {
             if (conveyorProximity.getToggle() && (getConveyorSpeed() > 0))
                 decrementBallsCount(1);
         }
