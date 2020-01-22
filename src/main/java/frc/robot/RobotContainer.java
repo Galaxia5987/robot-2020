@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.auto.FollowPath;
+import frc.robot.subsystems.drivetrain.commands.VelocityDrive;
 import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
@@ -72,6 +73,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FollowPath(drivetrain, TrajectoryLoader.getTrajectory("middle"));
+        return new VelocityDrive(drivetrain, false, true);
     }
 }
