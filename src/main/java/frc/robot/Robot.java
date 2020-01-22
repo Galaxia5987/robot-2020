@@ -25,7 +25,6 @@ public class Robot extends TimedRobot {
   public static boolean isRobotA = true;
 
     private Command m_autonomousCommand;
-    public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public static Timer robotTimer = new Timer();
 
     private RobotContainer m_robotContainer;

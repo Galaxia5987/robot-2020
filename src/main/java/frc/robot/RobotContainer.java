@@ -7,7 +7,9 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.climb.Climber;
@@ -23,6 +25,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public static final Climber climber = new Climber();
     private final Command m_autoCommand = null;
+    public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public static XboxController xbox = new XboxController(2);
     public static final int leftXStick = 0;
     public static final int leftYStick = 1;

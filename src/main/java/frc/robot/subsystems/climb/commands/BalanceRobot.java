@@ -10,6 +10,7 @@ package frc.robot.subsystems.climb.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 
 /**
@@ -63,7 +64,7 @@ public class BalanceRobot extends CommandBase {
         rightSetpointHeight = setpointHeight / 2;
 
         //Calculate the error angle and the current height
-        currentAngleError = setpointAngle - Robot.navx.getRoll();
+        currentAngleError = setpointAngle - RobotContainer.navx.getRoll();
 
         if (!climber.isStopperEngaged()) {
             double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
