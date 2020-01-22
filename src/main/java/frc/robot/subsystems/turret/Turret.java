@@ -170,8 +170,8 @@ public class Turret extends SubsystemBase {
         return visionAngle.getDouble(0);
     }
 
-    public void setTurretSpeed(){
-        motor.set(ControlMode.PercentOutput, 0.5);
+    public void setTurretSpeed(double speed){
+        motor.set(ControlMode.PercentOutput, speed);
     }
 
 }
