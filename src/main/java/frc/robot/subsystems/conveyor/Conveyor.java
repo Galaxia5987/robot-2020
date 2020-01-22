@@ -32,9 +32,9 @@ public class Conveyor extends SubsystemBase {
     public Conveyor() {
         motor.setInverted(MOTOR_INVERTED);
 
-        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
-        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
-        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
+        motor.config_kP(0, KP, TALON_TIMEOUT);
+        motor.config_kI(0, KI, TALON_TIMEOUT);
+        motor.config_kD(0, KD, TALON_TIMEOUT);
 
         motor.configMotionCruiseVelocity(CRUISE_VELOCITY);
         motor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT);
