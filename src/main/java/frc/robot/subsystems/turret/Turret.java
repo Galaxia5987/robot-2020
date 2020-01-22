@@ -46,7 +46,6 @@ public class Turret extends SubsystemBase {
         motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
         motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
         motor.configPeakCurrentLimit(MAX_CURRENT);
-        motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     }
 
     /**
@@ -63,7 +62,7 @@ public class Turret extends SubsystemBase {
      * @return the angle of the turret
      */
     public double getEncoderPosition() {
-        return motor.getSelectedSensorPosition();
+        return unitModel.toUnits(motor.getSelectedSensorPosition());
     }
 
     /**
@@ -87,7 +86,7 @@ public class Turret extends SubsystemBase {
                 targetPosition = targetPos;
             }
         }
-        return unitModel.toTicks(targetPosition);
+        return targetPosition;
     }
 
     /**
@@ -100,7 +99,7 @@ public class Turret extends SubsystemBase {
         } else if (currentPosition < (-180 + middle)) {
             currentPosition += 360;
         }
-        return unitModel.toTicks(currentPosition);
+        return currentPosition;
     }
 
     /**

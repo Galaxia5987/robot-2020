@@ -22,7 +22,7 @@ public class CenterTurret extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        turret.center(turret.getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        turret.setAngle(turret.center(turret.getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION));
     }
 
     // Make this return true when this Command no longer needs to run execute()
