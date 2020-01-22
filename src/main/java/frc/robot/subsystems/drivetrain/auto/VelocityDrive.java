@@ -1,4 +1,4 @@
-package frc.robot.subsystems.drivetrain.commands;
+package frc.robot.subsystems.drivetrain.auto;
 
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
