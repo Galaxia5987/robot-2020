@@ -78,6 +78,6 @@ public class RobotContainer {
     }
 
     public Command getTestCommand() {
-      return new VelocityDrive(drivetrain, -1, false, true);
+      return new VelocityDrive(drivetrain, false, true);
     }
 }
