@@ -1,4 +1,4 @@
-package frc.robot.utils;
+package frc.robot.utilities;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 

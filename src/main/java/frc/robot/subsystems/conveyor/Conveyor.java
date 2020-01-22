@@ -1,12 +1,11 @@
 package frc.robot.subsystems.conveyor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
-import frc.robot.utils.DeadbandProximity;
+import frc.robot.utilities.DeadbandProximity;
 
 import static frc.robot.Constants.Conveyor.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
