@@ -40,7 +40,7 @@ public final class Constants {
         public static final double VISION_KP = 0;
         public static final double VISION_KI = 0;
         public static final double VISION_KD = 0;
-        public static final double VISION_SETPOINT = 0;
+        public static final double VISION_SETPOINT = 0; // the setpoint angle to the target
       }
 
     static { // Runs alongside main
@@ -118,7 +118,7 @@ public final class Constants {
         public static final int TICKS_PER_ROTATION = 36;
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double MAX_ACCELERATION = 2;
-        public static final double SPEED_THRESHOLD = 0;
+        public static final double SPEED_THRESHOLD = 0; // the acceptable speed error of the shooter
     }
 }
 
