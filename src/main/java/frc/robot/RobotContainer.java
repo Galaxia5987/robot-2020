@@ -27,9 +27,9 @@ public class RobotContainer {
     private final Command m_autoCommand = null;
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public static XboxController xbox = new XboxController(2);
-    public static final int leftXStick = 0;
-    public static final int leftYStick = 1;
-    public static final int rightYStick = 5;
+    public static final int XboxLeftXStick = 0;
+    public static final int XboxLeftYStick = 1;
+    public static final int XboxRightYStick = 5;
 
 
     /**
@@ -53,15 +53,15 @@ public class RobotContainer {
     }
 
     public static double getLeftXboxX() {
-        return xbox.getRawAxis(leftXStick);
+        return xbox.getRawAxis(XboxLeftXStick);
     }
 
     public static double getLeftXboxY() {
-        return xbox.getRawAxis(leftYStick);
+        return xbox.getRawAxis(XboxLeftYStick);
     }
 
     public static double getRightXboxY() {
-        return xbox.getRawAxis(rightYStick);
+        return xbox.getRawAxis(XboxRightYStick);
     }
 
     /**

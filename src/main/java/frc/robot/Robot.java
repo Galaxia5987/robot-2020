@@ -21,12 +21,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  static final boolean debug = true;
-  public static boolean isRobotA = true;
+    static final boolean debug = true;
+    public static boolean isRobotA = true;
 
     private Command m_autonomousCommand;
     public static Timer robotTimer = new Timer();
-
     private RobotContainer m_robotContainer;
 
     /**
