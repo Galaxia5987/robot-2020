@@ -9,7 +9,8 @@ public class ClimbAndBalance extends SequentialCommandGroup {
         addRequirements(climber);
         addCommands(
                 new RiseToHeight(climber, setpoint),
-                new BalanceRobot(climber , setpoint)
+                new BalanceRobot(climber, setpoint)
+
         );
     }
 
