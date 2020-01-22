@@ -9,7 +9,7 @@ import frc.robot.subsystems.turret.Turret;
 
 import static frc.robot.Constants.Turret.ANGLE_THRESHOLD;
 
-public class NetworkTablesReached extends CommandBase {
+public class WaitForShootingVision extends CommandBase {
     private Shooter shooter;
     private Turret turret;
     private double distance;
@@ -18,7 +18,7 @@ public class NetworkTablesReached extends CommandBase {
     private static final NetworkTableEntry visionAngle = waitTable.getEntry("angle");
     private static final NetworkTableEntry visionDistance = waitTable.getEntry("distance");
 
-    public NetworkTablesReached(Shooter shooter, Turret turret) {
+    public WaitForShootingVision(Shooter shooter, Turret turret) {
         addRequirements(shooter, turret);
         this.shooter = shooter;
         this.turret = turret;

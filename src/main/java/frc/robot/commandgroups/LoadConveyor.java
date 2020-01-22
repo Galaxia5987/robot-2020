@@ -1,5 +1,6 @@
 package frc.robot.commandgroups;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.conveyor.Conveyor;
@@ -20,7 +21,15 @@ public class LoadConveyor extends SequentialCommandGroup {
                 // fold the intake out
                 new ToggleIntake(),
                 // move the power cells towards the turret and close the gate
+<<<<<<< HEAD
                 new ParallelCommandGroup(new IntakePowerCell(INTAKE_SPEED, timeout), new FeedTurret(), new Gate(conveyor, CLOSE_GATE))
+=======
+                new ParallelCommandGroup(
+                        new IntakePowerCell(intake, INTAKE_SPEED).withTimeout(timeout),
+                        new FeedTurret(),
+                        new InstantCommand(conveyor::closeGate, conveyor)
+                )
+>>>>>>> f3c0b0d... Fix LoadConveyor command group
         );
     }
 

@@ -10,7 +10,7 @@ import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 
 public class TurnAndShoot extends SequentialCommandGroup {
-
+    // for when there is no vision
     public TurnAndShoot(Turret turret, Shooter shooter, double timeout) {
         addRequirements(turret, shooter);
         addCommands(
