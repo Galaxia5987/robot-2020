@@ -154,7 +154,11 @@ public class Conveyor extends SubsystemBase {
         return gate.get();
     }
 
-    public void setGate(boolean open){
-        gate.set(open);
+    public void openGate(){
+        gate.set(OPEN_GATE);
+    }
+
+    public void closeGate() {
+        gate.set(CLOSE_GATE);
     }
 }
