@@ -13,7 +13,7 @@ public class AutoFeed extends ParallelCommandGroup {
         addRequirements(conveyor);
         addCommands(
                 // move the gate and let the power cells move into the turret
-                new Gate(conveyor, OPEN_GATE),
+                new InstantCommand(() -> conveyor.openGate(OPEN_GATE), conveyor),
                 // feed the power cells to the turret
                 new FeedTurret()
         );
