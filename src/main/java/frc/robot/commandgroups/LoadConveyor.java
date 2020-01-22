@@ -21,9 +21,9 @@ public class LoadConveyor extends SequentialCommandGroup {
                 // fold the intake out
                 new ToggleIntake(),
                 new ParallelCommandGroup(
-                        new IntakePowerCell(intake, INTAKE_SPEED).withTimeout(timeout),
+                        new IntakePowerCell(intake, conveyor, INTAKE_SPEED).withTimeout(timeout),
                         new FeedTurret(),
-                        new InstantCommand(conveyor::closeGate, conveyor)
+                        new InstantCommand(() -> conveyor.openGate(CLOSE_GATE), conveyor)
                 )
         );
     }
