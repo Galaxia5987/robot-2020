@@ -7,13 +7,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
 
 public class SpeedUp extends CommandBase {
-    public static final NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("shooter");
-    private static final NetworkTableEntry visionDistance = shooterTable.getEntry("distance");
+    private NetworkTable velocityTable = NetworkTableInstance.getDefault().getTable("velocityTable");
+    private final NetworkTableEntry velocityEntry = velocityTable.getEntry("velocity");
     private final Shooter shooter;
-    private final NetworkTableEntry velocityEntry = shooterTable.getEntry("velocity");
     private double distance;
     private boolean isVisionActive = false;
-    private boolean stop = true;
 
     public SpeedUp(Shooter shooter, double distance) {
         addRequirements(shooter);
@@ -23,7 +21,7 @@ public class SpeedUp extends CommandBase {
 
 
     public SpeedUp(Shooter shooter) {
-        this(shooter, visionDistance.getDouble(0)); //TODO replace 3 with the vision distance output value
+        this(shooter, shooter.getVisionDistance()); //TODO replace 3 with the vision distance output value
         isVisionActive = true;
     }
 
@@ -36,7 +34,7 @@ public class SpeedUp extends CommandBase {
     @Override
     public void execute() {
         if (isVisionActive) {
-            distance = visionDistance.getDouble(0);
+            distance = shooter.getVisionDistance();
         }
         shooter.setSpeed(shooter.approximateVelocity(distance));
         setNetworkTable();
