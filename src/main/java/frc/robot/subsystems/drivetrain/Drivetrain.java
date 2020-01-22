@@ -68,10 +68,10 @@ public class Drivetrain extends SubsystemBase {
         configurations.setEnableCurrentLimit(true);
         configurations.setSupplyCurrentLimit(40);
         UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
-//        if (Robot.isRobotA)
-//            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
-//        else
-//            gearShifterB = new Solenoid(1, SHIFTER_PORT);
+        if (Robot.isRobotA)
+            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+        else
+            gearShifterB = new Solenoid(1, SHIFTER_PORT);
 
     }
 
