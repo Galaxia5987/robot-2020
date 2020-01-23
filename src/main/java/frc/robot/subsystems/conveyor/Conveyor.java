@@ -145,6 +145,9 @@ public class Conveyor extends SubsystemBase {
         return feederProximity.getState();
     }
 
+    public boolean conveyorSensedObject() {
+        return conveyorProximity.getState();
+    }
     public boolean isGateOpen(){
         return gate.get();
     }

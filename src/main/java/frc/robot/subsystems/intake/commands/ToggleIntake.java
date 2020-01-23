@@ -37,9 +37,7 @@ public class ToggleIntake extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (direction)
-            return intake.isFolded();
-        return !intake.isFolded();
+        return true;
     }
 
     @Override
