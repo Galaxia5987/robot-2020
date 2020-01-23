@@ -157,6 +157,7 @@ public class Conveyor extends SubsystemBase {
     /**
      * Alternative way to open the gate, if booleans are too confusing to work with.
      * OPEN is in the state where the stopper is open, and balls can feed freely.
+     * CLOSE is the state where the stopper is closed, and balls can't feed freely.
      * TOGGLE state is ignored.
      *
      * @param state state of the stopper, OPEN / CLOSE
