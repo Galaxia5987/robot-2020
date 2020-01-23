@@ -57,8 +57,6 @@ public class Intake extends SubsystemBase {
     /**
      * OPEN is in the state where the intake is functional
      * CLOSE for the state of bringing the intake in.
-     * Toggle switch the state to the opposite state,
-     * for example if the state is OPEN he would become CLOSE.
      *
      * @param state state of the intake, OPEN / CLOSE / TOGGLE
      */
