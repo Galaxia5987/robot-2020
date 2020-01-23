@@ -5,6 +5,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_RETURN_VELOCITY;
 import static frc.robot.RobotContainer.conveyor;
 
+/**
+ * Minimize conveyor back
+ */
 public class MinimizeConveyor extends CommandBase {
 
     public MinimizeConveyor() {

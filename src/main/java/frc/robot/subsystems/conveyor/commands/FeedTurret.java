@@ -5,6 +5,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import static frc.robot.Constants.Conveyor.MAX_BALLS_AMOUNT;
 import static frc.robot.RobotContainer.conveyor;
 
+/**
+ * Feed power cells into the shooter.
+ */
 public class FeedTurret extends CommandBase {
     private int balls; //Shoot out X balls!
 
