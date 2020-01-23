@@ -24,7 +24,7 @@ import static frc.robot.Ports.Conveyor.*;
 public class Conveyor extends SubsystemBase {
     UnitModel unitsConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
-    private DeadbandProximity feederProximity = new DeadbandProximity(FEEDER_PROXIMITY, FEEDER_PROXIMITY_MIN_VOLTAGE, FEEDER_PROXIMITY_MAX_VOLTAGE);
+    private DeadbandProximity intakeProximity = new DeadbandProximity(INTAKE_PROXIMITY, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
     private DeadbandProximity conveyorProximity = new DeadbandProximity(CONVEYOR_PROXIMITY, CONVEYOR_PROXIMITY_MIN_VOLTAGE, CONVEYOR_PROXIMITY_MAX_VOLTAGE);
     private Solenoid gate = new Solenoid(GATE); //mechanical stop
     private int ballsCount = 3;
@@ -45,7 +45,7 @@ public class Conveyor extends SubsystemBase {
     @Override
     public void periodic() {
         updateSensors();
-        if (feederProximity.getState() && feederProximity.getToggle() && (getConveyorSpeed() > 0))
+        if (intakeProximity.getState() && intakeProximity.getToggle() && (getConveyorSpeed() > 0))
                 incrementBallsCount(1);
 
         if (!conveyorProximity.getState() && conveyorProximity.getToggle() && (getConveyorSpeed() > 0))
@@ -53,7 +53,7 @@ public class Conveyor extends SubsystemBase {
     }
 
     private void updateSensors() {
-        feederProximity.update();
+        intakeProximity.update();
         conveyorProximity.update();
     }
 
@@ -137,8 +137,8 @@ public class Conveyor extends SubsystemBase {
         this.ballsCount = ballsCount;
     }
 
-    public boolean feederSensedObject() {
-        return feederProximity.getState();
+    public boolean intakeSensedObject() {
+        return intakeProximity.getState();
     }
 
     public boolean isGateOpen(){

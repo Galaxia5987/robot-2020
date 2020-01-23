@@ -5,8 +5,8 @@ public class Ports {
     public static class Conveyor {
         public static final int MOTOR = 22;
 
-        public static final int FEEDER_PROXIMITY = 0;
-        public static final int CONVEYOR_PROXIMITY = 0;
+        public static final int INTAKE_PROXIMITY = 0; //Bottom proximity
+        public static final int CONVEYOR_PROXIMITY = 0; //Top proximity
 
         public static final int GATE = 0;
     }
