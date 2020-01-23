@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
 
-import static frc.robot.Constants.Shooter.VELOCITY_THRESHOLD;
+import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
 import static frc.robot.Constants.Turret.ANGLE_THRESHOLD;
 
 public class WaitForShootingVision extends CommandBase {
@@ -33,7 +33,7 @@ public class WaitForShootingVision extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        boolean isShooterReady = Math.abs(shooter.getSpeed() - shooter.approximateVelocity(distance)) >= VELOCITY_THRESHOLD;
+        boolean isShooterReady = Math.abs(shooter.getSpeed() - shooter.approximateVelocity(distance)) >= VELOCITY_TOLERANCE;
         boolean isTurretReady = Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD;
         return isShooterReady && isTurretReady;
     }
