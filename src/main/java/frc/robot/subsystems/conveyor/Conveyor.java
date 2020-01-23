@@ -45,9 +45,10 @@ public class Conveyor extends SubsystemBase {
     @Override
     public void periodic() {
         updateSensors();
+        //If the intake senses an object, and it hasn't in the previous state, and the wheels are turning outwards, add a ball to the count
         if (intakeProximity.getState() && intakeProximity.getToggle() && (getConveyorSpeed() > 0))
                 incrementBallsCount(1);
-
+        //If the conveyor proximity loses an object, and it hasn't been off before and the conveyor is spinning outwards, remove a ball from the count
         if (!conveyorProximity.getState() && conveyorProximity.getToggle() && (getConveyorSpeed() > 0))
                 decrementBallsCount(1);
     }
@@ -88,7 +89,7 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if(isGateOpen()) return;//TODO Check
+        if(isGateOpen()) return;
         motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
     }
 
@@ -137,6 +138,10 @@ public class Conveyor extends SubsystemBase {
         this.ballsCount = ballsCount;
     }
 
+    /**
+     * Return if the intake is seeing an object
+     * @return true if a power cell is in front of the sensor.
+     */
     public boolean intakeSensedObject() {
         return intakeProximity.getState();
     }
