@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.DeadbandProximity;
+import frc.robot.utilities.State;
 
 import static frc.robot.Constants.Conveyor.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -146,5 +147,25 @@ public class Conveyor extends SubsystemBase {
 
     public void openGate(boolean open){
         gate.set(open);
+    }
+
+    /**
+     * Alternative way to open the gate, if booleans are too confusing to work with.
+     * OPEN is in the state where the stopper is open, and balls can feed freely.
+     * TOGGLE state is ignored.
+     *
+     * @param state state of the stopper, OPEN / CLOSE
+     */
+    public void openGate(State state){
+        switch (state){
+            case OPEN:
+                openGate(true);
+                break;
+            case CLOSE:
+                openGate(false);
+                break;
+            case TOGGLE:
+                break;
+        }
     }
 }

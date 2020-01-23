@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.utilities.State;
 
 import static frc.robot.Constants.Intake.*;
 import static frc.robot.Ports.Intake.*;
@@ -53,6 +54,28 @@ public class Intake extends SubsystemBase {
         setPosition(!isFolded());
     }
 
+    /**
+     * OPEN is in the state where the intake is functional
+     * CLOSE for the state of bringing the intake in.
+     *
+     * @param state state of the intake, OPEN / CLOSE / TOGGLE
+     */
+    public void setPosition(State state){
+        switch (state) {
+            case OPEN:
+                redactor.set(Value.kForward);
+                break;
+            case CLOSE:
+                redactor.set(Value.kReverse);
+                break;
+            case TOGGLE:
+                if (isFolded())
+                    redactor.set(Value.kForward);
+                else
+                    redactor.set(Value.kReverse);
+                break;
+        }
+    }
     /**
      * apply power on the wheel to spin them based on the power you insert.
      *
