@@ -39,7 +39,7 @@ public final class Constants {
         public static final double VISION_KP = 0;
         public static final double VISION_KI = 0;
         public static final double VISION_KD = 0;
-        public static final double VISION_SETPOINT = 0; // the setpoint angle to the target
+        public static final double VISION_ANGLE_SETPOINT = 0; // the setpoint angle to the target
       }
 
     static { // Runs alongside main

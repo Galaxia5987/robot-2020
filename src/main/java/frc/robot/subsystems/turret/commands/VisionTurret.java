@@ -23,8 +23,8 @@ public class VisionTurret extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        anglePid.setSetpoint(VISION_SETPOINT);
-        turret.setSpeed(anglePid.calculate(turret.getVisionAngle(), VISION_SETPOINT));
+        anglePid.setSetpoint(VISION_ANGLE_SETPOINT);
+        turret.setSpeed(anglePid.calculate(turret.getVisionAngle(), VISION_ANGLE_SETPOINT));
     }
 
     @Override
