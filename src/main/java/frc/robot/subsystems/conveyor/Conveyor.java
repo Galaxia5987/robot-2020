@@ -44,16 +44,11 @@ public class Conveyor extends SubsystemBase {
     @Override
     public void periodic() {
         updateSensors();
-
-        if (feederProximity.getState()) {
-            if (feederProximity.getToggle() && (getConveyorSpeed() > 0))
+        if (feederProximity.getState() && feederProximity.getToggle() && (getConveyorSpeed() > 0))
                 incrementBallsCount(1);
-        }
 
-        if (!conveyorProximity.getState()) {
-            if (conveyorProximity.getToggle() && (getConveyorSpeed() > 0))
+        if (!conveyorProximity.getState() && conveyorProximity.getToggle() && (getConveyorSpeed() > 0))
                 decrementBallsCount(1);
-        }
     }
 
     private void updateSensors() {
