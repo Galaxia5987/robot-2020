@@ -24,8 +24,7 @@ public class VisionTurret extends CommandBase {
     @Override
     public void execute() {
         anglePid.setSetpoint(VISION_SETPOINT);
-        if (VISION_SETPOINT - turret.getVisionAngle() > ANGLE_THRESHOLD)
-            turret.setTurretSpeed(TURRET_SPEED);
+        turret.setTurretSpeed(anglePid.calculate(turret.getVisionAngle(), VISION_SETPOINT));
     }
 
     @Override
