@@ -1,13 +1,19 @@
 package frc.robot.subsystems.conveyor.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
+import frc.robot.subsystems.conveyor.Conveyor;
 
 import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_RETURN_VELOCITY;
 import static frc.robot.RobotContainer.conveyor;
 
 public class MinimizeConveyor extends CommandBase {
 
-    public MinimizeConveyor() {
+    private final Conveyor conveyor;
+
+    public MinimizeConveyor(Conveyor conveyor) {
+        this.conveyor = conveyor;
         addRequirements(conveyor);
     }
 
