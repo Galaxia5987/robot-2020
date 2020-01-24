@@ -28,6 +28,7 @@ public class TurnTurret extends CommandBase {
     public TurnTurret(Turret turret, boolean stop){
         addRequirements(turret);
         this.turret = turret;
+        this.angle = turret.getVisionAngle();
         this.stop = stop;
     }
 
