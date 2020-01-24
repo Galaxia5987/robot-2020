@@ -1,10 +1,12 @@
 package frc.robot.subsystems.intake.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 
 public class OuttakeBall extends CommandBase {
     private Intake intake;
+    private Conveyor conveyor;
     private double speed;
 
     /**
@@ -13,8 +15,9 @@ public class OuttakeBall extends CommandBase {
      *
      * @param speed
      */
-    public OuttakeBall(Intake intake, double speed) {
-        addRequirements(intake);
+    public OuttakeBall(Conveyor conveyor, Intake intake, double speed) {
+        addRequirements(intake, conveyor);
+        this.conveyor = conveyor;
         this.intake = intake;
         this.speed = -speed;
     }
@@ -23,11 +26,11 @@ public class OuttakeBall extends CommandBase {
     public void initialize() {
         intake.setPosition(false);
         intake.powerWheels(speed);
+        conveyor.setConveyorSpeed(speed);
     }
 
     @Override
     public void execute() {
-        intake.powerWheels(speed);
     }
 
     @Override
@@ -38,5 +41,6 @@ public class OuttakeBall extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         intake.powerWheels(0);
+        conveyor.setConveyorSpeed(0);
     }
 }
