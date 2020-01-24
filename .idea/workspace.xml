@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="390636c6-9c04-45e6-b711-31dac1690950" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="390636c6-9c04-45e6-b711-31dac1690950" name="Default Changelist" comment="Update turret angle constrains">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/robot/Ports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/robot/Ports.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +30,7 @@
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
         <option value="Dan Katzuv &lt;dan.dan.kafe@gmail.com&gt;" />
+        <option value="Lior Barkai &lt;lior5858@gmail.com&gt;" />
       </list>
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -57,6 +58,33 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunManager">
+    <configuration name="TurretTest.getNearestTurretPosition" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;frc.robot.subsystems.turret.TurretTest.getNearestTurretPosition&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanTest" />
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.TurretTest.getNearestTurretPosition" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -93,13 +121,119 @@
       <option name="presentableId" value="LOCAL‎00002" />
       <updated>1579860565052</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL‎00003" summary="Remove redundant imports">
+      <created>1579860754487</created>
+      <option name="number" value="LOCAL‎00003" />
+      <option name="presentableId" value="LOCAL‎00003" />
+      <updated>1579860754487</updated>
+    </task>
+    <task id="LOCAL‎00004" summary="Add dependancy injection for second constructor">
+      <created>1579860850243</created>
+      <option name="number" value="LOCAL‎00004" />
+      <option name="presentableId" value="LOCAL‎00004" />
+      <updated>1579860850243</updated>
+    </task>
+    <task id="LOCAL‎00005" summary="Add dependancy injection for constructor">
+      <created>1579860932596</created>
+      <option name="number" value="LOCAL‎00005" />
+      <option name="presentableId" value="LOCAL‎00005" />
+      <updated>1579860932596</updated>
+    </task>
+    <task id="LOCAL‎00006" summary="Fix feed turret command">
+      <created>1579861572439</created>
+      <option name="number" value="LOCAL‎00006" />
+      <option name="presentableId" value="LOCAL‎00006" />
+      <updated>1579861572439</updated>
+    </task>
+    <task id="LOCAL‎00007" summary="Remove redundant import">
+      <created>1579861623102</created>
+      <option name="number" value="LOCAL‎00007" />
+      <option name="presentableId" value="LOCAL‎00007" />
+      <updated>1579861623102</updated>
+    </task>
+    <task id="LOCAL‎00008" summary="Add a TODO for the unitmodel">
+      <created>1579862285334</created>
+      <option name="number" value="LOCAL‎00008" />
+      <option name="presentableId" value="LOCAL‎00008" />
+      <updated>1579862285334</updated>
+    </task>
+    <task id="LOCAL‎00009" summary="Remove redundant wrapper">
+      <created>1579862783102</created>
+      <option name="number" value="LOCAL‎00009" />
+      <option name="presentableId" value="LOCAL‎00009" />
+      <updated>1579862783102</updated>
+    </task>
+    <task id="LOCAL‎00010" summary="Change CenterTurret.turret call to this.turret">
+      <created>1579864233640</created>
+      <option name="number" value="LOCAL‎00010" />
+      <option name="presentableId" value="LOCAL‎00010" />
+      <updated>1579864233640</updated>
+    </task>
+    <task id="LOCAL‎00011" summary="Change JoystickTurret.turret call to this.turret">
+      <created>1579864370046</created>
+      <option name="number" value="LOCAL‎00011" />
+      <option name="presentableId" value="LOCAL‎00011" />
+      <updated>1579864370046</updated>
+    </task>
+    <task id="LOCAL‎00012" summary="Add angle initialization in third constructor">
+      <created>1579864672444</created>
+      <option name="number" value="LOCAL‎00012" />
+      <option name="presentableId" value="LOCAL‎00012" />
+      <updated>1579864672444</updated>
+    </task>
+    <task id="LOCAL‎00013" summary="Remove unused and damaging imports">
+      <created>1579865079825</created>
+      <option name="number" value="LOCAL‎00013" />
+      <option name="presentableId" value="LOCAL‎00013" />
+      <updated>1579865079825</updated>
+    </task>
+    <task id="LOCAL‎00014" summary="Update turret angle constrains">
+      <created>1579865214457</created>
+      <option name="number" value="LOCAL‎00014" />
+      <option name="presentableId" value="LOCAL‎00014" />
+      <updated>1579865214457</updated>
+    </task>
+    <task id="LOCAL‎00015" summary="Remove unused constant">
+      <created>1579865341535</created>
+      <option name="number" value="LOCAL‎00015" />
+      <option name="presentableId" value="LOCAL‎00015" />
+      <updated>1579865341535</updated>
+    </task>
+    <task id="LOCAL‎00016" summary="Rename method">
+      <created>1579865672336</created>
+      <option name="number" value="LOCAL‎00016" />
+      <option name="presentableId" value="LOCAL‎00016" />
+      <updated>1579865672336</updated>
+    </task>
+    <task id="LOCAL‎00017" summary="Remove unused imports">
+      <created>1579865693720</created>
+      <option name="number" value="LOCAL‎00017" />
+      <option name="presentableId" value="LOCAL‎00017" />
+      <updated>1579865693720</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Change intake singleton to private" />
     <MESSAGE value="Call right method of unit converter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Call right method of unit converter" />
+    <MESSAGE value="Remove redundant imports" />
+    <MESSAGE value="Add dependancy injection for second constructor" />
+    <MESSAGE value="Add dependancy injection for constructor" />
+    <MESSAGE value="Fix feed turret command" />
+    <MESSAGE value="Remove redundant import" />
+    <MESSAGE value="Add a TODO for the unitmodel" />
+    <MESSAGE value="Remove redundant wrapper" />
+    <MESSAGE value="Change CenterTurret.turret call to turret" />
+    <MESSAGE value="Change CenterTurret.turret call to this.turret" />
+    <MESSAGE value="Change JoystickTurret.turret call to this.turret" />
+    <MESSAGE value="Add angle initialization in third constructor" />
+    <MESSAGE value="Remove unused and damaging imports" />
+    <MESSAGE value="Update turret angle constrains" />
+    <MESSAGE value="Remove unused constant" />
+    <MESSAGE value="Rename method" />
+    <MESSAGE value="Remove unused imports" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unused imports" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1513" y="-480" key="#com.intellij.ide.util.MemberChooser" timestamp="1579858245313">
@@ -110,25 +244,46 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="1154" y="0" width="446" height="267" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1600.860/1562.-480.640.440@0.0.1600.860" timestamp="1579858058883" />
-    <state x="1000" y="0" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1579858093229">
+    <state x="530" y="180" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1579861251595">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="530" y="180" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1600.860@0.0.1600.860" timestamp="1579861251595" />
+    <state x="1000" y="0" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1579865289766">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="1000" y="0" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1600.860/1562.-480.640.440@0.0.1600.860" timestamp="1579858093229" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1579860564412">
+    <state x="1000" y="0" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1600.860@0.0.1600.860" timestamp="1579865289766" />
+    <state x="376" y="36" key="CommitChangelistDialog2" timestamp="1579865693156">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="1562" y="-480" key="CommitChangelistDialog2/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857873322" />
-    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1579860564412" />
+    <state x="376" y="36" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1579865693156" />
+    <state width="1557" height="249" key="GridCell.Tab.0.bottom" timestamp="1579865291124">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="249" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1579865291124" />
+    <state width="1557" height="249" key="GridCell.Tab.0.center" timestamp="1579865291123">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="249" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1579865291123" />
+    <state width="1557" height="249" key="GridCell.Tab.0.left" timestamp="1579865291123">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="249" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1579865291123" />
+    <state width="1557" height="249" key="GridCell.Tab.0.right" timestamp="1579865291124">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="249" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1579865291124" />
     <state x="0" y="0" key="SettingsEditor" timestamp="1579859105988">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="1562" y="-480" key="SettingsEditor/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857441035" />
     <state x="0" y="0" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1579859105988" />
-    <state x="0" y="0" key="Vcs.Push.Dialog.v2" timestamp="1579860567553">
+    <state x="0" y="0" key="Vcs.Push.Dialog.v2" timestamp="1579865695596">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="1562" y="-480" key="Vcs.Push.Dialog.v2/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857941318" />
-    <state x="0" y="0" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1579860567553" />
+    <state x="0" y="0" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1579865695596" />
     <state x="1589" y="-432" key="com.intellij.ide.util.TipDialog" timestamp="1579857300022">
       <screen x="1562" y="-480" width="640" height="440" />
     </state>
@@ -145,13 +300,13 @@
       <screen x="1562" y="-480" width="640" height="440" />
     </state>
     <state x="1562" y="-149" key="run.anything.popup/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857751767" />
-    <state x="8" y="40" width="1595" height="875" key="search.everywhere.popup" timestamp="1579860516201">
+    <state x="3" y="0" width="1595" height="858" key="search.everywhere.popup" timestamp="1579865941794">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="1388" y="-480" width="638" height="438" key="search.everywhere.popup/0.0.1600.860/1388.-480.640.440@1388.-480.640.440" timestamp="1579858525470" />
     <state x="0" y="0" width="1598" height="857" key="search.everywhere.popup/0.0.1600.860/1562.-480.640.440@0.0.1600.860" timestamp="1579858061658" />
     <state x="1562" y="-480" width="672" height="438" key="search.everywhere.popup/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857391581" />
-    <state x="8" y="40" width="1595" height="875" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1579860516201" />
+    <state x="3" y="0" width="1595" height="858" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1579865941794" />
   </component>
   <component name="masterDetails">
     <states>
