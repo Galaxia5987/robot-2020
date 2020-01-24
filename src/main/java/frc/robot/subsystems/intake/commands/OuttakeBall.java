@@ -1,10 +1,10 @@
 package frc.robot.subsystems.intake.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import static frc.robot.RobotContainer.intake;
+import frc.robot.subsystems.intake.Intake;
 
 public class OuttakeBall extends CommandBase {
+    private Intake intake;
     private double speed;
 
     /**
@@ -13,8 +13,9 @@ public class OuttakeBall extends CommandBase {
      *
      * @param speed
      */
-    public OuttakeBall(double speed) {
+    public OuttakeBall(Intake intake, double speed) {
         addRequirements(intake);
+        this.intake = intake;
         this.speed = -speed;
     }
 
