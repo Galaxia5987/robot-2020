@@ -119,8 +119,6 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * retrieve the Power Cells count that the proximities noticed.
-     *
      * @return the Power Cells count that the proximities noticed.
      */
     public int getBallsCount() {
@@ -139,14 +137,16 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * Return if the intake is seeing an object
-     * @return true if a power cell is in front of the sensor.
+     * @return whether a power cell is in the intake.
      */
-    public boolean intakeSensedObject() {
+    public boolean intakeSensedBall() {
         return intakeProximity.getState();
     }
 
-    public boolean shooterSensedObject() {
+    /**
+     * @return whether a power cell is beneath the stopper.
+     */
+    public boolean shooterSensedBall() {
         return conveyorProximity.getState();
     }
 

@@ -1,8 +1,6 @@
 package frc.robot.subsystems.conveyor.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.Constants;
 import frc.robot.subsystems.conveyor.Conveyor;
 
 import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_RETURN_VELOCITY;
@@ -31,7 +29,7 @@ public class MinimizeConveyor extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return conveyor.intakeSensedObject();
+        return conveyor.intakeSensedBall();
     }
 
     @Override
