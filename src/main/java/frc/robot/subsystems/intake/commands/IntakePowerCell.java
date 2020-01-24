@@ -23,11 +23,11 @@ public class IntakePowerCell extends CommandBase {
     public void initialize() {
         intake.setPosition(false);
         intake.powerWheels(speed);
+        conveyor.setConveyorSpeed(speed);
     }
 
     @Override
     public void execute() {
-        intake.powerWheels(speed);
     }
 
     @Override

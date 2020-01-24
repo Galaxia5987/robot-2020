@@ -1,10 +1,11 @@
 package frc.robot.subsystems.intake.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import static frc.robot.RobotContainer.intake;
 
-public class ToggleIntake extends CommandBase {
+public class ToggleIntake extends InstantCommand {
     private boolean direction;
     private boolean auto = false;
 
@@ -32,12 +33,6 @@ public class ToggleIntake extends CommandBase {
 
     @Override
     public void execute() {
-        chooseFoldingState();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
     }
 
     @Override
