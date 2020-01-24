@@ -27,7 +27,6 @@ public class IntakePowerCell extends CommandBase {
 
     @Override
     public void execute() {
-        intake.powerWheels(speed);
     }
 
     @Override
