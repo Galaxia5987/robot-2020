@@ -24,6 +24,7 @@ public class IntakePowerCell extends CommandBase {
         intake.setPosition(false);
         intake.powerWheels(speed);
         conveyor.setConveyorSpeed(speed);
+        conveyor.openGate(false);
     }
 
     @Override
