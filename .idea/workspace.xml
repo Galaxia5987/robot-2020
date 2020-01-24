@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3966747f-70d6-43ed-9f5c-4201f097e8bf" name="Default Changelist" comment="">
+    <list default="true" id="390636c6-9c04-45e6-b711-31dac1690950" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/frc/robot/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/robot/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/frc/robot/subsystems/turret/commands/VisionTurret.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/robot/subsystems/turret/commands/VisionTurret.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,21 +19,44 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="100" />
-    <option name="y" value="20" />
-    <option name="width" value="1400" />
-    <option name="height" value="820" />
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Dan Katzuv &lt;dan.dan.kafe@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="ProjectId" id="1WprHAkjCZTyMHkIuHS0x4tGmIJ" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -56,13 +75,83 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3966747f-70d6-43ed-9f5c-4201f097e8bf" name="Default Changelist" comment="" />
+      <changelist id="390636c6-9c04-45e6-b711-31dac1690950" name="Default Changelist" comment="" />
       <created>1578590336575</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1578590336575</updated>
     </task>
+    <task id="LOCAL‎00001" summary="Change intake singleton to private">
+      <created>1579857874012</created>
+      <option name="number" value="LOCAL‎00001" />
+      <option name="presentableId" value="LOCAL‎00001" />
+      <updated>1579857874012</updated>
+    </task>
+    <task id="LOCAL‎00002" summary="Call right method of unit converter">
+      <created>1579860565052</created>
+      <option name="number" value="LOCAL‎00002" />
+      <option name="presentableId" value="LOCAL‎00002" />
+      <updated>1579860565052</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Change intake singleton to private" />
+    <MESSAGE value="Call right method of unit converter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Call right method of unit converter" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1513" y="-480" key="#com.intellij.ide.util.MemberChooser" timestamp="1579858245313">
+      <screen x="1388" y="-480" width="640" height="440" />
+    </state>
+    <state x="1513" y="-480" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860/1388.-480.640.440@1388.-480.640.440" timestamp="1579858245313" />
+    <state x="1154" y="0" width="446" height="267" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1579858058883">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="1154" y="0" width="446" height="267" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1600.860/1562.-480.640.440@0.0.1600.860" timestamp="1579858058883" />
+    <state x="1000" y="0" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1579858093229">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="1000" y="0" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1600.860/1562.-480.640.440@0.0.1600.860" timestamp="1579858093229" />
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1579860564412">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="1562" y="-480" key="CommitChangelistDialog2/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857873322" />
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1579860564412" />
+    <state x="0" y="0" key="SettingsEditor" timestamp="1579859105988">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="1562" y="-480" key="SettingsEditor/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857441035" />
+    <state x="0" y="0" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1579859105988" />
+    <state x="0" y="0" key="Vcs.Push.Dialog.v2" timestamp="1579860567553">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="1562" y="-480" key="Vcs.Push.Dialog.v2/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857941318" />
+    <state x="0" y="0" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1579860567553" />
+    <state x="1589" y="-432" key="com.intellij.ide.util.TipDialog" timestamp="1579857300022">
+      <screen x="1562" y="-480" width="640" height="440" />
+    </state>
+    <state x="1589" y="-432" key="com.intellij.ide.util.TipDialog/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857300022" />
+    <state x="1693" y="-341" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1579857626417">
+      <screen x="1562" y="-480" width="640" height="440" />
+    </state>
+    <state x="1693" y="-341" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857626417" />
+    <state x="1562" y="-480" width="585" height="488" key="find.popup" timestamp="1579857380411">
+      <screen x="1562" y="-480" width="640" height="440" />
+    </state>
+    <state x="1562" y="-480" width="585" height="488" key="find.popup/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857380411" />
+    <state x="1562" y="-149" key="run.anything.popup" timestamp="1579857751767">
+      <screen x="1562" y="-480" width="640" height="440" />
+    </state>
+    <state x="1562" y="-149" key="run.anything.popup/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857751767" />
+    <state x="8" y="40" width="1595" height="875" key="search.everywhere.popup" timestamp="1579860516201">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="1388" y="-480" width="638" height="438" key="search.everywhere.popup/0.0.1600.860/1388.-480.640.440@1388.-480.640.440" timestamp="1579858525470" />
+    <state x="0" y="0" width="1598" height="857" key="search.everywhere.popup/0.0.1600.860/1562.-480.640.440@0.0.1600.860" timestamp="1579858061658" />
+    <state x="1562" y="-480" width="672" height="438" key="search.everywhere.popup/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857391581" />
+    <state x="8" y="40" width="1595" height="875" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1579860516201" />
   </component>
   <component name="masterDetails">
     <states>
