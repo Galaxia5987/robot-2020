@@ -25,7 +25,7 @@ public class Conveyor extends SubsystemBase {
     UnitModel unitsConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DeadbandProximity intakeProximity = new DeadbandProximity(INTAKE_PROXIMITY, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
-    private DeadbandProximity conveyorProximity = new DeadbandProximity(CONVEYOR_PROXIMITY, CONVEYOR_PROXIMITY_MIN_VOLTAGE, CONVEYOR_PROXIMITY_MAX_VOLTAGE);
+    private DeadbandProximity conveyorProximity = new DeadbandProximity(SHOOTER_PROXIMITY, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
     private Solenoid gate = new Solenoid(GATE); //mechanical stop
     private int ballsCount = 3;
 
@@ -146,7 +146,7 @@ public class Conveyor extends SubsystemBase {
         return intakeProximity.getState();
     }
 
-    public boolean conveyorSensedObject() {
+    public boolean shooterSensedObject() {
         return conveyorProximity.getState();
     }
 
