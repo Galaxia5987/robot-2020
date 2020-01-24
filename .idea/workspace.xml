@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="390636c6-9c04-45e6-b711-31dac1690950" name="Default Changelist" comment="Update turret angle constrains">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="390636c6-9c04-45e6-b711-31dac1690950" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/frc/robot/Ports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/robot/Ports.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -211,7 +210,19 @@
       <option name="presentableId" value="LOCAL‎00017" />
       <updated>1579865693720</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL‎00018" summary="Update CAN bus">
+      <created>1579867290211</created>
+      <option name="number" value="LOCAL‎00018" />
+      <option name="presentableId" value="LOCAL‎00018" />
+      <updated>1579867290212</updated>
+    </task>
+    <task id="LOCAL‎00019" summary="Update proximity sensors Ports">
+      <created>1579867426882</created>
+      <option name="number" value="LOCAL‎00019" />
+      <option name="presentableId" value="LOCAL‎00019" />
+      <updated>1579867426882</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -233,7 +244,9 @@
     <MESSAGE value="Remove unused constant" />
     <MESSAGE value="Rename method" />
     <MESSAGE value="Remove unused imports" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove unused imports" />
+    <MESSAGE value="Update CAN bus" />
+    <MESSAGE value="Update proximity sensors Ports" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update proximity sensors Ports" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1513" y="-480" key="#com.intellij.ide.util.MemberChooser" timestamp="1579858245313">
@@ -253,11 +266,11 @@
     </state>
     <state x="1000" y="0" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1600.860/1562.-480.640.440@0.0.1600.860" timestamp="1579858093229" />
     <state x="1000" y="0" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1600.860@0.0.1600.860" timestamp="1579865289766" />
-    <state x="376" y="36" key="CommitChangelistDialog2" timestamp="1579867320503">
+    <state x="376" y="36" key="CommitChangelistDialog2" timestamp="1579867557908">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="1562" y="-480" key="CommitChangelistDialog2/0.0.1600.860/1562.-480.640.440@1562.-480.640.440" timestamp="1579857873322" />
-    <state x="376" y="36" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1579867320503" />
+    <state x="376" y="36" key="CommitChangelistDialog2/0.0.1600.860@0.0.1600.860" timestamp="1579867557908" />
     <state width="1557" height="249" key="GridCell.Tab.0.bottom" timestamp="1579865291124">
       <screen x="0" y="0" width="1600" height="860" />
     </state>

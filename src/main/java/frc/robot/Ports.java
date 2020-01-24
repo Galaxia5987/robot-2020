@@ -8,7 +8,7 @@ public class Ports {
         public static final int FEEDER_PROXIMITY = 0;
         public static final int CONVEYOR_PROXIMITY = 1;
 
-        public static final int GATE = 2;
+        public static final int GATE = 4;
     }
 
     public static final int TALON_PID_SLOT = 0;
@@ -16,9 +16,9 @@ public class Ports {
     public static final class Intake {
         public static final int MASTER = 20;
         //TODO: Check, may need to switch between the channels
-        public static final int FOLD_SOLENOID_FORWARD = 6;
-        public static final int FOLD_SOLENOID_REVERSE = 7;
-    }    
+        public static final int FOLD_SOLENOID_REVERSE = 1;
+        public static final int FOLD_SOLENOID_FORWARD = 2;                ;
+    }
 
     public static class Turret {
         public static final int MOTOR = 22;
