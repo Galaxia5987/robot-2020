@@ -1,46 +1,43 @@
 package frc.robot.subsystems.intake.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.intake.Intake;
 
-import static frc.robot.RobotContainer.intake;
+import static frc.robot.Constants.Conveyor.MAX_BALLS_AMOUNT;
 
 public class IntakePowerCell extends CommandBase {
-    private Timer timer = new Timer();
     private double speed;
-    private double timeout;
+    private Intake intake;
+    private Conveyor conveyor;
 
-    public IntakePowerCell(double speed, double timeout) {
-        addRequirements(intake);
+    public IntakePowerCell(Intake intake, Conveyor conveyor, double speed) {
+        addRequirements(intake, conveyor);
+        this.intake = intake;
+        this.conveyor = conveyor;
         this.speed = speed;
-        this.timeout = timeout;
-    }
-
-    public IntakePowerCell(double speed) {
-        this(speed, 0);
     }
 
     @Override
     public void initialize() {
-        timer.reset();
-        timer.start();
         intake.setPosition(false);
         intake.powerWheels(speed);
+        conveyor.setConveyorSpeed(speed);
+        conveyor.openGate(false);
     }
 
     @Override
     public void execute() {
-        intake.powerWheels(speed);
     }
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= timeout || timeout == 0;
+        return conveyor.getBallsCount() >= MAX_BALLS_AMOUNT;
     }
 
     @Override
     public void end(boolean interrupted) {
-        timer.stop();
         intake.powerWheels(0);
+        conveyor.setConveyorSpeed(0);
     }
 }

@@ -2,15 +2,13 @@ package frc.robot.subsystems.turret;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Utils;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.Utils;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Constants.Turret.*;
@@ -26,13 +24,10 @@ import static frc.robot.Ports.Turret.*;
  * {@using Hall Effect}
  */
 public class Turret extends SubsystemBase {
-    public static NetworkTable table = NetworkTableInstance.getDefault().getTable("turret");
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
-    private final NetworkTableEntry kPentry = table.getEntry("kP");
-    private final NetworkTableEntry kIentry = table.getEntry("kI");
-    private final NetworkTableEntry kDentry = table.getEntry("kD");
-    private final NetworkTableEntry kFentry = table.getEntry("kF");
+    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
+    private NetworkTableEntry visionAngle = visionTable.getEntry("visionAngle");
 
     /**
      * configures the encoder and PID constants.
@@ -42,27 +37,20 @@ public class Turret extends SubsystemBase {
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         motor.setInverted(IS_MOTOR_INVERTED);
         motor.setSensorPhase(IS_ENCODER_INVERTED);
-        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
-        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
-        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
-        motor.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
+        motor.config_kP(0, KP, TALON_TIMEOUT);
+        motor.config_kI(0, KI, TALON_TIMEOUT);
+        motor.config_kD(0, KD, TALON_TIMEOUT);
+        motor.config_kF(0, KF, TALON_TIMEOUT);
         motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
         motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
         motor.configPeakCurrentLimit(MAX_CURRENT);
-        motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-        motor.setSelectedSensorPosition((int) HALL_EFFECT_POSITION_1, 0, TALON_TIMEOUT);
     }
-
-
 
     /**
      * runs periodically, updates the constants and resets encoder position if the hall effect is closed
      */
     @Override
     public void periodic() {
-        if (isLimitSwitchClosed()) {
-            resetEncoderPosition();
-        }
     }
 
 
@@ -71,8 +59,8 @@ public class Turret extends SubsystemBase {
      *
      * @return the angle of the turret
      */
-    public double getEncoderPosition() {
-        return motor.getSelectedSensorPosition();
+    public double getAngle() {
+        return unitModel.toUnits(motor.getSelectedSensorPosition());
     }
 
     /**
@@ -83,7 +71,7 @@ public class Turret extends SubsystemBase {
      * @return return the target angle in ticks.
      */
     public double getNearestTurretPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
-        targetAngle = mathFloor(targetAngle);
+        targetAngle = Utils.floorMod(targetAngle, 360);
         double[] positions = {targetAngle - 360, targetAngle, targetAngle + 360}; // An array of all possible target positions
         double targetPosition = currentPosition;
         double shortestDistance = Double.MAX_VALUE;
@@ -96,19 +84,8 @@ public class Turret extends SubsystemBase {
                 targetPosition = targetPos;
             }
         }
-        return unitModel.toTicks(targetPosition);
+        return targetPosition;
     }
-
-    /**
-     * sets the target angle to the corresponding angle between 0 and 360.
-     * @param targetAngle the setpoint angle.
-     * @return the angle between 0 and 360.
-     */
-    private double mathFloor(double targetAngle) {
-        targetAngle%=360; targetAngle+=360; targetAngle%=360;
-        return targetAngle;
-    }
-
 
     /**
      * @return the same position rotated 360 degrees or the current position in ticks
@@ -120,7 +97,7 @@ public class Turret extends SubsystemBase {
         } else if (currentPosition < (-180 + middle)) {
             currentPosition += 360;
         }
-        return unitModel.toTicks(currentPosition);
+        return currentPosition;
     }
 
     /**
@@ -129,42 +106,22 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetAngle = getNearestTurretPosition(angle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
         motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
-
-    /**
-     * sets the position of the turret to the joystick position.
-     * @param position the setpoint position indicated by the joystick.
-     */
-    public void setJoystickPosition(double position){
-        motor.set(ControlMode.Position, unitModel.toTicks(position));
-    }
-
     /**
      * set the position to the current position to stop the turret at the target position.
      */
     public void stop() {
-        motor.set(ControlMode.MotionMagic, getEncoderPosition());
+        motor.set(ControlMode.MotionMagic, getAngle());
     }
 
-    /**
-     * @return return if the state of the Hall Effect sensor is Closed.
-     */
-    public boolean isLimitSwitchClosed() {
-        return motor.getSensorCollection().isRevLimitSwitchClosed();
+    public double getVisionAngle(){
+        return visionAngle.getDouble(0);
     }
 
-    /**
-     * set encoder position to the nearest Hall Effect position.
-     */
-    public void resetEncoderPosition() {
-        double resetAngle;
-        if (Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_1) < Math.abs(getEncoderPosition() - HALL_EFFECT_POSITION_2))
-            resetAngle = HALL_EFFECT_POSITION_1;
-        else
-            resetAngle = HALL_EFFECT_POSITION_2;
-        motor.setSelectedSensorPosition(unitModel.toTicks(resetAngle), 0, TALON_TIMEOUT);
+    public void setSpeed(double speed){
+        motor.set(ControlMode.PercentOutput, speed);
     }
 
 }

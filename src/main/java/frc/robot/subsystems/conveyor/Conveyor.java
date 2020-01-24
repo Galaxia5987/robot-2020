@@ -1,12 +1,11 @@
 package frc.robot.subsystems.conveyor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
-import frc.robot.utils.DeadbandProximity;
+import frc.robot.utilities.DeadbandProximity;
 
 import static frc.robot.Constants.Conveyor.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -32,32 +31,28 @@ public class Conveyor extends SubsystemBase {
     public Conveyor() {
         motor.setInverted(MOTOR_INVERTED);
 
-        motor.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
-        motor.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
-        motor.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
+        motor.config_kP(0, KP, TALON_TIMEOUT);
+        motor.config_kI(0, KI, TALON_TIMEOUT);
+        motor.config_kD(0, KD, TALON_TIMEOUT);
 
         motor.configMotionCruiseVelocity(CRUISE_VELOCITY);
         motor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT);
         motor.configPeakCurrentLimit(MAX_CURRENT);
         motor.configClosedloopRamp(RAMP_RATE);
-
-        motor.configVoltageCompSaturation(12);
-        motor.enableVoltageCompensation(true);
-        motor.setSelectedSensorPosition(0);
     }
 
     @Override
     public void periodic() {
         updateSensors();
 
-        if (feederProximity.getState()) {
-            if (feederProximity.getToggle() && (getConveyorSpeed() > 0))
-                incrementBallsCount(1);
+        if (feederProximity.getState() &&
+                feederProximity.getToggle() && (getConveyorSpeed() > 0)) {
+            incrementBallsCount(1);
         }
 
-        if (conveyorProximity.getState()) {
-            if (conveyorProximity.getToggle() && (getConveyorSpeed() > 0))
-                decrementBallsCount(1);
+        if (!conveyorProximity.getState() &&
+                conveyorProximity.getToggle() && (getConveyorSpeed() > 0)) {
+            decrementBallsCount(1);
         }
     }
 
@@ -72,16 +67,7 @@ public class Conveyor extends SubsystemBase {
      * @return the current {@link #motor}'s encoder position.
      */
     public double getConveyorPosition() {
-        return unitsConverter.toTicks(motor.getSelectedSensorPosition());
-    }
-
-    /**
-     * set the speed for the {@link #motor}.
-     *
-     * @param speed the speed you want the conveyor to move.
-     */
-    public void setConveyorSpeed(double speed) {
-        motor.set(ControlMode.PercentOutput, speed);
+        return unitsConverter.toUnits(motor.getSelectedSensorPosition());
     }
 
     /**
@@ -94,11 +80,20 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
+     * set the speed for the {@link #motor}.
+     *
+     * @param speed the speed you want the conveyor to move.
+     */
+    public void setConveyorSpeed(double speed) {
+        motor.set(ControlMode.PercentOutput, speed);
+    }
+
+    /**
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if(gate.get()) return;//TODO Check
-        motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
+        if (isGateOpen())
+            motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
     }
 
     /**
@@ -148,5 +143,17 @@ public class Conveyor extends SubsystemBase {
 
     public boolean feederSensedObject() {
         return feederProximity.getState();
+    }
+
+    public boolean conveyorSensedObject() {
+        return conveyorProximity.getState();
+    }
+
+    public boolean isGateOpen() {
+        return gate.get();
+    }
+
+    public void openGate(boolean open) {
+        gate.set(open);
     }
 }

@@ -1,54 +1,46 @@
 package frc.robot.subsystems.intake.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import static frc.robot.RobotContainer.intake;
+import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.intake.Intake;
 
 public class OuttakeBall extends CommandBase {
-    private Timer timer = new Timer();
+    private Intake intake;
+    private Conveyor conveyor;
     private double speed;
-    private double timeout;
 
     /**
      * this constructor is for a situation when you use an autonomous command.
      * please be aware that you should insert positive {@param speed)'s number.
      *
      * @param speed
-     * @param timeout
      */
-    public OuttakeBall(double speed, double timeout) {
-        addRequirements(intake);
+    public OuttakeBall(Conveyor conveyor, Intake intake, double speed) {
+        addRequirements(intake, conveyor);
+        this.conveyor = conveyor;
+        this.intake = intake;
         this.speed = -speed;
-        this.timeout = timeout;
-    }
-
-    public OuttakeBall(double speed) {
-        this(speed, 0);
     }
 
     @Override
     public void initialize() {
-        timer.reset();
-        timer.start();
         intake.setPosition(false);
         intake.powerWheels(speed);
+        conveyor.setConveyorSpeed(speed);
     }
 
     @Override
     public void execute() {
-        intake.powerWheels(speed);
     }
 
     @Override
     public boolean isFinished() {
-        return timer.get() >= timeout || timeout == 0;
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
-        timer.stop();
         intake.powerWheels(0);
+        conveyor.setConveyorSpeed(0);
     }
 }
