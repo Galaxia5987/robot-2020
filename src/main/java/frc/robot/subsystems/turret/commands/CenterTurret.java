@@ -16,19 +16,19 @@ public class CenterTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        initialPosition = turret.getEncoderPosition();
+        initialPosition = turret.getAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        turret.setAngle(turret.center(turret.getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION));
+        turret.setAngle(turret.center(turret.getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION));
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return Math.abs(turret.getEncoderPosition() - initialPosition) <= ANGLE_THRESHOLD;
+        return Math.abs(turret.getAngle() - initialPosition) <= ANGLE_THRESHOLD;
     }
 
     @Override

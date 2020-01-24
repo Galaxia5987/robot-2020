@@ -34,7 +34,7 @@ public class WaitForShootingVision extends CommandBase {
     @Override
     public boolean isFinished() {
         boolean isShooterReady = Math.abs(shooter.getSpeed() - shooter.approximateVelocity(distance)) <= VELOCITY_TOLERANCE;
-        boolean isTurretReady = Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD;
+        boolean isTurretReady = Math.abs(turret.getAngle() - angle) <= ANGLE_THRESHOLD;
         return isShooterReady && isTurretReady;
     }
 

@@ -61,7 +61,7 @@ public class Turret extends SubsystemBase {
      *
      * @return the angle of the turret
      */
-    public double getEncoderPosition() {
+    public double getAngle() {
         return unitModel.toUnits(motor.getSelectedSensorPosition());
     }
 
@@ -108,15 +108,14 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetAngle = getNearestTurretPosition(angle, getEncoderPosition(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
         motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
-
     /**
      * set the position to the current position to stop the turret at the target position.
      */
     public void stop() {
-        motor.set(ControlMode.MotionMagic, getEncoderPosition());
+        motor.set(ControlMode.MotionMagic, getAngle());
     }
 
     public double getVisionAngle(){
