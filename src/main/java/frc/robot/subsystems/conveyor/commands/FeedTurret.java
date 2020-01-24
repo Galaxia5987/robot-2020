@@ -6,11 +6,11 @@ import static frc.robot.Constants.Conveyor.MAX_BALLS_AMOUNT;
 import static frc.robot.RobotContainer.conveyor;
 
 public class FeedTurret extends CommandBase {
-    private int balls; //Shoot out X balls!
+    private int ballsLeft; //Shoot out X balls!
 
     public FeedTurret(int balls) {
         addRequirements(conveyor);
-        this.balls = MAX_BALLS_AMOUNT - balls;
+        this.ballsLeft = MAX_BALLS_AMOUNT - balls;
     }
 
     public FeedTurret() {
@@ -29,7 +29,7 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return conveyor.getBallsCount() <= balls;
+        return conveyor.getBallsCount() <= ballsLeft;
     }
 
     @Override
