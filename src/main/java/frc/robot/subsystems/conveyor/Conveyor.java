@@ -45,14 +45,14 @@ public class Conveyor extends SubsystemBase {
     public void periodic() {
         updateSensors();
 
-        if (feederProximity.getState()) {
-            if (feederProximity.getToggle() && (getConveyorSpeed() > 0))
-                incrementBallsCount(1);
+        if (feederProximity.getState() &&
+                feederProximity.getToggle() && (getConveyorSpeed() > 0)) {
+            incrementBallsCount(1);
         }
 
-        if (!conveyorProximity.getState()) {
-            if (conveyorProximity.getToggle() && (getConveyorSpeed() > 0))
-                decrementBallsCount(1);
+        if (!conveyorProximity.getState() &&
+                conveyorProximity.getToggle() && (getConveyorSpeed() > 0)) {
+            decrementBallsCount(1);
         }
     }
 
@@ -71,15 +71,6 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * set the speed for the {@link #motor}.
-     *
-     * @param speed the speed you want the conveyor to move.
-     */
-    public void setConveyorSpeed(double speed) {
-        motor.set(ControlMode.PercentOutput, speed);
-    }
-
-    /**
      * retrieve the current {@link #motor}'s velocity.
      *
      * @return the velocity of the {@link #motor}.
@@ -89,10 +80,19 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
+     * set the speed for the {@link #motor}.
+     *
+     * @param speed the speed you want the conveyor to move.
+     */
+    public void setConveyorSpeed(double speed) {
+        motor.set(ControlMode.PercentOutput, speed);
+    }
+
+    /**
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if(isGateOpen()) return;//TODO Check
+        if (isGateOpen()) return;//TODO Check
         motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
     }
 
@@ -148,11 +148,12 @@ public class Conveyor extends SubsystemBase {
     public boolean conveyorSensedObject() {
         return conveyorProximity.getState();
     }
-    public boolean isGateOpen(){
+
+    public boolean isGateOpen() {
         return gate.get();
     }
 
-    public void openGate(boolean open){
+    public void openGate(boolean open) {
         gate.set(open);
     }
 }
