@@ -1,9 +1,7 @@
 package frc.robot.subsystems.turret.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.UnitModel;
 import frc.robot.subsystems.turret.Turret;
 
 import static frc.robot.Constants.Turret.*;
@@ -15,7 +13,7 @@ public class JoystickTurret extends CommandBase {
     private static Turret turret;
 
     public JoystickTurret(Turret turret) {
-        JoystickTurret.turret = turret;
+        this.turret = turret;
         addRequirements(turret);
     }
 
@@ -27,9 +25,9 @@ public class JoystickTurret extends CommandBase {
     @Override
     public void execute() {
         double joystickInput = m_robotContainer.getXboxY();
-        double position = turret.getEncoderPosition() + joystickInput * TURRET_JOYSTICK_SPEED;
+        double position = turret.getAngle() + joystickInput * TURRET_JOYSTICK_SPEED;
         if (position < MINIMUM_POSITION && position > MAXIMUM_POSITION)
-            turret.setJoystickPosition(position);
+            turret.setAngle(position);
     }
 
 }

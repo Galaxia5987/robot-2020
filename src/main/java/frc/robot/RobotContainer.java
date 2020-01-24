@@ -31,8 +31,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
     // The robot's subsystems and commands are defined here...
-    public static Conveyor conveyor = new Conveyor();
-    public static final Intake intake = new Intake();
+    private static Conveyor conveyor = new Conveyor();
+    private static final Intake intake = new Intake();
     private static final Turret turret = new Turret();
     private final Shooter shooter = new Shooter();
     

@@ -1,29 +1,20 @@
 package frc.robot.subsystems.shooter.commands;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
 
+import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
 import static frc.robot.Constants.Turret.ANGLE_THRESHOLD;
 
 public class WaitForShootingVision extends CommandBase {
     private Shooter shooter;
     private Turret turret;
-    private double distance;
-    private double angle;
-    public static final NetworkTable waitTable = NetworkTableInstance.getDefault().getTable("shooter");
-    private static final NetworkTableEntry visionAngle = waitTable.getEntry("angle");
-    private static final NetworkTableEntry visionDistance = waitTable.getEntry("distance");
 
     public WaitForShootingVision(Shooter shooter, Turret turret) {
         addRequirements(shooter, turret);
         this.shooter = shooter;
         this.turret = turret;
-        this.distance = visionDistance.getDouble(3);
-        this.angle = visionAngle.getDouble(3);
     }
 
     @Override
@@ -38,7 +29,9 @@ public class WaitForShootingVision extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return (shooter.getSpeed() >= shooter.approximateVelocity(distance)) && (Math.abs(turret.getEncoderPosition() - angle) <= ANGLE_THRESHOLD);
+        boolean isShooterReady = Math.abs(shooter.getSpeed() - shooter.approximateVelocity(shooter.getVisionDistance())) <= VELOCITY_TOLERANCE;
+        boolean isTurretReady = Math.abs(turret.getAngle() - turret.getVisionAngle()) <= ANGLE_THRESHOLD;
+        return isShooterReady && isTurretReady;
     }
 
     @Override
