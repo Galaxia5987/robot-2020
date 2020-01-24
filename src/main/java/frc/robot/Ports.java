@@ -27,9 +27,11 @@ public class Ports {
     }
     public static class Shooter {
         public static final int MASTER = 51;
-        public static final int SLAVE = 52;
+        public static final int SLAVE_1 = 52;
+        public static final int SLAVE_2 = 52;
         public static final boolean IS_MASTER_INVERTED = false;
         public static final boolean IS_MASTER_ENCODER_INVERTED = false;
-        public static final boolean IS_SLAVE_INVERTED = false;
+        public static final boolean IS_SLAVE_1_INVERTED = false;
+        public static final boolean IS_SLAVE_2_INVERTED = false;
     }
 }
