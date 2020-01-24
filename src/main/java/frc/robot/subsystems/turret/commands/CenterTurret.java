@@ -10,7 +10,7 @@ public class CenterTurret extends CommandBase {
     private static Turret turret;
 
     public CenterTurret(Turret turret) {
-        CenterTurret.turret = turret;
+        this.turret = turret;
         addRequirements(turret);
     }
 
