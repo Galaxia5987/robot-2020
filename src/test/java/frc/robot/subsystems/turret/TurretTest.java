@@ -21,8 +21,8 @@ public class TurretTest {
     public void getNearestTurretPosition() {
         double targetAngle = 280;
         double currentPosition = 30;
-        double minPos = -360;
-        double maxPos = 360;
+        double minPos = -200;
+        double maxPos = 200;
         Assert.assertEquals(turret.getNearestTurretPosition(targetAngle, currentPosition, minPos, maxPos), -80, 0.1);
         Assert.assertEquals(turret.getNearestTurretPosition(-359, 200, minPos, maxPos), 1, 0.1);
         Assert.assertEquals(turret.getNearestTurretPosition(300, -40, minPos, maxPos),-60, 0.1);
