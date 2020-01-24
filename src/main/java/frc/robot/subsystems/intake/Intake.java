@@ -19,11 +19,11 @@ import static frc.robot.Ports.Intake.*;
  * {@using DoubleSolenoid}
  */
 public class Intake extends SubsystemBase {
-    private VictorSPX masterMotor = new VictorSPX(MASTER);
-    private DoubleSolenoid redactor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
+    private VictorSPX motor = new VictorSPX(MASTER);
+    private DoubleSolenoid retractor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
 
     public Intake() {
-        masterMotor.setInverted(MASTER_INVERTED);
+        motor.setInverted(MASTER_INVERTED);
     }
 
     /**
@@ -32,7 +32,7 @@ public class Intake extends SubsystemBase {
      * @return the position of the redactor as a Value class instance
      */
     public boolean isFolded() {
-        return redactor.get() == Value.kForward;
+        return retractor.get() == Value.kForward;
     }
 
     /**
@@ -43,7 +43,7 @@ public class Intake extends SubsystemBase {
      *           Note that in case inserting false, the redactor will move down.
      */
     public void setPosition(boolean up) {
-        redactor.set(up ? Value.kForward : Value.kReverse);
+        retractor.set(up ? Value.kForward : Value.kReverse);
     }
 
     /**
@@ -63,16 +63,16 @@ public class Intake extends SubsystemBase {
     public void setPosition(State state){
         switch (state) {
             case OPEN:
-                redactor.set(Value.kForward);
+                retractor.set(Value.kForward);
                 break;
             case CLOSE:
-                redactor.set(Value.kReverse);
+                retractor.set(Value.kReverse);
                 break;
             case TOGGLE:
                 if (isFolded())
-                    redactor.set(Value.kForward);
+                    retractor.set(Value.kForward);
                 else
-                    redactor.set(Value.kReverse);
+                    retractor.set(Value.kReverse);
                 break;
         }
     }
@@ -82,6 +82,6 @@ public class Intake extends SubsystemBase {
      * @param power the power to apply on the intake's wheels (in percents)
      */
     public void powerWheels(double power) {
-        masterMotor.set(ControlMode.PercentOutput, power);
+        motor.set(ControlMode.PercentOutput, power);
     }
 }
