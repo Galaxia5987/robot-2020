@@ -59,21 +59,24 @@ public class RobotContainer {
 
     public static double getLeftXboxY() {
         return xbox.getRawAxis(XboxLeftYStick);
-  /**
-   * Initiates the value tuner.
-   */
-  private void startValueTuner() {
-    new ValueTuner().start();
-  }
+    }
 
-  /**
-   * Initiates the port of team 225s Fire-Logger.
-   */
-  private void startFireLog(){
-    try {
-      new Webserver();
-    } catch (Exception e) {
-      e.printStackTrace();
+    /**
+     * Initiates the value tuner.
+     */
+    private void startValueTuner() {
+        new ValueTuner().start();
+    }
+
+    /**
+     * Initiates the port of team 225s Fire-Logger.
+     */
+    private void startFireLog() {
+        try {
+            new Webserver();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static double getRightXboxY() {
@@ -91,16 +94,6 @@ public class RobotContainer {
         }
     }
 
-    /**
-     * Initiates the port of team 225s Fire-Logger.
-     */
-    private void startFireLog() {
-        try {
-            new Webserver();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }
 
