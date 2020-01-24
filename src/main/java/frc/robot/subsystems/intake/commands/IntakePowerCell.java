@@ -38,5 +38,6 @@ public class IntakePowerCell extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         intake.powerWheels(0);
+        conveyor.setConveyorSpeed(0);
     }
 }
