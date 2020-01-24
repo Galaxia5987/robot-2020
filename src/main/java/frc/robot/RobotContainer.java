@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
 /**
@@ -58,6 +59,21 @@ public class RobotContainer {
 
     public static double getLeftXboxY() {
         return xbox.getRawAxis(XboxLeftYStick);
+  /**
+   * Initiates the value tuner.
+   */
+  private void startValueTuner() {
+    new ValueTuner().start();
+  }
+
+  /**
+   * Initiates the port of team 225s Fire-Logger.
+   */
+  private void startFireLog(){
+    try {
+      new Webserver();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
     public static double getRightXboxY() {
