@@ -37,16 +37,8 @@ public class SpeedUp extends CommandBase {
             distance = shooter.getVisionDistance();
         }
         shooter.setSpeed(shooter.approximateVelocity(distance));
-        setNetworkTable();
-    }
-
-    /**
-     * sets the velocity in the network table
-     */
-    private void setNetworkTable() {
         velocityEntry.setDouble(shooter.getSpeed());
     }
-
 
     // Make this return true when this Command no longer needs to run execute()
     @Override

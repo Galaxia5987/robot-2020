@@ -1,38 +1,34 @@
 package frc.robot.subsystems.conveyor.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.conveyor.Conveyor;
 
-import static frc.robot.Constants.Conveyor.MAX_BALLS_AMOUNT;
-import static frc.robot.RobotContainer.conveyor;
+import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_FEED_VELOCITY;
 
 /**
  * Feed power cells into the shooter.
  */
 public class FeedTurret extends CommandBase {
-    private int balls; //Shoot out X balls!
+    private Conveyor conveyor;
 
-    public FeedTurret(int balls) {
+    public FeedTurret(Conveyor conveyor) {
+        this.conveyor = conveyor;
         addRequirements(conveyor);
-        this.balls = MAX_BALLS_AMOUNT - balls;
-    }
-
-    public FeedTurret() {
-        this(Math.max(MAX_BALLS_AMOUNT, conveyor.getBallsCount())); //In case there are more than 5 balls.
     }
 
     @Override
     public void initialize() {
-        conveyor.feed();
+        conveyor.openGate(true);
+        conveyor.setConveyorSpeed(CONVEYOR_MOTOR_FEED_VELOCITY);
     }
 
     @Override
     public void execute() {
-        conveyor.feed();
     }
 
     @Override
     public boolean isFinished() {
-        return conveyor.getBallsCount() <= balls;
+        return conveyor.getBallsCount() <= 0;
     }
 
     @Override

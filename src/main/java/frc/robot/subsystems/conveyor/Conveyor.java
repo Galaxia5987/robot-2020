@@ -64,16 +64,7 @@ public class Conveyor extends SubsystemBase {
      * @return the current {@link #motor}'s encoder position.
      */
     public double getConveyorPosition() {
-        return unitsConverter.toTicks(motor.getSelectedSensorPosition());
-    }
-
-    /**
-     * set the speed for the {@link #motor}.
-     *
-     * @param speed the speed you want the conveyor to move.
-     */
-    public void setConveyorSpeed(double speed) {
-        motor.set(ControlMode.PercentOutput, speed);
+        return unitsConverter.toUnits(motor.getSelectedSensorPosition());
     }
 
     /**
@@ -86,10 +77,19 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
+     * set the speed for the {@link #motor}.
+     *
+     * @param speed the speed you want the conveyor to move.
+     */
+    public void setConveyorSpeed(double speed) {
+        motor.set(ControlMode.PercentOutput, speed);
+    }
+
+    /**
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if(isGateOpen()) return;
+        if(!isGateOpen()) return;
         motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
     }
 
@@ -146,11 +146,15 @@ public class Conveyor extends SubsystemBase {
         return intakeProximity.getState();
     }
 
-    public boolean isGateOpen(){
+    public boolean conveyorSensedObject() {
+        return conveyorProximity.getState();
+    }
+
+    public boolean isGateOpen() {
         return gate.get();
     }
 
-    public void openGate(boolean open){
+    public void openGate(boolean open) {
         gate.set(open);
     }
 

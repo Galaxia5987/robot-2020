@@ -5,7 +5,6 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 
 import static frc.robot.Constants.Conveyor.MAX_BALLS_AMOUNT;
-import static frc.robot.RobotContainer.intake;
 
 public class IntakePowerCell extends CommandBase {
     private double speed;
@@ -23,11 +22,12 @@ public class IntakePowerCell extends CommandBase {
     public void initialize() {
         intake.setPosition(false);
         intake.powerWheels(speed);
+        conveyor.setConveyorSpeed(speed);
+        conveyor.openGate(false);
     }
 
     @Override
     public void execute() {
-        intake.powerWheels(speed);
     }
 
     @Override
@@ -38,5 +38,6 @@ public class IntakePowerCell extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         intake.powerWheels(0);
+        conveyor.setConveyorSpeed(0);
     }
 }

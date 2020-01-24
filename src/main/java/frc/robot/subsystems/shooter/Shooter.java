@@ -18,7 +18,9 @@ import static frc.robot.Ports.TALON_PID_SLOT;
 
 public class Shooter extends SubsystemBase {
     private final TalonSRX shooterMaster = new TalonSRX(MASTER);
-    private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);
+    private final VictorSPX shooterSlave1 = new VictorSPX(SLAVE_1);
+    private final VictorSPX shooterSlave2 = new VictorSPX(SLAVE_2);
+    private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
     private static final NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("shooter");
     private static final NetworkTableEntry visionDistance = visionTable.getEntry("distance");
 
@@ -43,15 +45,21 @@ public class Shooter extends SubsystemBase {
         shooterMaster.configPeakCurrentLimit(MAX_CURRENT);
 
         // Slave configuration
-        VictorSPX shooterSlave = new VictorSPX(SLAVE);
-        shooterSlave.follow(shooterMaster);
-        shooterMaster.setInverted(IS_SLAVE_INVERTED);
+        shooterSlave1.follow(shooterMaster);
+        shooterSlave2.follow(shooterMaster);
+        shooterSlave1.setInverted(IS_SLAVE_1_INVERTED);
+        shooterSlave2.setInverted(IS_SLAVE_2_INVERTED);
 
         // Electrical (slave)
-        shooterSlave.configVoltageCompSaturation(12);
-        shooterSlave.enableVoltageCompensation(true);
+        shooterSlave1.configVoltageCompSaturation(12);
+        shooterSlave1.enableVoltageCompensation(true);
+
+        shooterSlave2.configVoltageCompSaturation(12);
+        shooterSlave2.enableVoltageCompensation(true);
 
         shooterMaster.setNeutralMode(NeutralMode.Coast);
+        shooterSlave1.setNeutralMode(NeutralMode.Coast);
+        shooterSlave2.setNeutralMode(NeutralMode.Coast);
     }
 
     /**
