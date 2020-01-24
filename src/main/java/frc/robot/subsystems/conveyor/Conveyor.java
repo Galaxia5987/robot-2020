@@ -67,7 +67,7 @@ public class Conveyor extends SubsystemBase {
      * @return the current {@link #motor}'s encoder position.
      */
     public double getConveyorPosition() {
-        return unitsConverter.toTicks(motor.getSelectedSensorPosition());
+        return unitsConverter.toUnits(motor.getSelectedSensorPosition());
     }
 
     /**
