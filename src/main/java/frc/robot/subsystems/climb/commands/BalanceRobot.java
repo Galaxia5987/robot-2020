@@ -29,6 +29,19 @@ public class BalanceRobot extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
+    public BalanceRobot(Climber climber) {
+        this.climber = climber;
+        this.setpointHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
+        this.setpointAngle = 0;
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(climber);
+    }
+
+    /**
+     * Creates a new rise to height command.
+     *
+     * @param climber The subsystem used by this command.
+     */
     public BalanceRobot(Climber climber, double setpointHeight) {
         this.climber = climber;
         this.setpointHeight = setpointHeight;
