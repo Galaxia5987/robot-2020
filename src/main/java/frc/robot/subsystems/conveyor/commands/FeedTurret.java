@@ -15,9 +15,8 @@ public class FeedTurret extends CommandBase {
         this.ballsLeft = MAX_BALLS_AMOUNT - balls;
     }
 
-    public FeedTurret() {
-        
-        this(Math.max(MAX_BALLS_AMOUNT, conveyor.getBallsCount())); //In case there are more than 5..
+    public FeedTurret(Conveyor conveyor) {
+        this(conveyor, Math.max(MAX_BALLS_AMOUNT, conveyor.getBallsCount())); //In case there are more than 5..
     }
 
     @Override
