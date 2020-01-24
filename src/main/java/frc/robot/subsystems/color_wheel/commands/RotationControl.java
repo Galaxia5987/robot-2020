@@ -31,7 +31,7 @@ public class RotationControl extends CommandBase {
             clockwiseSpins += 0.125;
             clockwiseColorIndex = sensorColorIndex;
         }
-        if (sensorColorIndex == (counterClockwiseIndex - 1) % 4) {
+        if (sensorColorIndex == Math.floorMod((counterClockwiseIndex - 1) , 4)) {
             counterClockwiseSpins += 0.125;
             counterClockwiseIndex = sensorColorIndex;
         }
