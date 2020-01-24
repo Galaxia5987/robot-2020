@@ -146,11 +146,11 @@ public class Conveyor extends SubsystemBase {
         return intakeProximity.getState();
     }
 
-    public boolean isGateOpen(){
+    public boolean isGateOpen() {
         return gate.get();
     }
 
-    public void openGate(boolean open){
+    public void openGate(boolean open) {
         gate.set(open);
     }
 
