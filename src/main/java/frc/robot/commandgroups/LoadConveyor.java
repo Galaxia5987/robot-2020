@@ -15,7 +15,7 @@ public class LoadConveyor extends ParallelCommandGroup {
         addRequirements(intake, conveyor);
         addCommands(
                 // fold the intake down and intake balls
-                new IntakePowerCell(intake, conveyor, INTAKE_SPEED).withTimeout(timeout),
+                new IntakePowerCell(intake, INTAKE_SPEED).withTimeout(timeout),
                 new FeedTurret(conveyor, CLOSE_GATE)
         );
     }

@@ -11,10 +11,9 @@ public class IntakePowerCell extends CommandBase {
     private Intake intake;
     private Conveyor conveyor;
 
-    public IntakePowerCell(Intake intake, Conveyor conveyor, double speed) {
+    public IntakePowerCell(Intake intake, double speed) {
         addRequirements(intake, conveyor);
         this.intake = intake;
-        this.conveyor = conveyor;
         this.speed = speed;
     }
 
@@ -22,8 +21,6 @@ public class IntakePowerCell extends CommandBase {
     public void initialize() {
         intake.setPosition(false);
         intake.powerWheels(speed);
-        conveyor.setConveyorSpeed(speed);
-        conveyor.openGate(false);
     }
 
     @Override
@@ -32,12 +29,11 @@ public class IntakePowerCell extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return conveyor.getBallsCount() >= MAX_BALLS_AMOUNT;
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
         intake.powerWheels(0);
-        conveyor.setConveyorSpeed(0);
     }
 }
