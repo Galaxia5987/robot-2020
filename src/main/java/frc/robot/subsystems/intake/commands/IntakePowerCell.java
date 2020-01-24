@@ -5,7 +5,6 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 
 import static frc.robot.Constants.Conveyor.MAX_BALLS_AMOUNT;
-import static frc.robot.RobotContainer.intake;
 
 public class IntakePowerCell extends CommandBase {
     private double speed;

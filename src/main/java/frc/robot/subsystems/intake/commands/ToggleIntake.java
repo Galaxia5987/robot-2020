@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.intake.Intake;
 
-import static frc.robot.RobotContainer.intake;
-
 public class ToggleIntake extends InstantCommand {
     private Intake intake;
     private boolean direction;

@@ -6,7 +6,6 @@ import frc.robot.Constants;
 import frc.robot.subsystems.conveyor.Conveyor;
 
 import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_RETURN_VELOCITY;
-import static frc.robot.RobotContainer.conveyor;
 
 public class MinimizeConveyor extends CommandBase {
 
