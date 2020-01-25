@@ -59,63 +59,65 @@ public final class Constants {
     public static final int TALON_TIMEOUT = 10;
 
     public static final class Intake {
-        public static final boolean MASTER_INVERTED = true;
         public static final double INTAKE_POWER = 0.5;
-
     }
 
     public static class Conveyor {
-        public static final boolean MOTOR_INVERTED = false;
+        public static final int TICK_PER_METERS = 0;
+
         public static final double KP = 0.0;
         public static final double KI = 0.0;
         public static final double KD = 0.0;
         public static final int CRUISE_VELOCITY = 0;
         public static final int CRUISE_ACCELERATION = 0;
-        public static final int MAX_CURRENT = 0;
         public static final double RAMP_RATE = 0;
 
-        // Hades and Desmond
+        public static final int MAX_CURRENT = 0;
+
+        public static final double CONVEYOR_MOTOR_FEED_VELOCITY = 0;
+        public static final double CONVEYOR_MOTOR_RETURN_VELOCITY = 0;
+        public static final double FEED_TIMEOUT = 5;
+
         public static final double INTAKE_PROXIMITY_MAX_VOLTAGE = 2; //The minimum voltage for which the sensor would see a ball
         public static final double INTAKE_PROXIMITY_MIN_VOLTAGE = 1.2; //The minimum voltage which the sensor would see in between two balls
         public static final double SHOOTER_PROXIMITY_MAX_VOLTAGE = 0;
         public static final double SHOOTER_PROXIMITY_MIN_VOLTAGE = 0;
 
-        public static final int TICK_PER_METERS = 0;
         public static final int MAX_BALLS_AMOUNT = 5;
 
-        public static final double CONVEYOR_MOTOR_FEED_VELOCITY = 0;
-        public static final double CONVEYOR_MOTOR_RETURN_VELOCITY = 0;
-
-        public static final double FEED_TIMEOUT = 5;
     }
-    
+
     public static class Turret {
-        public static final int MAX_CURRENT = 35; // [A]
         public static final int TICKS_PER_DEGREE = 1;
-        public static final int MOTION_MAGIC_CRUISE_VELOCITY = 0;
-        public static final int MOTION_MAGIC_ACCELERATION = 0;
-        public static final double ANGLE_THRESHOLD = 1;
         public static final double MINIMUM_POSITION = -200;
         public static final double MAXIMUM_POSITION = 200;
+
         public static double KP = 0;
         public static double KI = 0;
         public static double KD = 0;
         public static double KF = 0;
+        public static final int MOTION_MAGIC_CRUISE_VELOCITY = 0;
+        public static final int MOTION_MAGIC_ACCELERATION = 0;
+
         public static final double VISION_KP = 0;
         public static final double VISION_KI = 0;
         public static final double VISION_KD = 0;
+
+        public static final int MAX_CURRENT = 35; // [A]
+        public static final double ANGLE_THRESHOLD = 1;
     }
 
 
     public static class Shooter {
+        public static final int TICKS_PER_ROTATION = 36;
         public static final double KP = 0.085; // 0.13
         public static final double KI = 0.0;
         public static final double KD = 0.00;
         public static final double KF = 0.003;
-        public static final int MAX_CURRENT = 35; //[A]
-        public static final int TICKS_PER_ROTATION = 36;
-        public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double MAX_ACCELERATION = 2;
+
+        public static final int MAX_CURRENT = 35; //[A]
+        public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double VELOCITY_TOLERANCE = 0; // the acceptable velocity threshold error of the shooter
     }
 }

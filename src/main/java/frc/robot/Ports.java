@@ -9,6 +9,7 @@ public class Ports {
         public static final int SHOOTER_PROXIMITY = 1;
 
         public static final int GATE = 4;
+        public static final boolean MOTOR_INVERTED = false;
     }
 
     public static final int TALON_PID_SLOT = 0;
@@ -16,7 +17,9 @@ public class Ports {
     public static final class Intake {
         public static final int MASTER = 20;
         public static final int FOLD_SOLENOID_REVERSE = 1;
-        public static final int FOLD_SOLENOID_FORWARD = 2;                ;
+        public static final int FOLD_SOLENOID_FORWARD = 2;
+        public static final boolean MASTER_INVERTED = true;
+        ;
     }
 
     public static class Turret {
