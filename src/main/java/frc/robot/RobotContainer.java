@@ -12,7 +12,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.BalanceRobot;
+import frc.robot.subsystems.climb.commands.JoystickControl;
+import frc.robot.subsystems.climb.commands.RiseToHeight;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -28,6 +32,9 @@ public class RobotContainer {
     private final Command m_autoCommand = null;
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public static XboxController xbox = new XboxController(2);
+    public static JoystickButton a = new JoystickButton(xbox, 1);
+    public static JoystickButton b = new JoystickButton(xbox, 2);
+    public static JoystickButton y = new JoystickButton(xbox, 3);
     public static final int XboxLeftXStick = 0;
     public static final int XboxLeftYStick = 1;
     public static final int XboxRightYStick = 5;
@@ -40,6 +47,9 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        a.whileHeld(new JoystickControl(climber, false));
+        b.whenPressed(new RiseToHeight(climber, 1.5));
+        b.whenPressed(new BalanceRobot(climber, 1));
     }
 
 
