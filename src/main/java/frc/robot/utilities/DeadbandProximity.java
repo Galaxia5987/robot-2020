@@ -13,7 +13,6 @@ public class DeadbandProximity extends AnalogInput {
     private double maxVoltage;
     private boolean objectSensed = false;
     private boolean toggle = false;
-    private boolean lastState = false;
 
     public DeadbandProximity(int port, double minVoltage, double maxVoltage) {
         super(port);
@@ -22,25 +21,25 @@ public class DeadbandProximity extends AnalogInput {
     }
 
     /**
-     * check whether the objectSensed was sensed by the proximity.
+     * Check whether the objectSensed was sensed by the proximity.
      * An object is sensed by the proximity sensor once the proximity value goes above maxVoltage
      * It will only say that it does not see a target anymore, when the value goes under minVoltage
      * this is to ensure that the proximity doesn't toggle rapidly because of sensor noise.
      *
-     * Side note: for the Toggle to work correctly, the update needs to be called only once per robot loop. (sorry Dan!)
+     * Side note: for the toggle to work correctly, the update needs to be called only once per robot loop. (sorry Dan!)
      */
     public void update() {
-        lastState = objectSensed;
+        boolean lastState = objectSensed;
         if (isObjectAway()) {
             objectSensed = false;
         } else if (isObjectClose()) {
             objectSensed = true;
         }
-        toggle = objectSensed!=lastState;
+        toggle = objectSensed != lastState;
     }
 
     /**
-     * Retrieves whether the proximity is sensing an object.
+     * Return whether the proximity is sensing an object.
      *
      * @return whether the object was sensed by the proximity.
      */
@@ -49,7 +48,7 @@ public class DeadbandProximity extends AnalogInput {
     }
 
     /**
-     * Retrieve whether the proximity sensed and then lost the object
+     * Return whether the proximity sensed and then lost the object
      *
      * @return whether the object passed the proximity sensor
      */
@@ -58,31 +57,22 @@ public class DeadbandProximity extends AnalogInput {
     }
 
     /**
-     * Retrieve the proximity's voltage.
-     *
-     * @return the proximity's voltage.
-     */
-    private double getRaw() {
-        return getVoltage();
-    }
-
-    /**
-     * retrieve whether the proximity senses an object.
-     * If you wish to check whether the proximity lost the object, use {@link #isObjectAway()} ()} instead.
+     * Return whether the proximity senses an object.
+     * If you wish to check whether the proximity lost the object, use {@link #isObjectAway()} instead.
      *
      * @return whether the proximity sense a object.
      */
     private boolean isObjectClose() {
-        return getRaw() > maxVoltage;
+        return getVoltage() > maxVoltage;
     }
 
     /**
-     * retrieve whether the proximity lost the object.
+     * Return whether the proximity lost the object.
      * If you wish to check whether the proximity sense the object, use {@link #isObjectClose()} instead.
      *
      * @return whether the proximity lost the object.
      */
     private boolean isObjectAway() {
-        return getRaw() < minVoltage;
+        return getVoltage() < minVoltage;
     }
 }

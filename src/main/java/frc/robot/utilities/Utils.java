@@ -7,8 +7,8 @@ public class Utils {
 
     /**
      * set the value of an entry in the network table
-     * @param entry
-     * @param value
+     * @param entry the network table entry's name
+     * @param value the value of the entry
      */
     public static void setValue(String table, String entry, Object value){
         NetworkTableInstance.getDefault().getTable(table).getEntry(entry).setValue(value);
@@ -16,8 +16,8 @@ public class Utils {
 
     /**
      * set the value of an entry in a known network table
-     * @param entry
-     * @param value
+     * @param entry the network table entry's name
+     * @param value the value of the entry
      */
     public static void setValue(NetworkTableEntry entry, double value) {
         entry.setValue(value);
