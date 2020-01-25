@@ -9,7 +9,7 @@ public class Ports {
         public static final int INTAKE_PROXIMITY = 0;
         public static final int SHOOTER_PROXIMITY = 1;
 
-        public static final int GATE = 4; //Port of the stopper solenoid
+        public static final int GATE = 4; // Port of the stopper solenoid.
     }
 
     public static final int TALON_PID_SLOT = 0;
