@@ -49,7 +49,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         a.whileHeld(new JoystickControl(climber, false));
         b.whenPressed(new RiseToHeight(climber, 1.5));
-        b.whenPressed(new BalanceRobot(climber, 1));
+        y.whenPressed(new BalanceRobot(climber, 1));
     }
 
 
