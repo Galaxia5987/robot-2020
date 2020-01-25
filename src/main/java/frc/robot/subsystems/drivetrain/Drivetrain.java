@@ -39,8 +39,8 @@ public class Drivetrain extends SubsystemBase {
      * High gear - low torque High speed
      * Low gear - high torque Low speed
      */
-    private DoubleSolenoid gearShifterA;
-    private Solenoid gearShifterB;
+    private DoubleSolenoid gearShifterA = null;
+    private Solenoid gearShifterB = null;
     private Timer shiftCooldown = new Timer();
     private boolean isShifting = false;
 
@@ -57,11 +57,12 @@ public class Drivetrain extends SubsystemBase {
         configurations.setEnableCurrentLimit(true);
         configurations.setSupplyCurrentLimit(40);
         UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
-        if (Robot.isRobotA)
-            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
-        else
-            gearShifterB = new Solenoid(1, SHIFTER_PORT);
-
+        if(Robot.hasShifter) {
+            if (Robot.isRobotA)
+                gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+            else
+                gearShifterB = new Solenoid(1, SHIFTER_PORT);
+        }
     }
 
     public void shiftGear(shiftModes mode) {
@@ -179,10 +180,12 @@ public class Drivetrain extends SubsystemBase {
      * @return
      */
     public boolean isShiftedHigh() {
-        if (Robot.isRobotA)
+        if (Robot.isRobotA && gearShifterA != null)
             return gearShifterA.get() == DoubleSolenoid.Value.kForward;
-        else
+        else if (gearShifterB != null)
             return gearShifterB.get();
+        else
+            return false;
     }
 
     /**
