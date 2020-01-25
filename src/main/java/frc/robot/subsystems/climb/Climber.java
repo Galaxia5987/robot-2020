@@ -189,11 +189,13 @@ public class Climber extends SubsystemBase {
             resetRight();
         }
 
-        // Engage the stopper to prevent the subsystem from exceeding the limits.
-        if (isRightOnLimit() || isLeftOnLimit()) {
-            engageStopper();
+        if (isRightOnLimit() || getRightHeight() >= Constants.Climber.MAX_HEIGHT) {
+            setRightHeight(Constants.Climber.MAX_HEIGHT);
         }
 
+        if (isLeftOnLimit() || getLeftHeight() >= Constants.Climber.MAX_HEIGHT) {
+            setLeftHeight(Constants.Climber.MAX_HEIGHT);
+        }
 
     }
 }
