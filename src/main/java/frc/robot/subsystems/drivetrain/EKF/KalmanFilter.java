@@ -1,4 +1,4 @@
-package frc.robot.EKF;
+package frc.robot.subsystems.drivetrain.EKF;
 
 /* Refer to http://en.wikipedia.org/wiki/Kalman_filter for
  mathematical details. The naming scheme is that variables get names

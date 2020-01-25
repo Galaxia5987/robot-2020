@@ -1,6 +1,6 @@
-package frc.robot.KalmanLocalization;
+package frc.robot.subsystems.drivetrain.KalmanLocalization;
 
-import frc.robot.EKF.ObservationModel;
+import frc.robot.subsystems.drivetrain.EKF.ObservationModel;
 
 // Class that implements the observation model for localization Kalman filter
 public class OdometryInertialObservation  extends ObservationModel {
