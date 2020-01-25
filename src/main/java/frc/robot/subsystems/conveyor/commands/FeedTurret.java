@@ -19,7 +19,7 @@ public class FeedTurret extends CommandBase {
     @Override
     public void initialize() {
         conveyor.openGate(true);
-        conveyor.setConveyorPower(CONVEYOR_MOTOR_FEED_POWER);
+        conveyor.setPower(CONVEYOR_MOTOR_FEED_POWER);
     }
 
     @Override

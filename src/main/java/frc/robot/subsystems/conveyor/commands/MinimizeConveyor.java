@@ -19,7 +19,7 @@ public class MinimizeConveyor extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.setConveyorPower(CONVEYOR_MOTOR_RETURN_POWER);
+        conveyor.setPower(CONVEYOR_MOTOR_RETURN_POWER);
     }
 
     @Override

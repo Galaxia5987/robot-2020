@@ -26,7 +26,7 @@ public class OuttakeBall extends CommandBase {
     public void initialize() {
         intake.setPosition(false);
         intake.powerWheels(speed);
-        conveyor.setConveyorPower(speed);
+        conveyor.setPower(speed);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class OuttakeBall extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         intake.powerWheels(0);
-        conveyor.setConveyorPower(0);
+        conveyor.setPower(0);
     }
 }
