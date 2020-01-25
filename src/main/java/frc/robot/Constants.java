@@ -52,10 +52,6 @@ public final class Constants {
 
     }
 
-    // ----------------------------- //
-    //           CONSTANTS           //
-    // ----------------------------- //
-
     public static final int TALON_TIMEOUT = 10;
 
     public static final class Intake {
