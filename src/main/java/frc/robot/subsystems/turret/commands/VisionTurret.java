@@ -26,13 +26,4 @@ public class VisionTurret extends CommandBase {
         turret.setPower(anglePid.calculate(turret.getVisionAngle(), turret.getVisionAngle()));
     }
 
-    @Override
-    public boolean isFinished() {
-        return false; // TODO use interruptOn decorator
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        turret.setPower(0);
-    }
 }

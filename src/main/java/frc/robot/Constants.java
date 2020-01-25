@@ -1,5 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -53,6 +56,7 @@ public final class Constants {
     }
 
     public static final int TALON_TIMEOUT = 10;
+    public static final Pose2d powerPortPose = new Pose2d(0, 0, new Rotation2d());
 
     public static final class Intake {
         public static final double INTAKE_POWER = 0.5;

@@ -49,8 +49,4 @@ public class TurnTurret extends CommandBase {
         return Math.abs(turret.getAngle() - angle) <= ANGLE_THRESHOLD && stop;
     }
 
-    @Override
-    public void end(boolean interrupted) {
-        turret.stop();
-    }
 }

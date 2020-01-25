@@ -6,7 +6,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.Utils;
 
@@ -27,7 +29,9 @@ public class Turret extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
     private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
-    private NetworkTableEntry visionAngle = visionTable.getEntry("visionAngle");
+    private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
+    private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
+    private double delta = 0;
 
     /**
      * configures the encoder and PID constants.
@@ -106,9 +110,18 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        double targetAngle = getNearestTurretPosition(delta + angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
         motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
+
+    public void setDelta(double delta) {
+        this.delta = delta;
+    }
+
+    public void resetDelta() {
+        this.delta = 0;
+    }
+
     /**
      * set the position to the current position to stop the turret at the target position.
      */
@@ -120,8 +133,23 @@ public class Turret extends SubsystemBase {
         return visionAngle.getDouble(0);
     }
 
+    public boolean hasVisionAngle() {
+        return visionValid.getBoolean(false);
+    }
+
     public void setPower(double speed){
         motor.set(ControlMode.PercentOutput, speed);
+    }
+
+    public Pose2d getLocalization() {
+        return new Pose2d();
+    }
+
+    public double calculateTargetAngle() {
+        Pose2d localization = getLocalization();
+        double deltaY = Math.abs(Constants.powerPortPose.getTranslation().getY() - localization.getTranslation().getY());
+        double deltaX = Math.abs(Constants.powerPortPose.getTranslation().getX() - localization.getTranslation().getX());
+        return -1 * (localization.getRotation().getRadians() - Math.atan2(deltaY, deltaX));
     }
 
 }
