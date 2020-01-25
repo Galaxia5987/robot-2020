@@ -25,7 +25,7 @@ public class Conveyor extends SubsystemBase {
     private UnitModel unitConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DeadbandProximity intakeProximity = new DeadbandProximity(INTAKE_PROXIMITY, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
-    private DeadbandProximity conveyorProximity = new DeadbandProximity(SHOOTER_PROXIMITY, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
+    private DeadbandProximity shooterProximity = new DeadbandProximity(SHOOTER_PROXIMITY, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
     private Solenoid gate = new Solenoid(GATE); //mechanical stop
     private int ballsCount = STARTING_AMOUNT;
 
@@ -46,18 +46,18 @@ public class Conveyor extends SubsystemBase {
     public void periodic() {
         updateSensors();
         //If the intake senses an object, and it hasn't in the previous state, and the wheels are turning outwards, add a ball to the count
-        if (intakeProximity.getState() && intakeProximity.getToggle() && (getConveyorPower() >= 0))
+        if (intakeProximity.getState() && intakeProximity.getToggle() && (getPower() >= 0))
                 incrementBallsCount(1);
         //If the conveyor proximity loses an object, and it hasn't been off before and the conveyor is spinning outwards, remove a ball from the count
         //Additionally, if the conveyor outtakes a ball and the sensor sees the ball pass it, decrement the count aswell.
-        if ( (!conveyorProximity.getState() && conveyorProximity.getToggle() && (getConveyorPower() > 0)) ||
-                (!intakeProximity.getState() && intakeProximity.getToggle() && (getConveyorPower() < 0)))
+        if ( (!shooterProximity.getState() && shooterProximity.getToggle() && (getPower() > 0)) ||
+                (!intakeProximity.getState() && intakeProximity.getToggle() && (getPower() < 0)))
                 decrementBallsCount(1);
     }
 
     private void updateSensors() {
         intakeProximity.update();
-        conveyorProximity.update();
+        shooterProximity.update();
     }
 
     /**
@@ -65,7 +65,7 @@ public class Conveyor extends SubsystemBase {
      *
      * @return the current motor's encoder position.
      */
-    public double getConveyorPosition() {
+    public double getPosition() {
         return unitConverter.toUnits(motor.getSelectedSensorPosition());
     }
 
@@ -74,16 +74,16 @@ public class Conveyor extends SubsystemBase {
      *
      * @return the power of the motor.
      */
-    public double getConveyorPower() {
+    public double getPower() {
         return motor.getMotorOutputPercent();
     }
 
     /**
      * set the power for the {@link #motor}.
      *
-     * @param power the power you want the conveyor to move.
+     * @param power The power given to the motor from -1 to 1.
      */
-    public void setConveyorPower(double power) {
+    public void setPower(double power) {
         motor.set(ControlMode.PercentOutput, power);
     }
 
@@ -149,7 +149,7 @@ public class Conveyor extends SubsystemBase {
      * @return whether a power cell is beneath the stopper.
      */
     public boolean shooterSensedBall() {
-        return conveyorProximity.getState();
+        return shooterProximity.getState();
     }
 
     public boolean isGateOpen() {
