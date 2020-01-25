@@ -25,6 +25,7 @@ public class Constants {
         public static final double GRAVITY_ACCELERATION = 9.80665;
         public static final boolean RIGHT_MASTER_INVERTED = true;
         public static final boolean RIGHT_SLAVE_INVERTED = true;
+        public static final double  ROBOT_WIDTH = 0.61; // wheel center to wheel center [m]
     }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);

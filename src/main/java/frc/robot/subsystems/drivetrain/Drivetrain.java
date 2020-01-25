@@ -9,11 +9,16 @@ package frc.robot.subsystems.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
@@ -34,6 +39,9 @@ public class Drivetrain extends SubsystemBase {
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
     public UnitModel unitModel = lowGearUnitModel;
+
+    private FullLocalization localization;
+
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -61,6 +69,9 @@ public class Drivetrain extends SubsystemBase {
             gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
         else
             gearShifterB = new Solenoid(1, SHIFTER_PORT);
+
+
+        localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
 
     }
 
@@ -193,6 +204,10 @@ public class Drivetrain extends SubsystemBase {
         return !isShiftedHigh();
     }
 
+    public Pose2d getRobotPosition() {
+        return localization.getPoseMeters();
+    }
+
 
     @Override
     public void periodic() {
@@ -200,6 +215,9 @@ public class Drivetrain extends SubsystemBase {
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
 
+        localization.update( new Rotation2d( Robot.navx.getAngle()),
+                unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
+                unitModel.toUnits(rightMaster.getSelectedSensorPosition()),Robot.navx.getWorldLinearAccelX(), Robot.robotTimer.get());
 
     }
 
