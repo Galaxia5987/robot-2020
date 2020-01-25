@@ -14,7 +14,7 @@ import static frc.robot.Ports.Intake.*;
  * @version 1.0.0
  * <p>
  * this class defining methods to the intake subsystem to apply in the commands.
- * {@using 2x VictorSPX}
+ * {@using VictorSPX}
  * {@using DoubleSolenoid}
  */
 public class Intake extends SubsystemBase {
@@ -26,23 +26,23 @@ public class Intake extends SubsystemBase {
     }
 
     /**
-     * get the current position of the redactor
+     * get the current position of the intake.
      *
-     * @return the position of the redactor as a Value class instance
+     * @return if the intake mechanism open to intake Power Cells.
      */
-    public boolean isFolded() {
+    public boolean isOpen() {
         return retractor.get() == Value.kForward;
     }
 
     /**
-     * set the position of the redactor.
-     * can be either Forward (Folded) or Reverse (Unfolded).
+     * set the position of the retractor piston holding the intake.
+     * can be either
      *
-     * @param up whether the redactor should move up.
-     *           Note that in case inserting false, the redactor will move down.
+     * @param open whether the Power Cell intake mechanism will be open.
+     *           If set to false, the intake will close inside the robot.
      */
-    public void setPosition(boolean up) {
-        retractor.set(up ? Value.kForward : Value.kReverse);
+    public void setPosition(boolean open) {
+        retractor.set(open == IS_FORWARD_OPEN ? Value.kForward : Value.kReverse);
     }
 
     /**
@@ -50,7 +50,7 @@ public class Intake extends SubsystemBase {
      * if you wish to change the position manually, use {@link #setPosition(boolean)} instead.
      */
     public void togglePosition() {
-        setPosition(!isFolded());
+        setPosition(!isOpen());
     }
 
     /**
@@ -68,7 +68,7 @@ public class Intake extends SubsystemBase {
                 retractor.set(Value.kReverse);
                 break;
             case TOGGLE:
-                if (isFolded())
+                if (isOpen())
                     retractor.set(Value.kForward);
                 else
                     retractor.set(Value.kReverse);

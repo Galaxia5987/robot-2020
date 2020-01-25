@@ -92,7 +92,7 @@ public class Conveyor extends SubsystemBase {
      */
     public void feed() {
         if(!isGateOpen()) return;
-        motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_VELOCITY);
+        motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_POWER);
     }
 
     /**

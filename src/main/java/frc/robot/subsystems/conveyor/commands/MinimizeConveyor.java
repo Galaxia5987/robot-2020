@@ -3,10 +3,10 @@ package frc.robot.subsystems.conveyor.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 
-import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_RETURN_VELOCITY;
+import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_RETURN_POWER;
 
 /**
- * Minimize conveyor back
+ * Move all of the Power Cells from the mechanical stopper to the intake proximity, to prevent gaps between them
  */
 public class MinimizeConveyor extends CommandBase {
 
@@ -19,7 +19,7 @@ public class MinimizeConveyor extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.setConveyorPower(CONVEYOR_MOTOR_RETURN_VELOCITY);
+        conveyor.setConveyorPower(CONVEYOR_MOTOR_RETURN_POWER);
     }
 
     @Override
