@@ -152,4 +152,7 @@ public class Turret extends SubsystemBase {
         return -1 * (localization.getRotation().getRadians() - Math.atan2(deltaY, deltaX));
     }
 
+    public boolean inCorrectRange() {
+        return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
+    }
 }
