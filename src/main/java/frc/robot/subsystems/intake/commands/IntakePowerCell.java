@@ -3,6 +3,7 @@ package frc.robot.subsystems.intake.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.utilities.State;
 
 import static frc.robot.Constants.Conveyor.MAX_BALLS_AMOUNT;
 
@@ -22,8 +23,8 @@ public class IntakePowerCell extends CommandBase {
     public void initialize() {
         intake.setPosition(false);
         intake.powerWheels(speed);
+        conveyor.setGate(State.CLOSE);
         conveyor.setPower(speed);
-        conveyor.openGate(false);
     }
 
     @Override

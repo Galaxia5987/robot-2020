@@ -168,7 +168,7 @@ public class Conveyor extends SubsystemBase {
      *
      * @param state state of the stopper, OPEN / CLOSE
      */
-    public void openGate(State state){
+    public void setGate(State state){
         switch (state){
             case OPEN:
                 openGate(true);
@@ -177,6 +177,7 @@ public class Conveyor extends SubsystemBase {
                 openGate(false);
                 break;
             case TOGGLE:
+                openGate(!isGateOpen());
                 break;
         }
     }
