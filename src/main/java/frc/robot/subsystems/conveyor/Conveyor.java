@@ -27,7 +27,7 @@ public class Conveyor extends SubsystemBase {
     private DeadbandProximity intakeProximity = new DeadbandProximity(INTAKE_PROXIMITY, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
     private DeadbandProximity conveyorProximity = new DeadbandProximity(SHOOTER_PROXIMITY, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
     private Solenoid gate = new Solenoid(GATE); //mechanical stop
-    private int ballsCount = 3;
+    private int ballsCount = STARTING_AMOUNT;
 
     public Conveyor() {
         motor.setInverted(MOTOR_INVERTED);

@@ -84,6 +84,7 @@ public final class Constants {
         public static final double SHOOTER_PROXIMITY_MIN_VOLTAGE = 0;
 
         public static final int MAX_BALLS_AMOUNT = 5;
+        public static final int STARTING_AMOUNT = 3;
 
     }
 
