@@ -22,7 +22,7 @@ import static frc.robot.Ports.Conveyor.*;
  * {@using 3xProximities}
  */
 public class Conveyor extends SubsystemBase {
-    UnitModel unitConverter = new UnitModel(TICK_PER_METERS);
+    private UnitModel unitConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DeadbandProximity intakeProximity = new DeadbandProximity(INTAKE_PROXIMITY, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
     private DeadbandProximity conveyorProximity = new DeadbandProximity(SHOOTER_PROXIMITY, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
