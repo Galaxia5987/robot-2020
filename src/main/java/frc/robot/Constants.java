@@ -1,7 +1,5 @@
 package frc.robot;
 
-import frc.robot.Robot;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -14,6 +12,20 @@ import java.util.Optional;
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
 public class Constants {
+    public static class Drivetrain{
+        public static final double[] VELOCITY_PID_SET = {0, 0, 0, 0};//PID set for the velocity drive of the wheels
+        public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
+        public static final double HIGH_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into high gear
+        public static final double LOW_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into low gear
+        public static final double TURNING_TOLERANCE = 0;//Stops the robot from shifting while the robot is turning
+        public static final int LOW_TICKS_PER_METER = 0;//unit conversion while the robot is on low gear
+        public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
+        public static final double HIGH_GEAR_MIN_VELOCITY = 0;
+        public static final double LOW_GEAR_MIN_OUTPUT = 0;
+        public static final double GRAVITY_ACCELERATION = 9.80665;
+        public static final boolean RIGHT_MASTER_INVERTED = true;
+        public static final boolean RIGHT_SLAVE_INVERTED = true;
+    }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);
 
