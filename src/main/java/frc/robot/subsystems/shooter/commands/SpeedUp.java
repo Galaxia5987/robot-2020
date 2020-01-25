@@ -4,24 +4,27 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 
 public class SpeedUp extends CommandBase {
     private NetworkTable velocityTable = NetworkTableInstance.getDefault().getTable("velocityTable");
     private final NetworkTableEntry velocityEntry = velocityTable.getEntry("velocity");
     private final Shooter shooter;
+    private Conveyor conveyor;
     private double distance;
     private boolean isVisionActive = false;
 
-    public SpeedUp(Shooter shooter, double distance) {
+    public SpeedUp(Shooter shooter, Conveyor conveyor, double distance) {
         addRequirements(shooter);
         this.distance = distance;
         this.shooter = shooter;
+        this.conveyor = conveyor;
     }
 
 
-    public SpeedUp(Shooter shooter) {
-        this(shooter, shooter.getVisionDistance()); //TODO replace 3 with the vision distance output value
+    public SpeedUp(Shooter shooter, Conveyor conveyor) {
+        this(shooter, conveyor, shooter.getVisionDistance()); //TODO replace 3 with the vision distance output value
         isVisionActive = true;
     }
 
@@ -49,7 +52,7 @@ public class SpeedUp extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-        shooter.setSpeed(0);
+
     }
 
 }
