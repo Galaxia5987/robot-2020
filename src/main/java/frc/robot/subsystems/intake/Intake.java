@@ -28,7 +28,7 @@ public class Intake extends SubsystemBase {
     /**
      * get the current position of the intake.
      *
-     * @return if the intake mechanism open to intake Power Cells.
+     * @return whether the intake mechanism is open to intake Power Cells.
      */
     public boolean isOpen() {
         return retractor.get() == Value.kForward;
