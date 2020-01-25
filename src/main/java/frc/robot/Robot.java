@@ -22,7 +22,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static boolean isRobotA = true;
+    public static final boolean isDebugMode = false; //Integral constant, enables debugging features, should be false at comps.
+    public static final boolean isRobotA = true; //Integral constant, switches between the robot configurations.
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
     private DigitalInput input1 = new DigitalInput(1);
