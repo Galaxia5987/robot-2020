@@ -58,7 +58,7 @@ public final class Constants {
 
     public static final class Intake {
         public static final boolean MASTER_INVERTED = true;
-        public static final double INTAKE_SPEED = 0.5;
+        public static final double INTAKE_POWER = 0.5;
 
     }
 

@@ -22,7 +22,7 @@ public class IntakePowerCell extends CommandBase {
     public void initialize() {
         intake.setPosition(false);
         intake.powerWheels(speed);
-        conveyor.setConveyorSpeed(speed);
+        conveyor.setConveyorPower(speed);
         conveyor.openGate(false);
     }
 
@@ -38,6 +38,6 @@ public class IntakePowerCell extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         intake.powerWheels(0);
-        conveyor.setConveyorSpeed(0);
+        conveyor.setConveyorPower(0);
     }
 }

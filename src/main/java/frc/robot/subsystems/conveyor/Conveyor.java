@@ -46,10 +46,10 @@ public class Conveyor extends SubsystemBase {
     public void periodic() {
         updateSensors();
         //If the intake senses an object, and it hasn't in the previous state, and the wheels are turning outwards, add a ball to the count
-        if (intakeProximity.getState() && intakeProximity.getToggle() && (getConveyorSpeed() > 0))
+        if (intakeProximity.getState() && intakeProximity.getToggle() && (getConveyorPower() > 0))
                 incrementBallsCount(1);
         //If the conveyor proximity loses an object, and it hasn't been off before and the conveyor is spinning outwards, remove a ball from the count
-        if (!conveyorProximity.getState() && conveyorProximity.getToggle() && (getConveyorSpeed() > 0))
+        if (!conveyorProximity.getState() && conveyorProximity.getToggle() && (getConveyorPower() > 0))
                 decrementBallsCount(1);
     }
 
@@ -59,30 +59,30 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * retrieve the current {@link #motor}'s encoder position.
+     * retrieve the current motor's encoder position.
      *
-     * @return the current {@link #motor}'s encoder position.
+     * @return the current motor's encoder position.
      */
     public double getConveyorPosition() {
         return unitsConverter.toUnits(motor.getSelectedSensorPosition());
     }
 
     /**
-     * retrieve the current {@link #motor}'s velocity.
+     * return the power which the motor is turning at.
      *
-     * @return the velocity of the {@link #motor}.
+     * @return the power of the motor.
      */
-    public double getConveyorSpeed() {
-        return motor.getMotorOutputPercent(); //TODO change to unitModel once unitmodel is fixed.
+    public double getConveyorPower() {
+        return motor.getMotorOutputPercent();
     }
 
     /**
-     * set the speed for the {@link #motor}.
+     * set the power for the {@link #motor}.
      *
-     * @param speed the speed you want the conveyor to move.
+     * @param power the power you want the conveyor to move.
      */
-    public void setConveyorSpeed(double speed) {
-        motor.set(ControlMode.PercentOutput, speed);
+    public void setConveyorPower(double power) {
+        motor.set(ControlMode.PercentOutput, power);
     }
 
     /**
@@ -119,7 +119,7 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * @return the Power Cells count that the proximities noticed.
+     * @return the amount of Power Cells on the robot, counted by the proximity sensors
      */
     public int getBallsCount() {
         return ballsCount;
