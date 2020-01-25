@@ -40,7 +40,7 @@ public class OdometryInertialObservation  extends ObservationModel {
 
     @Override
     public int stateDimension() {
-        return 5;
+        return 6;
     }
 
     @Override

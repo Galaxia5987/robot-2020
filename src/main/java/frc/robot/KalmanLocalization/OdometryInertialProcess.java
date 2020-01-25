@@ -5,9 +5,9 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 // Class that describes the 2D dynamics of robot. Has 5 states as following
-// State [x y v phi omega]
-//      [ 0 1 2  3   4  ]
-//       x [m] , y [m], v [m/s], phi [rad], omega [rad/s]
+// State [x y v phi omega acc_bias]
+//      [ 0 1 2  3   4  5]
+//       x [m] , y [m], v [m/s], phi [rad], omega [rad/s] acc_bias[m/s^2]
 public class OdometryInertialProcess extends ProcessModel {
 
     private double m_acc = 0;
@@ -19,7 +19,7 @@ public class OdometryInertialProcess extends ProcessModel {
 
     @Override
     public int stateDimension() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -29,6 +29,8 @@ public class OdometryInertialProcess extends ProcessModel {
         x[2][0] = 0;
         x[3][0] = 0;
         x[4][0] = 0;
+        x[5][0] = 0;
+
 
     }
 
@@ -40,6 +42,7 @@ public class OdometryInertialProcess extends ProcessModel {
         cov[2][2] = 0.1;  // 0.31 m/s accuracy for X
         cov[3][3] = 8e-3; //  5 deg sqrd in rad for phi
         cov[4][4] = 1e-5; //  assume not moving : 0.2 deg/s for omega
+        cov[5][5] = 1e-2; //  assume 10 mg, 0.1 m/s^2
     }
 
     @Override
@@ -49,11 +52,12 @@ public class OdometryInertialProcess extends ProcessModel {
         double v = x[2][0];
         double phi = x[3][0];
         double omega = x[4][0];
+        double acc_bias = x[5][0];
 
         // The main system dynamics:
         f[0][0] = v * cos(phi); // 2 D motion
         f[1][0] = v * sin(phi); // 2 D motion
-        f[2][0] = m_acc;        // Acceleration enters here
+        f[2][0] = m_acc-acc_bias;  // Acceleration enters here
         f[3][0] = omega;        // phi derivative is omega
         f[4][0] = 0;            // Assume constant omega
     }
@@ -65,6 +69,7 @@ public class OdometryInertialProcess extends ProcessModel {
         double v = x[2][0];
         double phi = x[3][0];
         double omega = x[4][0];
+        double acc_bias = x[5][0];
 
         // Derivative of state equation
         j[0][2] = cos(phi);
@@ -72,7 +77,7 @@ public class OdometryInertialProcess extends ProcessModel {
         j[0][3] = -v * sin(phi);
         j[1][3] = v * cos(phi);
         j[3][4] = 1;
-
+        j[2][5] = -1;
     }
 
     @Override
@@ -82,6 +87,7 @@ public class OdometryInertialProcess extends ProcessModel {
         cov[2][2] = 1e-4;  // Allow change in velocity can  - change by measurements
         cov[3][3] = 1e-9;  // assume phi is not changing
         cov[4][4] = 1e-2;  // Allow change in omega
+        cov[4][4] = 1e-3;  // Allow change in bias
     }
 
 }

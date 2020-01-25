@@ -172,6 +172,7 @@ public class FullLocalization {
         return m_poseMeters;
     }
 
+    // Detect encoder slipping condition by comparing gyro and encoder readings.
     public boolean EncoderValid(Rotation2d gyroAngle, double deltaLeftDistance,
                                 double deltaRightDistance) {
         double delta_angle = gyroAngle.getRadians() - m_previousAngle.getRadians();
