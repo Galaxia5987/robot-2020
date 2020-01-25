@@ -74,8 +74,8 @@ public final class Constants {
 
         public static final int MAX_CURRENT = 0;
 
-        public static final double CONVEYOR_MOTOR_FEED_VELOCITY = 0;
-        public static final double CONVEYOR_MOTOR_RETURN_VELOCITY = 0;
+        public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
+        public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
         public static final double INTAKE_PROXIMITY_MAX_VOLTAGE = 2; //The minimum voltage for which the sensor would see a ball
