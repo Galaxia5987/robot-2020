@@ -1,6 +1,6 @@
 package frc.robot.KalmanRange;
 
-import frc.robot.EKF.ObservationModel;
+import frc.robot.subsystems.drivetrain.EKF.ObservationModel;
 
 public class Linear1dObservationModel extends ObservationModel {
 

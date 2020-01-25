@@ -1,6 +1,6 @@
 package frc.robot.KalmanRange;
 
-import frc.robot.EKF.ProcessModel;
+import frc.robot.subsystems.drivetrain.EKF.ProcessModel;
 
 public class Linear1dProcessModel extends ProcessModel {
 
