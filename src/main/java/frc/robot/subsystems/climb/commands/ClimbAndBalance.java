@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems.climb.commands;
 
+import com.stormbots.MiniPID;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -17,9 +18,11 @@ import frc.robot.subsystems.climb.Climber;
  */
 public class ClimbAndBalance extends CommandBase {
     private final Climber climber;
-    private boolean startBalancing = false;
+    private boolean simpleMode = false;
+    private MiniPID deltaPID = new MiniPID(Constants.Climber.DELTA_PID[0], Constants.Climber.DELTA_PID[1], Constants.Climber.DELTA_PID[2]);
     private double setpointHeightFromGround;
     private double setpointAngle;
+    private double delta = 0;
     private double currentAngleError;
     private double leftSetpointHeight;
     private double rightSetpointHeight;
@@ -44,6 +47,20 @@ public class ClimbAndBalance extends CommandBase {
      */
     public ClimbAndBalance(Climber climber, double setpointHeightFromGround) {
         this.climber = climber;
+        this.setpointHeightFromGround = setpointHeightFromGround;
+        this.setpointAngle = 0;
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(climber);
+    }
+
+    /**
+     * Creates a new rise to height command.
+     *
+     * @param climber The subsystem used by this command.
+     */
+    public ClimbAndBalance(Climber climber, double setpointHeightFromGround, boolean simpleMode) {
+        this.climber = climber;
+        this.simpleMode = simpleMode;
         this.setpointHeightFromGround = setpointHeightFromGround;
         this.setpointAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
@@ -77,8 +94,11 @@ public class ClimbAndBalance extends CommandBase {
 
         //Calculate the error angle and the current height
         currentAngleError = setpointAngle - RobotContainer.navx.getRoll();
-
-        if (!climber.isStopperEngaged()) {
+        if (simpleMode) {
+            delta += deltaPID.getOutput((RobotContainer.navx.getRoll() - setpointAngle), 0);
+            leftSetpointHeight += delta;
+            rightSetpointHeight -= delta;
+        } else {
             double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(currentAngleError));
             //Fix the heights according to the angle of the robot
             if (currentAngleError > 0) {
@@ -90,7 +110,9 @@ public class ClimbAndBalance extends CommandBase {
                 rightSetpointHeight = heights[0];
                 leftSetpointHeight = heights[1];
             }
+        }
 
+        if (!climber.isStopperEngaged()) {
             climber.setLeftHeight(leftSetpointHeight);
             climber.setRightHeight(rightSetpointHeight);
         } else {
