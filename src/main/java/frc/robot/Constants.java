@@ -110,7 +110,7 @@ public final class Constants {
         public static final int MAX_CURRENT = 35; // [A]
         public static final double ANGLE_THRESHOLD = 1;
 
-        public static final double DELTA_CONSTRAIN = 0;
+        public static final double DELTA_CONSTRAIN = 0; // the max distance the turret can turn by joystick
     }
 
 
@@ -118,6 +118,7 @@ public final class Constants {
         public static final int TICKS_PER_ROTATION = 36;
         public static final double KP = 0.085; // 0.13
         public static final double KI = 0.0;
+
         public static final double KD = 0.00;
         public static final double KF = 0.003;
         public static final double MAX_ACCELERATION = 2;

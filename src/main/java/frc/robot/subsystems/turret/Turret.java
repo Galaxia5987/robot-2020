@@ -132,22 +132,38 @@ public class Turret extends SubsystemBase {
         motor.set(ControlMode.MotionMagic, getAngle());
     }
 
+    /**
+     * @return the angle to the target from the vision network table
+     */
     public double getVisionAngle(){
         return visionAngle.getDouble(0);
     }
 
+    /**
+     * @return whether the vision has calculated the angle to the target
+     */
     public boolean hasVisionAngle() {
         return visionValid.getBoolean(false);
     }
 
+    /**
+     * set the power the turret will turn
+     * @param speed the speed the turret will turn
+     */
     public void setPower(double speed){
         motor.set(ControlMode.PercentOutput, speed);
     }
 
+    /**
+     * @return the output values of the localization including the current position and the angle to the target
+     */
     public Pose2d getLocalization() {
         return new Pose2d();
     }
 
+    /**
+     * @return whether the current angle is within the turrets limits
+     */
     public boolean inCorrectRange() {
         return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
     }
