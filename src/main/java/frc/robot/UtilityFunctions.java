@@ -16,7 +16,7 @@ public class UtilityFunctions {
     public static void configAllTalons(TalonConfiguration configs, TalonSRX... talons) {
         for (TalonSRX talon : talons) {
             talon.configAllSettings(configs.motorConfigs);
-            talon.setNeutralMode(NeutralMode.Coast);
+            talon.setNeutralMode(configs.getNeutralMode());
             talon.configSelectedFeedbackSensor(configs.getFeedbackDevice());
             talon.enableVoltageCompensation(configs.isEnableVoltageCompensation());
             talon.enableCurrentLimit(configs.isEnableCurrentLimit());
