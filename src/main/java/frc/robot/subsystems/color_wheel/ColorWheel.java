@@ -23,7 +23,7 @@ import frc.robot.Ports;
 public class ColorWheel extends SubsystemBase {
 
     //Color sensor definitions
-    private final VictorSPX spinMotor = new VictorSPX(Ports.ColorWheel.MOTOR);
+    private final VictorSPX motor = new VictorSPX(Ports.ColorWheel.MOTOR);
     public final I2C.Port i2cPort = I2C.Port.kOnboard;
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
@@ -41,7 +41,7 @@ public class ColorWheel extends SubsystemBase {
         colorMatcher.addColorMatch(GreenTarget);
         colorMatcher.addColorMatch(RedTarget);
         colorMatcher.addColorMatch(YellowTarget);
-        spinMotor.setNeutralMode(NeutralMode.Brake);
+        motor.setNeutralMode(NeutralMode.Brake);
     }
 
     public String getColorString() {
@@ -86,7 +86,7 @@ public class ColorWheel extends SubsystemBase {
 
 
     public void setPower(double percent) {
-        spinMotor.set(ControlMode.PercentOutput, percent);
+        motor.set(ControlMode.PercentOutput, percent);
     }
 
     @Override
