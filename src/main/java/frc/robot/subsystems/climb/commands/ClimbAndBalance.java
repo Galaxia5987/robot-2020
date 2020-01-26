@@ -51,9 +51,9 @@ public class ClimbAndBalance extends CommandBase {
     }
 
     /**
-     * @param subsystem      the subsystem
+     * @param subsystem                the subsystem
      * @param setpointHeightFromGround the desired height for the mechanism
-     * @param setpointAngle  the desired angle
+     * @param setpointAngle            the desired angle
      */
     public ClimbAndBalance(Climber subsystem, double setpointHeightFromGround, double setpointAngle) {
         this.climber = subsystem;
@@ -79,21 +79,21 @@ public class ClimbAndBalance extends CommandBase {
         currentAngleError = setpointAngle - RobotContainer.navx.getRoll();
 
         if (!climber.isStopperEngaged()) {
-            double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(Math.abs(currentAngleError)));
+            double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(currentAngleError));
             //Fix the heights according to the angle of the robot
             if (currentAngleError > 0) {
-                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0, Constants.Climber.MAX_HEIGHT);
+                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0.2, Constants.Climber.MAX_HEIGHT);
                 rightSetpointHeight = heights[0];
                 leftSetpointHeight = heights[1];
             } else {
-                double[] heights = normalizeHeights(targetDifference, leftSetpointHeight, rightSetpointHeight, 0, Constants.Climber.MAX_HEIGHT);
-                rightSetpointHeight = heights[1];
-                leftSetpointHeight = heights[0];
+                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0.2, Constants.Climber.MAX_HEIGHT);
+                rightSetpointHeight = heights[0];
+                leftSetpointHeight = heights[1];
             }
 
             climber.setLeftHeight(leftSetpointHeight);
             climber.setRightHeight(rightSetpointHeight);
-        }else {
+        } else {
             climber.releaseStopper();
         }
     }
@@ -130,15 +130,27 @@ public class ClimbAndBalance extends CommandBase {
      * @return the modified heights
      */
     public double[] normalizeHeights(double difference, double firstHeight, double secondHeight, double minLimit, double maxLimit) {
-        firstHeight -= difference;
-        if (firstHeight <= minLimit) {
-            difference = Math.abs(Math.abs(firstHeight) - minLimit);
-            firstHeight = minLimit;
-            if (secondHeight + difference >= maxLimit) {
+        if (difference > 0) {
+            firstHeight += difference;
+            if (firstHeight >= maxLimit) {
+                difference = Math.abs(maxLimit - firstHeight);
+                firstHeight = maxLimit;
+                if (secondHeight - difference <= minLimit) {
+                    secondHeight = minLimit;
+                } else {
+                    secondHeight -= difference;
+                }
+            }
+        } else {
+            secondHeight += difference;
+            if (secondHeight >= maxLimit) {
+                difference = Math.abs(maxLimit - secondHeight);
                 secondHeight = maxLimit;
-            } else {
-                secondHeight += difference;
-
+                if (firstHeight - difference <= minLimit) {
+                    firstHeight = minLimit;
+                } else {
+                    firstHeight -= difference;
+                }
             }
         }
         return new double[]{firstHeight, secondHeight};
