@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration;
 public class TalonConfiguration {
 
     /**
-     * This class is meant to be used as an effective way to give several talons with the same
+     * This class is meant to be used as an effective way to give several TalonSRXs with the same
      * wanted configurations the same settings without a need to change each one separately
      * This uses the CTRE/WPILib TalonSRXConfiguration class and adds some likely needed parameters
      */
