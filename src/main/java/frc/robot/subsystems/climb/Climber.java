@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
-import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 
 public class Climber extends SubsystemBase {
@@ -101,7 +100,7 @@ public class Climber extends SubsystemBase {
         if (unsafeToClimb(height, true)) {
             return;
         }
-        leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
+        leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
     }
 
     /**
@@ -120,7 +119,7 @@ public class Climber extends SubsystemBase {
         if (unsafeToClimb(height, false)) {
             return;
         }
-        rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetPoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
+        rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
     }
 
     /**
@@ -172,7 +171,7 @@ public class Climber extends SubsystemBase {
      * @param setpoint the setpoint.
      * @return the normalized setpoint.
      */
-    public double normalizeSetPoint(double setpoint) {
+    public double normalizeSetpoint(double setpoint) {
         if (setpoint > Constants.Climber.MAX_HEIGHT) {
             return Constants.Climber.MAX_HEIGHT;
         } else if (setpoint < 0) {

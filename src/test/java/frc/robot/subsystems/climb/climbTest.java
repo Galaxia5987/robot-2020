@@ -27,8 +27,8 @@ public class climbTest {
 
     @Test
     public void normalizeSetpointTest() {
-        Assert.assertEquals(climber.normalizeSetPoint(0), 0,0);
-        Assert.assertEquals(2, climber.normalizeSetPoint(2.3),0);
-        Assert.assertEquals(1.5, climber.normalizeSetPoint(1.5),0);
+        Assert.assertEquals(climber.normalizeSetpoint(0), 0,0);
+        Assert.assertEquals(2, climber.normalizeSetpoint(2.3),0);
+        Assert.assertEquals(1.5, climber.normalizeSetpoint(1.5),0);
     }
 }
