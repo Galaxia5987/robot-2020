@@ -23,8 +23,6 @@ import org.techfire225.webapp.Webserver;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ColorWheel colorWheel = new ColorWheel();
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
