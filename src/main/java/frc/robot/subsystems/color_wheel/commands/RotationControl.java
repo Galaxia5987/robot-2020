@@ -48,7 +48,7 @@ public class RotationControl extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.max(clockwiseSpins, counterClockwiseSpins) >= 3;
+        return Math.max(clockwiseSpins, counterClockwiseSpins) >= 4;
     }
 
     @Override
