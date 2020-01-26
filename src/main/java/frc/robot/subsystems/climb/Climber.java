@@ -57,6 +57,9 @@ public class Climber extends SubsystemBase {
         leftMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
         rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
 
+        leftMotor.setNeutralMode(NeutralMode.Coast);
+        rightMotor.setNeutralMode(NeutralMode.Coast);
+
     }
 
     /**
