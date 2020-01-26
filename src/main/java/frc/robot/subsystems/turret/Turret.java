@@ -114,14 +114,24 @@ public class Turret extends SubsystemBase {
         motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
 
+    /**
+     * set the value of the delta.
+     * @param delta the distance the turret has traveled.
+     */
     public void setDelta(double delta) {
         this.delta = delta;
     }
 
+    /**
+     * resets the value of the delta to 0.
+     */
     public void resetDelta() {
         this.delta = 0;
     }
 
+    /**
+     * @return the value of the delta.
+     */
     public double getDelta(){
         return delta;
     }
@@ -133,36 +143,36 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * @return the angle to the target from the vision network table
+     * @return the angle to the target from the vision network table.
      */
     public double getVisionAngle(){
         return visionAngle.getDouble(0);
     }
 
     /**
-     * @return whether the vision has calculated the angle to the target
+     * @return whether the vision has calculated the angle to the target.
      */
     public boolean hasVisionAngle() {
         return visionValid.getBoolean(false);
     }
 
     /**
-     * set the power the turret will turn
-     * @param speed the speed the turret will turn
+     * set the power the turret will turn.
+     * @param speed the speed the turret will turn.
      */
     public void setPower(double speed){
         motor.set(ControlMode.PercentOutput, speed);
     }
 
     /**
-     * @return the output values of the localization including the current position and the angle to the target
+     * @return the output values of the localization including the current position and the angle to the target.
      */
     public Pose2d getLocalization() {
         return new Pose2d();
     }
 
     /**
-     * @return whether the current angle is within the turrets limits
+     * @return whether the current angle is within the turrets limits.
      */
     public boolean inCorrectRange() {
         return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
