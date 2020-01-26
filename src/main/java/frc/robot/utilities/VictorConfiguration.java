@@ -9,7 +9,7 @@ public class VictorConfiguration {
     /**
      * This class is meant to be used as an effective way to give several victors with the same
      * wanted configurations the same settings without a need to change each one separately
-     * This uses the wpilib VictorSPXConfiguration class and adds some likely needed parameters
+     * This uses the CTRE/WPILib VictorSPXConfiguration class and adds some likely needed parameters
      */
 
     private NeutralMode neutralMode;
