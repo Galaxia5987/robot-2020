@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.commands.BalanceRobot;
 import frc.robot.subsystems.climb.commands.JoystickControl;
-import frc.robot.subsystems.climb.commands.RiseToHeight;
+import frc.robot.subsystems.climb.commands.ReleaseRods;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -48,7 +48,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         a.whileHeld(new JoystickControl(climber, false));
-        b.whenPressed(new RiseToHeight(climber, 1.5));
+        b.whenPressed(new ReleaseRods(climber, 1.5));
         y.whenPressed(new BalanceRobot(climber, 1));
     }
 

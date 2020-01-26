@@ -17,7 +17,7 @@ import frc.robot.subsystems.climb.Climber;
  * This command would allow the driver to modify the robot's angle manually
  * with the value of the left xbox's joystick.
  */
-public class RiseToHeight extends CommandBase {
+public class ReleaseRods extends CommandBase {
     private final Climber climber;
     private double currentHeight;
     private double setpointHeight;
@@ -29,7 +29,7 @@ public class RiseToHeight extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public RiseToHeight(Climber climber, double setpointHeight) {
+    public ReleaseRods(Climber climber, double setpointHeight) {
         this.climber = climber;
         this.setpointHeight = setpointHeight;
         addRequirements(climber);
