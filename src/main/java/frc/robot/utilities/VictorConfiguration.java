@@ -44,51 +44,51 @@ public class VictorConfiguration {
     }
 
     public void setPrimaryPID(VictorSPXPIDSetConfiguration primaryPID) {
-        this.motorConfigs.primaryPID = primaryPID;
+        motorConfigs.primaryPID = primaryPID;
     }
 
     public void setAuxiliaryPID(VictorSPXPIDSetConfiguration auxiliaryPID) {
-        this.motorConfigs.auxiliaryPID = auxiliaryPID;
+        motorConfigs.auxiliaryPID = auxiliaryPID;
     }
 
     public void setForwardLimitSwitchSource(RemoteLimitSwitchSource forwardLimitSwitchSource) {
-        this.motorConfigs.forwardLimitSwitchSource = forwardLimitSwitchSource;
+        motorConfigs.forwardLimitSwitchSource = forwardLimitSwitchSource;
     }
 
     public void setReverseLimitSwitchSource(RemoteLimitSwitchSource reverseLimitSwitchSource) {
-        this.motorConfigs.reverseLimitSwitchSource = reverseLimitSwitchSource;
+        motorConfigs.reverseLimitSwitchSource = reverseLimitSwitchSource;
     }
 
     public void setForwardLimitSwitchDeviceID(int forwardLimitSwitchDeviceID) {
-        this.motorConfigs.forwardLimitSwitchDeviceID = forwardLimitSwitchDeviceID;
+        motorConfigs.forwardLimitSwitchDeviceID = forwardLimitSwitchDeviceID;
     }
 
     public void setReverseLimitSwitchDeviceID(int reverseLimitSwitchDeviceID) {
-        this.motorConfigs.reverseLimitSwitchDeviceID = reverseLimitSwitchDeviceID;
+        motorConfigs.reverseLimitSwitchDeviceID = reverseLimitSwitchDeviceID;
     }
 
     public void setForwardLimitSwitchNormal(LimitSwitchNormal forwardLimitSwitchNormal) {
-        this.motorConfigs.forwardLimitSwitchNormal = forwardLimitSwitchNormal;
+        motorConfigs.forwardLimitSwitchNormal = forwardLimitSwitchNormal;
     }
 
     public void setReverseLimitSwitchNormal(LimitSwitchNormal reverseLimitSwitchNormal) {
-        this.motorConfigs.reverseLimitSwitchNormal = reverseLimitSwitchNormal;
+        motorConfigs.reverseLimitSwitchNormal = reverseLimitSwitchNormal;
     }
 
     public void setSum0Term(RemoteFeedbackDevice sum0Term) {
-        this.motorConfigs.sum0Term = sum0Term;
+        motorConfigs.sum0Term = sum0Term;
     }
 
     public void setSum1Term(RemoteFeedbackDevice sum1Term) {
-        this.motorConfigs.sum1Term = sum1Term;
+        motorConfigs.sum1Term = sum1Term;
     }
 
     public void setDiff0Term(RemoteFeedbackDevice diff0Term) {
-        this.motorConfigs.diff0Term = diff0Term;
+        motorConfigs.diff0Term = diff0Term;
     }
 
     public void setDiff1Term(RemoteFeedbackDevice diff1Term) {
-        this.motorConfigs.diff1Term = diff1Term;
+        motorConfigs.diff1Term = diff1Term;
     }
 
 }
