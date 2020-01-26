@@ -18,11 +18,11 @@ public class climbTest {
     @Test
     public void normalizeHeightsTest() {
         Assert.assertTrue(rise.normalizeHeights(0.4, 1, 1, 1, 3)[0] >= 1);
-        Assert.assertEquals(1.4, rise.normalizeHeights(0.4, 1, 1, 0, 3)[0], 0.0);
-        Assert.assertEquals(0.6, rise.normalizeHeights(1.4, 1, 1, 0, 2)[1], 0.0);
-        Assert.assertEquals(0, rise.normalizeHeights(2, 1, 1, 0, 2)[1], 0.0);
-        Assert.assertEquals(1, rise.normalizeHeights(2, 1, 2, 1, 2)[1], 0.0);
-        Assert.assertEquals(2, rise.normalizeHeights(2, 2, 1, 1, 2)[0], 0.0);
+        Assert.assertEquals(1.4, rise.normalizeHeights(0.4, 1, 1, 0, 3)[0], 0.1);
+        Assert.assertEquals(0.6, rise.normalizeHeights(1.4, 1, 1, 0, 2)[1], 0.1);
+        Assert.assertEquals(0, rise.normalizeHeights(2, 1, 1, 0, 2)[1], 0.1);
+        Assert.assertEquals(1, rise.normalizeHeights(2, 1, 2, 1, 2)[1], 0.1);
+        Assert.assertEquals(2, rise.normalizeHeights(2, 2, 1, 1, 2)[0], 0.1);
     }
 
     @Test
