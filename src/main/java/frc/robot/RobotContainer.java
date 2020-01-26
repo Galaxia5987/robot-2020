@@ -35,9 +35,9 @@ public class RobotContainer {
     private static Conveyor conveyor = new Conveyor();
     private final Shooter shooter = new Shooter();
     private final XboxController xbox = new XboxController(2);
-    private final JoystickButton a = new JoystickButton(xbox, 3);
-    private final JoystickButton b = new JoystickButton(xbox, 4);
-    private final JoystickButton rs = new JoystickButton(xbox, 12313); //TODO: Check value
+    private final JoystickButton a = new JoystickButton(xbox, 1);
+    private final JoystickButton b = new JoystickButton(xbox, 2);
+    private final JoystickButton rs = new JoystickButton(xbox, 10);
     private final StickButton rightY = new StickButton(xbox, 5, 0.1);
 
     /**

@@ -20,8 +20,8 @@ public class TurnLocalization extends CommandBase {
 
     private double calculateTargetAngle() {
         Pose2d localization = turret.getLocalization();
-        double deltaY = Math.abs(Constants.POWER_PORT_LOCATION.getTranslation().getY() - localization.getTranslation().getY());
-        double deltaX = Math.abs(Constants.POWER_PORT_LOCATION.getTranslation().getX() - localization.getTranslation().getX());
+        double deltaY = Math.abs(Constants.Field_Geometry.POWER_PORT_LOCATION.getTranslation().getY() - localization.getTranslation().getY());
+        double deltaX = Math.abs(Constants.Field_Geometry.POWER_PORT_LOCATION.getTranslation().getX() - localization.getTranslation().getX());
         return -1 * (localization.getRotation().getRadians() - Math.atan2(deltaY, deltaX));
     }
 }
