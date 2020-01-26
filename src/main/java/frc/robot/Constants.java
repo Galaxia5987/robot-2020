@@ -69,6 +69,7 @@ public class Constants {
         public static final int MOTION_MAGIC_ACCELERATION = 0;
         public static final int TICKS_PER_METER = 1;
         public static final double[] CLIMB_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
         public static final double ARBITRARY_FEEDFORWARD = 0;
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0; // The allowed tolerance between the current height to the desired height
         public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle
