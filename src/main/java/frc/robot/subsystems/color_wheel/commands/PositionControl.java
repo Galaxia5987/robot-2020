@@ -4,18 +4,19 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.color_wheel.ColorWheel;
 
 import static frc.robot.Constants.ColorWheel.*;
-import static frc.robot.RobotContainer.colorWheel;
 
 public class PositionControl extends CommandBase {
 
     private char FMSData;
     private int currentColor;
     private Timer endTimer = new Timer();
+    private ColorWheel colorWheel;
 
-    public PositionControl() {
-
+    public PositionControl(ColorWheel colorWheel) {
+        this.colorWheel = colorWheel;
     }
 
     @Override

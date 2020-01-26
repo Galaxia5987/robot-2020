@@ -20,9 +20,8 @@ import frc.robot.subsystems.color_wheel.commands.RotationControl;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public static final ColorWheel colorWheel = new ColorWheel();
+  private static final ColorWheel colorWheel = new ColorWheel();
 
-//  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
 
 
@@ -51,7 +50,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-//    return m_autoCommand;
-    return new RotationControl(0.1);
+    return null;
   }
 }

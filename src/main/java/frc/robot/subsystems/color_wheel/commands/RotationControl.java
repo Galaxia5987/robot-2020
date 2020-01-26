@@ -2,6 +2,7 @@ package frc.robot.subsystems.color_wheel.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.color_wheel.ColorWheel;
 
 import static frc.robot.RobotContainer.colorWheel;
 
@@ -11,9 +12,11 @@ public class RotationControl extends CommandBase {
     private int counterClockwiseIndex = 0;
     private double clockwiseSpins = 0;
     private double counterClockwiseSpins = 0;
+    private ColorWheel colorWheel;
 
 
-    public RotationControl() {
+    public RotationControl(ColorWheel colorWheel) {
+        this.colorWheel = colorWheel;
     }
 
     @Override
