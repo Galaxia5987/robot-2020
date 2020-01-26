@@ -4,15 +4,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 
-import static frc.robot.RobotContainer.colorWheel;
 
+/**
+ * Rotates the control panel somewhere around 4 spins, does not mind an overshoot or an undershoot
+ * stops at 4 spins
+ */
 public class RotationControl extends CommandBase {
     private int sensorColorIndex;
-    private int clockwiseColorIndex = 0;
-    private int counterClockwiseIndex = 0;
-    private double clockwiseSpins = 0;
-    private double counterClockwiseSpins = 0;
+    private int clockwiseIndex = 0;//Marks the index of the current color when looking for a clockwise pov
+    private int counterClockwiseIndex = 0;//Marks the index of the current color when looking for a counterclockwise pov
+    private double clockwiseSpins = 0;//Counts the clockwise spins of the control panel
+    private double counterClockwiseSpins = 0;//Counts the counterclockwise spins of the control panel
     private ColorWheel colorWheel;
+
 
 
     public RotationControl(ColorWheel colorWheel) {
@@ -22,7 +26,7 @@ public class RotationControl extends CommandBase {
     @Override
     public void initialize() {
         updateColorIndex();
-        clockwiseColorIndex = sensorColorIndex;
+        clockwiseIndex = sensorColorIndex;
         counterClockwiseIndex = sensorColorIndex;
         colorWheel.setPower(Constants.ColorWheel.ROTATION_CONTROL_POWER);
     }
@@ -30,9 +34,13 @@ public class RotationControl extends CommandBase {
     @Override
     public void execute() {
         updateColorIndex();
-        if (sensorColorIndex == (clockwiseColorIndex + 1) % 4) {
+        /*
+        this block of code looks at the order of the colors and checks whether the wheel is moving clockwise or counterclockwise
+        and counts the amount of spis to each direction accordingly
+         */
+        if (sensorColorIndex == (clockwiseIndex + 1) % 4) {
             clockwiseSpins += 0.125;
-            clockwiseColorIndex = sensorColorIndex;
+            clockwiseIndex = sensorColorIndex;
         }
         if (sensorColorIndex == Math.floorMod((counterClockwiseIndex - 1) , 4)) {
             counterClockwiseSpins += 0.125;

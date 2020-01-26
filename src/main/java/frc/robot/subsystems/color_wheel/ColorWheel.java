@@ -65,6 +65,9 @@ public class ColorWheel extends SubsystemBase {
         }
     }
 
+    /*
+    Returns the currently detected color as a string
+     */
     private String colorToString() {
         String colorInString;
         if (match.color == BlueTarget) {

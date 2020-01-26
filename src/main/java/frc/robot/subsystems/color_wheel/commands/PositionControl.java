@@ -8,11 +8,14 @@ import frc.robot.subsystems.color_wheel.ColorWheel;
 
 import static frc.robot.Constants.ColorWheel.*;
 
+/**
+ * The commands uses the date from the fms to rotate the control panel to the given color
+ */
 public class PositionControl extends CommandBase {
 
     private char FMSData;
     private int currentColor;
-    private Timer endTimer = new Timer();
+    private Timer endTimer = new Timer();//Used to make sure we don't overshoot over the wanted color.
     private ColorWheel colorWheel;
 
     public PositionControl(ColorWheel colorWheel) {
