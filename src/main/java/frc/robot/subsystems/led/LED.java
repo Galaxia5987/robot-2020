@@ -92,9 +92,8 @@ public class LED extends SubsystemBase {
      * @param color color to set the whole strip to
      */
     public void setWholdStrip(Color color) {
-        for (int index = 0; !(index > ledBuffer.getLength()); index++) {
-            ledBuffer.setLED(index, color);
-        }
-        strip.setData(ledBuffer);
+        final LinkedHashMap<Integer, Color> colorMap = new LinkedHashMap<>();
+        colorMap.put(ledBuffer.getLength(), color);
+        setColorLengths(colorMap);
     }
 }
