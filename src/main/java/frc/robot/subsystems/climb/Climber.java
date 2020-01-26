@@ -10,6 +10,7 @@ package frc.robot.subsystems.climb;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
@@ -123,16 +124,18 @@ public class Climber extends SubsystemBase {
     }
 
     /**
-     * All cases where we want to prevent the drivers from climbing should return false here. whether it's by game time or localisation
+     * All cases where we want to prevent the drivers from climbing should return true here. whether it's by game time or localisation
      * We may allow the drivers to override this.
-     * It would also check that the difference between the motors doesn't exceed the limit.
+     * It would also check that the difference between the motors doesn't exceed the limit, according to
+     * the current height of each side.
+     * Another addition is that it won't allow climbing before the endgame
      *
      * @return whether the robot should not climb
      */
     private boolean unsafeToClimb(double setpoint, boolean isLeftSide) {
         double otherSideHeight = isLeftSide ? getRightHeight() : getLeftHeight();
         boolean difference = Math.abs(setpoint - otherSideHeight) >= Constants.Climber.MAX_DIFFERENCE;
-        return Robot.robotTimer.get() < 120 || difference;
+        return DriverStation.getInstance().getMatchTime() < 120 || difference;
     }
 
     /**
