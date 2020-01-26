@@ -39,7 +39,7 @@ public class PositionControl extends CommandBase {
     public void execute() {
         currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
         int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
-        colorWheel.setMotorSpeed(POSITION_CONTROL_SPEED * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
+        colorWheel.setMotorSpeed(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
         if (distanceFromTarget == 0 && endTimer.get() != 0)
             endTimer.start();
         else if(distanceFromTarget != 0)

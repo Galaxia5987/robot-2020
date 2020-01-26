@@ -1,19 +1,18 @@
 package frc.robot.subsystems.color_wheel.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 
 import static frc.robot.RobotContainer.colorWheel;
 
 public class RotationControl extends CommandBase {
-    private double percentSpeed;
     private int sensorColorIndex;
     private int clockwiseColorIndex = 0;
     private int counterClockwiseIndex = 0;
     private double clockwiseSpins = 0;
     private double counterClockwiseSpins = 0;
 
-    public RotationControl(double percentSpeed) {
-        this.percentSpeed = percentSpeed;
+    public RotationControl() {
     }
 
     @Override
