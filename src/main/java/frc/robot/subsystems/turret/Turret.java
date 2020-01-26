@@ -172,9 +172,10 @@ public class Turret extends SubsystemBase {
     }
 
     /**
+     * @param angle an angle in degrees.
      * @return whether the current angle is within the turrets limits.
      */
-    public boolean inCorrectRange() {
-        return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
+    public boolean inCorrectRange(double angle) {
+        return angle > MINIMUM_POSITION && angle < MAXIMUM_POSITION;
     }
 }
