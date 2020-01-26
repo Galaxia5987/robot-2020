@@ -79,7 +79,7 @@ public class TalonConfiguration {
     }
 
     public void setPrimaryPID(TalonSRXPIDSetConfiguration primaryPIDConfiguration) {
-        this.motorConfigs.primaryPID = primaryPID;
+        this.motorConfigs.primaryPID = primaryPIDConfiguration;
     }
 
     public void setAuxiliaryPID(TalonSRXPIDSetConfiguration auxiliaryPID) {
