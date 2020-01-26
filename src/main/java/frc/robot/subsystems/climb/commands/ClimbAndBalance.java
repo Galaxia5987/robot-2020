@@ -18,7 +18,7 @@ import frc.robot.subsystems.climb.Climber;
 public class ClimbAndBalance extends CommandBase {
     private final Climber climber;
     private boolean startBalancing = false;
-    private double setpointHeight;
+    private double setpointHeightFromGround;
     private double setpointAngle;
     private double currentAngleError;
     private double leftSetpointHeight;
@@ -31,7 +31,7 @@ public class ClimbAndBalance extends CommandBase {
      */
     public ClimbAndBalance(Climber climber) {
         this.climber = climber;
-        this.setpointHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
+        this.setpointHeightFromGround = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
         this.setpointAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(climber);
@@ -42,9 +42,9 @@ public class ClimbAndBalance extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public ClimbAndBalance(Climber climber, double setpointHeight) {
+    public ClimbAndBalance(Climber climber, double setpointHeightFromGround) {
         this.climber = climber;
-        this.setpointHeight = setpointHeight;
+        this.setpointHeightFromGround = setpointHeightFromGround;
         this.setpointAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(climber);
@@ -52,12 +52,12 @@ public class ClimbAndBalance extends CommandBase {
 
     /**
      * @param subsystem      the subsystem
-     * @param setpointHeight the desired height for the mechanism
+     * @param setpointHeightFromGround the desired height for the mechanism
      * @param setpointAngle  the desired angle
      */
-    public ClimbAndBalance(Climber subsystem, double setpointHeight, double setpointAngle) {
+    public ClimbAndBalance(Climber subsystem, double setpointHeightFromGround, double setpointAngle) {
         this.climber = subsystem;
-        this.setpointHeight = setpointHeight;
+        this.setpointHeightFromGround = setpointHeightFromGround;
         this.setpointAngle = setpointAngle;
         addRequirements(subsystem);
     }
@@ -72,8 +72,8 @@ public class ClimbAndBalance extends CommandBase {
     @Override
     public void execute() {
         //Update the target height of each side
-        leftSetpointHeight = setpointHeight / 2;
-        rightSetpointHeight = setpointHeight / 2;
+        leftSetpointHeight = setpointHeightFromGround;
+        rightSetpointHeight = setpointHeightFromGround;
 
         //Calculate the error angle and the current height
         currentAngleError = setpointAngle - RobotContainer.navx.getRoll();
