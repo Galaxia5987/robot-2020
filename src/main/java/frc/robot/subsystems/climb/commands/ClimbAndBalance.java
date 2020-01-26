@@ -93,6 +93,8 @@ public class ClimbAndBalance extends CommandBase {
 
             climber.setLeftHeight(leftSetpointHeight);
             climber.setRightHeight(rightSetpointHeight);
+        }else {
+            climber.releaseStopper();
         }
     }
 
