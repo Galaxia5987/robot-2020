@@ -98,4 +98,9 @@ public class LED extends SubsystemBase {
         colorMap.put(ledBuffer.getLength(), color);
         setColorLengths(colorMap);
     }
+
+    @Override
+    public void periodic() {
+        strip.setData(ledBuffer);
+    }
 }
