@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import java.util.LinkedHashMap;
+
 import static frc.robot.Ports.LED.*;
 
 /**
@@ -35,6 +37,54 @@ public class LED extends SubsystemBase {
         strip.setData(ledBuffer);
         strip.start();
     }
+
+    /**
+     * Sets the colors of the strip with mapping between lengths to each color.
+     *
+     * For example, the map [1: blue, 4: red, 2: green] will set the first cell to blue, the subsequent 4 cells to red
+     * and the subsequent 2 to green.
+     * Missing cells will stay in the color they were before, and excessive cells will be ignored.
+     *
+     * @param colorMap map that maps between length to each color
+     */
+    public void setColorLengths(LinkedHashMap<Integer, Color> colorMap) {
+        int runningIndex = 0;
+        for (Integer key : colorMap.keySet()) {
+            int innerIndex;
+            for (innerIndex = runningIndex + 1; innerIndex <= runningIndex + key; innerIndex++) {
+                ledBuffer.setLED(innerIndex, colorMap.get(key));
+                if (innerIndex > ledBuffer.getLength()) { // Exit the method if the given buffer is too long.
+                    return;
+                }
+            }
+            runningIndex = innerIndex;
+        }
+    }
+
+    /**
+     * Sets the colors of the strip with mapping between length ratios to each color.
+     *
+     * The map maps between parts of the strip to colors. For example, if the strip's length is 20, the map
+     * [0.3: blue, 0.5: red, 0.2: green] will set the first 6 (20 * 0.3) cell to blue, the subsequent 10 (20 * 0.5)
+     * cells to red, and the subsequent 4 (20 * 0.2) cells to green.
+     * Missing cells will stay in the color they were before, and excessive cells will be ignored.
+     *
+     * @param colorMap map that maps between ratio of the strip length to each color
+     */
+    public void setColorRatios(LinkedHashMap<Double, Color> colorMap) {
+        int runningIndex = 0;
+        for (Double key : colorMap.keySet()) {
+            int innerIndex;
+            for (innerIndex = runningIndex + 1; innerIndex <= runningIndex + key * ledBuffer.getLength(); innerIndex++) {
+                ledBuffer.setLED(innerIndex, colorMap.get(key));
+                if (innerIndex > ledBuffer.getLength()) { // Exit the method if the given buffer is too long.
+                    return;
+                }
+            }
+            runningIndex = innerIndex;
+        }
+    }
+
 
     /**
      * Sets the whole strip to the same color.
