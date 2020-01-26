@@ -19,6 +19,7 @@ public class TurretSwitchingCommand extends CommandBase {
     @Override
     public void execute() {
         if(turret.hasVisionAngle() && turret.inCorrectRange()) {
+            visionTurret.initialize();
             visionTurret.execute();
         }
         else {
