@@ -10,7 +10,6 @@ import static frc.robot.RobotContainer.colorWheel;
 
 public class PositionControl extends CommandBase {
 
-    private final String[] colors = {"Yellow", "Red", "Green", "Blue"};
     private char FMSData;
     private int currentColor;
     private Timer endTimer = new Timer();
