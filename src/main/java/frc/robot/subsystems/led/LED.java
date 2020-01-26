@@ -32,6 +32,8 @@ public class LED extends SubsystemBase {
         strip = new AddressableLED(PORT);
 
         ledBuffer = new AddressableLEDBuffer(LENGTH);
+        // Set the color of the LEDs to Galaxia blue at startup.
+        setWholeStrip(Color.kDeepSkyBlue);
         strip.setLength(LENGTH);
 
         strip.setData(ledBuffer);
@@ -91,7 +93,7 @@ public class LED extends SubsystemBase {
      *
      * @param color color to set the whole strip to
      */
-    public void setWholdStrip(Color color) {
+    public void setWholeStrip(Color color) {
         final LinkedHashMap<Integer, Color> colorMap = new LinkedHashMap<>();
         colorMap.put(ledBuffer.getLength(), color);
         setColorLengths(colorMap);
