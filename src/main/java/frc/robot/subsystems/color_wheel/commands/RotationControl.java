@@ -12,6 +12,7 @@ public class RotationControl extends CommandBase {
     private double clockwiseSpins = 0;
     private double counterClockwiseSpins = 0;
 
+
     public RotationControl() {
     }
 
@@ -20,7 +21,7 @@ public class RotationControl extends CommandBase {
         updateColorIndex();
         clockwiseColorIndex = sensorColorIndex;
         counterClockwiseIndex = sensorColorIndex;
-        colorWheel.setMotorSpeed(Constants.ColorWheel.ROTATION_CONTROL_POWER);
+        colorWheel.setPower(Constants.ColorWheel.ROTATION_CONTROL_POWER);
     }
 
     @Override
@@ -43,6 +44,7 @@ public class RotationControl extends CommandBase {
         } catch (Exception ignored) {
 
         }
+
     }
 
     @Override
@@ -52,7 +54,7 @@ public class RotationControl extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        colorWheel.setMotorSpeed(0);
+        colorWheel.setPower(0);
     }
 
 }

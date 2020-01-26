@@ -34,6 +34,7 @@ public class ColorWheel extends SubsystemBase {
     private final Color YellowTarget = ColorMatch.makeColor(Constants.ColorWheel.YELLOW_RGB[0], Constants.ColorWheel.YELLOW_RGB[1], Constants.ColorWheel.YELLOW_RGB[2]);
 
     private final VictorSPX spinMotor = new VictorSPX(Ports.ColorWheel.MOTOR);
+    private ColorMatchResult match;
 
     public ColorWheel() {
         colorMatcher.addColorMatch(BlueTarget);
@@ -63,8 +64,7 @@ public class ColorWheel extends SubsystemBase {
         }
     }
 
-    private String colorToString(Color color) {
-        ColorMatchResult match = colorMatcher.matchClosestColor(color);
+    private String colorToString() {
         String colorInString;
         if (match.color == BlueTarget) {
             colorInString = "Blue";
@@ -90,11 +90,13 @@ public class ColorWheel extends SubsystemBase {
 
     @Override
     public void periodic() {
+        match = colorMatcher.matchClosestColor(colorSensor.getColor());
         Color detectedColor = colorSensor.getColor();
-        colorString = colorToString(detectedColor);
+        colorString = colorToString();
         SmartDashboard.putNumber("Red", detectedColor.red);
         SmartDashboard.putNumber("Green", detectedColor.green);
         SmartDashboard.putNumber("Blue", detectedColor.blue);
+        SmartDashboard.putNumber("Confidence", match.confidence);
         SmartDashboard.putString("Detected Color", colorString);
     }
 }
