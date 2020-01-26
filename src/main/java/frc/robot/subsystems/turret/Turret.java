@@ -145,13 +145,6 @@ public class Turret extends SubsystemBase {
         return new Pose2d();
     }
 
-    public double calculateTargetAngle() {
-        Pose2d localization = getLocalization();
-        double deltaY = Math.abs(Constants.POWER_PORT_LOCATION.getTranslation().getY() - localization.getTranslation().getY());
-        double deltaX = Math.abs(Constants.POWER_PORT_LOCATION.getTranslation().getX() - localization.getTranslation().getX());
-        return -1 * (localization.getRotation().getRadians() - Math.atan2(deltaY, deltaX));
-    }
-
     public boolean inCorrectRange() {
         return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
     }
