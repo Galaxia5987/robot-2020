@@ -46,7 +46,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
-        turret.setDefaultCommand(new TurretSwitchingCommand(turret));
+        turret.setDefaultCommand(new TurretSwitching(turret));
     }
 
     /**
