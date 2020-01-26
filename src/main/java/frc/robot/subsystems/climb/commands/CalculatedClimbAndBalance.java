@@ -132,6 +132,7 @@ public class CalculatedClimbAndBalance extends CommandBase {
      * @return the modified heights
      */
     public double[] normalizeHeights(double difference, double firstHeight, double secondHeight, double minLimit, double maxLimit) {
+        difference = climber.normalizeDelta(difference);
         if (difference > 0) {
             firstHeight += difference;
             if (firstHeight >= maxLimit) {

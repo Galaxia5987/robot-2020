@@ -100,7 +100,7 @@ public class Climber extends SubsystemBase {
      * @param height the height setpoint of the left elevator in meters
      */
     public void setLeftHeight(double height) {
-        if (leftSafeToClimb(height)) {
+        if (safeToClimb()) {
             leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
         }
     }
@@ -118,39 +118,19 @@ public class Climber extends SubsystemBase {
      * @param height the height setpoint of the right elevator in meters
      */
     public void setRightHeight(double height) {
-        if (rightSafeToClimb(height)) {
+        if (safeToClimb()) {
             rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
         }
     }
 
     /**
-     * All cases where we want to prevent the drivers from climbing should return true here. whether it's by game time or localisation
-     * We may allow the drivers to override this.
-     * It would also check that the difference between the motors doesn't exceed the limit, according to
-     * the current height of each side.
-     * Another addition is that it won't allow climbing before the endgame
+     * All cases where we want to prevent the drivers from climbing should return true here. whether it's by game time.
+     * It won't allow climbing before the endgame
      *
      * @return whether the robot should not climb
      */
-    private boolean rightSafeToClimb(double setpoint) {
-        double otherSideHeight = getLeftHeight();
-        boolean difference = Math.abs(setpoint - otherSideHeight) <= Constants.Climber.MAX_DIFFERENCE;
-        return DriverStation.getInstance().getMatchTime() > 120 && difference;
-    }
-
-    /**
-     * All cases where we want to prevent the drivers from climbing should return true here. whether it's by game time or localisation
-     * We may allow the drivers to override this.
-     * It would also check that the difference between the motors doesn't exceed the limit, according to
-     * the current height of each side.
-     * Another addition is that it won't allow climbing before the endgame
-     *
-     * @return whether the robot should not climb
-     */
-    private boolean leftSafeToClimb(double setpoint) {
-        double otherSideHeight = getRightHeight();
-        boolean difference = Math.abs(setpoint - otherSideHeight) <= Constants.Climber.MAX_DIFFERENCE;
-        return DriverStation.getInstance().getMatchTime() > 120 && difference;
+    private boolean safeToClimb() {
+        return DriverStation.getInstance().getMatchTime() > 120;
     }
 
     /**
@@ -196,6 +176,14 @@ public class Climber extends SubsystemBase {
         return setpoint;
     }
 
+    public double normalizeDelta(double delta){
+        if (delta > Constants.Climber.MAX_DIFFERENCE) {
+            return Constants.Climber.MAX_DIFFERENCE;
+        } else if (delta < -Constants.Climber.MAX_DIFFERENCE) {
+            return -Constants.Climber.MAX_DIFFERENCE;
+        }
+        return delta;
+    }
 
     @Override
     public void periodic() {

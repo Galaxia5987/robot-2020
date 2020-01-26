@@ -81,8 +81,10 @@ public class PIDClimbAndBalance extends CommandBase {
         currentAngleError = setpointAngle - RobotContainer.navx.getRoll();
 
         delta += deltaPID.getOutput((RobotContainer.navx.getRoll() - setpointAngle), 0);
-        leftSetpointHeight += delta;
-        rightSetpointHeight -= delta;
+        delta = climber.normalizeDelta(delta);
+
+        leftSetpointHeight += delta * 0.5;
+        rightSetpointHeight -= delta * 0.5;
 
         if (!climber.isStopperEngaged()) {
             climber.setLeftHeight(leftSetpointHeight);
