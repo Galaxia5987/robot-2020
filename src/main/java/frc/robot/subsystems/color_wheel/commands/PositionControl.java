@@ -39,18 +39,29 @@ public class PositionControl extends CommandBase {
 
     @Override
     public void execute() {
-        currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
-        int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
-        colorWheel.setPower(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
-        if (distanceFromTarget == 0 && endTimer.get() != 0)
-            endTimer.start();
-        else if(distanceFromTarget != 0)
-            endTimer.reset();
+        try {
+            currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
+            int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
+            colorWheel.setPower(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
+            if (distanceFromTarget == 0 && endTimer.get() != 0)
+                endTimer.start();
+            else if(distanceFromTarget != 0)
+                endTimer.reset();
+        }
+        catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return endTimer.get() > POSITION_CONTROL_TIMER && Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4) == 0;
+        try {
+            return endTimer.get() > POSITION_CONTROL_TIMER && Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData)) - TILES_BEFORE_SENSOR, 4) == 0;
+        }
+        catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

@@ -52,10 +52,9 @@ public class RotationControl extends CommandBase {
     private void updateColorIndex() {
         try {
             sensorColorIndex = colorWheel.indexOfColor(colorWheel.getColorString());
-        } catch (Exception ignored) {
-
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
-
     }
 
     @Override
