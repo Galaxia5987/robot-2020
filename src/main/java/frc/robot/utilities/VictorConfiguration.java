@@ -47,8 +47,8 @@ public class VictorConfiguration {
         motorConfigs.primaryPID = primaryPID;
     }
 
-    public void setAuxiliaryPID(VictorSPXPIDSetConfiguration auxiliaryPID) {
-        motorConfigs.auxiliaryPID = auxiliaryPID;
+    public void setAuxiliaryPID(VictorSPXPIDSetConfiguration auxiliaryPIDConfiguration) {
+        motorConfigs.auxiliaryPID = auxiliaryPIDConfiguration;
     }
 
     public void setForwardLimitSwitchSource(RemoteLimitSwitchSource forwardLimitSwitchSource) {

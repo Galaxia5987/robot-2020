@@ -82,8 +82,8 @@ public class TalonConfiguration {
         this.motorConfigs.primaryPID = primaryPIDConfiguration;
     }
 
-    public void setAuxiliaryPID(TalonSRXPIDSetConfiguration auxiliaryPID) {
-        motorConfigs.auxiliaryPID = auxiliaryPID;
+    public void setAuxiliaryPID(TalonSRXPIDSetConfiguration auxiliaryPIDConfiguration) {
+        motorConfigs.auxiliaryPID = auxiliaryPIDConfiguration;
     }
 
     public void setForwardLimitSwitchSource(LimitSwitchSource forwardLimitSwitchSource) {
