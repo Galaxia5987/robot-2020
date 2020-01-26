@@ -16,9 +16,8 @@ import frc.robot.subsystems.climb.Climber;
 /**
  * An example command that uses an example subsystem.
  */
-public class ClimbAndBalance extends CommandBase {
+public class CalculatedClimbAndBalance extends CommandBase {
     private final Climber climber;
-    private boolean simpleMode = false;
     private MiniPID deltaPID = new MiniPID(Constants.Climber.DELTA_PID[0], Constants.Climber.DELTA_PID[1], Constants.Climber.DELTA_PID[2]);
     private double setpointHeightFromGround;
     private double setpointAngle;
@@ -32,7 +31,7 @@ public class ClimbAndBalance extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public ClimbAndBalance(Climber climber) {
+    public CalculatedClimbAndBalance(Climber climber) {
         this.climber = climber;
         this.setpointHeightFromGround = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
         this.setpointAngle = 0;
@@ -45,22 +44,8 @@ public class ClimbAndBalance extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public ClimbAndBalance(Climber climber, double setpointHeightFromGround) {
+    public CalculatedClimbAndBalance(Climber climber, double setpointHeightFromGround) {
         this.climber = climber;
-        this.setpointHeightFromGround = setpointHeightFromGround;
-        this.setpointAngle = 0;
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(climber);
-    }
-
-    /**
-     * Creates a new rise to height command.
-     *
-     * @param climber The subsystem used by this command.
-     */
-    public ClimbAndBalance(Climber climber, double setpointHeightFromGround, boolean simpleMode) {
-        this.climber = climber;
-        this.simpleMode = simpleMode;
         this.setpointHeightFromGround = setpointHeightFromGround;
         this.setpointAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
@@ -72,7 +57,7 @@ public class ClimbAndBalance extends CommandBase {
      * @param setpointHeightFromGround the desired height for the mechanism
      * @param setpointAngle            the desired angle
      */
-    public ClimbAndBalance(Climber subsystem, double setpointHeightFromGround, double setpointAngle) {
+    public CalculatedClimbAndBalance(Climber subsystem, double setpointHeightFromGround, double setpointAngle) {
         this.climber = subsystem;
         this.setpointHeightFromGround = setpointHeightFromGround;
         this.setpointAngle = setpointAngle;
@@ -94,22 +79,17 @@ public class ClimbAndBalance extends CommandBase {
 
         //Calculate the error angle and the current height
         currentAngleError = setpointAngle - RobotContainer.navx.getRoll();
-        if (simpleMode) {
-            delta += deltaPID.getOutput((RobotContainer.navx.getRoll() - setpointAngle), 0);
-            leftSetpointHeight += delta;
-            rightSetpointHeight -= delta;
+
+        double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(currentAngleError));
+        //Fix the heights according to the angle of the robot
+        if (currentAngleError > 0) {
+            double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0.2, Constants.Climber.MAX_HEIGHT);
+            rightSetpointHeight = heights[0];
+            leftSetpointHeight = heights[1];
         } else {
-            double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(currentAngleError));
-            //Fix the heights according to the angle of the robot
-            if (currentAngleError > 0) {
-                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0.2, Constants.Climber.MAX_HEIGHT);
-                rightSetpointHeight = heights[0];
-                leftSetpointHeight = heights[1];
-            } else {
-                double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0.2, Constants.Climber.MAX_HEIGHT);
-                rightSetpointHeight = heights[0];
-                leftSetpointHeight = heights[1];
-            }
+            double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0.2, Constants.Climber.MAX_HEIGHT);
+            rightSetpointHeight = heights[0];
+            leftSetpointHeight = heights[1];
         }
 
         if (!climber.isStopperEngaged()) {
