@@ -17,7 +17,6 @@ public class VisionTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        anglePid.setSetpoint(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
