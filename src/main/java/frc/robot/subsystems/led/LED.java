@@ -92,7 +92,7 @@ public class LED extends SubsystemBase {
 
 
     /**
-     * Sets the whole strip to the same color.
+     * Sets the whole strip to a given color.
      *
      * @param color color to set the whole strip to
      */
