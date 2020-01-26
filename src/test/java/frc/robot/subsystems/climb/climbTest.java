@@ -1,6 +1,6 @@
 package frc.robot.subsystems.climb;
 
-import frc.robot.subsystems.climb.commands.BalanceRobot;
+import frc.robot.subsystems.climb.commands.ClimbAndBalance;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,11 +8,11 @@ import org.junit.Test;
 import static frc.robot.RobotContainer.climber;
 
 public class climbTest {
-    BalanceRobot rise;
+    ClimbAndBalance rise;
 
     @Before
     public void setClimber() throws Exception {
-        rise = new BalanceRobot(climber, 2);
+        rise = new ClimbAndBalance(climber, 2);
     }
 
     @Test

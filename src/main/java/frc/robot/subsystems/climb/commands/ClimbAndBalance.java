@@ -15,7 +15,7 @@ import frc.robot.subsystems.climb.Climber;
 /**
  * An example command that uses an example subsystem.
  */
-public class BalanceRobot extends CommandBase {
+public class ClimbAndBalance extends CommandBase {
     private final Climber climber;
     private boolean startBalancing = false;
     private double setpointHeight;
@@ -29,7 +29,7 @@ public class BalanceRobot extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public BalanceRobot(Climber climber) {
+    public ClimbAndBalance(Climber climber) {
         this.climber = climber;
         this.setpointHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
         this.setpointAngle = 0;
@@ -42,7 +42,7 @@ public class BalanceRobot extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public BalanceRobot(Climber climber, double setpointHeight) {
+    public ClimbAndBalance(Climber climber, double setpointHeight) {
         this.climber = climber;
         this.setpointHeight = setpointHeight;
         this.setpointAngle = 0;
@@ -55,7 +55,7 @@ public class BalanceRobot extends CommandBase {
      * @param setpointHeight the desired height for the mechanism
      * @param setpointAngle  the desired angle
      */
-    public BalanceRobot(Climber subsystem, double setpointHeight, double setpointAngle) {
+    public ClimbAndBalance(Climber subsystem, double setpointHeight, double setpointAngle) {
         this.climber = subsystem;
         this.setpointHeight = setpointHeight;
         this.setpointAngle = setpointAngle;

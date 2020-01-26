@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
-import frc.robot.subsystems.climb.commands.BalanceRobot;
+import frc.robot.subsystems.climb.commands.ClimbAndBalance;
 import frc.robot.subsystems.climb.commands.JoystickControl;
 import frc.robot.subsystems.climb.commands.ReleaseRods;
 import frc.robot.valuetuner.ValueTuner;
@@ -49,7 +49,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         a.whileHeld(new JoystickControl(climber, false));
         b.whenPressed(new ReleaseRods(climber, 1.5));
-        y.whenPressed(new BalanceRobot(climber, 1));
+        y.whenPressed(new ClimbAndBalance(climber, 1));
     }
 
 
