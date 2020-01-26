@@ -25,7 +25,9 @@ public class JoystickTurret extends CommandBase {
     public void execute() {
         double joystickInput = m_robotContainer.getXboxY();
         double delta = joystickInput * TURRET_JOYSTICK_SPEED;
-        turret.setDelta(delta + turret.getDelta());
+        if (Math.abs(delta) < DELTA_CONSTRAIN) {
+            turret.setDelta(delta + turret.getDelta());
+        }
     }
 
 }

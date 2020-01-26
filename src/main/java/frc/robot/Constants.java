@@ -109,6 +109,8 @@ public final class Constants {
 
         public static final int MAX_CURRENT = 35; // [A]
         public static final double ANGLE_THRESHOLD = 1;
+
+        public static final double DELTA_CONSTRAIN = 0;
     }
 
 
