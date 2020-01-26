@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.LinkedHashMap;
 
+import static frc.robot.Constants.LED.*;
 import static frc.robot.Ports.LED.*;
 
 /**
@@ -24,6 +25,8 @@ public class LED extends SubsystemBase {
 
     private AddressableLED strip;
     private AddressableLEDBuffer ledBuffer;
+    private double dimness = DEFAULT_DIMNESS;
+    private double currentDimness = dimness;
 
     /**
      * Creates a new LED subsystem.
@@ -98,6 +101,17 @@ public class LED extends SubsystemBase {
         colorMap.put(ledBuffer.getLength(), color);
         setColorLengths(colorMap);
     }
+
+
+    /**
+     * Sets the dimness of the strip.
+     *
+     * @param dimness dimness to set the strip to
+     */
+    public void setDimness(double dimness) {
+        this.dimness = dimness;
+    }
+
 
     @Override
     public void periodic() {
