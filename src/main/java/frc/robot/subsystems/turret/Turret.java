@@ -122,6 +122,9 @@ public class Turret extends SubsystemBase {
         this.delta = 0;
     }
 
+    public double getDelta(){
+        return delta;
+    }
     /**
      * set the position to the current position to stop the turret at the target position.
      */
