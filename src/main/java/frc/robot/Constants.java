@@ -75,7 +75,7 @@ public class Constants {
         public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle
         public static final double MAX_HEIGHT = 2; // The allowed maximum height of the subsystem
         public static final double MODIFY_JOYSTICK_RATE = 0; // The factor which the value of the joystick is multiply by to calculate the change rate
-        public static final double MAX_DIFFERENCE = 0; // The maximal difference between the two sides of the climber
+        public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber
         public static final double RAMP_RATE = 0;
         public static final long DELAY_BETWEEN_COMMANDS = 0;
     }
