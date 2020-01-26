@@ -20,7 +20,7 @@ import frc.robot.subsystems.color_wheel.commands.RotationControl;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private static final ColorWheel colorWheel = new ColorWheel();
+  private final ColorWheel colorWheel = new ColorWheel();
 
 
 
