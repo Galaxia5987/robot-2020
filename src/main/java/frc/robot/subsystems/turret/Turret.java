@@ -147,8 +147,8 @@ public class Turret extends SubsystemBase {
 
     public double calculateTargetAngle() {
         Pose2d localization = getLocalization();
-        double deltaY = Math.abs(Constants.powerPortPose.getTranslation().getY() - localization.getTranslation().getY());
-        double deltaX = Math.abs(Constants.powerPortPose.getTranslation().getX() - localization.getTranslation().getX());
+        double deltaY = Math.abs(Constants.POWER_PORT_LOCATION.getTranslation().getY() - localization.getTranslation().getY());
+        double deltaX = Math.abs(Constants.POWER_PORT_LOCATION.getTranslation().getX() - localization.getTranslation().getX());
         return -1 * (localization.getRotation().getRadians() - Math.atan2(deltaY, deltaX));
     }
 

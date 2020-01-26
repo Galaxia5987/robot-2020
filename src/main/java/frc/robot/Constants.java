@@ -56,7 +56,7 @@ public final class Constants {
     }
 
     public static final int TALON_TIMEOUT = 10;
-    public static final Pose2d powerPortPose = new Pose2d(0, 0, new Rotation2d());
+    public static final Pose2d POWER_PORT_LOCATION = new Pose2d(0, 0, new Rotation2d());
 
     public static final class Intake {
         public static final double INTAKE_POWER = 0.5;
