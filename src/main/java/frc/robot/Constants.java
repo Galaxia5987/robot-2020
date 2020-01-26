@@ -31,6 +31,7 @@ public class Constants {
 
         public static final double POSITION_CONTROL_TIMER = 1;
         public static final double POSITION_CONTROL_SPEED = 0.2;
+        public static final double ROTATION_CONTROL_POWER = 0.2;
         public static double kP = 0.3;
     }
 

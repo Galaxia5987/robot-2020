@@ -21,7 +21,7 @@ public class RotationControl extends CommandBase {
         updateColorIndex();
         clockwiseColorIndex = sensorColorIndex;
         counterClockwiseIndex = sensorColorIndex;
-        colorWheel.setMotorSpeed(percentSpeed);
+        colorWheel.setMotorSpeed(Constants.ColorWheel.ROTATION_CONTROL_POWER);
     }
 
     @Override
