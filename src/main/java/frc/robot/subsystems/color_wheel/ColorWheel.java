@@ -83,7 +83,7 @@ public class ColorWheel extends SubsystemBase {
         }
         return colorInString;
     }
-    
+
 
     public void setPower(double percent) {
         spinMotor.set(ControlMode.PercentOutput, percent);
