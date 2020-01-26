@@ -12,9 +12,8 @@ public class JoystickTurret extends CommandBase {
     private RobotContainer m_robotContainer = new RobotContainer();
     private final Turret turret;
 
-    public JoystickTurret(Turret turret) {
+    public JoystickTurret(Turret turret) { //This does not power the motors, it simply adjusts the target angle. Henceforth, there is no reason to interrupt the turning class.
         this.turret = turret;
-        addRequirements(turret);
     }
 
     @Override
