@@ -24,7 +24,7 @@ import static frc.robot.Ports.LED.STRIP_LENGTH;
 public class LED extends SubsystemBase {
 
     private AddressableLED strip;
-    private AddressableLEDBuffer ledBuffer;
+    private AddressableLEDBuffer colorsBuffer;
 
     /**
      * Creates a new LED subsystem.
@@ -32,12 +32,12 @@ public class LED extends SubsystemBase {
     public LED() {
         strip = new AddressableLED(STRIP);
 
-        ledBuffer = new AddressableLEDBuffer(STRIP_LENGTH, MINIMAL_DIMNESS);
+        colorsBuffer = new AddressableLEDBuffer(STRIP_LENGTH, MINIMAL_DIMNESS);
         // Set the color of the LEDs to Galaxia blue at startup.
         setWholeStrip(Color.kDeepSkyBlue);
         strip.setLength(STRIP_LENGTH);
 
-        strip.setData(ledBuffer);
+        strip.setData(colorsBuffer);
         strip.start();
     }
 
@@ -55,8 +55,8 @@ public class LED extends SubsystemBase {
         for (Integer key : colorMap.keySet()) {
             int innerIndex;
             for (innerIndex = runningIndex + 1; innerIndex <= runningIndex + key; innerIndex++) {
-                ledBuffer.setLED(innerIndex, colorMap.get(key));
-                if (innerIndex > ledBuffer.getLength()) { // Exit the method if the given buffer is too long.
+                colorsBuffer.setLED(innerIndex, colorMap.get(key));
+                if (innerIndex > colorsBuffer.getLength()) { // Exit the method if the given buffer is too long.
                     return;
                 }
             }
@@ -78,9 +78,9 @@ public class LED extends SubsystemBase {
         int runningIndex = 0;
         for (Double key : colorMap.keySet()) {
             int innerIndex;
-            for (innerIndex = runningIndex + 1; innerIndex <= runningIndex + key * ledBuffer.getLength(); innerIndex++) {
-                ledBuffer.setLED(innerIndex, colorMap.get(key));
-                if (innerIndex > ledBuffer.getLength()) { // Exit the method if the given buffer is too long.
+            for (innerIndex = runningIndex + 1; innerIndex <= runningIndex + key * colorsBuffer.getLength(); innerIndex++) {
+                colorsBuffer.setLED(innerIndex, colorMap.get(key));
+                if (innerIndex > colorsBuffer.getLength()) { // Exit the method if the given buffer is too long.
                     return;
                 }
             }
@@ -96,7 +96,7 @@ public class LED extends SubsystemBase {
      */
     public void setWholeStrip(Color color) {
         final LinkedHashMap<Integer, Color> colorMap = new LinkedHashMap<>();
-        colorMap.put(ledBuffer.getLength(), color);
+        colorMap.put(colorsBuffer.getLength(), color);
         setColorLengths(colorMap);
     }
 
@@ -107,19 +107,19 @@ public class LED extends SubsystemBase {
      * @param minDimness dimness to set the strip to
      */
     public void setDimness(double minDimness) {
-        ledBuffer.setMinDimness(minDimness);
+        colorsBuffer.setMinDimness(minDimness);
     }
 
     @Override
     public void periodic() {
-        strip.setData(ledBuffer);
+        strip.setData(colorsBuffer);
     }
 
     /**
      * @return the current colors buffer.
      */
     public AddressableLEDBuffer getCurrentBuffer() {
-        return ledBuffer;
+        return colorsBuffer;
     }
 
     /**
@@ -128,6 +128,6 @@ public class LED extends SubsystemBase {
      * @param colorBuffer colors buffer to set to
      */
     public void setColorBuffer(AddressableLEDBuffer colorBuffer) {
-        ledBuffer = colorBuffer;
+        colorsBuffer = colorBuffer;
     }
 }
