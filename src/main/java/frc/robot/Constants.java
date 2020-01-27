@@ -1,7 +1,5 @@
 package frc.robot;
 
-import frc.robot.Robot;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -19,6 +17,7 @@ public class Constants {
 
     public static final class LED {
         public static final double DEFAULT_DIMNESS = 0;
+        public static final double DIMNESS_INCREASE = 0;
     }
 
     public static class ExampleSubsystem1 {

@@ -7,24 +7,38 @@
 
 package frc.robot.subsystems.led;
 
-import edu.wpi.first.wpilibj.util.Color;
+import static frc.robot.Constants.LED.DIMNESS_INCREASE;
 
 /**
  * Buffer storage for Addressable LEDs.
  */
 public class AddressableLEDBuffer extends edu.wpi.first.wpilibj.AddressableLEDBuffer {
     byte[] m_buffer;
-    private Color[] rgbBuffer;
+
+    private double minDimness;
+    private double currentDimness;
 
     /**
      * Constructs a new LED buffer with the specified length.
      *
-     * @param length The length of the buffer in pixels
+     * @param length     The length of the buffer in pixels
+     * @param minDimness The minimal dimness of the LEDs strip
      */
-    public AddressableLEDBuffer(int length) {
+    public AddressableLEDBuffer(int length, double minDimness) {
         super(length);
         m_buffer = new byte[length * 4];
-        rgbBuffer = new Color[length];
+        this.minDimness = minDimness;
+        this.currentDimness = minDimness;
+
+    }
+
+    /**
+     * Sets the minimal dimness of the strip.
+     *
+     * @param minDimness minimal dimness to set the strip to
+     */
+    public void setMinDimness(double minDimness) {
+        this.minDimness = minDimness;
     }
 
     /**
@@ -37,17 +51,13 @@ public class AddressableLEDBuffer extends edu.wpi.first.wpilibj.AddressableLEDBu
      */
     @SuppressWarnings("ParameterName")
     public void setRGB(int index, int r, int g, int b) {
-        m_buffer[index * 4] = (byte) b;
-        m_buffer[(index * 4) + 1] = (byte) g;
-        m_buffer[(index * 4) + 2] = (byte) r;
+        m_buffer[index * 4] = (byte) (b * currentDimness);
+        m_buffer[(index * 4) + 1] = (byte) (g * currentDimness);
+        m_buffer[(index * 4) + 2] = (byte) (r * currentDimness);
         m_buffer[(index * 4) + 3] = 0;
-        rgbBuffer[index] = new Color(r, g, b);
-    }
-
-    /**
-     * @return array of the current colors on the buffer in the RGB format
-     */
-    public Color[] getCurrentBuffer() {
-        return rgbBuffer;
+        currentDimness += DIMNESS_INCREASE;
+        if (currentDimness > 1) {
+            currentDimness = minDimness;
+        }
     }
 }

@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.LinkedHashMap;
 
-import static frc.robot.Constants.LED.*;
-import static frc.robot.Ports.LED.*;
+import static frc.robot.Constants.LED.DEFAULT_DIMNESS;
+import static frc.robot.Ports.LED.STRIP;
+import static frc.robot.Ports.LED.STRIP_LENGTH;
 
 /**
  * Subsystem controlling the LEDs on the robot.
@@ -24,8 +25,6 @@ public class LED extends SubsystemBase {
 
     private AddressableLED strip;
     private AddressableLEDBuffer ledBuffer;
-    private double dimness = DEFAULT_DIMNESS;
-    private double currentDimness = dimness;
 
     /**
      * Creates a new LED subsystem.
@@ -33,7 +32,7 @@ public class LED extends SubsystemBase {
     public LED() {
         strip = new AddressableLED(STRIP);
 
-        ledBuffer = new AddressableLEDBuffer(STRIP_LENGTH);
+        ledBuffer = new AddressableLEDBuffer(STRIP_LENGTH, DEFAULT_DIMNESS);
         // Set the color of the LEDs to Galaxia blue at startup.
         setWholeStrip(Color.kDeepSkyBlue);
         strip.setLength(STRIP_LENGTH);
@@ -103,26 +102,16 @@ public class LED extends SubsystemBase {
 
 
     /**
-     * Sets the dimness of the strip.
+     * Sets the minimal dimness of the strip.
      *
-     * @param dimness dimness to set the strip to
+     * @param minDimness dimness to set the strip to
      */
-    public void setDimness(double dimness) {
-        this.dimness = dimness;
+    public void setDimness(double minDimness) {
+        ledBuffer.setMinDimness(minDimness);
     }
-
 
     @Override
     public void periodic() {
-        Color[] currentColors = ledBuffer.getCurrentBuffer();
-        for (int i = 0; i < currentColors.length; i++) {
-            Color color = currentColors[i];
-            ledBuffer.setRGB(i, (int) (color.red * dimness), (int) (color.green * dimness), (int) (color.blue * dimness));
-        }
-        dimness += 0.05;
-        if (dimness > 1) {
-            dimness = DEFAULT_DIMNESS;
-        }
         strip.setData(ledBuffer);
     }
 }
