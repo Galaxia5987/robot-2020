@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
@@ -59,7 +60,7 @@ public class RobotContainer {
         a.whenPressed(new TurnTurret(turret, 45));
         b.whenPressed(new CenterTurret(turret));
         rightY.whileHeld(new JoystickTurret(turret));
-        rs.whenPressed(new ResetDelta(turret));
+        rs.whenPressed(new InstantCommand(turret::resetOffset));
     }
 
     public double getXboxY() {
