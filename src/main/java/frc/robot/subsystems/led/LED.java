@@ -32,7 +32,7 @@ public class LED extends SubsystemBase {
      * Creates a new LED subsystem.
      */
     public LED() {
-        strip = new AddressableLED(PORT);
+        strip = new AddressableLED(STRIP);
 
         ledBuffer = new AddressableLEDBuffer(LENGTH);
         // Set the color of the LEDs to Galaxia blue at startup.
