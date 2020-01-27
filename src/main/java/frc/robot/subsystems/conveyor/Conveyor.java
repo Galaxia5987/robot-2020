@@ -107,7 +107,7 @@ public class Conveyor extends SubsystemBase {
      *
      * @param amount the number of Power Cells you want to increment.
      */
-    private void incrementBallsCount(int amount) {
+    public void incrementBallsCount(int amount) {
         setBallsCount(getBallsCount() + amount);
     }
 
@@ -116,7 +116,7 @@ public class Conveyor extends SubsystemBase {
      *
      * @param amount the number of Power Cells you want to decrement.
      */
-    private void decrementBallsCount(int amount) {
+    public void decrementBallsCount(int amount) {
         setBallsCount(getBallsCount() - amount);
     }
 
