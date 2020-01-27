@@ -18,6 +18,10 @@ public class Constants {
     public static final class LED {
         public static final double MINIMAL_DIMNESS = 0;
         public static final double DIMNESS_INCREASE = 0;
+
+        public static final int TOTAL_BLINKS = 5;
+        public static final double BLINK_PAUSE = 0.125; // TODO: Tune blink values.
+
     }
 
     public static class ExampleSubsystem1 {
