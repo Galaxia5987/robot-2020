@@ -10,18 +10,16 @@ import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_FEED_POWER;
  */
 public class FeedTurret extends CommandBase {
     private Conveyor conveyor;
-    private boolean open;
 
-    public FeedTurret(Conveyor conveyor, boolean open) {
+    public FeedTurret(Conveyor conveyor) {
         this.conveyor = conveyor;
-        this.open = open;
         addRequirements(conveyor);
     }
 
     @Override
     public void initialize() {
-        conveyor.openGate(open);
-        conveyor.setConveyorSpeed(CONVEYOR_MOTOR_FEED_VELOCITY);
+        conveyor.openGate(true);
+        conveyor.setPower(CONVEYOR_MOTOR_FEED_POWER);
     }
 
     @Override
