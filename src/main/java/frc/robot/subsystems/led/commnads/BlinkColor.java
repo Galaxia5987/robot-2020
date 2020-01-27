@@ -48,6 +48,7 @@ public class BlinkColor extends CommandBase {
         currentColor = color;
         timer = new Timer();
         this.initialColorsBuffer = ledStrip.getCurrentBuffer();
+        addRequirements(ledStrip);
     }
 
     @Override
