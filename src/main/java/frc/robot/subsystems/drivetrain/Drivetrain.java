@@ -10,6 +10,9 @@ package frc.robot.subsystems.drivetrain;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -39,6 +42,13 @@ public class Drivetrain extends SubsystemBase {
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
     public UnitModel unitModel = lowGearUnitModel;
+    private NetworkTable localizationTable = NetworkTableInstance.getDefault().getTable("localization");
+    private NetworkTableEntry x = localizationTable.getEntry("x");
+    private NetworkTableEntry y = localizationTable.getEntry("y");
+    private NetworkTableEntry velocity = localizationTable.getEntry("velocity");
+    private NetworkTableEntry theta = localizationTable.getEntry("theta");
+    private NetworkTableEntry angularVelocity = localizationTable.getEntry("angular-velocity");
+    private NetworkTableEntry accelerationBias = localizationTable.getEntry("acceleration-bias");
 
     private FullLocalization localization;
 
@@ -219,6 +229,13 @@ public class Drivetrain extends SubsystemBase {
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition()),
                 Robot.navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION, Robot.robotTimer.get());
+
+        x.setDouble(localization.filter.model.state_estimate.data[0][0]);
+        y.setDouble(localization.filter.model.state_estimate.data[1][0]);
+        velocity.setDouble(localization.filter.model.state_estimate.data[2][0]);
+        theta.setDouble(localization.filter.model.state_estimate.data[3][0]);
+        angularVelocity.setDouble(localization.filter.model.state_estimate.data[4][0]);
+        accelerationBias.setDouble(localization.filter.model.state_estimate.data[5][0]);
 
     }
 
