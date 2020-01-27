@@ -18,14 +18,14 @@ public class Constants {
         public static final double HIGH_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into high gear
         public static final double LOW_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into low gear
         public static final double TURNING_TOLERANCE = 0;//Stops the robot from shifting while the robot is turning
-        public static final int LOW_TICKS_PER_METER = 0;//unit conversion while the robot is on low gear
+        public static final int LOW_TICKS_PER_METER = 2138;//unit conversion while the robot is on low gear
         public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
         public static final double GRAVITY_ACCELERATION = 9.80665;
         public static final boolean RIGHT_MASTER_INVERTED = true;
         public static final boolean RIGHT_SLAVE_INVERTED = true;
-        public static final double  ROBOT_WIDTH = 0.61; // wheel center to wheel center [m]
+        public static final double  ROBOT_WIDTH = 0.71; // wheel center to wheel center [m] previous: 0.64
     }
     //All general constants go here
     //public static final double TIME_STEP = CONST(0.02);

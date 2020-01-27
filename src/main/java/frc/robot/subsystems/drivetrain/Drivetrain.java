@@ -7,8 +7,10 @@
 
 package frc.robot.subsystems.drivetrain;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -33,10 +35,8 @@ import static frc.robot.Robot.navx;
 public class Drivetrain extends SubsystemBase {
 
 
-    private final TalonFX leftMaster = new TalonFX(LEFT_MASTER);
-    private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
-    private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
-    private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
+    private final TalonSRX leftMaster = new TalonSRX(LEFT_MASTER);
+    private final TalonSRX rightMaster = new TalonSRX(RIGHT_MASTER);
     private FalconConfiguration configurations = new FalconConfiguration();
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
@@ -49,6 +49,8 @@ public class Drivetrain extends SubsystemBase {
     private NetworkTableEntry theta = localizationTable.getEntry("theta");
     private NetworkTableEntry angularVelocity = localizationTable.getEntry("angular-velocity");
     private NetworkTableEntry accelerationBias = localizationTable.getEntry("acceleration-bias");
+    private NetworkTableEntry encoderLeft = localizationTable.getEntry("left-encoder");
+    private NetworkTableEntry encoderRight = localizationTable.getEntry("right-encoder");
 
     private FullLocalization localization;
 
@@ -65,21 +67,26 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         rightMaster.setInverted(RIGHT_MASTER_INVERTED);
-        rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
-        rightSlave.follow(rightMaster);
-        leftSlave.follow(leftMaster);
+        leftMaster.setInverted(false);
+        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+        leftMaster.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
+//        rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
+//        rightSlave.follow(rightMaster);
+//        leftSlave.follow(leftMaster);
         configurations.setNeutralMode(NeutralMode.Coast);
         configurations.setEnableVoltageCompensation(true);
         configurations.setPidSet(pidSet);
         configurations.setEnableCurrentLimit(true);
         configurations.setEnableCurrentLimit(true);
         configurations.setSupplyCurrentLimit(40);
-        UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
-        if (Robot.isRobotA)
-            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
-        else
-            gearShifterB = new Solenoid(1, SHIFTER_PORT);
-
+        //UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
+//        if (Robot.isRobotA)
+//            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+//        else
+//            gearShifterB = new Solenoid(1, SHIFTER_PORT);
+//
 
         localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
 
@@ -134,19 +141,20 @@ public class Drivetrain extends SubsystemBase {
     }
 
     private void shiftHigh(){
-        startCooldown();
-        if(Robot.isRobotA)
-            gearShifterA.set(DoubleSolenoid.Value.kForward);
-        else
-            gearShifterB.set(true);
+        return;
+//        startCooldown();
+//        if(Robot.isRobotA)
+//            gearShifterA.set(DoubleSolenoid.Value.kForward);
+//        else
+//            gearShifterB.set(true);
     }
 
     private void shiftLow(){
         startCooldown();
-        if(Robot.isRobotA)
-            gearShifterA.set(DoubleSolenoid.Value.kReverse);
-        else
-            gearShifterB.set(false);
+//        if(Robot.isRobotA)
+//            gearShifterA.set(DoubleSolenoid.Value.kReverse);
+//        else
+//            gearShifterB.set(false);
     }
 
     /**
@@ -156,7 +164,7 @@ public class Drivetrain extends SubsystemBase {
     private boolean canShiftHigh() {
         return shiftCooldown.get() > SHIFTER_COOLDOWN
                 && !isShifting
-                && (double) navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION > HIGH_ACCELERATION_THRESHOLD
+                && (double) navx.getRawAccelX()*GRAVITY_ACCELERATION > HIGH_ACCELERATION_THRESHOLD
                 && !isShiftedHigh()
                 && Math.abs(getLeftVelocity() - getRightVelocity()) < TURNING_TOLERANCE
                 && (getLeftVelocity() + getRightVelocity()) / 2 > HIGH_GEAR_MIN_VELOCITY;
@@ -221,11 +229,11 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
-        unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
-        if (getCooldown() > SHIFTER_COOLDOWN)
-            resetCooldown();
+//        unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
+//        if (getCooldown() > SHIFTER_COOLDOWN)
+//            resetCooldown();
 
-        localization.update( new Rotation2d( Robot.navx.getAngle()),
+        localization.update( new Rotation2d( Math.toRadians(Robot.navx.getAngle())),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition()),
                 Robot.navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION, Robot.robotTimer.get());
@@ -236,7 +244,8 @@ public class Drivetrain extends SubsystemBase {
         theta.setDouble(localization.filter.model.state_estimate.data[3][0]);
         angularVelocity.setDouble(localization.filter.model.state_estimate.data[4][0]);
         accelerationBias.setDouble(localization.filter.model.state_estimate.data[5][0]);
-
+        encoderLeft.setDouble(leftMaster.getSelectedSensorPosition());
+        encoderRight.setDouble(rightMaster.getSelectedSensorPosition());
     }
 
     public enum shiftModes{
