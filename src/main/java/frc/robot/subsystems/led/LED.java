@@ -100,16 +100,6 @@ public class LED extends SubsystemBase {
         setColorLengths(colorMap);
     }
 
-
-    /**
-     * Sets the minimal dimness of the strip.
-     *
-     * @param minDimness dimness to set the strip to
-     */
-    public void setDimness(double minDimness) {
-        colorsBuffer.setMinDimness(minDimness);
-    }
-
     @Override
     public void periodic() {
         strip.setData(colorsBuffer);
@@ -129,5 +119,9 @@ public class LED extends SubsystemBase {
      */
     public void setColorBuffer(AddressableLEDBuffer colorBuffer) {
         colorsBuffer = colorBuffer;
+    }
+
+    public void activateDimness(boolean activate) {
+        colorsBuffer.activateDimness(activate);
     }
 }
