@@ -9,9 +9,11 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.drivetrain.FullLocalization;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
@@ -27,6 +29,8 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain();
+  private final Joystick left = new Joystick(0);
+  private final Joystick right = new Joystick(1);
 
 
 
@@ -40,6 +44,7 @@ public class RobotContainer {
       startValueTuner();
       startFireLog();
     }
+    drivetrain.setDefaultCommand(new RunCommand(() -> drivetrain.setPower(-left.getY(), -right.getY()), drivetrain));
   }
 
   /**
