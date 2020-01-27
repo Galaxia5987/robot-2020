@@ -8,7 +8,7 @@ var app = new Vue({
         plots: [],
         selectedAddTopic: "",
         selectedAddTopicColor: "#00ff00",
-        maxValue: 500,
+        maxValue: 10,
         minValue: 0,
         unitsPerDivision: 100,
         modal: ""
