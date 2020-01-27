@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.LinkedHashMap;
 
+import static frc.robot.Constants.LED.DEFAULT_COLOR;
 import static frc.robot.Constants.LED.MINIMAL_DIMNESS;
 import static frc.robot.Ports.LED.STRIP;
 import static frc.robot.Ports.LED.STRIP_LENGTH;
@@ -34,7 +35,7 @@ public class LED extends SubsystemBase {
 
         colorsBuffer = new AddressableLEDBuffer(STRIP_LENGTH, MINIMAL_DIMNESS);
         // Set the color of the LEDs to Galaxia blue at startup.
-        setWholeStrip(Color.kDeepSkyBlue);
+        setWholeStrip(DEFAULT_COLOR);
         strip.setLength(STRIP_LENGTH);
 
         strip.setData(colorsBuffer);

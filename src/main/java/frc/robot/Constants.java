@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.util.Color;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -16,6 +18,8 @@ public class Constants {
     //public static final double TIME_STEP = CONST(0.02);
 
     public static final class LED {
+        public static final Color DEFAULT_COLOR = Color.kDeepSkyBlue;
+
         // Dimness settings
         public static final double MINIMAL_DIMNESS = 0;
         public static final double DIMNESS_INCREASE = 0;
