@@ -114,6 +114,15 @@ public class LED extends SubsystemBase {
 
     @Override
     public void periodic() {
+        Color[] currentColors = ledBuffer.getCurrentBuffer();
+        for (int i = 0; i < currentColors.length; i++) {
+            Color color = currentColors[i];
+            ledBuffer.setRGB(i, (int) (color.red * dimness), (int) (color.green * dimness), (int) (color.blue * dimness));
+        }
+        dimness += 0.05;
+        if (dimness > 1) {
+            dimness = DEFAULT_DIMNESS;
+        }
         strip.setData(ledBuffer);
     }
 }
