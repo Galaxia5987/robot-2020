@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems.drivetrain;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -90,6 +91,11 @@ public class Drivetrain extends SubsystemBase {
 
         localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
 
+    }
+
+    public void setPower(double left, double right) {
+        leftMaster.set(ControlMode.PercentOutput, left);
+        rightMaster.set(ControlMode.PercentOutput, right);
     }
 
     public void shiftGear(shiftModes mode) {
