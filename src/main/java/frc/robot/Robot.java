@@ -7,11 +7,7 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -22,14 +18,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static boolean isRobotA = true;
+    public static final boolean isDebugMode = false; //Integral constant, enables debugging features, should be false at comps.
+    public static final boolean isRobotA = true; //Integral constant, switches between the robot configurations.
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
-    private DigitalInput input1 = new DigitalInput(1);
-    private DigitalInput input2 = new DigitalInput(2);
-    private DigitalInput input3 = new DigitalInput(7);
-    private AnalogInput analogInput = new AnalogInput(0);
-    private DutyCycle m_dutyCycle = new DutyCycle(input3);
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -51,7 +43,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
-        SmartDashboard.putNumber("output", (m_dutyCycle.getOutput()*360+90)%360);
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic

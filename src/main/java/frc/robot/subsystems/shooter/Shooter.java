@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
         shooterMaster.configFactoryDefault();
         shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         shooterMaster.setInverted(IS_MASTER_INVERTED);
-        shooterMaster.setSensorPhase(IS_MASTER_ENCODER_INVERTED);
+        shooterMaster.setSensorPhase(IS_ENCODER_INVERTED);
 
         // Closed loop control
         shooterMaster.configClosedloopRamp(MAX_ACCELERATION);
