@@ -8,7 +8,6 @@
 package frc.robot.subsystems.led;
 
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 
 /**
  * Buffer storage for Addressable LEDs.
