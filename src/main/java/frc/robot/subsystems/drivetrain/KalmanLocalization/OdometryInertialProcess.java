@@ -42,7 +42,7 @@ public class OdometryInertialProcess extends ProcessModel {
         cov[2][2] = 0.1;  // 0.31 m/s accuracy for X
         cov[3][3] = 8e-3; //  5 deg sqrd in rad for phi
         cov[4][4] = 1e-5; //  assume not moving : 0.2 deg/s for omega
-        cov[5][5] = 1e-2; //  assume 10 mg, 0.1 m/s^2
+        cov[5][5] = 1e0; //  assume 1 m/s^2
     }
 
     @Override
@@ -87,7 +87,7 @@ public class OdometryInertialProcess extends ProcessModel {
         cov[2][2] = 1e-4;  // Allow change in velocity can  - change by measurements
         cov[3][3] = 1e-9;  // assume phi is not changing
         cov[4][4] = 1e-2;  // Allow change in omega
-        cov[4][4] = 1e-3;  // Allow change in bias
+        cov[4][4] = 1e-1;  // Allow change in bias
     }
 
 }

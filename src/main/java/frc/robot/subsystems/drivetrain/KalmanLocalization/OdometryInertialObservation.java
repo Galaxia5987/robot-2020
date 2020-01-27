@@ -75,14 +75,15 @@ public class OdometryInertialObservation  extends ObservationModel {
 
     @Override
     public void observationNoiseCovariance(double[][] cov) {
-        cov[0][0] = 4e-4;     // sigma = 2e-2 rad
+        cov[0][0] = 1e-8;     // sigma = 1e-4 rad
 
         if (m_encoderValid) {
-            cov[1][1] = 1e-4; // sigma = 1e-2 m/s
-            cov[2][2] = 1e-4; // sigma = 1e-2 m/s
+            cov[1][1] = 1e-6; // sigma = 1e-3 m/s
+            cov[2][2] = 1e-6; // sigma = 1e-3 m/s
         } else{ // Throw away encoders if it slips
             cov[1][1] = 1e6; // garbage measurement
             cov[2][2] = 1e6; // garbage measurement
+            System.out.println("encoders invalid");
         }
 
     }

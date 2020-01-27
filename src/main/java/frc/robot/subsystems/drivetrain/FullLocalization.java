@@ -4,6 +4,7 @@ package frc.robot.subsystems.drivetrain;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.drivetrain.EKF.KalmanFilter;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialObservation;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialProcess;
@@ -166,8 +167,9 @@ public class FullLocalization {
                                 double deltaRightDistance) {
         double delta_angle = gyroAngle.getRadians() - m_previousAngle.getRadians();
 
-        double delta_angle_from_encoder = (deltaRightDistance - deltaLeftDistance) / m_width;
-
+        double delta_angle_from_encoder = (deltaLeftDistance - deltaRightDistance) / m_width;
+        SmartDashboard.putNumber("delta angle: " , delta_angle );
+        SmartDashboard.putNumber("delta angle from encoder: " , delta_angle_from_encoder );
         if (abs(delta_angle - delta_angle_from_encoder) > MAX_ANGLE_DELTA_ENCODER_GYRO) {
             return false;
         } else {
