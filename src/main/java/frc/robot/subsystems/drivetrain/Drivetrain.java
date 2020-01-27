@@ -217,7 +217,8 @@ public class Drivetrain extends SubsystemBase {
 
         localization.update( new Rotation2d( Robot.navx.getAngle()),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
-                unitModel.toUnits(rightMaster.getSelectedSensorPosition()),Robot.navx.getWorldLinearAccelX(), Robot.robotTimer.get());
+                unitModel.toUnits(rightMaster.getSelectedSensorPosition()),
+                Robot.navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION, Robot.robotTimer.get());
 
     }
 
