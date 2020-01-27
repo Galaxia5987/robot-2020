@@ -70,7 +70,9 @@ public final class Constants {
 
         public static final int MAX_CURRENT = 0;
 
+
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
+        public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0;
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
