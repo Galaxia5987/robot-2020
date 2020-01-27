@@ -2,10 +2,9 @@ package frc.robot.subsystems.turret.commands;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.turret.Turret;
 
-import static frc.robot.Constants.Field_Geometry.POWER_PORT_LOCATION;
+import static frc.robot.Constants.FieldGeometry.POWER_PORT_LOCATION;
 
 public class TurnLocalization extends CommandBase {
     private final Turret turret;

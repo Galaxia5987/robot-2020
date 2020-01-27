@@ -57,7 +57,7 @@ public final class Constants {
 
     public static final int TALON_TIMEOUT = 10;
     
-    public static class Field_Geometry {
+    public static class FieldGeometry {
         public static final Pose2d POWER_PORT_LOCATION = new Pose2d(0, 0, new Rotation2d());
     }
 
