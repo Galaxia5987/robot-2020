@@ -24,7 +24,7 @@ import static frc.robot.Ports.LED.STRIP_LENGTH;
  */
 public class LED extends SubsystemBase {
 
-    private AddressableLED strip;
+    private final AddressableLED strip;
     private AddressableLEDBuffer colorsBuffer;
 
     /**
