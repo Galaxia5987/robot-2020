@@ -7,12 +7,12 @@ import frc.robot.utilities.State;
 
 import static frc.robot.Constants.Conveyor.MAX_BALLS_AMOUNT;
 
-public class IntakePowerCell extends CommandBase {
+public class IntakeBalls extends CommandBase {
     private double speed;
     private Intake intake;
     private Conveyor conveyor;
 
-    public IntakePowerCell(Intake intake, double speed) {
+    public IntakeBalls(Intake intake, double speed) {
         addRequirements(intake, conveyor);
         this.intake = intake;
         this.speed = speed;
