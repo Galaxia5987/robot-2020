@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.utilities.TrajectoryLoader;
 
 
 /**
@@ -19,9 +20,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  static final boolean debug = true;
+  public static final boolean debug = true;
   public static boolean isRobotA = true;
-    private Command m_autonomousCommand;
+  public static boolean hasShifter = false;
+  private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
 
@@ -34,6 +36,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    TrajectoryLoader.loadTrajectories();
   }
 
   /**
@@ -69,11 +72,11 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    RobotContainer.navx.reset();
   }
 
   /**
@@ -104,7 +107,6 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
   }
 
   /**
