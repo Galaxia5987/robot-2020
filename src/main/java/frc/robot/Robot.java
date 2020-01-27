@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -22,7 +20,6 @@ import frc.robot.utilities.TrajectoryLoader;
  */
 public class Robot extends TimedRobot {
   public static final boolean debug = true;
-  public static AHRS navx = new AHRS(SPI.Port.kMXP);
   public static boolean isRobotA = true;
   public static boolean hasShifter = false;
   private Command m_autonomousCommand;
@@ -78,7 +75,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    navx.reset();
+    RobotContainer.navx.reset();
   }
 
   /**

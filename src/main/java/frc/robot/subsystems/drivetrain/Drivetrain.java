@@ -27,7 +27,7 @@ import org.ghrobotics.lib.debug.FalconDashboard;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
-import static frc.robot.Robot.navx;
+import static frc.robot.RobotContainer.navx;
 
 public class Drivetrain extends SubsystemBase {
     private final TalonFX leftMaster = new TalonFX(LEFT_MASTER);
