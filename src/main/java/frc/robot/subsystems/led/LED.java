@@ -34,10 +34,10 @@ public class LED extends SubsystemBase {
     public LED() {
         strip = new AddressableLED(STRIP);
 
-        ledBuffer = new AddressableLEDBuffer(LENGTH);
+        ledBuffer = new AddressableLEDBuffer(STRIP_LENGTH);
         // Set the color of the LEDs to Galaxia blue at startup.
         setWholeStrip(Color.kDeepSkyBlue);
-        strip.setLength(LENGTH);
+        strip.setLength(STRIP_LENGTH);
 
         strip.setData(ledBuffer);
         strip.start();
