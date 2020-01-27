@@ -16,9 +16,11 @@ public class Constants {
     //public static final double TIME_STEP = CONST(0.02);
 
     public static final class LED {
+        // Dimness settings
         public static final double MINIMAL_DIMNESS = 0;
         public static final double DIMNESS_INCREASE = 0;
 
+        // Blinking settings
         public static final int TOTAL_BLINKS = 5;
         public static final double BLINK_PAUSE = 0.125; // TODO: Tune blink values.
 
