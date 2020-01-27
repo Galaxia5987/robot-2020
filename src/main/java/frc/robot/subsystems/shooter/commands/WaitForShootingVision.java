@@ -11,8 +11,7 @@ public class WaitForShootingVision extends CommandBase {
     private Shooter shooter;
     private Turret turret;
 
-    public WaitForShootingVision(Shooter shooter, Turret turret) {
-        addRequirements(shooter, turret);
+    public WaitForShootingVision(Shooter shooter, Turret turret) { //This reads the values, so there is no reason to require.
         this.shooter = shooter;
         this.turret = turret;
     }
