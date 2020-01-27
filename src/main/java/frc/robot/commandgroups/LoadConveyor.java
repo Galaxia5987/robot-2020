@@ -6,8 +6,7 @@ import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakePowerCell;
 
-import static frc.robot.Constants.Conveyor.CLOSE_GATE;
-import static frc.robot.Constants.Intake.INTAKE_SPEED;
+import static frc.robot.Constants.Intake.INTAKE_POWER;
 
 public class LoadConveyor extends ParallelCommandGroup {
 
@@ -15,8 +14,8 @@ public class LoadConveyor extends ParallelCommandGroup {
         addRequirements(intake, conveyor);
         addCommands(
                 // fold the intake down and intake balls
-                new IntakePowerCell(intake, INTAKE_SPEED).withTimeout(timeout),
-                new FeedTurret(conveyor, CLOSE_GATE)
+                new IntakePowerCell(intake, INTAKE_POWER).withTimeout(timeout),
+                new FeedTurret(conveyor)
         );
     }
 
