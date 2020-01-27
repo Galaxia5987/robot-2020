@@ -8,7 +8,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.Utils;
 
@@ -31,7 +30,7 @@ public class Turret extends SubsystemBase {
     private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
     private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
     private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
-    private double delta = 0;
+    private double offset = 0;
 
     /**
      * configures the encoder and PID constants.
@@ -110,31 +109,25 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetAngle = getNearestTurretPosition(delta + angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        double targetAngle = getNearestTurretPosition(offset + angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
         motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
 
     /**
-     * set the value of the delta.
-     * @param delta the distance the turret has traveled.
+     * set the value of the offset.
+     * @param offset the distance the turret has traveled.
      */
-    public void setDelta(double delta) {
-        this.delta = delta;
+    public void setOffset(double offset) {
+        this.offset = offset;
     }
 
     /**
      * resets the value of the delta to 0.
      */
-    public void resetDelta() {
-        this.delta = 0;
+    public void resetOffset() {
+        this.offset = 0;
     }
 
-    /**
-     * @return the value of the delta.
-     */
-    public double getDelta(){
-        return delta;
-    }
     /**
      * set the position to the current position to stop the turret at the target position.
      */
@@ -172,10 +165,9 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * @param angle an angle in degrees.
      * @return whether the current angle is within the turrets limits.
      */
-    public boolean inCorrectRange(double angle) {
-        return angle > MINIMUM_POSITION && angle < MAXIMUM_POSITION;
+    public boolean inCorrectRange() {
+        return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
     }
 }

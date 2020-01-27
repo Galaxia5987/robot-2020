@@ -12,7 +12,7 @@ public class ResetDelta extends InstantCommand {
 
     @Override
     public void initialize() {
-        this.turret.resetDelta();
+        this.turret.resetOffset();
     }
 
 }

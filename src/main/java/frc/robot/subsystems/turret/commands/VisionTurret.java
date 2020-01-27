@@ -22,12 +22,7 @@ public class VisionTurret extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        if (turret.inCorrectRange(turret.getAngle() + turret.getVisionAngle() + turret.getDelta())) {
-            turret.setPower(anglePid.calculate(turret.getVisionAngle() + turret.getDelta(), 0));
-        } else {
-            turret.setPower(0); //TODO: handle the situation where the target is out of the turret's boundaries.
-        }
-
+        turret.setPower(anglePid.calculate(turret.getVisionAngle(), 0));
     }
 
 }

@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.utilities.Utils;
-import org.opencv.core.Mat;
 
 import static frc.robot.Constants.Turret.*;
 import static frc.robot.RobotContainer.*;
@@ -26,8 +25,8 @@ public class JoystickTurret extends CommandBase {
     @Override
     public void execute() {
         double joystickInput = m_robotContainer.getXboxY();
-        double deltaGain = joystickInput * TURRET_JOYSTICK_SPEED;
-        turret.setDelta(Utils.constrain(deltaGain + turret.getDelta(), -DELTA_CONSTRAIN, DELTA_CONSTRAIN));
+        double offset = joystickInput * TURRET_JOYSTICK_SPEED;
+        turret.setOffset(offset);
     }
 
 }
