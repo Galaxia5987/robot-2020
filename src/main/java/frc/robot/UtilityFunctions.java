@@ -1,8 +1,11 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.utilities.TalonConfiguration;
 
@@ -43,14 +46,14 @@ public class UtilityFunctions {
 
     public static void configAllFalcons(FalconConfiguration configurations, TalonFX... falcons) {
         for (TalonFX falcon : falcons) {
-            falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
             falcon.enableVoltageCompensation(configurations.isEnableVoltageCompensation());
             falcon.setNeutralMode(configurations.getNeutralMode());
             falcon.configAllSettings(configurations.motorConfigs);
-            falcon.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
+            falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
                     , configurations.getSupplyCurrentLimit()
                     , configurations.getThreshHoldCurrent()
-                        , configurations.getThreshHoldTime()));
+                    , configurations.getThreshHoldTime()));
+            falcon.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
             falcon.config_kP(0, configurations.getPidSet()[0]);
             falcon.config_kI(0, configurations.getPidSet()[1]);
             falcon.config_kD(0, configurations.getPidSet()[2]);
