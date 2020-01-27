@@ -135,7 +135,6 @@ public class FullLocalization {
         m_prevRightDistance = rightDistanceMeters;
 
          var angle = gyroAngle.plus(m_gyroOffset);
-        m_previousAngle = angle;
 
 
         double dt = time - m_prev_time;
@@ -145,7 +144,9 @@ public class FullLocalization {
         process.setAcc(acc);
 
         // Check if encoders are valid or slipping:
-        observation.setEncoderValid(EncoderValid(gyroAngle, deltaLeftDistance, deltaRightDistance));
+        observation.setEncoderValid(EncoderValid(angle, deltaLeftDistance, deltaRightDistance));
+
+        m_previousAngle = gyroAngle;
 
 
         // The main estimate step:
@@ -166,10 +167,10 @@ public class FullLocalization {
     public boolean EncoderValid(Rotation2d gyroAngle, double deltaLeftDistance,
                                 double deltaRightDistance) {
         double delta_angle = gyroAngle.getRadians() - m_previousAngle.getRadians();
-
-        double delta_angle_from_encoder = (deltaLeftDistance - deltaRightDistance) / m_width;
+        SmartDashboard.putNumber("previous angle", m_previousAngle.getRadians());
         SmartDashboard.putNumber("delta angle: " , delta_angle );
-        SmartDashboard.putNumber("delta angle from encoder: " , delta_angle_from_encoder );
+        double delta_angle_from_encoder = (deltaLeftDistance - deltaRightDistance) / m_width;
+        SmartDashboard.putNumber("delta angle from encoder: " , delta_angle_from_encoder);
         if (abs(delta_angle - delta_angle_from_encoder) > MAX_ANGLE_DELTA_ENCODER_GYRO) {
             return false;
         } else {
