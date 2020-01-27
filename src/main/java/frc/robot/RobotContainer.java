@@ -6,12 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.color_wheel.ColorWheel;
+import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 import frc.robot.subsystems.drivetrain.Drivetrain;
@@ -28,6 +29,7 @@ public class RobotContainer {
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     // The robot's subsystems and commands are defined here...
     private final Drivetrain drivetrain = new Drivetrain();
+    private final ColorWheel colorWheel = new ColorWheel();
 
 
     /**
@@ -77,5 +79,6 @@ public class RobotContainer {
    */
     public Command getAutonomousCommand() {
         return new FollowPath(drivetrain, TrajectoryLoader.getTrajectory("middle"));
-    }
+    return null;
+  }
 }
