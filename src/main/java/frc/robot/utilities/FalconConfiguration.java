@@ -7,12 +7,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
 public class FalconConfiguration {
     private NeutralMode neutralMode;
     private boolean enableVoltageCompensation;
+    private double voltageCompensationSaturation;
     private double supplyCurrentLimit = 0;
     private boolean enableCurrentLimit = false;
     private double threshHoldCurrent = 0;
     private double threshHoldTime = 0;
-
-
 
     private double[] pidSet = {0, 0, 0, 0};
     public TalonFXConfiguration motorConfigs = new TalonFXConfiguration();
@@ -74,6 +73,10 @@ public class FalconConfiguration {
         this.enableVoltageCompensation = enableVoltageCompensation;
     }
 
+    public void configureVoltageCompensationSaturation(double volts) {
+        voltageCompensationSaturation = volts;
+    }
+
     public void setPrimaryPID(TalonFXPIDSetConfiguration primaryPID) {
         this.motorConfigs.primaryPID = primaryPID;
     }
@@ -114,4 +117,7 @@ public class FalconConfiguration {
         this.motorConfigs.reverseLimitSwitchNormal = reverseLimitSwitchNormal;
     }
 
+    public double getVoltageCompensationSaturation() {
+        return voltageCompensationSaturation;
+    }
 }

@@ -7,15 +7,14 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.auto.FollowPath;
+import frc.robot.utilities.TrajectoryLoader;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -24,22 +23,22 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final Drivetrain drivetrain = new Drivetrain();
+    // The robot's subsystems and commands are defined here...
+    private final Drivetrain drivetrain = new Drivetrain();
 
 
-
-  /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-    if(Robot.debug) {
-      startValueTuner();
-      startFireLog();
+    /**
+     * The container for the robot.  Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        // Configure the button bindings
+        configureButtonBindings();
+        if (Robot.debug) {
+            startValueTuner();
+            startFireLog();
+            new ValueTuner().start();
+        }
     }
-  }
 
   /**
    * Initiates the value tuner.
@@ -73,7 +72,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public CommandBase getAutonomousCommand() {
-    return null;
-  }
+    public Command getAutonomousCommand() {
+        return new FollowPath(drivetrain, TrajectoryLoader.getTrajectory("middle"));
+    }
 }

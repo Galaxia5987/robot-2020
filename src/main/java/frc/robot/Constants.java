@@ -12,22 +12,41 @@ import java.util.Optional;
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
 public class Constants {
-    public static class Drivetrain{
-        public static final double[] VELOCITY_PID_SET = {0, 0, 0, 0};//PID set for the velocity drive of the wheels
+    //All general constants go here
+    //public static final double TIME_STEP = CONST(0.02);
+
+    public static class Drivetrain {
+        public static final double[] VELOCITY_PID_SET = {0.0001, 0, 2, 0};//PID set for the velocity drive of the wheels
         public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
         public static final double HIGH_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into high gear
         public static final double LOW_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into low gear
         public static final double TURNING_TOLERANCE = 0;//Stops the robot from shifting while the robot is turning
-        public static final int LOW_TICKS_PER_METER = 0;//unit conversion while the robot is on low gear
+        public static final int LOW_TICKS_PER_METER = 28914;//unit conversion while the robot is on low gear
         public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
         public static final double GRAVITY_ACCELERATION = 9.80665;
         public static final boolean RIGHT_MASTER_INVERTED = true;
         public static final boolean RIGHT_SLAVE_INVERTED = true;
+        public static final double TRACK_WIDTH = 0.72;
+        public static final boolean GYRO_INVERTED = true;
+        public static final double WHEEL_DIAMETER = 0.1016;
     }
-    //All general constants go here
-    //public static final double TIME_STEP = CONST(0.02);
+
+    public static class Autonomous {
+        // Drivetrain characterization constants
+        public static final double leftkS = 0.367;
+        public static final double leftkV = 1.6;
+        public static final double leftkA = 0.0527;
+
+        public static final double rightkS = 0.361;
+        public static final double rightkV = 1.59;
+        public static final double rightkA = 0.0667;
+
+        // Follower constants
+        public static final double kBeta = 2;
+        public static final double kZeta = 0.7;
+    }
 
     public static class ExampleSubsystem1 {
         //All of the Subsystem specific constants go here,and need to be static.
@@ -50,6 +69,7 @@ public class Constants {
 
     /**
      * Replaces fields between constants classes
+     *
      * @param class1 Original constants class
      * @param class2 Constants to replace with
      */
