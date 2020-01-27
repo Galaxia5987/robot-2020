@@ -10,7 +10,7 @@ import static frc.robot.Constants.LED.BLINK_PAUSE;
 import static frc.robot.Constants.LED.TOTAL_BLINKS;
 
 public class BlinkColor extends CommandBase {
-    private final LED ledStrip;
+    private final LED led;
     private final Color color;
     private final int blinks;
     private final double period;
@@ -22,24 +22,24 @@ public class BlinkColor extends CommandBase {
     /**
      * Make the LED strip blink.
      *
-     * @param ledStrip the LED strip subsystem object
+     * @param led the LED strip subsystem object
      * @param color    color to blink
      */
 
-    public BlinkColor(LED ledStrip, Color color) {
-        this(ledStrip, color, TOTAL_BLINKS, BLINK_PAUSE);
+    public BlinkColor(LED led, Color color) {
+        this(led, color, TOTAL_BLINKS, BLINK_PAUSE);
     }
 
     /**
      * Make the LED strip blink.
      *
-     * @param ledStrip the LED strip subsystem object
+     * @param led the LED strip subsystem object
      * @param color    color to blink
      * @param blinks   amount of blinks
      * @param period   time between blinks
      */
-    public BlinkColor(LED ledStrip, Color color, int blinks, double period) {
-        this.ledStrip = ledStrip;
+    public BlinkColor(LED led, Color color, int blinks, double period) {
+        this.led = led;
         this.color = color;
         this.blinks = blinks * 2; // The blinks field counts periods where the LEDs are turned off too, so it's doubled.
         this.period = period;
@@ -47,14 +47,14 @@ public class BlinkColor extends CommandBase {
         this.blinksDone = 0;
         currentColor = color;
         timer = new Timer();
-        this.initialColorsBuffer = ledStrip.getCurrentBuffer();
-        addRequirements(ledStrip);
+        this.initialColorsBuffer = led.getCurrentBuffer();
+        addRequirements(led);
     }
 
     @Override
     public void initialize() {
         timer.start();
-        ledStrip.setWholeStrip(color);
+        led.setWholeStrip(color);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class BlinkColor extends CommandBase {
         if (timer.hasPeriodPassed(period)) {
             // Switch between showing the color or turning the LED strip off, to make a blink effect.
             currentColor = currentColor == Color.kBlack ? color : Color.kBlack;
-            ledStrip.setWholeStrip(currentColor);
+            led.setWholeStrip(currentColor);
             blinksDone++;
         }
     }
@@ -75,6 +75,6 @@ public class BlinkColor extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         // Make the LED strip show the color(s) it showed before this command started.
-        ledStrip.setColorBuffer(initialColorsBuffer);
+        led.setColorBuffer(initialColorsBuffer);
     }
 }

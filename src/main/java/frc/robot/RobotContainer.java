@@ -29,14 +29,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final LED ledStrip = new LED();
+  private final LED led = new LED();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Set default commands for subsystems.
-    ledStrip.setDefaultCommand(new DimmingColor(ledStrip, DEFAULT_COLOR));
+    led.setDefaultCommand(new DimmingColor(led, DEFAULT_COLOR));
 
     // Configure the button bindings
     configureButtonBindings();

@@ -8,32 +8,32 @@ import frc.robot.subsystems.led.LED;
  * Command that sets a dimming color.
  */
 public class DimmingColor extends CommandBase {
-    private final LED ledStrip;
+    private final LED led;
     private final Color color;
 
     /**
      * Create a dimming color command.
      *
-     * @param ledStrip the LED strip object
+     * @param led the LED strip object
      */
-    public DimmingColor(LED ledStrip, Color color) {
-        this.ledStrip = ledStrip;
+    public DimmingColor(LED led, Color color) {
+        this.led = led;
         this.color = color;
-        addRequirements(ledStrip);
+        addRequirements(led);
     }
 
     @Override
     public void initialize() {
-        ledStrip.activateDimness(true); // TODO: Test whether initialize is actually called in a default command
+        led.activateDimness(true); // TODO: Test whether initialize is actually called in a default command
     }
 
     @Override
     public void execute() {
-        ledStrip.setWholeStrip(color);
+        led.setWholeStrip(color);
     }
 
     @Override
     public void end(boolean interrupted) {
-        ledStrip.activateDimness(false);
+        led.activateDimness(false);
     }
 }
