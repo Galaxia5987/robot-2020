@@ -114,4 +114,20 @@ public class LED extends SubsystemBase {
     public void periodic() {
         strip.setData(ledBuffer);
     }
+
+    /**
+     * @return the current colors buffer.
+     */
+    public AddressableLEDBuffer getCurrentBuffer() {
+        return ledBuffer;
+    }
+
+    /**
+     * Sets the colors buffer.
+     *
+     * @param colorBuffer colors buffer to set to
+     */
+    public void setColorBuffer(AddressableLEDBuffer colorBuffer) {
+        ledBuffer = colorBuffer;
+    }
 }
