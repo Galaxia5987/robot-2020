@@ -22,6 +22,7 @@ import frc.robot.utilities.TrajectoryLoader;
 public class Robot extends TimedRobot {
     public static final boolean debug = false; //Integral constant, enables debugging features, should be false at comps.
     public static final boolean isRobotA = true; //Integral constant, switches between the robot configurations.
+    public static boolean hasShifter = false;
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
 
