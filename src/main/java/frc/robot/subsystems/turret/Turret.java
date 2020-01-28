@@ -124,4 +124,8 @@ public class Turret extends SubsystemBase {
         motor.set(ControlMode.PercentOutput, speed);
     }
 
+    public boolean isTurretReady(){
+        return Math.abs(getAngle() - getVisionAngle()) <= ANGLE_THRESHOLD;
+    }
+
 }
