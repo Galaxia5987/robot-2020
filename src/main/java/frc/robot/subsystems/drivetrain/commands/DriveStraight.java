@@ -11,22 +11,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
-import static frc.robot.Constants.Drivetrain.SHIFTER_COOLDOWN;
-
 /**
  *
  */
 public class DriveStraight extends CommandBase {
     private final Drivetrain drivetrain;
-    private double leftSpeed, rightSpeed;
+    private double leftPower, rightPower;
 
     /**
      *
      */
-    public DriveStraight(Drivetrain drivetrain, double rightSpeed, double leftSpeed) {
+    public DriveStraight(Drivetrain drivetrain, double rightPower, double leftPower) {
         this.drivetrain = drivetrain;
-        this.leftSpeed = leftSpeed;
-        this.rightSpeed = rightSpeed;
+        this.leftPower = leftPower;
+        this.rightPower = rightPower;
     }
 
     // Called when the command is initially scheduled.
@@ -38,7 +36,7 @@ public class DriveStraight extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        drivetrain.setPower(leftSpeed, rightSpeed);
+        drivetrain.setPower(leftPower, rightPower);
     }
 
     // Called once the command ends or is interrupted.
@@ -50,6 +48,6 @@ public class DriveStraight extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(RobotContainer.rightJoystick.getY()) > leftSpeed || Math.abs(RobotContainer.leftJoystick.getY()) > rightSpeed;
+        return Math.abs(RobotContainer.rightJoystick.getY()) > leftPower || Math.abs(RobotContainer.leftJoystick.getY()) > rightPower;
     }
 }
