@@ -35,6 +35,7 @@ public class RobotContainer {
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
     private final Joystick rightJoystick = new Joystick(0);
+    private final Joystick leftJoystick = new Joystick(1);
     private final JoystickButton button3 = new JoystickButton(rightJoystick, 3);
 
     /**
