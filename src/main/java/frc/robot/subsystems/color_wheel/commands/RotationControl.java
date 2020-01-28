@@ -2,6 +2,7 @@ package frc.robot.subsystems.color_wheel.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 
 
@@ -34,6 +35,10 @@ public class RotationControl extends CommandBase {
     @Override
     public void execute() {
         updateColorIndex();
+        if (RobotContainer.getXboxAxis() > 0.1)
+            colorWheel.manualOn();
+        if (colorWheel.isManual())
+            colorWheel.setPower(RobotContainer.getXboxAxis());
         /*
         this block of code looks at the order of the colors and checks whether the wheel is moving clockwise or counterclockwise
         and counts the amount of spis to each direction accordingly
