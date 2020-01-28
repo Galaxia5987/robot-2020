@@ -18,6 +18,16 @@ import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
+import frc.robot.subsystems.conveyor.Conveyor;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.intake.Intake;
+
+import frc.robot.subsystems.turret.Turret;
+import frc.robot.subsystems.turret.commands.CenterTurret;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.TurnTurret;
+import frc.robot.subsystems.shooter.Shooter;
+
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -29,10 +39,15 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
-
-    private static final XboxController xbox = new XboxController(0);
-    private final JoystickButton a = new JoystickButton(xbox, 1);
-
+    private static Conveyor conveyor = new Conveyor();
+    private static final Intake intake = new Intake();
+    private static final Turret turret = new Turret();
+    private final Shooter shooter = new Shooter();
+    private final XboxController xbox = new XboxController(2);
+    private final JoystickButton a = new JoystickButton(xbox, 3);
+    private final JoystickButton b = new JoystickButton(xbox, 4);
+    public static final int rightYStick = 5;
+    public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
 
 
     /**
@@ -75,11 +90,9 @@ public class RobotContainer {
       a.whenPressed(new RunCommand(colorWheel::manualOff));
   }
 
-  public static double getXboxAxis(){
-      return xbox.getRawAxis(1);
+  public double getXboxY(){
+    return xbox.getRawAxis(rightYStick);
   }
-
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
