@@ -23,12 +23,13 @@ public class WaitForShootingVision extends CommandBase {
 
     @Override
     public void execute() {
+        shooter.approximateVelocity(shooter.getVisionDistance());
 
     }
 
     @Override
     public boolean isFinished() {
-        boolean isShooterReady = Math.abs(shooter.getSpeed() - shooter.approximateVelocity(shooter.getVisionDistance())) <= VELOCITY_TOLERANCE;
+        boolean isShooterReady = Math.abs(shooter.getSpeed() - shooter.getTargetVelocity()) <= VELOCITY_TOLERANCE;
         boolean isTurretReady = Math.abs(turret.getAngle() - turret.getVisionAngle()) <= ANGLE_THRESHOLD;
         return isShooterReady && isTurretReady;
     }
