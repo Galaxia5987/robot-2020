@@ -16,14 +16,14 @@ import static frc.robot.Constants.Drivetrain.SHIFTER_COOLDOWN;
 /**
  *
  */
-public class DriveStraightCommand extends CommandBase {
+public class DriveStraight extends CommandBase {
     private final Drivetrain drivetrain;
     private double leftSpeed, rightSpeed;
 
     /**
      *
      */
-    public DriveStraightCommand(Drivetrain drivetrain, double rightSpeed, double leftSpeed) {
+    public DriveStraight(Drivetrain drivetrain, double rightSpeed, double leftSpeed) {
         this.drivetrain = drivetrain;
         this.leftSpeed = leftSpeed;
         this.rightSpeed = rightSpeed;
