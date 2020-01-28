@@ -16,12 +16,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.color_wheel.ColorWheel;
-import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.auto.FollowPath;
-import frc.robot.utilities.TrajectoryLoader;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,7 +33,7 @@ public class RobotContainer {
     private final ColorWheel colorWheel = new ColorWheel();
     public static final Joystick rightJoystick = new Joystick(0);
     public static final Joystick leftJoystick = new Joystick(1);
-    private final JoystickButton button3 = new JoystickButton(rightJoystick, 3);
+    private final JoystickButton rightJoystickButton3 = new JoystickButton(rightJoystick, 3);
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -75,7 +72,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-      button3.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
+      rightJoystickButton3.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
 
   }
 
