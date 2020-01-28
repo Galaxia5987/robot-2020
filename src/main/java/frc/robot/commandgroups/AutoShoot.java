@@ -1,6 +1,7 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
@@ -14,7 +15,7 @@ import frc.robot.subsystems.turret.commands.VisionTurret;
 public class AutoShoot extends ParallelDeadlineGroup { // TODO check if you can call a command group with timeout, safety feature
 
     public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor) {
-        super(new SequentialCommandGroup(new WaitForShootingVision(shooter, turret), new FeedTurret(conveyor)));
+        super(new SequentialCommandGroup(new SmartFeed(conveyor,shooter, turret), new RunCommand(shooter::stop)));
         addRequirements(turret, shooter);
         addCommands(
                 // turn the turret to the setpoint angle
