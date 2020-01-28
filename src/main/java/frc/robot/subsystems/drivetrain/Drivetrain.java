@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
@@ -54,6 +56,7 @@ public class Drivetrain extends SubsystemBase {
     private NetworkTableEntry encoderRight = localizationTable.getEntry("right-encoder");
 
     private FullLocalization localization;
+    private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())),new Pose2d(0, 0, new Rotation2d()));
 
     /**
      * The gear shifter will be programmed according to the following terms
@@ -243,6 +246,14 @@ public class Drivetrain extends SubsystemBase {
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition()),
                 Robot.navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION, Robot.robotTimer.get());
+
+        differentialDriveOdometry.update(new Rotation2d( Math.toRadians(Robot.navx.getAngle())),
+                unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
+                unitModel.toUnits(rightMaster.getSelectedSensorPosition()));
+
+        SmartDashboard.putNumber(" simple x", differentialDriveOdometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber(" simple y", differentialDriveOdometry.getPoseMeters().getTranslation().getY());
+        SmartDashboard.putNumber(" simple angle", differentialDriveOdometry.getPoseMeters().getRotation().getRadians());
 
         x.setDouble(localization.filter.model.state_estimate.data[0][0]);
         y.setDouble(localization.filter.model.state_estimate.data[1][0]);
