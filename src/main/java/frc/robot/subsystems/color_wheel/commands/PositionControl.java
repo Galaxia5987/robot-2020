@@ -7,6 +7,8 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 
+import java.util.function.Supplier;
+
 import static frc.robot.Constants.ColorWheel.*;
 
 /**
@@ -18,9 +20,11 @@ public class PositionControl extends CommandBase {
     private int currentColor;
     private Timer endTimer = new Timer();//Used to make sure we don't overshoot over the wanted color.
     private ColorWheel colorWheel;
+    private Supplier<Double> joystickY;
 
-    public PositionControl(ColorWheel colorWheel) {
+    public PositionControl(ColorWheel colorWheel, Supplier<Double> joystickY) {
         this.colorWheel = colorWheel;
+        this.joystickY = joystickY;
     }
 
     @Override
@@ -43,12 +47,12 @@ public class PositionControl extends CommandBase {
         try {
             currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
             int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
-            if (RobotContainer.getXboxAxis() > 0.1)
+            if (joystickY.get() > 0.1)
                 colorWheel.manualOn();
             if (!colorWheel.isManual())
                 colorWheel.setPower(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
             else
-                colorWheel.setPower(RobotContainer.getXboxAxis());
+                colorWheel.setPower(joystickY.get());
             if (distanceFromTarget == 0)
                 endTimer.start();
             else if (distanceFromTarget != 0)

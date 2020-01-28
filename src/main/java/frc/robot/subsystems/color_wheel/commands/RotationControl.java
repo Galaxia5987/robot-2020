@@ -5,6 +5,8 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 
+import java.util.function.Supplier;
+
 
 /**
  * Rotates the control panel somewhere around 4 spins, does not mind an overshoot or an undershoot
@@ -18,10 +20,13 @@ public class RotationControl extends CommandBase {
     private double counterClockwiseSpins = 0;//Counts the counterclockwise spins of the control panel
     private ColorWheel colorWheel;
 
+    private Supplier<Double> joystickY;
 
 
-    public RotationControl(ColorWheel colorWheel) {
+
+    public RotationControl(ColorWheel colorWheel, Supplier<Double> joystickY) {
         this.colorWheel = colorWheel;
+        this.joystickY = joystickY;
     }
 
     @Override
@@ -35,10 +40,10 @@ public class RotationControl extends CommandBase {
     @Override
     public void execute() {
         updateColorIndex();
-        if (RobotContainer.getXboxAxis() > 0.1)
+        if (joystickY.get() > 0.1)
             colorWheel.manualOn();
         if (colorWheel.isManual())
-            colorWheel.setPower(RobotContainer.getXboxAxis());
+            colorWheel.setPower(joystickY.get());
         /*
         this block of code looks at the order of the colors and checks whether the wheel is moving clockwise or counterclockwise
         and counts the amount of spins to each direction accordingly
