@@ -8,9 +8,13 @@
 package frc.robot;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.valuetuner.ValueTuner;
@@ -30,7 +34,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
-
+    private final Joystick rightJoystick = new Joystick(0);
+    private final JoystickButton button3 = new JoystickButton(rightJoystick, 3);
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -69,6 +74,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+      button3.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
+
   }
 
 
