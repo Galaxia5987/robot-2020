@@ -37,7 +37,7 @@ public class FeedTurret extends CommandBase {
     @Override
     public void execute() {
         if (smartFeed) {
-            if (Math.abs(shooter.getSpeed() - shooter.getTargetVelocity()) <= VELOCITY_TOLERANCE)
+            if (shooter.isShooterReady())
                 conveyor.setPower(CONVEYOR_MOTOR_FEED_POWER);
         }
         else

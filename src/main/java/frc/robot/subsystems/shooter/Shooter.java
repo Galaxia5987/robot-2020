@@ -90,6 +90,9 @@ public class Shooter extends SubsystemBase {
         return targetVelocity;
     }
 
+    public boolean isShooterReady(){
+        return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE;
+    }
 
     public void stop() {
         setSpeed(0);
