@@ -5,47 +5,52 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.subsystems.drivetrain.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import static frc.robot.Constants.Drivetrain.*;
+
 /**
- * An example command that uses an example subsystem.
+ *
  */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
+public class GearShift extends CommandBase {
+  private Drivetrain.shiftModes shiftmode;
+  private final Drivetrain drivetrain;
 
   /**
-   * Creates a new ExampleCommand.
    *
-   * @param subsystem The subsystem used by this command.
+   *
+   *
    */
-  public ExampleCommand(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+  public GearShift(Drivetrain drivetrain, Drivetrain.shiftModes shiftmode) {
+    this.shiftmode = shiftmode;
+    this.drivetrain = drivetrain;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    drivetrain.shiftGear(shiftmode);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    drivetrain.resetCooldown();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return drivetrain.getCooldown() > SHIFTER_COOLDOWN;
   }
 }

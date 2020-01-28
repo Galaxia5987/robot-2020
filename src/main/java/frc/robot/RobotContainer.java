@@ -6,16 +6,21 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.color_wheel.ColorWheel;
+import frc.robot.subsystems.color_wheel.commands.RotationControl;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.led.LED;
 import frc.robot.subsystems.led.commnads.DimmingColor;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
+import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.auto.FollowPath;
+import frc.robot.utilities.TrajectoryLoader;
 
 import static frc.robot.Constants.LED.DEFAULT_COLOR;
 
@@ -26,25 +31,27 @@ import static frc.robot.Constants.LED.DEFAULT_COLOR;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+    public static AHRS navx = new AHRS(SPI.Port.kMXP);
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final LED led = new LED();
+    private final Drivetrain drivetrain = new Drivetrain();
+    private final ColorWheel colorWheel = new ColorWheel();
+    private final LED led = new LED();
 
-  /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
+
+    /**
+     * The container for the robot.  Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        // Configure the button bindings
+        configureButtonBindings();
+        if (Robot.debug) {
+            startValueTuner();
+            startFireLog();
+            new ValueTuner().start();
+        }
     // Set default commands for subsystems.
     led.setDefaultCommand(new DimmingColor(led, DEFAULT_COLOR));
-
-    // Configure the button bindings
-    configureButtonBindings();
-    if (Robot.debug) {
-      startValueTuner();
-      startFireLog();
     }
-  }
 
   /**
    * Initiates the value tuner.
@@ -78,8 +85,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    public Command getAutonomousCommand() {
+    return null;
   }
 }
