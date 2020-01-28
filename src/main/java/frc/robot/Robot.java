@@ -20,10 +20,11 @@ import frc.robot.utilities.TrajectoryLoader;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static final boolean isDebugMode = false; //Integral constant, enables debugging features, should be false at comps.
+    public static final boolean debug = false; //Integral constant, enables debugging features, should be false at comps.
     public static final boolean isRobotA = true; //Integral constant, switches between the robot configurations.
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
+
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -34,19 +35,9 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+        TrajectoryLoader.loadTrajectories();
     }
 
-  /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
-   */
-  @Override
-  public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
-    TrajectoryLoader.loadTrajectories();
-  }
     /**
      * This function is called every robot packet, no matter the mode. Use this for items like
      * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
@@ -74,25 +65,19 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {
     }
 
+
     /**
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
     public void autonomousInit() {
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-  /**
-   * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
-   */
-  @Override
-  public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+        // schedule the autonomous command (example)
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.schedule();
+        }
+        RobotContainer.navx.reset();
     }
-    RobotContainer.navx.reset();
-  }
 
     @Override
     public void teleopInit() {
@@ -118,15 +103,11 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().cancelAll();
     }
 
-  @Override
-  public void testInit() {
-    // Cancels all running commands at the start of test mode.
-  }
-
-  /**
-   * This function is called periodically during test mode.
-   */
-  @Override
-  public void testPeriodic() {
-  }
+    /**
+     * This function is called periodically during test mode.
+     */
+    @Override
+    public void testPeriodic() {
+    }
 }
+

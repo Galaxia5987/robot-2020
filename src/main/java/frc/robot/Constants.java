@@ -9,7 +9,7 @@ import java.util.Optional;
  * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
-
+public class Constants{
     public static class Drivetrain {
         public static final double[] VELOCITY_PID_SET = {0.0001, 0, 2, 0};//PID set for the velocity drive of the wheels
         public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used

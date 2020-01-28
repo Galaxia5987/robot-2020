@@ -40,13 +40,10 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
-
-    // The robot's subsystems and commands are defined here...
     private static Conveyor conveyor = new Conveyor();
     private static final Intake intake = new Intake();
     private static final Turret turret = new Turret();
     private final Shooter shooter = new Shooter();
-    
     private final XboxController xbox = new XboxController(2);
     private final JoystickButton a = new JoystickButton(xbox, 3);
     private final JoystickButton b = new JoystickButton(xbox, 4);
