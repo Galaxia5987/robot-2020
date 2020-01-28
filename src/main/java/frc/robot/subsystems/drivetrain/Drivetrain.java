@@ -10,14 +10,12 @@ package frc.robot.subsystems.drivetrain;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.kauailabs.navx.frc.AHRS;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -26,8 +24,6 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.RobotContainer;
-import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 
@@ -39,6 +35,10 @@ public class Drivetrain extends SubsystemBase {
 
 
     private final TalonSRX leftMaster = new TalonSRX(LEFT_MASTER);
+    private final VictorSPX leftSlave1 = new VictorSPX(LEFT_SLAVE1);
+    private final VictorSPX leftSlave2 = new VictorSPX(LEFT_SLAVE2);
+    private final VictorSPX rightSlave1 = new VictorSPX(RIGHT_SLAVE1);
+    private final VictorSPX rightSlave2 = new VictorSPX(RIGHT_SLAVE2);
     private final TalonSRX rightMaster = new TalonSRX(RIGHT_MASTER);
     private FalconConfiguration configurations = new FalconConfiguration();
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
@@ -71,7 +71,15 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         rightMaster.setInverted(RIGHT_MASTER_INVERTED);
-        leftMaster.setInverted(false);
+        rightSlave1.setInverted(RIGHT_SLAVE_INVERTED);
+        rightSlave2.setInverted(RIGHT_SLAVE_INVERTED);
+        leftSlave1.setInverted(LEFT_MASTER_INVERTED);
+        leftSlave2.setInverted(LEFT_MASTER_INVERTED);
+        leftMaster.setInverted(LEFT_MASTER_INVERTED);
+        leftSlave1.follow(leftMaster);
+        leftSlave2.follow(leftMaster);
+        rightSlave1.follow(rightMaster);
+        rightSlave2.follow(rightMaster);
         rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
         leftMaster.setSelectedSensorPosition(0);
