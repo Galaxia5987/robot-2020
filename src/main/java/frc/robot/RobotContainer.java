@@ -34,8 +34,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
-    private final Joystick rightJoystick = new Joystick(0);
-    private final Joystick leftJoystick = new Joystick(1);
+    public static final Joystick rightJoystick = new Joystick(0);
+    public static final Joystick leftJoystick = new Joystick(1);
     private final JoystickButton button3 = new JoystickButton(rightJoystick, 3);
 
     /**
