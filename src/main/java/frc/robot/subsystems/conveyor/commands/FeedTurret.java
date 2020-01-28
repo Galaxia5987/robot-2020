@@ -5,6 +5,8 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
 
+import java.util.function.Supplier;
+
 import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_FEED_POWER;
 import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
 
@@ -13,7 +15,7 @@ import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
  */
 public class FeedTurret extends CommandBase {
     private Conveyor conveyor;
-    private Shooter shooter;
+    private Supplier<Boolean> isShooterReady;
     private boolean smartFeed;
 
     public FeedTurret(Conveyor conveyor) {
@@ -21,10 +23,10 @@ public class FeedTurret extends CommandBase {
         addRequirements(conveyor);
     }
 
-    public FeedTurret(Conveyor conveyor, Shooter shooter){
+    public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady){
         addRequirements(conveyor);
         this.conveyor = conveyor;
-        this.shooter = shooter;
+        this.isShooterReady = isShooterReady;
         smartFeed = true;
     }
 
@@ -37,7 +39,7 @@ public class FeedTurret extends CommandBase {
     @Override
     public void execute() {
         if (smartFeed) {
-            if (shooter.isShooterReady())
+            if (isShooterReady.get())
                 conveyor.setPower(CONVEYOR_MOTOR_FEED_POWER);
         }
         else

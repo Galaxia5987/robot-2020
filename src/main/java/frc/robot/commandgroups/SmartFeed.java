@@ -14,7 +14,7 @@ public class SmartFeed extends SequentialCommandGroup {
         addCommands(
                 // waits for the shooter to speed up and releases the balls one at a time
                 new WaitForShootingVision(shooter, turret),
-                new FeedTurret(conveyor, shooter)
+                new FeedTurret(conveyor, shooter::isShooterReady)
         );
     }
 }
