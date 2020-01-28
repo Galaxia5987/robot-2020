@@ -9,6 +9,9 @@ import frc.robot.subsystems.intake.commands.IntakeBalls;
 
 import static frc.robot.Constants.Intake.INTAKE_POWER;
 
+/**
+ * Command group which turns the intake and the conveyor at the same time.
+ */
 public class PickupBalls extends ParallelCommandGroup {
 
     public PickupBalls(Intake intake, Conveyor conveyor, double timeout){

@@ -11,7 +11,10 @@ import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.subsystems.turret.commands.VisionTurret;
 
-public class AutoShoot extends ParallelDeadlineGroup { // TODO check if you can call a command group with timeout, safety feature
+/**
+ * Automatically speed up and shoot towards the vision target when ready.
+ */
+public class AutoShoot extends ParallelDeadlineGroup {
 
     public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor) {
         super(new SequentialCommandGroup(new WaitForShootingVision(shooter, turret), new FeedTurret(conveyor)));

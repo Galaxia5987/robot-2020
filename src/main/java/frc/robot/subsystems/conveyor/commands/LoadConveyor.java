@@ -6,7 +6,7 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import static frc.robot.Constants.Conveyor.*;
 
 /**
- * Open the mechanical stopper and feed Power Cells into the shooter.
+ * Turn the conveyor and close the gate
  */
 public class LoadConveyor extends CommandBase {
     private Conveyor conveyor;
