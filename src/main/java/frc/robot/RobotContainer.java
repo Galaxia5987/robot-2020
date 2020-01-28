@@ -11,13 +11,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.color_wheel.ColorWheel;
-import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.auto.FollowPath;
-import frc.robot.utilities.TrajectoryLoader;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -30,6 +29,10 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
+
+    private static final XboxController xbox = new XboxController(0);
+    private final JoystickButton a = new JoystickButton(xbox, 1);
+
 
 
     /**
@@ -69,6 +72,11 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+      a.whenPressed(new RunCommand(colorWheel::manualOff));
+  }
+
+  public static double getXboxAxis(){
+      return xbox.getRawAxis(1);
   }
 
 
