@@ -134,7 +134,7 @@ public class FullLocalization {
         m_prevLeftDistance = leftDistanceMeters;
         m_prevRightDistance = rightDistanceMeters;
 
-         var angle = gyroAngle.plus(m_gyroOffset);
+         var angle = gyroAngle; // .plus(m_gyroOffset); TODO think how to use offset
 
 
         double dt = time - m_prev_time;
