@@ -8,6 +8,7 @@ import frc.robot.subsystems.turret.Turret;
 import java.util.function.Supplier;
 
 import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_FEED_POWER;
+import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_OPEN_FEED_POWER;
 import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
 
 /**
@@ -17,11 +18,11 @@ public class FeedTurret extends CommandBase {
     private Conveyor conveyor;
     private Supplier<Boolean> isShooterReady;
     private Supplier<Boolean> isTurretReady;
-    private boolean smartFeed;
+    private boolean smartFeed = false; //In cases where we want to feed at a constant rate. TODO: Deprecate this once we are confident with constant velocity checking.
 
     public FeedTurret(Conveyor conveyor) {
-        this.conveyor = conveyor;
-        addRequirements(conveyor);
+        this(conveyor, () -> true, () -> true);
+        smartFeed = false;
     }
 
     public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady){
@@ -47,7 +48,7 @@ public class FeedTurret extends CommandBase {
                 conveyor.stop();
         }
         else
-            conveyor.setPower(CONVEYOR_MOTOR_FEED_POWER);
+            conveyor.setPower(CONVEYOR_MOTOR_OPEN_FEED_POWER);
     }
 
     @Override

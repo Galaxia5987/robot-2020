@@ -12,11 +12,18 @@ public class SpeedUp extends CommandBase {
     private final NetworkTableEntry velocityEntry = velocityTable.getEntry("velocity");
     private final Shooter shooter;
     private double distance;
+    private boolean isVisionActive = false;
 
     public SpeedUp(Shooter shooter, double distance) {
         addRequirements(shooter);
         this.distance = distance;
         this.shooter = shooter;
+    }
+
+
+    public SpeedUp(Shooter shooter) {
+        this(shooter, shooter.getVisionDistance()); //TODO replace 3 with the vision distance output value
+        isVisionActive = true;
     }
 
     // Called just before this Command runs the first time
@@ -27,6 +34,9 @@ public class SpeedUp extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
+        if (isVisionActive) {
+            distance = shooter.getVisionDistance();
+        }
         shooter.approximateVelocity(distance);
         shooter.setSpeed(shooter.getTargetVelocity());
         velocityEntry.setDouble(shooter.getSpeed());
