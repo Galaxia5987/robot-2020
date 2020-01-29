@@ -14,6 +14,7 @@ import frc.robot.subsystems.turret.commands.VisionTurret;
  * This command group shoots Power Cells to a distance and angle which are predefined.
  * This command will most likely be obsolete after testing, but it allows you to run all of the necessary functions
  * for shooting.
+ * This command also feeds the balls at a constant rate.
  */
 public class TurnAndShoot extends ParallelDeadlineGroup {
     // for when there is no vision
@@ -22,7 +23,7 @@ public class TurnAndShoot extends ParallelDeadlineGroup {
         addRequirements(turret, shooter);
         addCommands(
                 new TurnTurret(turret, angle),
-                new SpeedUp(shooter, conveyor, distance).withTimeout(timeout)
+                new SpeedUp(shooter, distance).withTimeout(timeout)
         );
     }
 

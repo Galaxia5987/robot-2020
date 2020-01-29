@@ -19,12 +19,12 @@ public class AutoShoot extends ParallelDeadlineGroup {
 
     public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor) {
         super(new SmartFeed(conveyor,shooter, turret));
-        addRequirements(turret, shooter);
+        addRequirements(turret, shooter,conveyor);
         addCommands(
                 // turn the turret to the setpoint angle
                 // ready the flywheel to shoot the balls to the target distance for the desired amount of time
                 new VisionTurret(turret),
-                new SpeedUp(shooter, conveyor)
+                new SpeedUp(shooter)
         );
     }
 
