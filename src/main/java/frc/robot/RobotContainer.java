@@ -60,8 +60,6 @@ public class RobotContainer {
     public static final int XboxLeftYStick = 1;
     public static final int XboxRightYStick = 5;
 
-    private final JoystickButton a = new JoystickButton(OI.xbox, 3);
-    private final JoystickButton b = new JoystickButton(OI.xbox, 4);
 
     /**
      * Use this method to define your button->command mappings.  Buttons can be created by
@@ -73,17 +71,6 @@ public class RobotContainer {
         a.whileHeld(new JoystickControl(climber, false));
         b.whenPressed(new ReleaseRods(climber, 1.5));
         y.whenPressed(new CalculatedClimbAndBalance(climber, 1));
-    }
-
-
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return m_autoCommand;
     }
 
     public static double getLeftXboxX() {
@@ -126,37 +113,14 @@ public class RobotContainer {
             startFireLog();
         }
     }
-}
 
 
-  /**
-   * Initiates the port of team 225s Fire-Logger.
-   */
-  private void startFireLog(){
-    try {
-      new Webserver();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
-    a.whenPressed(new TurnTurret(turret, 45));
-    b.whenPressed(new CenterTurret(turret));
-
-  }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
     public Command getAutonomousCommand() {
-    return null;
-  }
+        return null;
+    }
 }
