@@ -21,7 +21,7 @@ public class TurnAndShoot extends ParallelDeadlineGroup {
         addRequirements(turret, shooter, conveyor);
         addCommands(
                 new TurnTurret(turret, angle),
-                new SpeedUp(shooter, distance).withTimeout(timeout)
+                new SpeedUp(shooter, distance)
         );
     }
 
