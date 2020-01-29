@@ -16,6 +16,7 @@ import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
 public class FeedTurret extends CommandBase {
     private Conveyor conveyor;
     private Supplier<Boolean> isShooterReady;
+    private Supplier<Boolean> isTurretReady;
     private boolean smartFeed;
 
     public FeedTurret(Conveyor conveyor) {
@@ -23,10 +24,11 @@ public class FeedTurret extends CommandBase {
         addRequirements(conveyor);
     }
 
-    public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady){
+    public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady){
         addRequirements(conveyor);
         this.conveyor = conveyor;
         this.isShooterReady = isShooterReady;
+        this.isTurretReady = isTurretReady;
         smartFeed = true;
     }
 
@@ -39,7 +41,7 @@ public class FeedTurret extends CommandBase {
     @Override
     public void execute() {
         if (smartFeed) {
-            if (isShooterReady.get())
+            if (isShooterReady.get() && isTurretReady.get())
                 conveyor.setPower(CONVEYOR_MOTOR_FEED_POWER);
             else
                 conveyor.stop();
