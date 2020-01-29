@@ -66,7 +66,7 @@ public class Shooter extends SubsystemBase {
      * @return the speed of the shooter in rpm.
      */
     public double getSpeed() {
-        return rpsUnitModel.toUnits(shooterMaster.getSelectedSensorVelocity() * 10);
+        return rpsUnitModel.toVelocity(shooterMaster.getSelectedSensorVelocity());
     }
 
     /**
@@ -74,7 +74,7 @@ public class Shooter extends SubsystemBase {
      * @param speed the rotations per second of the shooter.
      */
     public void setSpeed(double speed) {
-        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks(speed) / 10.); //convert rps to ticks per 100ms
+        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(speed));
     }
 
     /**
