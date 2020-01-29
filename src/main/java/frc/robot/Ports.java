@@ -11,6 +11,7 @@ public class Ports {
         public static final boolean RIGHT_MOTOR_INVERTED = false;
         public static final boolean LEFT_ENCODER_INVERTED = false;
         public static final boolean RIGHT_ENCODER_INVERTED = false;
+    }
 
     public static class Conveyor {
         public static final int MOTOR = 21;
@@ -30,14 +31,14 @@ public class Ports {
         public static final boolean IS_FORWARD_OPEN = true; //if kForward of the solenoid opens the intake or reverse.
         public static final int FOLD_SOLENOID_REVERSE = 1;
         public static final int FOLD_SOLENOID_FORWARD = 2;
-        ;
     }
 
     public static class Turret {
         public static final int MOTOR = 22;
         public static final boolean IS_MOTOR_INVERTED = false;
-        public static final boolean IS_ENCODER_INVERTED  = false;
+        public static final boolean IS_ENCODER_INVERTED = false;
     }
+
     public static class Shooter {
         public static final int MASTER = 23;
         public static final int SLAVE_1 = 24;
@@ -47,6 +48,7 @@ public class Ports {
         public static final boolean IS_SLAVE_2_INVERTED = false;
         public static final boolean IS_ENCODER_INVERTED = false;
     }
+
     public static class Drivetrain {
         public static final int LEFT_MASTER = 10;
         public static final int LEFT_SLAVE = 11;
@@ -57,7 +59,8 @@ public class Ports {
         public static final int SHIFTER_REVERSE_PORT = 0;
         public static final int SHIFTER_PORT = 0;
     }
-      public static class ColorWheel {
+
+    public static class ColorWheel {
         public static final int MOTOR = 30;
     }
 }
