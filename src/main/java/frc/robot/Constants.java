@@ -1,4 +1,5 @@
 package frc.robot;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -10,6 +11,10 @@ import java.util.Optional;
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
 public class Constants{
+  
+    public static final int TALON_TIMEOUT_MS = 10;
+    public static final double ROBOT_WIDTH = 0;
+  
     public static class Drivetrain {
         public static final double[] VELOCITY_PID_SET = {0.0001, 0, 2, 0};//PID set for the velocity drive of the wheels
         public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
@@ -33,7 +38,6 @@ public class Constants{
         public static final double leftkS = 0.367;
         public static final double leftkV = 1.6;
         public static final double leftkA = 0.0527;
-
         public static final double rightkS = 0.361;
         public static final double rightkV = 1.59;
         public static final double rightkA = 0.0667;
@@ -107,6 +111,24 @@ public class Constants{
         public static final double INTAKE_POWER = 0.5;
     }
 
+
+
+    public static class Climber {
+        public static final int MOTION_MAGIC_VELOCITY = 0;
+        public static final int MOTION_MAGIC_ACCELERATION = 0;
+        public static final int TICKS_PER_METER = 1;
+        public static final double[] CLIMB_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
+        public static final double ARBITRARY_FEEDFORWARD = 0;
+        public static final double ALLOWED_HEIGHT_TOLERANCE = 0; // The allowed tolerance between the current height to the desired height
+        public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle
+        public static final double MAX_HEIGHT = 2; // The allowed maximum height of the subsystem
+        public static final double MODIFY_JOYSTICK_RATE = 0; // The factor which the value of the joystick is multiply by to calculate the change rate
+        public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber
+        public static final double RAMP_RATE = 0;
+        public static final long DELAY_BETWEEN_COMMANDS = 0;
+    }
+
     public static class Conveyor {
         public static final int TICK_PER_METERS = 0;
 
@@ -139,6 +161,7 @@ public class Constants{
         public static final int TICKS_PER_DEGREE = 1;
         public static final double MINIMUM_POSITION = -200;
         public static final double MAXIMUM_POSITION = 200;
+        public static final double TURRET_JOYSTICK_SPEED = 0;
 
         public static double KP = 0;
         public static double KI = 0;
