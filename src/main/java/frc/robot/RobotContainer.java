@@ -6,11 +6,17 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
+import frc.robot.subsystems.climb.commands.JoystickControl;
+import frc.robot.subsystems.climb.commands.ReleaseRods;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.valuetuner.ValueTuner;
@@ -36,19 +42,71 @@ import frc.robot.subsystems.shooter.Shooter;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    public static AHRS navx = new AHRS(SPI.Port.kMXP);
     // The robot's subsystems and commands are defined here...
-    private final Drivetrain drivetrain = new Drivetrain();
-    private final ColorWheel colorWheel = new ColorWheel();
-    private static Conveyor conveyor = new Conveyor();
-    private static final Intake intake = new Intake();
-    private static final Turret turret = new Turret();
-    private final Shooter shooter = new Shooter();
-    private final XboxController xbox = new XboxController(2);
-    private final JoystickButton a = new JoystickButton(xbox, 3);
-    private final JoystickButton b = new JoystickButton(xbox, 4);
-    public static final int rightYStick = 5;
-    public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
+    public static final Climber climber = new Climber();
+    private final Command m_autoCommand = null;
+    public static AHRS navx = new AHRS(SPI.Port.kMXP);
+    public static XboxController xbox = new XboxController(2);
+    public static JoystickButton a = new JoystickButton(xbox, 1);
+    public static JoystickButton b = new JoystickButton(xbox, 2);
+    public static JoystickButton y = new JoystickButton(xbox, 3);
+    public static final int XboxLeftXStick = 0;
+    public static final int XboxLeftYStick = 1;
+    public static final int XboxRightYStick = 5;
+
+
+    /**
+     * Use this method to define your button->command mappings.  Buttons can be created by
+     * instantiating a {@link GenericHID} or one of its subclasses ({@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
+     * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings() {
+        a.whileHeld(new JoystickControl(climber, false));
+        b.whenPressed(new ReleaseRods(climber, 1.5));
+        y.whenPressed(new CalculatedClimbAndBalance(climber, 1));
+    }
+
+
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        // An ExampleCommand will run in autonomous
+        return m_autoCommand;
+    }
+
+    public static double getLeftXboxX() {
+        return xbox.getRawAxis(XboxLeftXStick);
+    }
+
+    public static double getLeftXboxY() {
+        return xbox.getRawAxis(XboxLeftYStick);
+    }
+
+    /**
+     * Initiates the value tuner.
+     */
+    private void startValueTuner() {
+        new ValueTuner().start();
+    }
+
+    /**
+     * Initiates the port of team 225s Fire-Logger.
+     */
+    private void startFireLog() {
+        try {
+            new Webserver();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static double getRightXboxY() {
+        return xbox.getRawAxis(XboxRightYStick);
+    }
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -57,50 +115,8 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
         if (Robot.debug) {
-            startValueTuner();
             startFireLog();
-            new ValueTuner().start();
         }
     }
-
-  /**
-   * Initiates the value tuner.
-   */
-  private void startValueTuner() {
-    new ValueTuner().start();
-  }
-
-  /**
-   * Initiates the port of team 225s Fire-Logger.
-   */
-  private void startFireLog(){
-    try {
-      new Webserver();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
-    a.whenPressed(new TurnTurret(turret, 45));
-    b.whenPressed(new CenterTurret(turret));
-
-  }
-
-  public double getXboxY(){
-    return xbox.getRawAxis(rightYStick);
-  }
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-    public Command getAutonomousCommand() {
-    return null;
-  }
 }
+

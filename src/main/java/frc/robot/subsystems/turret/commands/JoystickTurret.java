@@ -13,7 +13,7 @@ public class JoystickTurret extends CommandBase {
     private static Turret turret;
 
     public JoystickTurret(Turret turret) {
-        this.turret = turret;
+        JoystickTurret.turret = turret;
         addRequirements(turret);
     }
 
@@ -24,7 +24,7 @@ public class JoystickTurret extends CommandBase {
 
     @Override
     public void execute() {
-        double joystickInput = m_robotContainer.getXboxY();
+        double joystickInput = getLeftXboxY();
         double position = turret.getAngle() + joystickInput * TURRET_JOYSTICK_SPEED;
         if (position < MINIMUM_POSITION && position > MAXIMUM_POSITION)
             turret.setAngle(position);
