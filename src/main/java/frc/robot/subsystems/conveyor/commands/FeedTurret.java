@@ -17,11 +17,11 @@ public class FeedTurret extends CommandBase {
     private Conveyor conveyor;
     private Supplier<Boolean> isShooterReady;
     private Supplier<Boolean> isTurretReady;
-    private boolean smartFeed;
+    private boolean smartFeed = false; //In cases where we want to feed at a constant rate. TODO: Deprecate this once we are confident with constant velocity checking.
 
     public FeedTurret(Conveyor conveyor) {
-        this.conveyor = conveyor;
-        addRequirements(conveyor);
+        this(conveyor, () -> true, () -> true);
+        smartFeed = false;
     }
 
     public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady){
