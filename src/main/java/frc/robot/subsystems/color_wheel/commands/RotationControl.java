@@ -36,7 +36,7 @@ public class RotationControl extends CommandBase {
         updateColorIndex();
         /*
         this block of code looks at the order of the colors and checks whether the wheel is moving clockwise or counterclockwise
-        and counts the amount of spis to each direction accordingly
+        and counts the amount of spins to each direction accordingly
          */
         if (sensorColorIndex == (clockwiseIndex + 1) % 4) {
             clockwiseSpins += 0.125;
