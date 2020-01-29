@@ -37,6 +37,7 @@ import frc.robot.subsystems.shooter.Shooter;
  */
 public class RobotContainer {
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
+
     // The robot's subsystems and commands are defined here...
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
@@ -44,11 +45,9 @@ public class RobotContainer {
     private static final Intake intake = new Intake();
     private static final Turret turret = new Turret();
     private final Shooter shooter = new Shooter();
-    private final XboxController xbox = new XboxController(2);
-    private final JoystickButton a = new JoystickButton(xbox, 3);
-    private final JoystickButton b = new JoystickButton(xbox, 4);
-    public static final int rightYStick = 5;
-    public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
+
+    private final JoystickButton a = new JoystickButton(OI.xbox, 3);
+    private final JoystickButton b = new JoystickButton(OI.xbox, 4);
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -92,9 +91,6 @@ public class RobotContainer {
 
   }
 
-  public double getXboxY(){
-    return xbox.getRawAxis(rightYStick);
-  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
