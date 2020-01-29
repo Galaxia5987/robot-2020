@@ -8,6 +8,7 @@
 package frc.robot.subsystems.drivetrain.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
@@ -21,7 +22,7 @@ public class DriveStraight extends CommandBase {
     /**
      *
      */
-    public DriveStraight(Drivetrain drivetrain, double rightPower, double leftPower) {
+    public DriveStraight(Drivetrain drivetrain, double leftPower, double rightPower) {
         this.drivetrain = drivetrain;
         this.leftPower = leftPower;
         this.rightPower = rightPower;
@@ -48,6 +49,6 @@ public class DriveStraight extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(RobotContainer.rightJoystick.getY()) > leftPower || Math.abs(RobotContainer.leftJoystick.getY()) > rightPower;
+        return Math.abs(RobotContainer.rightJoystick.getY()) > Constants.Drivetrain.JOYSTICK_END_TOLERANCE || Math.abs(RobotContainer.leftJoystick.getY()) > Constants.Drivetrain.JOYSTICK_END_TOLERANCE;
     }
 }
