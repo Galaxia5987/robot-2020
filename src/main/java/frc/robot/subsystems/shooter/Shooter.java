@@ -9,7 +9,9 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.VictorConfiguration;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -23,6 +25,7 @@ public class Shooter extends SubsystemBase {
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
     private static final NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("shooter");
     private static final NetworkTableEntry visionDistance = visionTable.getEntry("distance");
+    private final VictorConfiguration slaveConfigs = new VictorConfiguration();
 
     public Shooter() {
         // Basic motor configurations
@@ -50,16 +53,12 @@ public class Shooter extends SubsystemBase {
         shooterSlave1.setInverted(IS_SLAVE_1_INVERTED);
         shooterSlave2.setInverted(IS_SLAVE_2_INVERTED);
 
-        // Electrical (slave)
-        shooterSlave1.configVoltageCompSaturation(12);
-        shooterSlave1.enableVoltageCompensation(true);
-
-        shooterSlave2.configVoltageCompSaturation(12);
-        shooterSlave2.enableVoltageCompensation(true);
-
         shooterMaster.setNeutralMode(NeutralMode.Coast);
-        shooterSlave1.setNeutralMode(NeutralMode.Coast);
-        shooterSlave2.setNeutralMode(NeutralMode.Coast);
+
+        slaveConfigs.setNeutralMode(NeutralMode.Coast);
+        slaveConfigs.setEnableVoltageCompensation(true);
+        slaveConfigs.setVoltageCompensationSaturation(12);
+        UtilityFunctions.configAllVictors(slaveConfigs, shooterSlave1, shooterSlave2);
     }
 
     /**
