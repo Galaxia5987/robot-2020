@@ -18,7 +18,7 @@ import frc.robot.subsystems.turret.commands.VisionTurret;
 public class AutoShoot extends ParallelDeadlineGroup {
 
     public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor) {
-        super(new SequentialCommandGroup(new SmartFeed(conveyor,shooter, turret), new RunCommand(shooter::stop)));
+        super(new SmartFeed(conveyor,shooter, turret));
         addRequirements(turret, shooter);
         addCommands(
                 // turn the turret to the setpoint angle
