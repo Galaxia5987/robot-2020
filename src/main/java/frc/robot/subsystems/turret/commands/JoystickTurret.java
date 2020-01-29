@@ -11,7 +11,7 @@ public class JoystickTurret extends CommandBase {
     private static Turret turret;
 
     public JoystickTurret(Turret turret) {
-        this.turret = turret;
+        JoystickTurret.turret = turret;
         addRequirements(turret);
     }
 
