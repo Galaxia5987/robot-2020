@@ -14,6 +14,7 @@ public class VictorConfiguration {
 
     private NeutralMode neutralMode;
     private boolean enableVoltageCompensation;
+    private double voltageCompensationSaturation;
     public VictorSPXConfiguration motorConfigs = new VictorSPXConfiguration();
 
 
@@ -21,6 +22,7 @@ public class VictorConfiguration {
 
         neutralMode = NeutralMode.Coast;
         enableVoltageCompensation = false;
+        voltageCompensationSaturation = 12;
 
 
     }
@@ -41,6 +43,14 @@ public class VictorConfiguration {
 
     public void setEnableVoltageCompensation(boolean enableVoltageCompensation) {
         this.enableVoltageCompensation = enableVoltageCompensation;
+    }
+
+    public double getVoltageCompensationSaturation() {
+        return voltageCompensationSaturation;
+    }
+
+    public void setVoltageCompensationSaturation(double voltageCompensationSaturation) {
+        this.voltageCompensationSaturation = voltageCompensationSaturation;
     }
 
     public void setPrimaryPID(VictorSPXPIDSetConfiguration primaryPID) {
