@@ -23,8 +23,9 @@ import frc.robot.utilities.TrajectoryLoader;
  * project.
  */
 public class Robot extends TimedRobot {
-    static final boolean debug = true;
+    public static final boolean debug = true;
     public static boolean isRobotA = true;
+    public static boolean hasShifter = true;
 
     private Command m_autonomousCommand;
     public static Timer robotTimer = new Timer();
