@@ -15,6 +15,7 @@ public class TalonConfiguration {
     private NeutralMode neutralMode;
     private FeedbackDevice feedbackDevice;
     private boolean enableVoltageCompensation;
+    private double voltageCompensationSaturation;
     private boolean enableCurrentLimit;
     private int continuousCurrentLimit = 0;
     private int peakCurrentLimit = 0;
@@ -25,6 +26,7 @@ public class TalonConfiguration {
         neutralMode = NeutralMode.Coast;
         feedbackDevice = FeedbackDevice.CTRE_MagEncoder_Relative;
         enableVoltageCompensation = false;
+        voltageCompensationSaturation = 12;
 
 
     }
@@ -63,6 +65,14 @@ public class TalonConfiguration {
 
     public boolean isEnableVoltageCompensation() {
         return enableVoltageCompensation;
+    }
+
+    public double getVoltageCompensationSaturation() {
+        return voltageCompensationSaturation;
+    }
+
+    public void setVoltageCompensationSaturation(double voltageCompensationSaturation) {
+        this.voltageCompensationSaturation = voltageCompensationSaturation;
     }
 
     public void setNeutralMode(NeutralMode neutralMode) {
