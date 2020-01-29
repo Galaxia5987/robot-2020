@@ -20,7 +20,7 @@ public class AutoShoot extends ParallelDeadlineGroup {
                 // turn the turret to the setpoint angle
                 // ready the flywheel to shoot the balls to the target distance for the desired amount of time
                 new VisionTurret(turret),
-                new SpeedUp(shooter)
+                new SpeedUp(shooter, shooter.getVisionDistance())
         );
     }
 
