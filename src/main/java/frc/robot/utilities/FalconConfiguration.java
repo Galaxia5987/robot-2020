@@ -85,8 +85,23 @@ public class FalconConfiguration {
         this.motorConfigs.auxiliaryPID = auxiliaryPID;
     }
 
-    public void setPidSet(double[] pidSet) {
-        this.pidSet = pidSet;
+    public void setPGain(double pGain){
+        this.pidSet[0] = pGain;
+    }
+    public void setIGain(double iGain){
+        this.pidSet[1] = iGain;
+    }
+    public void setDGain(double dGain){
+        this.pidSet[2] = dGain;
+    }
+    public void setFGain(double fGain){
+        this.pidSet[3] = fGain;
+    }
+    public void setPidSet(double pGain, double iGain, double dGain, double fGain){
+        setPGain(pGain);
+        setIGain(iGain);
+        setDGain(dGain);
+        setFGain(fGain);
     }
 
     public double[] getPidSet() {
@@ -120,4 +135,6 @@ public class FalconConfiguration {
     public double getVoltageCompensationSaturation() {
         return voltageCompensationSaturation;
     }
+
+
 }
