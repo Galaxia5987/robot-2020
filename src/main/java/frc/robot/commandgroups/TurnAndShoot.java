@@ -5,10 +5,8 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
-import frc.robot.subsystems.shooter.commands.WaitForShootingVision;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
-import frc.robot.subsystems.turret.commands.VisionTurret;
 
 /**
  * This command group shoots Power Cells to a distance and angle which are predefined.

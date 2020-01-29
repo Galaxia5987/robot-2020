@@ -19,9 +19,9 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
+import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.ghrobotics.lib.debug.FalconDashboard;
 
@@ -67,7 +67,7 @@ public class Drivetrain extends SubsystemBase {
         configurations.setEnableCurrentLimit(true);
         configurations.setEnableCurrentLimit(true);
         configurations.setSupplyCurrentLimit(40);
-        UtilityFunctions.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
+        Utils.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
         if(Robot.hasShifter) {
             if (Robot.isRobotA)
                 gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
