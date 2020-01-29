@@ -19,6 +19,11 @@ public class FeedTurret extends CommandBase {
     private Supplier<Boolean> isTurretReady;
     private boolean smartFeed;
 
+    public FeedTurret(Conveyor conveyor) {
+        this.conveyor = conveyor;
+        addRequirements(conveyor);
+    }
+
     public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady){
         addRequirements(conveyor);
         this.conveyor = conveyor;
