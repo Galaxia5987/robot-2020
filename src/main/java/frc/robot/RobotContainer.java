@@ -33,24 +33,45 @@ import org.techfire225.webapp.Webserver;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+    private final Command m_autoCommand;
+
     // The robot's subsystems and commands are defined here...
     public static final Climber climber = new Climber();
-    private final Command m_autoCommand = null;
-    public static AHRS navx = new AHRS(SPI.Port.kMXP);
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
     private static Conveyor conveyor = new Conveyor();
     private static final Intake intake = new Intake();
     private static final Turret turret = new Turret();
     private final Shooter shooter = new Shooter();
+
+    public static AHRS navx = new AHRS(SPI.Port.kMXP);
+
     public static XboxController xbox = new XboxController(2);
     public static JoystickButton a = new JoystickButton(xbox, 1);
     public static JoystickButton b = new JoystickButton(xbox, 2);
     public static JoystickButton y = new JoystickButton(xbox, 3);
-    public static final int XboxLeftXStick = 0;
-    public static final int XboxLeftYStick = 1;
-    public static final int XboxRightYStick = 5;
 
+    /**
+     * The container for the robot.  Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        m_autoCommand = null;
+        // Configure the button bindings
+        configureButtonBindings();
+        if (Robot.debug) {
+            startFireLog();
+        }
+    }
+
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        return m_autoCommand;
+    }
 
     /**
      * Use this method to define your button->command mappings.  Buttons can be created by
@@ -62,14 +83,6 @@ public class RobotContainer {
         a.whileHeld(new JoystickControl(climber, false));
         b.whenPressed(new ReleaseRods(climber, 1.5));
         y.whenPressed(new CalculatedClimbAndBalance(climber, 1));
-    }
-
-    public static double getLeftXboxX() {
-        return xbox.getRawAxis(XboxLeftXStick);
-    }
-
-    public static double getLeftXboxY() {
-        return xbox.getRawAxis(XboxLeftYStick);
     }
 
     /**
@@ -88,30 +101,5 @@ public class RobotContainer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static double getRightXboxY() {
-        return xbox.getRawAxis(XboxRightYStick);
-    }
-
-    /**
-     * The container for the robot.  Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
-        if (Robot.debug) {
-            startFireLog();
-        }
-    }
-
-
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        return null;
     }
 }

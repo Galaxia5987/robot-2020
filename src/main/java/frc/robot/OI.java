@@ -14,7 +14,12 @@ public class OI {
     final static Joystick rightStick = new Joystick(1);
     final static XboxController xbox = new XboxController(2);
 
-    public static double getXboxY() {
+    public static double getXboxRY() {
         return xbox.getY(GenericHID.Hand.kRight);
     }
+
+    public static double getXboxLY() {
+        return xbox.getY(GenericHID.Hand.kLeft);
+    }
+
 }
