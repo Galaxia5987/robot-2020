@@ -75,19 +75,23 @@ public class TalonConfiguration {
         this.voltageCompensationSaturation = voltageCompensationSaturation;
     }
 
-    public void setPGain(double pGain){
+    public void setPGain(double pGain) {
         this.pidSet[0] = pGain;
     }
-    public void setIGain(double iGain){
+
+    public void setIGain(double iGain) {
         this.pidSet[1] = iGain;
     }
-    public void setDGain(double dGain){
+
+    public void setDGain(double dGain) {
         this.pidSet[2] = dGain;
     }
-    public void setFGain(double fGain){
+
+    public void setFGain(double fGain) {
         this.pidSet[3] = fGain;
     }
-    public void setPidSet(double pGain, double iGain, double dGain, double fGain){
+
+    public void setPidSet(double pGain, double iGain, double dGain, double fGain) {
         setPGain(pGain);
         setIGain(iGain);
         setDGain(dGain);
@@ -111,11 +115,11 @@ public class TalonConfiguration {
     }
 
     public void setReverseLimitSwitchSource(LimitSwitchSource reverseLimitSwitchSource) {
-       motorConfigs.reverseLimitSwitchSource = reverseLimitSwitchSource;
+        motorConfigs.reverseLimitSwitchSource = reverseLimitSwitchSource;
     }
 
     public void setForwardLimitSwitchDeviceID(int forwardLimitSwitchDeviceID) {
-       motorConfigs.forwardLimitSwitchDeviceID = forwardLimitSwitchDeviceID;
+        motorConfigs.forwardLimitSwitchDeviceID = forwardLimitSwitchDeviceID;
     }
 
     public void setReverseLimitSwitchDeviceID(int reverseLimitSwitchDeviceID) {

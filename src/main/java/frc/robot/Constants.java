@@ -10,11 +10,11 @@ import java.util.Optional;
  * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
-public class Constants{
-  
+public class Constants {
+
     public static final int TALON_TIMEOUT_MS = 10;
     public static final double ROBOT_WIDTH = 0;
-  
+
     public static class Drivetrain {
         public static final double[] VELOCITY_PID_SET = {0.0001, 0, 2, 0};//PID set for the velocity drive of the wheels
         public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
@@ -46,7 +46,8 @@ public class Constants{
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
     }
-    public static class ColorWheel{
+
+    public static class ColorWheel {
         public static final double[] POLY_YELLOW_RGB = {0.297, 0.541, 0.161};
         public static final double[] POLY_GREEN_RGB = {0.195, 0.526, 0.281};
         public static final double[] POLY_RED_RGB = {0.398, 0.398, 0.202};
@@ -110,7 +111,6 @@ public class Constants{
     public static final class Intake {
         public static final double INTAKE_POWER = 0.5;
     }
-
 
 
     public static class Climber {

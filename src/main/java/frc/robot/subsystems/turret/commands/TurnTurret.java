@@ -1,9 +1,7 @@
 package frc.robot.subsystems.turret.commands;
 
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.turret.Turret;
-
-import static frc.robot.Constants.Turret.*;
 
 /**
  * this command turns the turret until it reaches a certain threshold.
@@ -21,11 +19,11 @@ public class TurnTurret extends CommandBase {
         this.angle = angle;
     }
 
-    public TurnTurret(Turret turret){
+    public TurnTurret(Turret turret) {
         this(turret, turret.getVisionAngle());
     }
 
-    public TurnTurret(Turret turret, boolean stop){
+    public TurnTurret(Turret turret, boolean stop) {
         addRequirements(turret);
         this.turret = turret;
         this.angle = turret.getVisionAngle();

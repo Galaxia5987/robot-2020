@@ -12,7 +12,7 @@ public class TurretTest {
     UnitModel unitModel;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         turret = new Turret();
         unitModel = new UnitModel(TICKS_PER_DEGREE);
     }
@@ -25,7 +25,7 @@ public class TurretTest {
         double maxPos = 200;
         Assert.assertEquals(turret.getNearestTurretPosition(targetAngle, currentPosition, minPos, maxPos), -80, 0.1);
         Assert.assertEquals(turret.getNearestTurretPosition(-359, 200, minPos, maxPos), 1, 0.1);
-        Assert.assertEquals(turret.getNearestTurretPosition(300, -40, minPos, maxPos),-60, 0.1);
+        Assert.assertEquals(turret.getNearestTurretPosition(300, -40, minPos, maxPos), -60, 0.1);
         Assert.assertEquals(turret.getNearestTurretPosition(20, 320, minPos, maxPos), 20, 0.1);
         Assert.assertEquals(turret.getNearestTurretPosition(320, 20, minPos, maxPos), -40, 0.1);
         Assert.assertEquals(turret.getNearestTurretPosition(173, -247, minPos, maxPos), -187, 0.1);
@@ -40,7 +40,7 @@ public class TurretTest {
         Assert.assertEquals(turret.center(currentPos, minPos, maxPos), -160, 0.1);
         Assert.assertEquals(turret.center(-20, minPos, maxPos), -20, 0.1);
         Assert.assertEquals(turret.center(-180, minPos, maxPos), -180, 0.1);
-        Assert.assertEquals(turret.center(-200, minPos, maxPos),160, 0.1);
-        Assert.assertEquals(turret.center(50, minPos, maxPos),50, 0.1);
+        Assert.assertEquals(turret.center(-200, minPos, maxPos), 160, 0.1);
+        Assert.assertEquals(turret.center(50, minPos, maxPos), 50, 0.1);
     }
 }

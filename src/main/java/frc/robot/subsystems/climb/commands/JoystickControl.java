@@ -44,8 +44,7 @@ public class JoystickControl extends CommandBase {
         if (controlEachSide) {
             leftInput = RobotContainer.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
             rightInput = RobotContainer.getRightXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
-        }
-        else {
+        } else {
             leftInput = RobotContainer.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
             rightInput = -leftInput;
         }

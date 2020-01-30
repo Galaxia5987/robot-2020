@@ -3,7 +3,7 @@ package frc.robot.subsystems.conveyor.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 
-import static frc.robot.Constants.Conveyor.*;
+import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_INTAKE_POWER;
 
 /**
  * Turn the conveyor and close the gate

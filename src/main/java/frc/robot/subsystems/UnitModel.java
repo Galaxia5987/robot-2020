@@ -15,11 +15,11 @@ public class UnitModel {
         return (int) (ticksPerUnit * units);
     }
 
-    public double toVelocity(double ticks100ms){
+    public double toVelocity(double ticks100ms) {
         return (ticks100ms / ticksPerUnit) * 10;
     }
 
-    public int toTicks100ms(double velocity){
+    public int toTicks100ms(double velocity) {
         return (int) (velocity * ticksPerUnit * 10);
     }
 

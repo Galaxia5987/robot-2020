@@ -1,6 +1,5 @@
 package frc.robot.subsystems.color_wheel.commands;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -26,12 +25,11 @@ public class PositionControl extends CommandBase {
     public void initialize() {
         String gameData = DriverStation.getInstance().getGameSpecificMessage();
         if (gameData.length() > 0) {
-            if(gameData.charAt(0) == 'Y' || gameData.charAt(0) == 'R' || gameData.charAt(0) == 'G' || gameData.charAt(0) == 'B')
+            if (gameData.charAt(0) == 'Y' || gameData.charAt(0) == 'R' || gameData.charAt(0) == 'G' || gameData.charAt(0) == 'B')
                 FMSData = gameData.charAt(0);
             else
                 this.cancel();
-        }
-        else
+        } else
             this.cancel();
 
         endTimer.reset();
@@ -41,14 +39,13 @@ public class PositionControl extends CommandBase {
     public void execute() {
         try {
             currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
-            int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
+            int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData)) - TILES_BEFORE_SENSOR, 4);
             colorWheel.setPower(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
             if (distanceFromTarget == 0 && endTimer.get() == 0)
                 endTimer.start();
             else
                 endTimer.reset();
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
@@ -57,8 +54,7 @@ public class PositionControl extends CommandBase {
     public boolean isFinished() {
         try {
             return endTimer.get() > POSITION_CONTROL_TIMER && Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData)) - TILES_BEFORE_SENSOR, 4) == 0;
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return false;
         }

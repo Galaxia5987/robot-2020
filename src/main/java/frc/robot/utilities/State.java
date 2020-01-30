@@ -12,5 +12,5 @@ package frc.robot.utilities;
 public enum State {
     OPEN,
     CLOSE,
-    TOGGLE;
+    TOGGLE
 }

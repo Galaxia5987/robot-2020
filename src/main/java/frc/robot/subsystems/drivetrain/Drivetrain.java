@@ -68,7 +68,7 @@ public class Drivetrain extends SubsystemBase {
         configurations.setEnableCurrentLimit(true);
         configurations.setSupplyCurrentLimit(40);
         Utils.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
-        if(Robot.hasShifter) {
+        if (Robot.hasShifter) {
             if (Robot.isRobotA)
                 gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
             else
@@ -191,6 +191,7 @@ public class Drivetrain extends SubsystemBase {
 
     /**
      * Indicates whether the shifter is on a high gear
+     *
      * @return
      */
     public boolean isShiftedHigh() {
@@ -204,6 +205,7 @@ public class Drivetrain extends SubsystemBase {
 
     /**
      * Indicates whether the shifter is on a low gear
+     *
      * @return
      */
     public boolean isShiftedLow() {

@@ -176,7 +176,7 @@ public class Climber extends SubsystemBase {
         return setpoint;
     }
 
-    public double normalizeDelta(double delta){
+    public double normalizeDelta(double delta) {
         if (delta > Constants.Climber.MAX_DIFFERENCE) {
             return Constants.Climber.MAX_DIFFERENCE;
         } else if (delta < -Constants.Climber.MAX_DIFFERENCE) {

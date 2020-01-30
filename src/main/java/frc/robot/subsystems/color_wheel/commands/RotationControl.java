@@ -18,7 +18,6 @@ public class RotationControl extends CommandBase {
     private ColorWheel colorWheel;
 
 
-
     public RotationControl(ColorWheel colorWheel) {
         this.colorWheel = colorWheel;
     }
@@ -42,7 +41,7 @@ public class RotationControl extends CommandBase {
             clockwiseSpins += 0.125;
             clockwiseIndex = sensorColorIndex;
         }
-        if (sensorColorIndex == Math.floorMod((counterClockwiseIndex - 1) , 4)) {
+        if (sensorColorIndex == Math.floorMod((counterClockwiseIndex - 1), 4)) {
             counterClockwiseSpins += 0.125;
             counterClockwiseIndex = sensorColorIndex;
         }

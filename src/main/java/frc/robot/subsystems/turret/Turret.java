@@ -29,6 +29,7 @@ public class Turret extends SubsystemBase {
     private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
     private NetworkTableEntry visionAngle = visionTable.getEntry("visionAngle");
     private double targetAngle;
+
     /**
      * configures the encoder and PID constants.
      */
@@ -53,7 +54,7 @@ public class Turret extends SubsystemBase {
     public void periodic() {
     }
 
-    public void setPower(double speed){
+    public void setPower(double speed) {
         motor.set(ControlMode.PercentOutput, speed);
     }
 
@@ -121,11 +122,11 @@ public class Turret extends SubsystemBase {
         motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
 
-    public double getVisionAngle(){
+    public double getVisionAngle() {
         return visionAngle.getDouble(0);
     }
 
-    public boolean isTurretReady(){
+    public boolean isTurretReady() {
         return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
     }
 

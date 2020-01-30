@@ -72,6 +72,7 @@ public class Shooter extends SubsystemBase {
 
     /**
      * set the speed of the shooter.
+     *
      * @param speed the rotations per second of the shooter.
      */
     public void setSpeed(double speed) {
@@ -87,11 +88,11 @@ public class Shooter extends SubsystemBase {
         return (8.68 * Math.exp(0.1685 * distance));
     }
 
-    public double getTargetVelocity(){
+    public double getTargetVelocity() {
         return targetVelocity;
     }
 
-    public boolean isShooterReady(){
+    public boolean isShooterReady() {
         return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE;
     }
 
@@ -99,7 +100,7 @@ public class Shooter extends SubsystemBase {
         setSpeed(0);
     }
 
-    public double getVisionDistance(){
+    public double getVisionDistance() {
         return visionDistance.getDouble(0);
     }
 }

@@ -1,7 +1,6 @@
 package frc.robot.subsystems.drivetrain.auto;
 
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -49,7 +48,7 @@ public class VelocityDrive extends CommandBase {
 
         System.out.println(leftFeedforward / 12);
 
-        if(!useFF) {
+        if (!useFF) {
             leftFeedforward = 0;
             rightFeedforward = 0;
         }

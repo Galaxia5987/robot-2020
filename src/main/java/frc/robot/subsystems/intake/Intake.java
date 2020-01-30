@@ -39,7 +39,7 @@ public class Intake extends SubsystemBase {
      * can be either
      *
      * @param open whether the Power Cell intake mechanism will be open.
-     *           If set to false, the intake will close inside the robot.
+     *             If set to false, the intake will close inside the robot.
      */
     public void setPosition(boolean open) {
         retractor.set(open == IS_FORWARD_OPEN ? Value.kForward : Value.kReverse);
@@ -59,7 +59,7 @@ public class Intake extends SubsystemBase {
      *
      * @param state state of the intake, OPEN / CLOSE / TOGGLE
      */
-    public void setPosition(State state){
+    public void setPosition(State state) {
         switch (state) {
             case OPEN:
                 retractor.set(Value.kForward);
@@ -75,6 +75,7 @@ public class Intake extends SubsystemBase {
                 break;
         }
     }
+
     /**
      * apply power on the wheel to spin them based on the power you insert.
      *

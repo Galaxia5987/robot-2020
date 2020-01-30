@@ -8,9 +8,7 @@
 package frc.robot.subsystems.climb.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 
 /**
@@ -21,7 +19,6 @@ public class ReleaseRods extends CommandBase {
     private final Climber climber;
     private double currentHeight;
     private double setpointHeight;
-
 
 
     /**
