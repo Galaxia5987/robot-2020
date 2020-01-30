@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
     private static final NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("shooter");
     private static final NetworkTableEntry visionDistance = visionTable.getEntry("distance");
-    private double targetVelocity;
+    private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
 
     public Shooter() {
         // Basic motor configurations
@@ -75,15 +75,16 @@ public class Shooter extends SubsystemBase {
      * @param speed the rotations per second of the shooter.
      */
     public void setSpeed(double speed) {
-        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(speed));
+        targetVelocity = speed;
+        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(targetVelocity));
     }
 
     /**
      * @param distance the distance away from the target.
      * @return the calculated velocity to get to the target in rps.
      */
-    public void approximateVelocity(double distance) {
-        targetVelocity = (8.68 * Math.exp(0.1685 * distance));
+    public double approximateVelocity(double distance) {
+        return (8.68 * Math.exp(0.1685 * distance));
     }
 
     public double getTargetVelocity(){

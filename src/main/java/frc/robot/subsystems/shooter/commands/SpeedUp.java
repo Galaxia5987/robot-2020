@@ -37,8 +37,7 @@ public class SpeedUp extends CommandBase {
         if (isVisionActive) {
             distance = shooter.getVisionDistance();
         }
-        shooter.approximateVelocity(distance);
-        shooter.setSpeed(shooter.getTargetVelocity());
+        shooter.setSpeed(shooter.approximateVelocity(distance));
         velocityEntry.setDouble(shooter.getSpeed());
     }
 
