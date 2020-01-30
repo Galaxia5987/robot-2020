@@ -15,14 +15,14 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 /**
  *
  */
-public class DriveStraight extends CommandBase {
+public class DriveForward extends CommandBase {
     private final Drivetrain drivetrain;
     private double leftPower, rightPower;
 
     /**
      *
      */
-    public DriveStraight(Drivetrain drivetrain, double leftPower, double rightPower) {
+    public DriveForward(Drivetrain drivetrain, double leftPower, double rightPower) {
         this.drivetrain = drivetrain;
         this.leftPower = leftPower;
         this.rightPower = rightPower;
