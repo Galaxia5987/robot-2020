@@ -4,8 +4,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.turret.Turret;
 
-import static frc.robot.Constants.Turret.*;
-import static frc.robot.RobotContainer.*;
+import static frc.robot.Constants.Turret.MAXIMUM_POSITION;
+import static frc.robot.Constants.Turret.MINIMUM_POSITION;
+import static frc.robot.RobotContainer.TURRET_JOYSTICK_SPEED;
 
 
 public class JoystickTurret extends CommandBase {
@@ -26,7 +27,7 @@ public class JoystickTurret extends CommandBase {
     public void execute() {
         double joystickInput = m_robotContainer.getXboxY();
         double position = turret.getAngle() + joystickInput * TURRET_JOYSTICK_SPEED;
-        if (position < MINIMUM_POSITION && position > MAXIMUM_POSITION)
+        if (position >= MINIMUM_POSITION && position <= MAXIMUM_POSITION)
             turret.setAngle(position);
     }
 
