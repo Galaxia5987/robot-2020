@@ -37,7 +37,12 @@ public class Turret extends SubsystemBase {
      */
     public Turret() {
         motor.configFactoryDefault();
+
+        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, TALON_TIMEOUT);
+        int currentPosition = motor.getSelectedSensorPosition();
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
+        motor.setSelectedSensorPosition(currentPosition);
+        
         motor.setInverted(IS_MOTOR_INVERTED);
         motor.setSensorPhase(IS_ENCODER_INVERTED);
         motor.config_kP(0, KP, TALON_TIMEOUT);
