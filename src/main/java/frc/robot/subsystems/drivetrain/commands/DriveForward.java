@@ -49,6 +49,9 @@ public class DriveForward extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(RobotContainer.rightJoystick.getY()) > Constants.Drivetrain.JOYSTICK_END_TOLERANCE || Math.abs(RobotContainer.leftJoystick.getY()) > Constants.Drivetrain.JOYSTICK_END_TOLERANCE;
+        double leftJoystick = Math.abs(RobotContainer.leftJoystick.getY());
+        double rightJoystick = Math.abs(RobotContainer.rightJoystick.getY());
+        return leftJoystick > Constants.Drivetrain.JOYSTICK_END_THRESHOLD ||
+                rightJoystick > Constants.Drivetrain.JOYSTICK_END_THRESHOLD;
     }
 }
