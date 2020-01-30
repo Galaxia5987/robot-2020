@@ -7,24 +7,19 @@ public class Ports {
         public static final int LEFT_SLAVE = 11;
         public static final int RIGHT_MASTER = 12;
         public static final int RIGHT_SLAVE = 13;
-
-        public static final int SHIFTER_FORWARD_PORT = 6;
-        public static final int SHIFTER_REVERSE_PORT = 7;
-        public static final int SHIFTER_PORT = 6;
+        public static final int SHIFTER_FORWARD_PORT = 0;
+        public static final int SHIFTER_REVERSE_PORT = 0;
+        public static final int SHIFTER_PORT = 0;
     }
 
     public static class Conveyor {
         public static final int MOTOR = 21;
         public static final boolean MOTOR_INVERTED = false;
-
         public static final int INTAKE_PROXIMITY = 0;
         public static final int SHOOTER_PROXIMITY = 1;
-
         public static final int GATE = 4; // Port of the stopper solenoid.
     }
-
     public static final int TALON_PID_SLOT = 0;
-
     public static final class Intake {
         public static final int MOTOR = 20;
         public static final boolean MOTOR_INVERTED = true;
@@ -32,13 +27,11 @@ public class Ports {
         public static final int FOLD_SOLENOID_REVERSE = 1;
         public static final int FOLD_SOLENOID_FORWARD = 2;
     }
-
     public static class Turret {
         public static final int MOTOR = 22;
         public static final boolean IS_MOTOR_INVERTED = false;
         public static final boolean IS_ENCODER_INVERTED = false;
     }
-
     public static class Shooter {
         public static final int MASTER = 23;
         public static final int SLAVE_1 = 24;
@@ -52,8 +45,8 @@ public class Ports {
     public class climber {
         public static final int LEFT_MOTOR = 61;
         public static final int RIGHT_MOTOR = 62;
-        public static final int STOPPER_FORWARD = 0;
-        public static final int STOPPER_REVERSE = 3;
+        public static final int STOPPER_FORWARD = 3;
+        public static final int STOPPER_REVERSE = 0;
         public static final boolean LEFT_MOTOR_INVERTED = false;
         public static final boolean RIGHT_MOTOR_INVERTED = false;
         public static final boolean LEFT_ENCODER_INVERTED = false;
