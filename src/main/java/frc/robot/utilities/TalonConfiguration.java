@@ -2,7 +2,6 @@ package frc.robot.utilities;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration;
 
 public class TalonConfiguration {
 
@@ -19,6 +18,7 @@ public class TalonConfiguration {
     private boolean enableCurrentLimit;
     private int continuousCurrentLimit = 0;
     private int peakCurrentLimit = 0;
+    private double[] pidSet = {0, 0, 0, 0};
     public TalonSRXConfiguration motorConfigs = new TalonSRXConfiguration();
 
 
@@ -75,6 +75,25 @@ public class TalonConfiguration {
         this.voltageCompensationSaturation = voltageCompensationSaturation;
     }
 
+    public void setPGain(double pGain){
+        this.pidSet[0] = pGain;
+    }
+    public void setIGain(double iGain){
+        this.pidSet[1] = iGain;
+    }
+    public void setDGain(double dGain){
+        this.pidSet[2] = dGain;
+    }
+    public void setFGain(double fGain){
+        this.pidSet[3] = fGain;
+    }
+    public void setPidSet(double pGain, double iGain, double dGain, double fGain){
+        setPGain(pGain);
+        setIGain(iGain);
+        setDGain(dGain);
+        setFGain(fGain);
+    }
+
     public void setNeutralMode(NeutralMode neutralMode) {
         this.neutralMode = neutralMode;
     }
@@ -85,14 +104,6 @@ public class TalonConfiguration {
 
     public void setEnableVoltageCompensation(boolean enableVoltageCompensation) {
         this.enableVoltageCompensation = enableVoltageCompensation;
-    }
-
-    public void setPrimaryPID(TalonSRXPIDSetConfiguration primaryPIDConfiguration) {
-        this.motorConfigs.primaryPID = primaryPIDConfiguration;
-    }
-
-    public void setAuxiliaryPID(TalonSRXPIDSetConfiguration auxiliaryPIDConfiguration) {
-        motorConfigs.auxiliaryPID = auxiliaryPIDConfiguration;
     }
 
     public void setForwardLimitSwitchSource(LimitSwitchSource forwardLimitSwitchSource) {
