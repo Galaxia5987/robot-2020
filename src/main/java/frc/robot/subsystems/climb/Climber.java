@@ -13,22 +13,23 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Ports;
 import frc.robot.subsystems.UnitModel;
+
+import static frc.robot.Ports.Climber.*;
 
 public class Climber extends SubsystemBase {
 
-    private final TalonSRX leftMotor = new TalonSRX(Ports.climber.LEFT_MOTOR);
-    private final TalonSRX rightMotor = new TalonSRX(Ports.climber.RIGHT_MOTOR);
-    private final DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
+    private final TalonSRX leftMotor = new TalonSRX(LEFT_MOTOR);
+    private final TalonSRX rightMotor = new TalonSRX(RIGHT_MOTOR);
+    private final DoubleSolenoid stopper = new DoubleSolenoid(STOPPER_FORWARD, STOPPER_REVERSE);
     private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
 
     /**
      * Creates a new climb Subsystem.
      */
     public Climber() {
-        leftMotor.setInverted(Ports.climber.LEFT_MOTOR_INVERTED);
-        rightMotor.setInverted(Ports.climber.RIGHT_MOTOR_INVERTED);
+        leftMotor.setInverted(LEFT_MOTOR_INVERTED);
+        rightMotor.setInverted(RIGHT_MOTOR_INVERTED);
 
         leftMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
         rightMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
@@ -48,8 +49,8 @@ public class Climber extends SubsystemBase {
         leftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-        leftMotor.setSensorPhase(Ports.climber.LEFT_ENCODER_INVERTED);
-        rightMotor.setSensorPhase(Ports.climber.RIGHT_ENCODER_INVERTED);
+        leftMotor.setSensorPhase(LEFT_ENCODER_INVERTED);
+        rightMotor.setSensorPhase(RIGHT_ENCODER_INVERTED);
 
         leftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         rightMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);

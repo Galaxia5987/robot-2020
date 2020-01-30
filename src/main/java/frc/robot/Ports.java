@@ -2,15 +2,25 @@ package frc.robot;
 
 
 public class Ports {
-    public class climber {
-        public static final int LEFT_MOTOR = 61;
-        public static final int RIGHT_MOTOR = 62;
-        public static final int STOPPER_FORWARD = 3;
-        public static final int STOPPER_REVERSE = 0;
-        public static final boolean LEFT_MOTOR_INVERTED = false;
-        public static final boolean RIGHT_MOTOR_INVERTED = false;
-        public static final boolean LEFT_ENCODER_INVERTED = false;
-        public static final boolean RIGHT_ENCODER_INVERTED = false;
+    public static final int TALON_PID_SLOT = 0;
+
+    public static class Drivetrain {
+        public static final int LEFT_MASTER = 10;
+        public static final int LEFT_SLAVE = 11;
+        public static final int RIGHT_MASTER = 12;
+        public static final int RIGHT_SLAVE = 13;
+
+        public static final int SHIFTER_FORWARD_PORT = 0;
+        public static final int SHIFTER_REVERSE_PORT = 0;
+        public static final int SHIFTER_PORT = 0;
+    }
+
+    public static final class Intake {
+        public static final int MOTOR = 20;
+        public static final boolean MOTOR_INVERTED = true;
+        public static final boolean IS_FORWARD_OPEN = true; //if kForward of the solenoid opens the intake or reverse.
+        public static final int FOLD_SOLENOID_REVERSE = 1;
+        public static final int FOLD_SOLENOID_FORWARD = 2;
     }
 
     public static class Conveyor {
@@ -21,16 +31,6 @@ public class Ports {
         public static final int SHOOTER_PROXIMITY = 1;
 
         public static final int GATE = 4; // Port of the stopper solenoid.
-    }
-
-    public static final int TALON_PID_SLOT = 0;
-
-    public static final class Intake {
-        public static final int MOTOR = 20;
-        public static final boolean MOTOR_INVERTED = true;
-        public static final boolean IS_FORWARD_OPEN = true; //if kForward of the solenoid opens the intake or reverse.
-        public static final int FOLD_SOLENOID_REVERSE = 1;
-        public static final int FOLD_SOLENOID_FORWARD = 2;
     }
 
     public static class Turret {
@@ -49,18 +49,18 @@ public class Ports {
         public static final boolean IS_ENCODER_INVERTED = false;
     }
 
-    public static class Drivetrain {
-        public static final int LEFT_MASTER = 10;
-        public static final int LEFT_SLAVE = 11;
-        public static final int RIGHT_MASTER = 12;
-        public static final int RIGHT_SLAVE = 13;
-
-        public static final int SHIFTER_FORWARD_PORT = 0;
-        public static final int SHIFTER_REVERSE_PORT = 0;
-        public static final int SHIFTER_PORT = 0;
-    }
-
     public static class ColorWheel {
         public static final int MOTOR = 30;
+    }
+
+    public static class Climber {
+        public static final int LEFT_MOTOR = 61;
+        public static final int RIGHT_MOTOR = 62;
+        public static final int STOPPER_FORWARD = 3;
+        public static final int STOPPER_REVERSE = 0;
+        public static final boolean LEFT_MOTOR_INVERTED = false;
+        public static final boolean RIGHT_MOTOR_INVERTED = false;
+        public static final boolean LEFT_ENCODER_INVERTED = false;
+        public static final boolean RIGHT_ENCODER_INVERTED = false;
     }
 }
