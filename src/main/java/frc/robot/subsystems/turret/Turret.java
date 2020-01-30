@@ -29,6 +29,7 @@ public class Turret extends SubsystemBase {
     private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
     private NetworkTableEntry visionAngle = visionTable.getEntry("visionAngle");
     private double targetAngle;
+
     /**
      * configures the encoder and PID constants.
      */
@@ -53,18 +54,6 @@ public class Turret extends SubsystemBase {
     public void periodic() {
     }
 
-    public void setPower(double speed){
-        motor.set(ControlMode.PercentOutput, speed);
-    }
-
-    /**
-     * set the position to the current position to stop the turret at the target position.
-     */
-    public void stop() {
-        targetAngle = getAngle();
-    }
-
-
     /**
      * get the current angle from the controller
      *
@@ -72,6 +61,16 @@ public class Turret extends SubsystemBase {
      */
     public double getAngle() {
         return unitModel.toUnits(motor.getSelectedSensorPosition());
+    }
+
+    /**
+     * set the position of the turret to the setpoint angle.
+     *
+     * @param angle setpoint angle.
+     */
+    public void setAngle(double angle) {
+        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
 
     /**
@@ -117,14 +116,6 @@ public class Turret extends SubsystemBase {
     public void stop() {
         motor.set(ControlMode.MotionMagic, getAngle());
     }
-      * set the position of the turret to the setpoint angle.
-     *
-     * @param angle setpoint angle.
-     */
-    public void setAngle(double angle) {
-        targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
-        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
-    }
 
     public double getVisionAngle() {
         return visionAngle.getDouble(0);
@@ -136,7 +127,8 @@ public class Turret extends SubsystemBase {
         }
         motor.set(ControlMode.PercentOutput, speed);
     }
-  public boolean isTurretReady(){
+
+    public boolean isTurretReady() {
         return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
     }
 
