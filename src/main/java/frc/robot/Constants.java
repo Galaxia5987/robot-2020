@@ -148,7 +148,10 @@ public class Constants{
 
         public static final int MAX_CURRENT = 0;
 
+
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
+        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0;
+        public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0;
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
@@ -168,7 +171,6 @@ public class Constants{
         public static final int TICKS_PER_DEGREE = 1;
         public static final double MINIMUM_POSITION = -200;
         public static final double MAXIMUM_POSITION = 200;
-        public static final double TURRET_JOYSTICK_SPEED = 0;
 
         public static double KP = 0;
         public static double KI = 0;
@@ -180,6 +182,8 @@ public class Constants{
         public static final double VISION_KP = 0;
         public static final double VISION_KI = 0;
         public static final double VISION_KD = 0;
+
+        public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
 
         public static final int MAX_CURRENT = 35; // [A]
         public static final double ANGLE_THRESHOLD = 1;

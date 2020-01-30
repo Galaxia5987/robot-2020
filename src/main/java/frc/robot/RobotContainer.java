@@ -46,6 +46,12 @@ public class RobotContainer {
     public final Turret turret = new Turret();
     private final Command m_autoCommand = null;
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
+    private final Drivetrain drivetrain = new Drivetrain();
+    private final ColorWheel colorWheel = new ColorWheel();
+    private static Conveyor conveyor = new Conveyor();
+    private static final Intake intake = new Intake();
+    private static final Turret turret = new Turret();
+    private final Shooter shooter = new Shooter();
     public static XboxController xbox = new XboxController(2);
     public static JoystickButton a = new JoystickButton(xbox, 1);
     public static JoystickButton b = new JoystickButton(xbox, 2);
@@ -68,17 +74,6 @@ public class RobotContainer {
         y.whenPressed(new CalculatedClimbAndBalance(climber, 1));
         rightY.whileHeld(new JoystickTurret(turret));
         rs.whenPressed(new InstantCommand(turret::resetOffset));
-    }
-
-
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return m_autoCommand;
     }
 
     public static double getLeftXboxX() {
@@ -122,5 +117,14 @@ public class RobotContainer {
             startFireLog();
         }
     }
-}
 
+
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        return null;
+    }
+}

@@ -31,6 +31,7 @@ public class Turret extends SubsystemBase {
     private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
     private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private double offset = 0;
+    private double targetAngle;
 
     /**
      * configures the encoder and PID constants.
@@ -59,6 +60,13 @@ public class Turret extends SubsystemBase {
      */
     @Override
     public void periodic() {
+    }
+
+    /**
+     * set the position to the current position to stop the turret at the target position.
+     */
+    public void stop() {
+        targetAngle = getAngle();
     }
 
 
@@ -134,13 +142,6 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * set the position to the current position to stop the turret at the target position.
-     */
-    public void stop() {
-        motor.set(ControlMode.MotionMagic, getAngle());
-    }
-
-    /**
      * @return the angle to the target from the vision network table.
      */
     public double getVisionAngle(){
@@ -159,7 +160,11 @@ public class Turret extends SubsystemBase {
      * @param speed the speed the turret will turn.
      */
     public void setPower(double speed){
-        motor.set(ControlMode.PercentOutput, speed);
+        motor.set(ControlMode.PercentOutput, speed);   
+    }
+    
+    public boolean isTurretReady(){
+        return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
     }
 
     /**
