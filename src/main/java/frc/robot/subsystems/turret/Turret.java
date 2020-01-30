@@ -168,13 +168,6 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * @return the output values of the localization including the current position and the angle to the target.
-     */
-    public Pose2d getLocalization() {
-        return new Pose2d();
-    }
-
-    /**
      * @return whether the current angle is within the turrets limits.
      */
     public boolean inCorrectRange() {

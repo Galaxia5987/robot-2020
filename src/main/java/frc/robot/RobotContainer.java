@@ -109,7 +109,7 @@ public class RobotContainer {
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        turret.setDefaultCommand(new TurretSwitching(turret));
+        turret.setDefaultCommand(new TurretSwitching(turret, drivetrain));
         // Configure the button bindings
         configureButtonBindings();
         if (Robot.debug) {
