@@ -26,7 +26,7 @@ import static spark.Spark.post;
  * Example usage:
  *  public static WebConstant vision_kP = new WebConstant("vision_kP")
  *  vision_Kp.get()
- *  WebConstantPIDTalon("turretTalon", pidSet[0], pidSet[1], pidSet[2], pidSet[3], turretMaster)
+ *  new WebConstantPIDTalon("turretTalon", pidSet[0], pidSet[1], pidSet[2], pidSet[3], turretMaster)
  *
  *  Notes:
  *    - A value key should only be used once, hence its recommended to use static when instantiating constants
