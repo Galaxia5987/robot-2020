@@ -1,6 +1,6 @@
 package frc.robot.subsystems.turret.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.OI;
 import frc.robot.subsystems.turret.Turret;
 
 import java.util.function.Supplier;
