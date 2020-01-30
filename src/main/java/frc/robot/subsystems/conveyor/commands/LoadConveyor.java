@@ -2,6 +2,7 @@ package frc.robot.subsystems.conveyor.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.utilities.State;
 
 import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_INTAKE_POWER;
 
@@ -18,7 +19,7 @@ public class LoadConveyor extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.openGate(false);
+        conveyor.setGate(State.CLOSE);
         conveyor.setPower(CONVEYOR_MOTOR_INTAKE_POWER);
     }
 

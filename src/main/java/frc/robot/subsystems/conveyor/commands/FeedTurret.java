@@ -2,6 +2,7 @@ package frc.robot.subsystems.conveyor.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.utilities.State;
 
 import java.util.function.Supplier;
 
@@ -33,7 +34,7 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.openGate(true);
+        conveyor.setGate(State.OPEN);
     }
 
     @Override
@@ -55,6 +56,6 @@ public class FeedTurret extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         conveyor.stop();
-        conveyor.openGate(false);
+        conveyor.setGate(State.CLOSE);
     }
 }
