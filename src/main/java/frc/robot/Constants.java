@@ -13,9 +13,62 @@ import java.util.Optional;
  * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
+public class Constants{
+  
+    public static final int TALON_TIMEOUT_MS = 10;
+    public static final double ROBOT_WIDTH = 0;
+  
+    public static class Drivetrain {
+        public static final double[] VELOCITY_PID_SET = {0.0001, 0, 2, 0};//PID set for the velocity drive of the wheels
+        public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
+        public static final double HIGH_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into high gear
+        public static final double LOW_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into low gear
+        public static final double TURNING_TOLERANCE = 0;//Stops the robot from shifting while the robot is turning
+        public static final int LOW_TICKS_PER_METER = 28914;//unit conversion while the robot is on low gear
+        public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
+        public static final double HIGH_GEAR_MIN_VELOCITY = 0;
+        public static final double LOW_GEAR_MIN_OUTPUT = 0;
+        public static final double GRAVITY_ACCELERATION = 9.80665;
+        public static final boolean RIGHT_MASTER_INVERTED = true;
+        public static final boolean RIGHT_SLAVE_INVERTED = true;
+        public static final double TRACK_WIDTH = 0.72;
+        public static final boolean GYRO_INVERTED = true;
+        public static final double WHEEL_DIAMETER = 0.1016;
+    }
+
+    public static class Autonomous {
+        // Drivetrain characterization constants
+        public static final double leftkS = 0.367;
+        public static final double leftkV = 1.6;
+        public static final double leftkA = 0.0527;
+        public static final double rightkS = 0.361;
+        public static final double rightkV = 1.59;
+        public static final double rightkA = 0.0667;
+
+        // Follower constants
+        public static final double kBeta = 2;
+        public static final double kZeta = 0.7;
+    }
+    public static class ColorWheel{
+        public static final double[] POLY_YELLOW_RGB = {0.297, 0.541, 0.161};
+        public static final double[] POLY_GREEN_RGB = {0.195, 0.526, 0.281};
+        public static final double[] POLY_RED_RGB = {0.398, 0.398, 0.202};
+        public static final double[] POLY_BLUE_RGB = {0.166, 0.435, 0.398};
+
+        public static final double[] YELLOW_RGB = {0.317, 0.552, 0.127};
+        public static final double[] GREEN_RGB = {0.16, 0.571, 0.269};
+        public static final double[] RED_RGB = {0.492, 0.348, 0.145};
+        public static final double[] BLUE_RGB = {0.132, 0.427, 0.442};
+
+        public static final int TILES_BEFORE_SENSOR = 2; //The amount of color tiles between the robot sensor and the field sensor (for example at TBS = 2, the position would aim for RED when the FMS asks for BLUE)
+
+        public static final double POSITION_CONTROL_TIMER = 1;
+        public static final double POSITION_CONTROL_POWER = 0.2;
+        public static final double ROTATION_CONTROL_POWER = 0.2;
+        public static double kP = 0.3;
+    }
 
 
-public final class Constants {
     static { // Runs alongside main
         if (!Robot.isRobotA) { // We want robot B constants
             replaceFields(Constants.class, BConstants.class); // Replace outer constants
@@ -65,6 +118,24 @@ public final class Constants {
         public static final double INTAKE_POWER = 0.5;
     }
 
+
+
+    public static class Climber {
+        public static final int MOTION_MAGIC_VELOCITY = 0;
+        public static final int MOTION_MAGIC_ACCELERATION = 0;
+        public static final int TICKS_PER_METER = 1;
+        public static final double[] CLIMB_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
+        public static final double ARBITRARY_FEEDFORWARD = 0;
+        public static final double ALLOWED_HEIGHT_TOLERANCE = 0; // The allowed tolerance between the current height to the desired height
+        public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle
+        public static final double MAX_HEIGHT = 2; // The allowed maximum height of the subsystem
+        public static final double MODIFY_JOYSTICK_RATE = 0; // The factor which the value of the joystick is multiply by to calculate the change rate
+        public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber
+        public static final double RAMP_RATE = 0;
+        public static final long DELAY_BETWEEN_COMMANDS = 0;
+    }
+
     public static class Conveyor {
         public static final int TICK_PER_METERS = 0;
 
@@ -97,6 +168,7 @@ public final class Constants {
         public static final int TICKS_PER_DEGREE = 1;
         public static final double MINIMUM_POSITION = -200;
         public static final double MAXIMUM_POSITION = 200;
+        public static final double TURRET_JOYSTICK_SPEED = 0;
 
         public static double KP = 0;
         public static double KI = 0;
