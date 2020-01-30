@@ -59,6 +59,8 @@ public class RobotContainer {
     public static final Shooter shooter = new Shooter();
     private final Command m_autoCommand = null;
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
+    public static Joystick rightJoystick = new Joystick(0);
+    public static Joystick leftJoystick = new Joystick(1);
     public static XboxController xbox = new XboxController(2);
     public static JoystickButton a = new JoystickButton(xbox, 1);
     public static JoystickButton b = new JoystickButton(xbox, 2);
