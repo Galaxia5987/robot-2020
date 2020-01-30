@@ -97,6 +97,23 @@ public class RobotContainer {
         a.whileHeld(new JoystickControl(climber, false));
         b.whenPressed(new ReleaseRods(climber, 1.5));
         y.whenPressed(new CalculatedClimbAndBalance(climber, 1));
+        right2.whenPressed(new PIDClimbAndBalance(climber, 2));
+        right3.whenPressed(new PositionControl(colorWheel));
+        left2.whenPressed(new RotationControl(colorWheel));
+        left3.whenPressed(new FeedTurret(conveyor));
+        left4.whenPressed(new MinimizeConveyor(conveyor));
+        left5.whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
+        right5.whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
+        right4.whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.TOGGLE));
+        x.whenPressed(new IntakePowerCell(intake, conveyor, 0.7));
+        left6.whenPressed(new OuttakeBall(conveyor, intake, 0.2));
+        left7.whenPressed(new ToggleIntake());
+        left8.whenPressed(new SpeedUp(shooter));
+        left9.whenPressed(new WaitForShootingVision(shooter, turret));
+        right6.whenPressed(new CenterTurret(turret));
+        right7.whileHeld(new JoystickTurret(turret));
+        right8.whenPressed(new TurnTurret(turret, 90));
+        right9.whenPressed(new VisionTurret(turret));
     }
 
 
