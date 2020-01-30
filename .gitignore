@@ -243,6 +243,7 @@ modules.xml
 
 # Package Files #
 *.jar
+!jetty-all-9.4.0.v20161208-uber.jar
 *.war
 *.nar
 *.ear

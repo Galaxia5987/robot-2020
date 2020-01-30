@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Value tuner</title>
+</head>
+<body>
+    #foreach( $constant in $constants )
+        $constant.key: <input ctype="normal" type="text" name="$constant.key" value="$constant.value"><br><br>
+    #end
+
+    #foreach( $talon in $talons )
+        $talon.key:<br>
+    kP: <input ctype="talon" type="text" name="${talon.key}-kP" value="$talon.kP"><br>
+    kI: <input ctype="talon" type="text" name="${talon.key}-kI" value="$talon.kI"><br>
+    kD: <input ctype="talon" type="text" name="${talon.key}-kD" value="$talon.kD"><br>
+    kF: <input ctype="talon" type="text" name="${talon.key}-kF" value="$talon.kF"><br>
+    #end
+</body>
+
+<br>
+
+<script>
+
+    function post(url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.send();
+    }
+
+    function update() {
+        Array.prototype.slice.call(
+                document.getElementsByTagName('input'))
+                .forEach(function (el) {
+                    var ctype = el.getAttribute("ctype");
+                    if(ctype === "normal") {
+                        post(encodeURI(`${window.location.href}set?key=${el.name}&value=${el.value}`));
+                    }
+                    else if(ctype === "talon") {
+                        var split = el.name.split("-");
+                        post(encodeURI(`${window.location.href}setTalon?key=${split[0]}&${split[1]}=${el.value}`));
+                    }
+                });
+    }
+</script>
+
+<button onclick="update()">Update</button>
+</html>
