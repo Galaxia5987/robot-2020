@@ -43,7 +43,6 @@ import frc.robot.utilities.StickButton;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public static final Climber climber = new Climber();
-    public final Turret turret = new Turret();
     private final Command m_autoCommand = null;
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     private final Drivetrain drivetrain = new Drivetrain();
