@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 
-public class OuttakeBall extends CommandBase {
+public class OuttakeBalls extends CommandBase {
     private Intake intake;
     private Conveyor conveyor;
     private double speed;
@@ -15,7 +15,7 @@ public class OuttakeBall extends CommandBase {
      *
      * @param speed
      */
-    public OuttakeBall(Conveyor conveyor, Intake intake, double speed) {
+    public OuttakeBalls(Conveyor conveyor, Intake intake, double speed) {
         addRequirements(intake, conveyor);
         this.conveyor = conveyor;
         this.intake = intake;
