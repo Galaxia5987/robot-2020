@@ -2,7 +2,6 @@ package frc.robot.subsystems.color_wheel.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 
 import java.util.function.Supplier;
@@ -41,7 +40,7 @@ public class RotationControl extends CommandBase {
     public void execute() {
         updateColorIndex();
         if (joystickY.get() > 0.1)
-            colorWheel.manualOn();
+            colorWheel.turnManual(true);
         if (colorWheel.isManual())
             colorWheel.setPower(joystickY.get());
         /*

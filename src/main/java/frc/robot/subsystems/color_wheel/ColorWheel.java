@@ -50,12 +50,10 @@ public class ColorWheel extends SubsystemBase {
         return colorString;
     }
 
-    public void manualOn(){
-        manual = true;
+    public void turnManual(boolean manual){
+        this.manual = manual;
     }
-    public void manualOff(){
-        manual = false;
-    }
+
     public boolean isManual(){
         return manual;
     }

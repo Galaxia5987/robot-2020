@@ -3,8 +3,6 @@ package frc.robot.subsystems.color_wheel.commands;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 
 import java.util.function.Supplier;
@@ -48,7 +46,7 @@ public class PositionControl extends CommandBase {
             currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
             int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
             if (joystickY.get() > 0.1)
-                colorWheel.manualOn();
+                colorWheel.turnManual(true);
             if (!colorWheel.isManual())
                 colorWheel.setPower(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
             else
