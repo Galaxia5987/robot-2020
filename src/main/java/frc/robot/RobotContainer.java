@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,24 +17,30 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
 import frc.robot.subsystems.climb.commands.JoystickControl;
+import frc.robot.subsystems.climb.commands.PIDClimbAndBalance;
 import frc.robot.subsystems.climb.commands.ReleaseRods;
 import frc.robot.subsystems.color_wheel.ColorWheel;
+import frc.robot.subsystems.color_wheel.commands.PositionControl;
 import frc.robot.subsystems.color_wheel.commands.RotationControl;
-import frc.robot.valuetuner.ValueTuner;
-import org.techfire225.webapp.Webserver;
-import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.auto.FollowPath;
-import frc.robot.utilities.TrajectoryLoader;
-
 import frc.robot.subsystems.conveyor.Conveyor;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.conveyor.commands.FeedTurret;
+import frc.robot.subsystems.conveyor.commands.MinimizeConveyor;
+import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.commands.GearShift;
 import frc.robot.subsystems.intake.Intake;
-
+import frc.robot.subsystems.intake.commands.IntakePowerCell;
+import frc.robot.subsystems.intake.commands.OuttakeBall;
+import frc.robot.subsystems.intake.commands.ToggleIntake;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.commands.SpeedUp;
+import frc.robot.subsystems.shooter.commands.WaitForShootingVision;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.CenterTurret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
-import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.turret.commands.VisionTurret;
+import frc.robot.valuetuner.ValueTuner;
+import org.techfire225.webapp.Webserver;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -44,6 +51,12 @@ import frc.robot.subsystems.shooter.Shooter;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public static final Climber climber = new Climber();
+    public static final ColorWheel colorWheel = new ColorWheel();
+    public static final Turret turret = new Turret();
+    public static final Conveyor conveyor = new Conveyor();
+    public static final Drivetrain drivetrain = new Drivetrain();
+    public static final Intake intake = new Intake();
+    public static final Shooter shooter = new Shooter();
     private final Command m_autoCommand = null;
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public static XboxController xbox = new XboxController(2);
