@@ -50,6 +50,7 @@ import org.techfire225.webapp.Webserver;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
+    public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public static final Climber climber = new Climber();
     public static final ColorWheel colorWheel = new ColorWheel();
     public static final Turret turret = new Turret();
@@ -58,7 +59,6 @@ public class RobotContainer {
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
     private final Command m_autoCommand = null;
-    public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public static Joystick rightJoystick = new Joystick(0);
     public static Joystick leftJoystick = new Joystick(1);
     public static XboxController xbox = new XboxController(2);
