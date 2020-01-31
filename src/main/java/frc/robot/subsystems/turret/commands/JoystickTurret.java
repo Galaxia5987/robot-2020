@@ -1,16 +1,18 @@
 package frc.robot.subsystems.turret.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.OI;
 import frc.robot.subsystems.turret.Turret;
 
-import static frc.robot.Constants.Turret.TURRET_JOYSTICK_SPEED;
-import static frc.robot.RobotContainer.getRightXboxY;
+import static frc.robot.Constants.Turret.*;
+
 
 public class JoystickTurret extends CommandBase {
-    private final Turret turret;
+    private static Turret turret;
 
-    public JoystickTurret(Turret turret) { //This does not power the motors, it simply adjusts the target angle. Henceforth, there is no reason to interrupt the turning class.
-        this.turret = turret;
+    public JoystickTurret(Turret turret) {
+        JoystickTurret.turret = turret;
+        addRequirements(turret);
     }
 
     @Override
@@ -20,9 +22,10 @@ public class JoystickTurret extends CommandBase {
 
     @Override
     public void execute() {
-        double joystickInput = getRightXboxY();
-        double offset = joystickInput * TURRET_JOYSTICK_SPEED;
-        turret.setOffset(offset);
+        double joystickInput = OI.getXboxY();
+        double position = turret.getAngle() + joystickInput * TURRET_JOYSTICK_SPEED;
+        if (position < MINIMUM_POSITION && position > MAXIMUM_POSITION)
+            turret.setAngle(position);
     }
 
 }

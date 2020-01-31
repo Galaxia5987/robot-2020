@@ -30,7 +30,6 @@ public class Turret extends SubsystemBase {
     private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
     private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
     private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
-    private double offset = 0;
     private double targetAngle;
 
     /**
@@ -122,23 +121,8 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetAngle = getNearestTurretPosition(offset + angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
         motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
-    }
-
-    /**
-     * set the value of the offset.
-     * @param offset the distance the turret has traveled.
-     */
-    public void setOffset(double offset) {
-        this.offset = offset;
-    }
-
-    /**
-     * resets the value of the delta to 0.
-     */
-    public void resetOffset() {
-        this.offset = 0;
     }
 
     /**
