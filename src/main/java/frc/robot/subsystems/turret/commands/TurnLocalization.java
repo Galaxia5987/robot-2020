@@ -19,13 +19,12 @@ public class TurnLocalization extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        turret.setAngle(calculateTargetAngle());
+        turret.setAngle(calculateTargetAngle(drivetrain.getPose()));
     }
 
-    private double calculateTargetAngle() {
-        Pose2d localization = drivetrain.getPose();
-        double deltaY = Math.abs(POWER_PORT_LOCATION.getTranslation().getY() - localization.getTranslation().getY());
-        double deltaX = Math.abs(POWER_PORT_LOCATION.getTranslation().getX() - localization.getTranslation().getX());
-        return Math.toDegrees(Math.atan2(deltaY, deltaX) - localization.getRotation().getRadians());
+    public double calculateTargetAngle(Pose2d currentPosition) {
+        double deltaY = Math.abs(POWER_PORT_LOCATION.getTranslation().getY() - currentPosition.getTranslation().getY());
+        double deltaX = Math.abs(POWER_PORT_LOCATION.getTranslation().getX() - currentPosition.getTranslation().getX());
+        return Math.toDegrees(Math.atan2(deltaY, deltaX) - currentPosition.getRotation().getRadians());
     }
 }
