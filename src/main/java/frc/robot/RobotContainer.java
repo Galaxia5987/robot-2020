@@ -72,7 +72,6 @@ public class RobotContainer {
         b.whenPressed(new ReleaseRods(climber, 1.5));
         y.whenPressed(new CalculatedClimbAndBalance(climber, 1));
         rightY.whileHeld(new JoystickTurret(turret));
-        rs.whenPressed(new InstantCommand(turret::resetOffset));
     }
 
     public static double getLeftXboxX() {
