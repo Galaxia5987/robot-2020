@@ -43,6 +43,7 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.CenterTurret;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.valuetuner.ValueTuner;
@@ -127,7 +128,7 @@ public class RobotContainer {
     }
 
     public static double getRightXboxY() {
-        return xbox.getRawAxis(rightYStick);
+        return xbox.getRawAxis(XboxRightYStick);
     }
 
     /**
