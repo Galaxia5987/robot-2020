@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commandgroups.AutoShoot;
 import frc.robot.subsystems.climb.Climber;
@@ -34,9 +36,13 @@ import frc.robot.subsystems.intake.commands.MoveIntake;
 import frc.robot.subsystems.intake.commands.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
+import frc.robot.subsystems.color_wheel.ColorWheel;
+import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.CenterTurret;
-import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.valuetuner.ValueTuner;
@@ -86,12 +92,8 @@ public class RobotContainer {
     public static final int XboxLeftYStick = 1;
     public static final int XboxRightYStick = 5;
 
-
     /**
-     * Use this method to define your button->command mappings.  Buttons can be created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-     * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
     private void configureButtonBindings() {
         a.whileHeld(new JoystickControl(climber, false));
@@ -124,6 +126,10 @@ public class RobotContainer {
         return xbox.getRawAxis(XboxLeftYStick);
     }
 
+    public static double getRightXboxY() {
+        return xbox.getRawAxis(rightYStick);
+    }
+
     /**
      * Initiates the value tuner.
      */
@@ -141,23 +147,7 @@ public class RobotContainer {
             e.printStackTrace();
         }
     }
-
-    public static double getRightXboxY() {
-        return xbox.getRawAxis(XboxRightYStick);
-    }
-
-    /**
-     * The container for the robot.  Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
-        if (Robot.debug) {
-            startFireLog();
-        }
-    }
-
-
+  
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
