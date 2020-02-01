@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.subsystems.turret.Turret;
 
-import static frc.robot.Constants.Turret.MAXIMUM_POSITION;
-import static frc.robot.Constants.Turret.MINIMUM_POSITION;
 import static frc.robot.Constants.Turret.*;
 
 

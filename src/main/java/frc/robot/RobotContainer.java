@@ -8,44 +8,18 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commandgroups.AutoShoot;
 import frc.robot.subsystems.climb.Climber;
-import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
-import frc.robot.subsystems.climb.commands.JoystickControl;
-import frc.robot.subsystems.climb.commands.PIDClimbAndBalance;
-import frc.robot.subsystems.climb.commands.ReleaseRods;
-import frc.robot.subsystems.color_wheel.ColorWheel;
-import frc.robot.subsystems.color_wheel.commands.PositionControl;
-import frc.robot.subsystems.color_wheel.commands.RotationControl;
-import frc.robot.subsystems.conveyor.Conveyor;
-import frc.robot.subsystems.conveyor.commands.FeedTurret;
-import frc.robot.subsystems.conveyor.commands.MinimizeConveyor;
-import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.commands.GearShift;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.IntakeBalls;
-import frc.robot.subsystems.intake.commands.MoveIntake;
-import frc.robot.subsystems.intake.commands.OuttakeBalls;
-import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
-import frc.robot.subsystems.turret.commands.CenterTurret;
-import frc.robot.subsystems.turret.commands.JoystickTurret;
-import frc.robot.subsystems.turret.commands.TurnTurret;
-import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -93,30 +67,18 @@ public class RobotContainer {
     public static final int XboxLeftYStick = 1;
     public static final int XboxRightYStick = 5;
 
+    public RobotContainer() {
+        configureButtonBindings();
+        if (Robot.debug) {
+            startFireLog();
+        }
+    }
+
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
     private void configureButtonBindings() {
-        a.whileHeld(new JoystickControl(climber, false));
-        b.whenPressed(new ReleaseRods(climber, 1.5));
-        y.whenPressed(new CalculatedClimbAndBalance(climber, 1));
-        right2.whenPressed(new PIDClimbAndBalance(climber, 2));
-        right3.whenPressed(new PositionControl(colorWheel));
-        left2.whenPressed(new RotationControl(colorWheel));
-        left3.whenPressed(new FeedTurret(conveyor));
-        left4.whenPressed(new MinimizeConveyor(conveyor));
-        left5.whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
-        right5.whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
-        right4.whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.TOGGLE));
-        x.whenPressed(new IntakeBalls(intake, conveyor, 0.7));
-        left6.whenPressed(new OuttakeBalls(conveyor, intake, 0.2));
-        left7.whenPressed(new MoveIntake(intake));
-        left8.whenPressed(new SpeedUp(shooter));
-        left9.whenPressed(new AutoShoot(turret, shooter, conveyor));
-        right6.whenPressed(new CenterTurret(turret));
-        right7.whileHeld(new JoystickTurret(turret));
-        right8.whenPressed(new TurnTurret(turret, 90));
-        right9.whenPressed(new VisionTurret(turret));
+
     }
 
     public static double getLeftXboxX() {
