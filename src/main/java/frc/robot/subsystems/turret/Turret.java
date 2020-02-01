@@ -53,7 +53,7 @@ public class Turret extends SubsystemBase {
         int currentVelocity = motor.getSelectedSensorVelocity();
         if (Math.abs(currentVelocity) <= VELOCITY_MINIMUM)
             return;
-        boolean changedDirection = isGoingClockwise != currentVelocity < 0; // Checks whether the turret switched directions since the last movement
+        boolean changedDirection = !(isGoingClockwise == currentVelocity > 0); // Checks whether the turret switched directions since the last movement
         if (changedDirection) {
             motor.setSelectedSensorPosition(unitModel.toTicks(getAngle() + (isGoingClockwise ? BACKLASH_ANGLE : -BACKLASH_ANGLE)));
             isGoingClockwise = !isGoingClockwise;
