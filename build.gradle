@@ -3,6 +3,8 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2020.2.2"
 }
 
+apply plugin: "java"
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -61,6 +63,7 @@ dependencies {
 
     implementation "com.github.Oblarg.Oblog:lib:3.1.0"
     implementation name: 'jetty-all-9.4.0.v20161208-uber'
+    compile group: 'com.github.RoelGo', name: 'MiniPID-Java', version: '1.0.0'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
 
     implementation 'org.ghrobotics.FalconLibrary:wpi:2020.2.2'
@@ -73,6 +76,11 @@ dependencies {
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
+    implementation 'junit:junit:4.12'
+    compile group: 'com.github.RoelGo', name: 'MiniPID-Java', version: '1.0.0'
+
+    //  implementation 'org.junit.jupiter:junit-jupiter'
+  //  implementation 'junit:junit:4.12'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
