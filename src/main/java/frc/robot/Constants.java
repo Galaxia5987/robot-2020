@@ -31,6 +31,7 @@ public class Constants{
         public static final double TRACK_WIDTH = 0.72;
         public static final boolean GYRO_INVERTED = true;
         public static final double WHEEL_DIAMETER = 0.1016;
+        public static final double JOYSTICK_END_THRESHOLD = 0;
     }
 
     public static class Autonomous {
