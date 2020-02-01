@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
     public static final boolean debug = true;
     public static boolean isRobotA = true;
     public static boolean hasShifter = true;
+    public static boolean isManualMode = false;
 
     private Command m_autonomousCommand;
     public static Timer robotTimer = new Timer();
@@ -58,6 +59,13 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        if (RobotContainer.cancel.get() && RobotContainer.select.get()){
+            isManualMode = true;
+        }
+
+        if (isManualMode && RobotContainer.cancel.get()){
+            isManualMode = false;
+        }
     }
 
     /**
