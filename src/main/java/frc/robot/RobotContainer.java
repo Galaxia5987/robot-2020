@@ -74,6 +74,7 @@ public class RobotContainer {
     public static final int XboxLeftXStick = 0;
     public static final int XboxLeftYStick = 1;
     public static final int XboxRightYStick = 5;
+    public static final int XboxRightXStick = 4;
 
     public RobotContainer() {
         configureButtonBindings();
@@ -104,6 +105,10 @@ public class RobotContainer {
 
     public static double getRightXboxY() {
         return xbox.getRawAxis(XboxRightYStick);
+    }
+
+    public static double getRightXboxX() {
+        return xbox.getRawAxis(XboxRightXStick);
     }
 
     /**

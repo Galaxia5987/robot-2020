@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.color_wheel.commands.ManualControl;
 
 public class ColorWheel extends SubsystemBase {
 
@@ -42,6 +44,7 @@ public class ColorWheel extends SubsystemBase {
         colorMatcher.addColorMatch(RedTarget);
         colorMatcher.addColorMatch(YellowTarget);
         motor.setNeutralMode(NeutralMode.Brake);
+        setDefaultCommand(new ManualControl(this, RobotContainer::getRightXboxX));
     }
 
     public String getColorString() {
