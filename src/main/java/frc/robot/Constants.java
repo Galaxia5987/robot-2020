@@ -180,8 +180,8 @@ public class Constants{
         public static final int MAX_CURRENT = 35; // [A]
         public static final double ANGLE_THRESHOLD = 1;
 
-        public static final int BACKLASH_ANGLE = 0;//The angle in which the motor moves without the mechanical system moving when switching direction
-        public static final int VELOCITY_MINIMUM = 0;//Minimum velocity to indicate actual movement of the system instead of just small error
+        public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
+        public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
     }
 
 
