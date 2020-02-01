@@ -29,6 +29,7 @@ public class Turret extends SubsystemBase {
     private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
     private NetworkTableEntry visionAngle = visionTable.getEntry("visionAngle");
     private double targetAngle;
+    private boolean isGoingClockwise = true;
     /**
      * configures the encoder and PID constants.
      */
@@ -46,13 +47,17 @@ public class Turret extends SubsystemBase {
         motor.configPeakCurrentLimit(MAX_CURRENT);
     }
 
-    /**
-     * runs periodically, updates the constants and resets encoder position if the hall effect is closed
-     */
-    @Override
-    public void periodic() {
-    }
 
+    public void checkBacklash(){
+        int currentVelocity = motor.getSelectedSensorVelocity();
+        if (Math.abs(currentVelocity) <= VELOCITY_MINIMUM)
+            return;
+        boolean changedDirection = isGoingClockwise != currentVelocity < 0;
+        if (changedDirection) {
+            motor.setSelectedSensorPosition(unitModel.toTicks(getAngle() + (isGoingClockwise ? BACKLASH_ANGLE : -BACKLASH_ANGLE)));
+            isGoingClockwise = !isGoingClockwise;
+        }
+    }
     public void setPower(double speed){
         motor.set(ControlMode.PercentOutput, speed);
     }
@@ -63,7 +68,6 @@ public class Turret extends SubsystemBase {
     public void stop() {
         targetAngle = getAngle();
     }
-
 
     /**
      * get the current angle from the controller
@@ -127,6 +131,13 @@ public class Turret extends SubsystemBase {
 
     public boolean isTurretReady(){
         return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
+    }
+    /**
+     * runs periodically, updates the constants and resets encoder position if the hall effect is closed
+     */
+    @Override
+    public void periodic() {
+        checkBacklash();
     }
 
 }
