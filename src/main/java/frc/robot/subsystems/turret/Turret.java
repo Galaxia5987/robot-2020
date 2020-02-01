@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.Utils;
 
@@ -38,10 +39,9 @@ public class Turret extends SubsystemBase {
     public Turret() {
         motor.configFactoryDefault();
 
-        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, TALON_TIMEOUT);
-        int currentPosition = motor.getSelectedSensorPosition();
+        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 1, TALON_TIMEOUT); // Todo: check if this experimental idea works.
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
-        motor.setSelectedSensorPosition(currentPosition);
+        resetEncoder();
         
         motor.setInverted(IS_MOTOR_INVERTED);
         motor.setSensorPhase(IS_ENCODER_INVERTED);
@@ -156,5 +156,18 @@ public class Turret extends SubsystemBase {
      */
     public boolean inCorrectRange() {
         return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
+    }
+
+    /**
+     * Resets the turret position based on the absolute encoder of the turret.
+     *
+     * IMPORTANT: since the turrets absolute encoder only reads 360 degrees,
+     * we assume the reading to be from -180 to 180. If the turret is reset
+     * when it is more than half a rotation from the starting angle, the turret will
+     * DESTROY ITSELF... be warned! do not use this midgame!
+     */
+    public void resetEncoder(){
+        double currentPosition = Math.IEEEremainder(motor.getSelectedSensorPosition(1) - Constants.Turret.CENTER_POSITION, unitModel.toTicks(360));
+        motor.setSelectedSensorPosition((int)currentPosition);
     }
 }
