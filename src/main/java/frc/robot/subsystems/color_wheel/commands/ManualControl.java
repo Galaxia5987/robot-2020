@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 
 
 /**
- * Rotates the control panel somewhere around 4 spins, does not mind an overshoot or an undershoot
- * stops at 4 spins
+ * Rotates the control panel manually.
+ * This command would run while you hold a button
  */
 public class ManualControl extends CommandBase {
     private ColorWheel colorWheel;
