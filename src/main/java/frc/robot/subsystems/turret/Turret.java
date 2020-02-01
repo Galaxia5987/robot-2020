@@ -49,7 +49,10 @@ public class Turret extends SubsystemBase {
     }
 
 
-    public void checkBacklash(){
+    /**
+     * Corrects subsystem's backlash.
+     */
+    public void correctBacklash(){
         int currentVelocity = motor.getSelectedSensorVelocity();
         if (Math.abs(currentVelocity) <= VELOCITY_MINIMUM)
             return;
@@ -142,7 +145,7 @@ public class Turret extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        checkBacklash();
+        correctBacklash();
     }
 
 }
