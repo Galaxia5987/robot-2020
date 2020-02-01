@@ -1,6 +1,8 @@
 package frc.robot.subsystems.intake.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 
@@ -39,7 +41,7 @@ public class IntakeBalls extends CommandBase {
     @Override
     public boolean isFinished() {
         if(conveyor != null)
-            return conveyor.getBallsCount() >= 5;
+            return conveyor.getBallsCount() >= 5 && !RobotContainer.a.get();
         return false;
     }
 
