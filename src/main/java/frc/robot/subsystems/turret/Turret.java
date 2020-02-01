@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.utilities.Utils;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -45,6 +46,7 @@ public class Turret extends SubsystemBase {
         motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
         motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
         motor.configPeakCurrentLimit(MAX_CURRENT);
+        setDefaultCommand(new JoystickTurret(this));
     }
 
     /**
