@@ -45,8 +45,8 @@ public class PositionControl extends CommandBase {
         try {
             currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
             int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
-            if (joystickY.get() > 0.1)
-                colorWheel.turnManual(true);
+            if (controlStick.get() > 0.1)
+                colorWheel.setManual(true);
             if (!colorWheel.isManual())
                 colorWheel.setPower(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
             else

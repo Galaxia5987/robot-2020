@@ -40,7 +40,7 @@ public class RotationControl extends CommandBase {
     public void execute() {
         updateColorIndex();
         if (joystickY.get() > 0.1)
-            colorWheel.turnManual(true);
+            colorWheel.setManual(true);
         if (colorWheel.isManual())
             colorWheel.setPower(joystickY.get());
         /*
