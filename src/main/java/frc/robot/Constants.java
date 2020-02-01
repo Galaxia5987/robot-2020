@@ -11,10 +11,10 @@ import java.util.Optional;
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
 public class Constants{
-  
+
     public static final int TALON_TIMEOUT_MS = 10;
     public static final double ROBOT_WIDTH = 0;
-  
+
     public static class Drivetrain {
         public static final double[] VELOCITY_PID_SET = {0.0001, 0, 2, 0};//PID set for the velocity drive of the wheels
         public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
@@ -31,6 +31,7 @@ public class Constants{
         public static final double TRACK_WIDTH = 0.72;
         public static final boolean GYRO_INVERTED = true;
         public static final double WHEEL_DIAMETER = 0.1016;
+        public static final double JOYSTICK_END_THRESHOLD = 0;
     }
 
     public static class Autonomous {
@@ -141,7 +142,10 @@ public class Constants{
 
         public static final int MAX_CURRENT = 0;
 
+
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
+        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0;
+        public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0;
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
@@ -159,7 +163,6 @@ public class Constants{
         public static final int TICKS_PER_DEGREE = 1;
         public static final double MINIMUM_POSITION = -200;
         public static final double MAXIMUM_POSITION = 200;
-        public static final double TURRET_JOYSTICK_SPEED = 0;
 
         public static double KP = 0;
         public static double KI = 0;
@@ -172,8 +175,13 @@ public class Constants{
         public static final double VISION_KI = 0;
         public static final double VISION_KD = 0;
 
+        public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
+
         public static final int MAX_CURRENT = 35; // [A]
         public static final double ANGLE_THRESHOLD = 1;
+
+        public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
+        public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
     }
 
 
