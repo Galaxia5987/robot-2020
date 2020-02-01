@@ -17,6 +17,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
+import frc.robot.subsystems.color_wheel.commands.ManualControl;
+import frc.robot.subsystems.color_wheel.commands.PositionControl;
+import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
@@ -26,6 +29,7 @@ import frc.robot.subsystems.intake.commands.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -55,6 +59,8 @@ public class RobotContainer {
     public static JoystickButton x = new JoystickButton(xbox, 4);
     public static JoystickButton select = new JoystickButton(xbox, 5); // TODO: check the actual number
     public static JoystickButton cancel = new JoystickButton(xbox, 6);
+    public static JoystickButton rb = new JoystickButton(xbox, 7);
+    public static JoystickButton lb = new JoystickButton(xbox, 8);
     public static JoystickButton right2 = new JoystickButton(rightJoystick, 2);
     public static JoystickButton left2 = new JoystickButton(leftJoystick, 2);
     public static JoystickButton right3 = new JoystickButton(rightJoystick, 3);
@@ -78,6 +84,8 @@ public class RobotContainer {
 
     public RobotContainer() {
         configureButtonBindings();
+        colorWheel.setDefaultCommand(new ManualControl(colorWheel, RobotContainer::getRightXboxX));
+        turret.setDefaultCommand(new JoystickTurret(turret));
         if (Robot.debug) {
             startFireLog();
         }
@@ -92,6 +100,8 @@ public class RobotContainer {
         b.whenPressed(new SpeedUp(shooter));
         y.whenPressed(new FeedTurret(conveyor));
         cancel.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
+        rb.whenPressed(new RotationControl(colorWheel));
+        lb.whenPressed(new PositionControl(colorWheel));
 
     }
 

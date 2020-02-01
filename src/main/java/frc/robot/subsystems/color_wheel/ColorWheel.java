@@ -44,7 +44,6 @@ public class ColorWheel extends SubsystemBase {
         colorMatcher.addColorMatch(RedTarget);
         colorMatcher.addColorMatch(YellowTarget);
         motor.setNeutralMode(NeutralMode.Brake);
-        setDefaultCommand(new ManualControl(this, RobotContainer::getRightXboxX));
     }
 
     public String getColorString() {

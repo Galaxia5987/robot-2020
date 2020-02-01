@@ -46,7 +46,6 @@ public class Turret extends SubsystemBase {
         motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
         motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
         motor.configPeakCurrentLimit(MAX_CURRENT);
-        setDefaultCommand(new JoystickTurret(this));
     }
 
     /**
