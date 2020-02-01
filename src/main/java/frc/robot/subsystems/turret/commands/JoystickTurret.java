@@ -9,11 +9,10 @@ import static frc.robot.Constants.Turret.*;
 import static frc.robot.RobotContainer.*;
 public class JoystickTurret extends CommandBase {
     private static Turret turret;
-    private Supplier<Double> joystickInput;
+    private Supplier<Double> joystickInput = OI::getXboxY;
 
-    public JoystickTurret(Turret turret, Supplier<Double> joystickInput) {
+    public JoystickTurret(Turret turret) {
         this.turret = turret;
-        this.joystickInput = joystickInput;
         addRequirements(turret);
     }
 
