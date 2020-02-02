@@ -30,7 +30,6 @@ public class TurretSwitching extends CommandBase {
             visionTurret.execute();
         }
         else {
-            turret.setAngle(turret.getAngle());
             timer.start();
             if(timer.get() > Constants.Turret.VISION_TIMEOUT_SECONDS) {
                 turnLocalization.execute();
