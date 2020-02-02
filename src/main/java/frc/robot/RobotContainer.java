@@ -9,9 +9,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
@@ -28,6 +26,7 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.utilities.ButtonCombination;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -56,6 +55,7 @@ public class RobotContainer {
     public static JoystickButton start = new JoystickButton(OI.xbox, 6);
     public static JoystickButton rb = new JoystickButton(OI.xbox, 7);
     public static JoystickButton lb = new JoystickButton(OI.xbox, 8);
+    public static ButtonCombination select_start = new ButtonCombination(OI.xbox, 5, 6);
 
     public RobotContainer() {
         configureButtonBindings();
@@ -77,7 +77,12 @@ public class RobotContainer {
         select.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         rb.whenPressed(new RotationControl(colorWheel));
         lb.whenPressed(new PositionControl(colorWheel));
-
+        select_start.whenHeld(new SequentialCommandGroup(
+                new WaitCommand(2),
+                new RunCommand(() -> Robot.shootingManualMode = true)
+        )); //If both buttons are held without being released the manualMode will be enabled.
+        start.whenPressed(() -> Robot.shootingManualMode = false); //Pressing start disables the manual mode for shooting.
+        
     }
 
     /**

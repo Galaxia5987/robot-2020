@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
     public static final boolean debug = true;
     public static boolean isRobotA = true;
     public static boolean hasShifter = true;
-    public static boolean isManualMode = false;
+    public static boolean shootingManualMode = false;
 
     private Command m_autonomousCommand;
     public static Timer robotTimer = new Timer();
@@ -57,11 +57,11 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         if (RobotContainer.start.get() && RobotContainer.select.get()){
-            isManualMode = true;
+            shootingManualMode = true;
         }
 
-        if (isManualMode && RobotContainer.start.get()){
-            isManualMode = false;
+        if (shootingManualMode && RobotContainer.start.get()){
+            shootingManualMode = false;
         }
     }
 
