@@ -111,7 +111,8 @@ public class Constants{
     public static final int TALON_TIMEOUT = 10;
     
     public static class FieldGeometry {
-        public static final Pose2d POWER_PORT_LOCATION = new Pose2d(0, 0.5, new Rotation2d());
+        public static final Pose2d OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 5.81, new Rotation2d()); // the opponent location is x:0, y:2.4
+        public static final Pose2d INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 5.81, new Rotation2d()); // the opponent location is x:-0.78, y:2.4
     }
 
     public static final class Intake {
