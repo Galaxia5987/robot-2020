@@ -12,10 +12,10 @@ import java.util.Optional;
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
 public class Constants{
-  
+
     public static final int TALON_TIMEOUT_MS = 10;
     public static final double ROBOT_WIDTH = 0;
-  
+
     public static class Drivetrain {
         public static final double[] VELOCITY_PID_SET = {0.0001, 0, 2, 0};//PID set for the velocity drive of the wheels
         public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
@@ -193,6 +193,9 @@ public class Constants{
 
         public static final int MAX_CURRENT = 35; // [A]
         public static final double ANGLE_THRESHOLD = 1;
+
+        public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
+        public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
     }
 
 
