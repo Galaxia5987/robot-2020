@@ -68,8 +68,9 @@ public class Climber extends SubsystemBase {
      * This would allow it to extend.
      */
     public void releaseStopper() {
-        if(safeToClimb())return;
-        stopper.set(DoubleSolenoid.Value.kReverse);
+        if (safeToClimb()) {
+            stopper.set(DoubleSolenoid.Value.kReverse);
+        }
     }
 
     /**
@@ -177,7 +178,7 @@ public class Climber extends SubsystemBase {
         return setpoint;
     }
 
-    public double normalizeDelta(double delta){
+    public double normalizeDelta(double delta) {
         if (delta > Constants.Climber.MAX_DIFFERENCE) {
             return Constants.Climber.MAX_DIFFERENCE;
         } else if (delta < -Constants.Climber.MAX_DIFFERENCE) {
