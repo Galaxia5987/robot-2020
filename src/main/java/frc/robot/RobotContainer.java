@@ -57,8 +57,8 @@ public class RobotContainer {
     public static JoystickButton b = new JoystickButton(xbox, 2);
     public static JoystickButton y = new JoystickButton(xbox, 3);
     public static JoystickButton x = new JoystickButton(xbox, 4);
-    public static JoystickButton select = new JoystickButton(xbox, 5); // TODO: check the actual number
-    public static JoystickButton cancel = new JoystickButton(xbox, 6);
+    public static JoystickButton select = new JoystickButton(xbox, 5);
+    public static JoystickButton start = new JoystickButton(xbox, 6);
     public static JoystickButton rb = new JoystickButton(xbox, 7);
     public static JoystickButton lb = new JoystickButton(xbox, 8);
     public static final int XboxLeftXStick = 0;
@@ -83,7 +83,7 @@ public class RobotContainer {
         x.whileHeld(new OuttakeBalls(conveyor, intake, 0.4));
         b.whenPressed(new SpeedUp(shooter));
         y.whenPressed(new FeedTurret(conveyor));
-        cancel.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
+        select.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         rb.whenPressed(new RotationControl(colorWheel));
         lb.whenPressed(new PositionControl(colorWheel));
 

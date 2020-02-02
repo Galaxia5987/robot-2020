@@ -7,13 +7,10 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.utilities.TrajectoryLoader;
 
 
 /**
@@ -59,11 +56,11 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        if (RobotContainer.cancel.get() && RobotContainer.select.get()){
+        if (RobotContainer.start.get() && RobotContainer.select.get()){
             isManualMode = true;
         }
 
-        if (isManualMode && RobotContainer.cancel.get()){
+        if (isManualMode && RobotContainer.start.get()){
             isManualMode = false;
         }
     }
