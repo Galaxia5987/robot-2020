@@ -26,9 +26,10 @@ public class Shooter extends SubsystemBase {
     private static final NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("shooter");
     private static final NetworkTableEntry visionDistance = visionTable.getEntry("distance");
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
-    private final VictorConfiguration slaveConfigs = new VictorConfiguration();
 
     public Shooter() {
+        VictorConfiguration slaveConfigs = new VictorConfiguration();
+
         // Basic motor configurations
         // Master configurations
         shooterMaster.configFactoryDefault();

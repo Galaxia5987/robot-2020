@@ -27,12 +27,12 @@ public class Climber extends SubsystemBase {
     private final TalonSRX rightMotor = new TalonSRX(Ports.climber.RIGHT_MOTOR);
     private final DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
     private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
-    private final TalonConfiguration talonConfigs = new TalonConfiguration();
 
     /**
      * Creates a new climb Subsystem.
      */
     public Climber() {
+        TalonConfiguration talonConfigs = new TalonConfiguration();
         leftMotor.setInverted(Ports.climber.LEFT_MOTOR_INVERTED);
         rightMotor.setInverted(Ports.climber.RIGHT_MOTOR_INVERTED);
 
