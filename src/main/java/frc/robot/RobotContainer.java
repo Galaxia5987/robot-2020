@@ -8,9 +8,7 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -50,25 +48,18 @@ public class RobotContainer {
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
     private final Command m_autoCommand = null;
-    public static Joystick rightJoystick = new Joystick(0);
-    public static Joystick leftJoystick = new Joystick(1);
-    public static XboxController xbox = new XboxController(2);
-    public static JoystickButton a = new JoystickButton(xbox, 1);
-    public static JoystickButton b = new JoystickButton(xbox, 2);
-    public static JoystickButton y = new JoystickButton(xbox, 3);
-    public static JoystickButton x = new JoystickButton(xbox, 4);
-    public static JoystickButton select = new JoystickButton(xbox, 5);
-    public static JoystickButton start = new JoystickButton(xbox, 6);
-    public static JoystickButton rb = new JoystickButton(xbox, 7);
-    public static JoystickButton lb = new JoystickButton(xbox, 8);
-    public static final int XboxLeftXStick = 0;
-    public static final int XboxLeftYStick = 1;
-    public static final int XboxRightYStick = 5;
-    public static final int XboxRightXStick = 4;
+    public static JoystickButton a = new JoystickButton(OI.xbox, 1);
+    public static JoystickButton b = new JoystickButton(OI.xbox, 2);
+    public static JoystickButton y = new JoystickButton(OI.xbox, 3);
+    public static JoystickButton x = new JoystickButton(OI.xbox, 4);
+    public static JoystickButton select = new JoystickButton(OI.xbox, 5);
+    public static JoystickButton start = new JoystickButton(OI.xbox, 6);
+    public static JoystickButton rb = new JoystickButton(OI.xbox, 7);
+    public static JoystickButton lb = new JoystickButton(OI.xbox, 8);
 
     public RobotContainer() {
         configureButtonBindings();
-        colorWheel.setDefaultCommand(new ManualControl(colorWheel, RobotContainer::getRightXboxX));
+        colorWheel.setDefaultCommand(new ManualControl(colorWheel, OI::getRightXboxX));
         turret.setDefaultCommand(new JoystickTurret(turret));
         if (Robot.debug) {
             startFireLog();
@@ -87,22 +78,6 @@ public class RobotContainer {
         rb.whenPressed(new RotationControl(colorWheel));
         lb.whenPressed(new PositionControl(colorWheel));
 
-    }
-
-    public static double getLeftXboxX() {
-        return xbox.getRawAxis(XboxLeftXStick);
-    }
-
-    public static double getLeftXboxY() {
-        return xbox.getRawAxis(XboxLeftYStick);
-    }
-
-    public static double getRightXboxY() {
-        return xbox.getRawAxis(XboxRightYStick);
-    }
-
-    public static double getRightXboxX() {
-        return xbox.getRawAxis(XboxRightXStick);
     }
 
     /**
