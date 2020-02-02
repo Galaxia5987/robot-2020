@@ -24,7 +24,7 @@ public class JoystickTurret extends CommandBase {
     public void execute() {
         double joystickInput = OI.getXboxY();
         double position = turret.getAngle() + joystickInput * TURRET_JOYSTICK_SPEED;
-        if (position < MINIMUM_POSITION && position > MAXIMUM_POSITION)
+        if (position > MINIMUM_POSITION && position < MAXIMUM_POSITION)
             turret.setAngle(position);
     }
 
