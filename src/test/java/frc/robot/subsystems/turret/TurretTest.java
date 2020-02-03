@@ -52,9 +52,9 @@ public class TurretTest {
 
     @Test
     public void TurretLocalization() {
-        Assert.assertEquals(turnLocalization.calculateTargetAngle(new Pose2d(7, 4, new Rotation2d(Math.toRadians(56.4)))), -29.83, 0.1);
-        Assert.assertEquals(turnLocalization.calculateTargetAngle(new Pose2d(3.5, 0.2, new Rotation2d(Math.toRadians(29.4)))), -24.5, 0.1);
-        Assert.assertEquals(turnLocalization.calculateTargetAngle(new Pose2d(3, 0, new Rotation2d(Math.toRadians(20.7)))), -11.23, 0.1);
-        Assert.assertEquals(turnLocalization.calculateTargetAngle(new Pose2d(3.5, 0.2, new Rotation2d(Math.toRadians(-20)))), 24.89, 0.1);
+        Assert.assertEquals(turnLocalization.calculateTargetAngle(new Pose2d(7, 4, new Rotation2d(Math.toRadians(56.4)))), -45.893, 0.1);
+        Assert.assertEquals(turnLocalization.calculateTargetAngle(new Pose2d(3.5, 0.2, new Rotation2d(Math.toRadians(29.4)))), -6.4678, 0.1);
+        Assert.assertEquals(turnLocalization.calculateTargetAngle(new Pose2d(3, 0, new Rotation2d(Math.toRadians(20.7)))), 2.19133, 0.1);
+        Assert.assertEquals(turnLocalization.calculateTargetAngle(new Pose2d(3.5, 0.2, new Rotation2d(Math.toRadians(-20)))), 42.932, 0.1);
     }
 }
