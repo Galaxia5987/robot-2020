@@ -25,9 +25,9 @@ import org.techfire225.webapp.Webserver;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private Test test = new Test();
+  public static Test test = new Test();
   private double timeout = 3;
   private CommandGroup commandGroup = new CommandGroup(test, timeout);
   private ParallelGroup parallelGroup = new ParallelGroup(test);

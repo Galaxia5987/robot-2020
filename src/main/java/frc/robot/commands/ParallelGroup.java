@@ -8,9 +8,8 @@ import frc.robot.subsystems.Test;
 public class ParallelGroup extends ParallelDeadlineGroup {
      public ParallelGroup(Test test){
          super(new Parallel2());
-         addRequirements((Subsystem) test);
          addCommands(
-                 new ParallelCommandGroup(new Parallel1(), new Parallel2())
+                 new Parallel1()
          );
      }
 

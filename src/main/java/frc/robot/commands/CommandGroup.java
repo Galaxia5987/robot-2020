@@ -6,8 +6,7 @@ import frc.robot.subsystems.Test;
 
 public class CommandGroup extends ParallelCommandGroup {
 
-    public CommandGroup(Test test, double timeout) {
-        addRequirements((Subsystem) test);
+    public CommandGroup(double timeout) {
         addCommands(
                 new WithTimeoutTest().withTimeout(timeout)
         );
