@@ -32,6 +32,7 @@ public class Turret extends SubsystemBase {
     private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
     private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private double targetAngle;
+    private boolean isGoingClockwise = true;
 
     /**
      * configures the encoder and PID constants.
@@ -55,19 +56,18 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * runs periodically, updates the constants and resets encoder position if the hall effect is closed
+     * Corrects subsystem's backlash.
      */
-    @Override
-    public void periodic() {
+    public void correctBacklash(){
+        int currentVelocity = motor.getSelectedSensorVelocity();
+        if (Math.abs(currentVelocity) <= VELOCITY_MINIMUM)
+            return;
+        boolean changedDirection = !(isGoingClockwise == currentVelocity > 0); // Checks whether the turret switched directions since the last movement
+        if (changedDirection) {
+            motor.setSelectedSensorPosition(unitModel.toTicks(getAngle() + (isGoingClockwise ? BACKLASH_ANGLE : -BACKLASH_ANGLE)));
+            isGoingClockwise = !isGoingClockwise;
+        }
     }
-
-    /**
-     * set the position to the current position to stop the turret at the target position.
-     */
-    public void stop() {
-        targetAngle = getAngle();
-    }
-
 
     /**
      * get the current angle from the controller
@@ -76,6 +76,16 @@ public class Turret extends SubsystemBase {
      */
     public double getAngle() {
         return unitModel.toUnits(motor.getSelectedSensorPosition());
+    }
+
+    /**
+     * set the position of the turret to the setpoint angle.
+     *
+     * @param angle setpoint angle.
+     */
+    public void setAngle(double angle) {
+        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
 
     /**
@@ -116,13 +126,10 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * set the position of the turret to the setpoint angle.
-     *
-     * @param angle setpoint angle.
+     * set the position to the current position to stop the turret at the target position.
      */
-    public void setAngle(double angle) {
-        targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
-        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
+    public void stop() {
+        motor.set(ControlMode.MotionMagic, getAngle());
     }
 
     /**
@@ -149,6 +156,13 @@ public class Turret extends SubsystemBase {
     
     public boolean isTurretReady(){
         return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
+    }
+    /**
+     * runs periodically, updates the constants and resets encoder position if the hall effect is closed
+     */
+    @Override
+    public void periodic() {
+        correctBacklash();
     }
 
     /**

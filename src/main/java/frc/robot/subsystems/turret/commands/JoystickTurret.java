@@ -5,6 +5,9 @@ import frc.robot.OI;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.utilities.Utils;
 
+import static frc.robot.Constants.Turret.MAXIMUM_POSITION;
+import static frc.robot.Constants.Turret.MINIMUM_POSITION;
+import static frc.robot.RobotContainer.TURRET_JOYSTICK_SPEED;
 import static frc.robot.Constants.Turret.*;
 
 
