@@ -11,4 +11,8 @@ public class Test extends SubsystemBase {
     public void print(){
         System.out.println("Running");
     }
+
+    public void stop() {
+        System.out.println("Stopped");
+    }
 }

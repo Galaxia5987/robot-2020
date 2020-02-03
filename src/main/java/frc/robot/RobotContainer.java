@@ -29,8 +29,8 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   public static Test test = new Test();
   private double timeout = 3;
-  private CommandGroup commandGroup = new CommandGroup(test, timeout);
-  private ParallelGroup parallelGroup = new ParallelGroup(test);
+  private CommandGroup commandGroup = new CommandGroup(timeout);
+  private ParallelGroup parallelGroup = new ParallelGroup();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
