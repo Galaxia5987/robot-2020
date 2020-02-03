@@ -8,8 +8,8 @@ public class Test extends SubsystemBase {
 
     }
 
-    public void print(){
-        System.out.println("Running");
+    public void print(String print){
+        System.out.println(print);
     }
 
     public void stop() {

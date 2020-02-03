@@ -17,12 +17,13 @@ public class Parallel1 extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        test.print();
+        test.print("running1");
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        test.print("PARALLEL_1_END");
     }
 
     // Returns true when the command should end.
