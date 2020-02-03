@@ -62,7 +62,9 @@ public class Climber extends SubsystemBase {
      * This would allow it to extend.
      */
     public void releaseStopper() {
-        stopper.set(DoubleSolenoid.Value.kReverse);
+        if (safeToClimb()) {
+            stopper.set(DoubleSolenoid.Value.kReverse);
+        }
     }
 
     /**
