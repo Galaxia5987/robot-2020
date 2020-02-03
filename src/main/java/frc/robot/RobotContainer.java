@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.commands.CommandGroup;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ParallelGroup;
@@ -33,6 +34,7 @@ public class RobotContainer {
   private CommandGroup commandGroup = new CommandGroup(timeout);
   private ParallelGroup parallelGroup = new ParallelGroup();
   private WithTimeoutTest timeoutTest = new WithTimeoutTest();
+  private Button a = new Button();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -62,6 +64,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    a.whileHeld(new WithTimeoutTest());
   }
 
 
