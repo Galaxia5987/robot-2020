@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.networktables.NetworkTable;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
@@ -30,6 +32,7 @@ import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.ghrobotics.lib.debug.FalconDashboard;
 
 import static frc.robot.Constants.Drivetrain.*;
+import static frc.robot.Constants.ROBOT_WIDTH;
 import static frc.robot.Ports.Drivetrain.*;
 import static frc.robot.RobotContainer.navx;
 
@@ -73,18 +76,6 @@ public class Drivetrain extends SubsystemBase {
         configurations.setEnableCurrentLimit(true);
         configurations.setSupplyCurrentLimit(40);
         localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
-    }
-
-    public void setPower(double left, double right) {
-        leftMaster.set(ControlMode.PercentOutput, left);
-        rightMaster.set(ControlMode.PercentOutput, right);
-        Utils.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
-        if(Robot.hasShifter) {
-            if (Robot.isRobotA)
-                gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
-            else
-                gearShifterB = new Solenoid(1, SHIFTER_PORT);
-        }
     }
 
     public void shiftGear(shiftModes mode) {
@@ -257,11 +248,12 @@ public class Drivetrain extends SubsystemBase {
     public void periodic() { // This method will be called once per scheduler run
         UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
         unitModel = lowGearUnitModel;
-        Pose2d current = localization.update( new Rotation2d( Math.toRadians(Robot.navx.getAngle())),
+        Pose2d current = localization.update( new Rotation2d( Math.toRadians(RobotContainer.navx.getAngle())),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition()),
-                Robot.navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION, Robot.robotTimer.get());
+                RobotContainer.navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION,
         );
+
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
 

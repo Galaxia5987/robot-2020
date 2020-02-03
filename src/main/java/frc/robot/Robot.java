@@ -26,12 +26,11 @@ public class Robot extends TimedRobot {
     public static final boolean debug = true;
     public static boolean isRobotA = true;
     public static boolean hasShifter = true;
-
     private Command m_autonomousCommand;
   
-  public static Timer robotTimer = new Timer();
+    public static Timer robotTimer = new Timer();
 
-  private RobotContainer m_robotContainer;
+    private RobotContainer m_robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -41,9 +40,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
     robotTimer.reset();
     robotTimer.start();
+    m_robotContainer = new RobotContainer();
   }
 
   /**
@@ -94,7 +93,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    navx.reset();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -102,6 +100,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+  }
 
     /**
      * This function is called periodically during operator control.
