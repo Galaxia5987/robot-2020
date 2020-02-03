@@ -230,7 +230,7 @@ public class Drivetrain extends SubsystemBase {
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
         navx.reset();
-        localization.resetPosition(pose, rotation);
+        localization.resetPosition(pose, rotation, Robot.robotTimer.get());
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
@@ -252,6 +252,7 @@ public class Drivetrain extends SubsystemBase {
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition()),
                 RobotContainer.navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION,
+                Robot.robotTimer.get()
         );
 
         if (getCooldown() > SHIFTER_COOLDOWN)
