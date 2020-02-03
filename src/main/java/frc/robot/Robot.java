@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.utilities.TrajectoryLoader;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,10 +23,12 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static AHRS navx = new AHRS(SPI.Port.kMXP);
-  static final boolean debug = true;
-  public static boolean isRobotA = true;
+    public static final boolean debug = true;
+    public static boolean isRobotA = true;
+    public static boolean hasShifter = true;
+
     private Command m_autonomousCommand;
+  
   public static Timer robotTimer = new Timer();
 
   private RobotContainer m_robotContainer;
@@ -99,25 +102,26 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-  }
 
-  /**
-   * This function is called periodically during operator control.
-   */
-  @Override
-  public void teleopPeriodic() {
-  }
+    /**
+     * This function is called periodically during operator control.
+     */
+    @Override
+    public void teleopPeriodic() {
+    }
 
-  @Override
-  public void testInit() {
-    // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
-  }
+    @Override
+    public void testInit() {
+        // Cancels all running commands at the start of test mode.
+        CommandScheduler.getInstance().cancelAll();
+    }
 
-  /**
-   * This function is called periodically during test mode.
-   */
-  @Override
-  public void testPeriodic() {
-  }
+    /**
+     * This function is called periodically during test mode.
+     */
+    @Override
+    public void testPeriodic() {
+    }
+
 }
+
