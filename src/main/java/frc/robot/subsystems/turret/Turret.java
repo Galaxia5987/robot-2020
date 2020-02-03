@@ -121,7 +121,7 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
         motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
     }
 
