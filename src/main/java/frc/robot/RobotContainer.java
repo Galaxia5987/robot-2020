@@ -17,6 +17,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
+import frc.robot.subsystems.climb.commands.JoystickControl;
+import frc.robot.subsystems.climb.commands.ReleaseRods;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
@@ -53,13 +56,9 @@ public class RobotContainer {
     private final ColorWheel colorWheel = new ColorWheel();
     private final JoystickButton rightJoystickButton3 = new JoystickButton(rightJoystick, 3);
     private final Shooter shooter = new Shooter();
-    public static XboxController xbox = new XboxController(2);
     public static JoystickButton a = new JoystickButton(xbox, 1);
     public static JoystickButton b = new JoystickButton(xbox, 2);
     public static JoystickButton y = new JoystickButton(xbox, 3);
-    public static final int XboxLeftXStick = 0;
-    public static final int XboxLeftYStick = 1;
-    public static final int XboxRightYStick = 5;
     private final JoystickButton rs = new JoystickButton(xbox, 10);
     private final StickButton rightY = new StickButton(xbox, 5, 0.1);
     private static Conveyor conveyor = new Conveyor();
@@ -102,10 +101,6 @@ public class RobotContainer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public double getLeftXboxX() {
-        return xbox.getRawAxis(XboxLeftXStick);
     }
 
     /**
