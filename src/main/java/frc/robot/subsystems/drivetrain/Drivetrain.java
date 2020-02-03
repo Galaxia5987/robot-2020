@@ -56,6 +56,7 @@ public class Drivetrain extends SubsystemBase {
     private DoubleSolenoid gearShifterA = null;
     private Solenoid gearShifterB = null;
     private Timer shiftCooldown = new Timer();
+    private Timer localizationTimer = new Timer();
     private boolean isShifting = false;
 
 
@@ -76,6 +77,8 @@ public class Drivetrain extends SubsystemBase {
         configurations.setEnableCurrentLimit(true);
         configurations.setSupplyCurrentLimit(40);
         localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
+        localizationTimer.reset();
+        localizationTimer.start();
     }
 
     public void shiftGear(shiftModes mode) {
@@ -230,7 +233,7 @@ public class Drivetrain extends SubsystemBase {
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
         navx.reset();
-        localization.resetPosition(pose, rotation, Robot.robotTimer.get());
+        localization.resetPosition(pose, rotation, localizationTimer.get());
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
@@ -252,7 +255,7 @@ public class Drivetrain extends SubsystemBase {
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition()),
                 RobotContainer.navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION,
-                Robot.robotTimer.get()
+                localizationTimer.get()
         );
 
         if (getCooldown() > SHIFTER_COOLDOWN)
