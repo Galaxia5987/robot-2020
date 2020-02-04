@@ -236,6 +236,11 @@ public class Drivetrain extends SubsystemBase {
         rightMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(rightVelocity), DemandType.ArbitraryFeedForward, rightFF);
     }
 
+    public void setPower(double leftPower, double rightPower){
+        leftMaster.set(ControlMode.PercentOutput, leftPower);
+        rightMaster.set(ControlMode.PercentOutput, rightPower);
+    }
+
     @Override
     public void periodic() { // This method will be called once per scheduler run
         UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
