@@ -33,8 +33,8 @@ public class RobotContainer {
   private ParallelGroup parallelGroup = new ParallelGroup();
   private WithTimeoutTest timeoutTest = new WithTimeoutTest();
   private WhileHeldTest whileHeldTest = new WhileHeldTest();
-  private XboxController xboxController = new XboxController(2);
-  private JoystickButton a = new JoystickButton(xboxController, 1);
+//  private XboxController xboxController = new XboxController(2);
+//  private JoystickButton a = new JoystickButton(xboxController, 1);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -64,7 +64,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    a.whileHeld(new WhileHeldTest());
+//    a.whileHeld(new WhileHeldTest());
   }
 
 
@@ -75,6 +75,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return timeoutTest;
+    return commandGroup;
   }
 }
