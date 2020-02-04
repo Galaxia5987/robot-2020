@@ -110,7 +110,6 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     public RobotContainer() {
-        turret.setDefaultCommand(new TurretSwitching(turret, drivetrain));
         // Configure the button bindings
         configureButtonBindings();
         if (Robot.debug) {
