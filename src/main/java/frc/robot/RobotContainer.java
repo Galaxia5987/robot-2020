@@ -59,7 +59,7 @@ public class RobotContainer {
 
     public RobotContainer() {
         configureButtonBindings();
-        colorWheel.setDefaultCommand(new ManualControl(colorWheel, OI::getRightXboxX));
+        colorWheel.setDefaultCommand(new ManualControl(colorWheel));
         turret.setDefaultCommand(new JoystickTurret(turret));
         if (Robot.debug) {
             startFireLog();
