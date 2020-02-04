@@ -51,11 +51,11 @@ public class RobotContainer {
     public static JoystickButton b = new JoystickButton(OI.xbox, 2);
     public static JoystickButton y = new JoystickButton(OI.xbox, 3);
     public static JoystickButton x = new JoystickButton(OI.xbox, 4);
-    public static JoystickButton select = new JoystickButton(OI.xbox, 5);
-    public static JoystickButton start = new JoystickButton(OI.xbox, 6);
-    public static JoystickButton rb = new JoystickButton(OI.xbox, 7);
-    public static JoystickButton lb = new JoystickButton(OI.xbox, 8);
-    public static ButtonCombination select_start = new ButtonCombination(OI.xbox, 5, 6);
+    public static JoystickButton select = new JoystickButton(OI.xbox, 7);
+    public static JoystickButton start = new JoystickButton(OI.xbox, 8);
+    public static JoystickButton rb = new JoystickButton(OI.xbox, 5);
+    public static JoystickButton lb = new JoystickButton(OI.xbox, 6);
+    public static ButtonCombination select_start = new ButtonCombination(OI.xbox, 7, 8);
 
     public RobotContainer() {
         configureButtonBindings();
@@ -82,7 +82,6 @@ public class RobotContainer {
                 new RunCommand(() -> Robot.shootingManualMode = true)
         )); //If both buttons are held without being released the manualMode will be enabled.
         start.whenPressed(() -> Robot.shootingManualMode = false); //Pressing start disables the manual mode for shooting.
-        
     }
 
     /**
