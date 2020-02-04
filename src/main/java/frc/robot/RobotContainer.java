@@ -114,6 +114,7 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
         if (Robot.debug) {
+            startValueTuner();
             startFireLog();
         }
     }
