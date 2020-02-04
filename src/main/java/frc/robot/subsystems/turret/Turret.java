@@ -59,7 +59,7 @@ public class Turret extends SubsystemBase {
      * Corrects subsystem's backlash.
      */
     public void correctBacklash(){
-        int currentVelocity = motor.getSelectedSensorVelocity();
+        double currentVelocity = unitModel.toVelocity(motor.getSelectedSensorVelocity());
         if (Math.abs(currentVelocity) <= VELOCITY_MINIMUM)
             return;
         boolean changedDirection = !(isGoingClockwise == currentVelocity > 0); // Checks whether the turret switched directions since the last movement
