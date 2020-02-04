@@ -49,6 +49,10 @@ public class Shooter extends SubsystemBase {
         shooterMaster.enableVoltageCompensation(true);
         shooterMaster.configPeakCurrentLimit(MAX_CURRENT);
 
+        shooterMaster.configPeakCurrentLimit(0);
+        shooterMaster.configContinuousCurrentLimit(40);
+        shooterMaster.enableCurrentLimit(true);
+
         // Slave configuration
         shooterSlave1.follow(shooterMaster);
         shooterSlave2.follow(shooterMaster);
