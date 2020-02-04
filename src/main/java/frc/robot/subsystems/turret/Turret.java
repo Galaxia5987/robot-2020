@@ -33,7 +33,7 @@ public class Turret extends SubsystemBase {
     private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private double targetAngle;
     private boolean isGoingClockwise = true;
-
+    private double turretBacklash; //The angle in degrees which the turret is off from the motor (clockwise). this angle changes based on the turning direction.
     /**
      * configures the encoder and PID constants.
      */
@@ -64,8 +64,8 @@ public class Turret extends SubsystemBase {
             return;
         boolean changedDirection = !(isGoingClockwise == currentVelocity > 0); // Checks whether the turret switched directions since the last movement
         if (changedDirection) {
-            motor.setSelectedSensorPosition(unitModel.toTicks(getAngle() + (isGoingClockwise ? BACKLASH_ANGLE : -BACKLASH_ANGLE)));
             isGoingClockwise = !isGoingClockwise;
+            turretBacklash = isGoingClockwise ? BACKLASH_ANGLE / 2. : -BACKLASH_ANGLE / 2.;
         }
     }
 
@@ -75,7 +75,7 @@ public class Turret extends SubsystemBase {
      * @return the angle of the turret
      */
     public double getAngle() {
-        return unitModel.toUnits(motor.getSelectedSensorPosition());
+        return unitModel.toUnits(motor.getSelectedSensorPosition()) - turretBacklash; //subtract backlash to get turret angle, add to get motor angle.
     }
 
     /**
@@ -84,8 +84,8 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
-        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
+        targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle + turretBacklash));
     }
 
     /**
