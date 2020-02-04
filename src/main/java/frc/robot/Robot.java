@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -24,7 +25,8 @@ import frc.robot.utilities.TrajectoryLoader;
  */
 public class Robot extends TimedRobot {
     public static final boolean debug = true;
-    public static boolean isRobotA = true;
+    // The roborio has built in pull up resistors, Bridge signal and ground pins on Robot A DIO 0
+    public static boolean isRobotA = !new DigitalInput(0).get();
     public static boolean hasShifter = true;
 
     private Command m_autonomousCommand;
