@@ -22,7 +22,7 @@ public class TurnLocalization extends CommandBase {
         turret.setAngle(calculateTargetAngle(drivetrain.getPose()));
     }
 
-    public double calculateTargetAngle(Pose2d currentPosition) {
+    public static double calculateTargetAngle(Pose2d currentPosition) {
         double deltaY = OUTER_POWER_PORT_LOCATION.getTranslation().getY() - currentPosition.getTranslation().getY();
         double deltaX = OUTER_POWER_PORT_LOCATION.getTranslation().getX() - currentPosition.getTranslation().getX();
         return Math.toDegrees(Math.atan2(deltaY, deltaX) - currentPosition.getRotation().getRadians());
