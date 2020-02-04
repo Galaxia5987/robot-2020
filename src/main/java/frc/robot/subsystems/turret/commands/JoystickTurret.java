@@ -6,7 +6,6 @@ import frc.robot.subsystems.turret.Turret;
 import java.util.function.Supplier;
 
 import static frc.robot.Constants.Turret.*;
-import static frc.robot.RobotContainer.*;
 public class JoystickTurret extends CommandBase {
     private static Turret turret;
     private Supplier<Double> joystickInput = OI::getXboxY;

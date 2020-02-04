@@ -39,10 +39,6 @@ public class RotationControl extends CommandBase {
     @Override
     public void execute() {
         updateColorIndex();
-        if (joystickInput.get() > 0.1)
-            colorWheel.setManual(true);
-        if (colorWheel.isManual())
-            colorWheel.setPower(joystickInput.get());
         /*
         this block of code looks at the order of the colors and checks whether the wheel is moving clockwise or counterclockwise
         and counts the amount of spins to each direction accordingly
