@@ -52,7 +52,7 @@ public class RobotContainer {
     private static final Turret turret = new Turret();
     private static final XboxController xbox = new XboxController(2);
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
-    public final Drivetrain drivetrain = new Drivetrain();
+    private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
     private final JoystickButton rightJoystickButton3 = new JoystickButton(rightJoystick, 3);
     private final Shooter shooter = new Shooter();
