@@ -2,10 +2,7 @@ package frc.robot.subsystems.color_wheel.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.OI;
 import frc.robot.subsystems.color_wheel.ColorWheel;
-
-import java.util.function.Supplier;
 
 
 /**
@@ -19,8 +16,6 @@ public class RotationControl extends CommandBase {
     private double clockwiseSpins = 0;//Counts the clockwise spins of the control panel
     private double counterClockwiseSpins = 0;//Counts the counterclockwise spins of the control panel
     private ColorWheel colorWheel;
-
-    private Supplier<Double> joystickInput = OI::getXboxY;
 
 
 

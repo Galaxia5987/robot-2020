@@ -20,10 +20,9 @@ import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
 import frc.robot.subsystems.climb.commands.JoystickControl;
 import frc.robot.subsystems.climb.commands.ReleaseRods;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.color_wheel.ColorWheel;
-import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
@@ -68,7 +67,6 @@ public class RobotContainer {
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
     private void configureButtonBindings() {
-        //a.whenPressed(new RunCommand(() -> colorWheel.turnManual(false)));
         a.whileHeld(new JoystickControl(climber, false));
         b.whenPressed(new ReleaseRods(climber, 1.5));
         y.whenPressed(new CalculatedClimbAndBalance(climber, 1));
@@ -128,5 +126,4 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return null;
     }
-      
 }

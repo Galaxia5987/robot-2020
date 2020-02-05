@@ -36,8 +36,6 @@ public class ColorWheel extends SubsystemBase {
 
     private ColorMatchResult match;
 
-    private boolean manual = false;
-
     public ColorWheel() {
         colorMatcher.addColorMatch(BlueTarget);
         colorMatcher.addColorMatch(GreenTarget);
@@ -48,14 +46,6 @@ public class ColorWheel extends SubsystemBase {
 
     public String getColorString() {
         return colorString;
-    }
-
-    public void setManual(boolean manual){
-        this.manual = manual;
-    }
-
-    public boolean isManual(){
-        return manual;
     }
 
     public int indexOfColor(String color) {
