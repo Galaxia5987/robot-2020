@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
- * Extension of the button class, triggers a command when an axis' value raises above a height
+ * Extension of the {@link Button} class, triggers a command when an axis' value raises above a height
  *
- * @author paulo
+ * @author Paulo Khayat
  */
 public class TriggerButton extends Button {
     private final GenericHID m_joystick;
@@ -19,11 +19,13 @@ public class TriggerButton extends Button {
      * @param joystick     The GenericHID object that has the button (e.g. Joystick, KinectStick,
      *                     etc)
      * @param axisNumber The button number (see {@link GenericHID#getRawButton(int) }
+     *
+     * @param threshholdValue above this absolute value the command will run.
      */
-    public TriggerButton(GenericHID joystick, int axisNumber, double threshHoldValue) {
+    public TriggerButton(GenericHID joystick, int axisNumber, double threshholdValue) {
         m_joystick = joystick;
         m_axis_number = axisNumber;
-        m_starting_value = threshHoldValue;
+        m_starting_value = threshholdValue;
     }
 
     public TriggerButton(XboxController xbox, GenericHID.Hand wantedHand, double startingValue) {
@@ -37,6 +39,6 @@ public class TriggerButton extends Button {
      */
     @Override
     public boolean get() {
-        return m_joystick.getRawAxis(m_axis_number) > m_starting_value;
+        return Math.abs(m_joystick.getRawAxis(m_axis_number)) > m_starting_value;
     }
 }
