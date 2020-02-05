@@ -45,10 +45,10 @@ public class OI {
     }
 
     public static double getLeftStickForward(){
-        return leftStick.getY();
+        return -leftStick.getY();
     }
 
     public static double getRightStickForward(){
-        return rightStick.getY();
+        return -rightStick.getY();
     }
 }
