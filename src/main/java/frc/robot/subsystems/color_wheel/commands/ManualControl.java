@@ -30,7 +30,6 @@ public class ManualControl extends CommandBase {
     @Override
     public void execute() {
             colorWheel.setPower(joystickInput.get());
-
     }
 
     @Override
