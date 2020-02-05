@@ -18,6 +18,7 @@ import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.IntakeBalls;
 import frc.robot.subsystems.intake.commands.OuttakeBalls;
@@ -47,9 +48,10 @@ public class RobotContainer {
     private final Command m_autoCommand = null;
 
     public RobotContainer() {
-        configureButtonBindings();
         colorWheel.setDefaultCommand(new ManualControl(colorWheel));
         turret.setDefaultCommand(new JoystickTurret(turret));
+        drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
+        configureButtonBindings();
         if (Robot.debug) {
             startFireLog();
         }
