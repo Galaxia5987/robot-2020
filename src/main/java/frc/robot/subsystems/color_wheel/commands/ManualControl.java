@@ -18,9 +18,8 @@ public class ManualControl extends CommandBase {
 
 
 
-    public ManualControl(ColorWheel colorWheel, Supplier<Double> joystickInput) {
+    public ManualControl(ColorWheel colorWheel) {
         this.colorWheel = colorWheel;
-        this.joystickInput = joystickInput;
     }
 
     @Override
@@ -31,7 +30,6 @@ public class ManualControl extends CommandBase {
     @Override
     public void execute() {
             colorWheel.setPower(joystickInput.get());
-
     }
 
     @Override
