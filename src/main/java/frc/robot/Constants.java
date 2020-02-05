@@ -100,6 +100,7 @@ public class Constants{
                         Field modifiersField = Field.class.getDeclaredField("modifiers");
                         modifiersField.setAccessible(true);
                         modifiersField.setInt(f2, f2.getModifiers() & ~Modifier.FINAL);
+                        f2.set(null, f.get(null));
                     } catch (IllegalAccessException | NoSuchFieldException e) { // Catch relevant exceptions
                         e.printStackTrace();
                     }
