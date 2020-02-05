@@ -62,7 +62,7 @@ public class RobotContainer {
     public static JoystickButton y = new JoystickButton(xbox, 3);
     private final JoystickButton rs = new JoystickButton(xbox, 10);
     private final StickButton rightY = new StickButton(xbox, 5, 0.1);
-    private static Conveyor conveyor = new Conveyor();
+    private static Conveyor conveyor = new Conveyor(intake);
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
