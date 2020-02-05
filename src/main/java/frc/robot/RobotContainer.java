@@ -17,12 +17,19 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
+import frc.robot.subsystems.climb.commands.JoystickControl;
+import frc.robot.subsystems.climb.commands.ReleaseRods;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.color_wheel.ColorWheel;
-import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.TurretSwitching;
+import frc.robot.utilities.StickButton;
 import frc.robot.subsystems.turret.commands.CenterTurret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.valuetuner.ValueTuner;
@@ -46,26 +53,30 @@ public class RobotContainer {
     private static final Turret turret = new Turret();
     private static final XboxController xbox = new XboxController(2);
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
-    // The robot's subsystems and commands are defined here...
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
     private final JoystickButton rightJoystickButton3 = new JoystickButton(rightJoystick, 3);
     private final Shooter shooter = new Shooter();
+    public static JoystickButton a = new JoystickButton(xbox, 1);
+    public static JoystickButton b = new JoystickButton(xbox, 2);
+    public static JoystickButton y = new JoystickButton(xbox, 3);
+    private final JoystickButton rs = new JoystickButton(xbox, 10);
+    private final StickButton rightY = new StickButton(xbox, 5, 0.1);
     private static Conveyor conveyor = new Conveyor();
-    private final JoystickButton a = new JoystickButton(xbox, 3);
-    private final JoystickButton b = new JoystickButton(xbox, 4);
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
-        if (Robot.debug) {
-            startValueTuner();
-            startFireLog();
-            new ValueTuner().start();
-        }
+    private void configureButtonBindings() {
+        //a.whenPressed(new RunCommand(() -> colorWheel.turnManual(false)));
+        a.whileHeld(new JoystickControl(climber, false));
+        b.whenPressed(new ReleaseRods(climber, 1.5));
+        y.whenPressed(new CalculatedClimbAndBalance(climber, 1));
+        rightY.whileHeld(new JoystickTurret(turret));
+    }
+
+    public static double getLeftXboxX() {
+        return xbox.getRawAxis(XboxLeftXStick);
     }
 
     public static double getLeftXboxY() {
@@ -94,20 +105,19 @@ public class RobotContainer {
         }
     }
 
-    public double getLeftXboxX() {
-        return xbox.getRawAxis(XboxLeftXStick);
-    }
-
     /**
      * Use this method to define your button->command mappings.  Buttons can be created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-    private void configureButtonBindings() {
-        rightJoystickButton3.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        a.whenPressed(new TurnTurret(turret, 45));
-        b.whenPressed(new CenterTurret(turret));
+    public RobotContainer() {
+        // Configure the button bindings
+        configureButtonBindings();
+        if (Robot.debug) {
+            startValueTuner();
+            startFireLog();
+        }
     }
 
     /**
@@ -118,4 +128,5 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return null;
     }
+      
 }

@@ -1,5 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -97,6 +100,7 @@ public class Constants{
                         Field modifiersField = Field.class.getDeclaredField("modifiers");
                         modifiersField.setAccessible(true);
                         modifiersField.setInt(f2, f2.getModifiers() & ~Modifier.FINAL);
+                        f2.set(null, f.get(null));
                     } catch (IllegalAccessException | NoSuchFieldException e) { // Catch relevant exceptions
                         e.printStackTrace();
                     }
@@ -107,6 +111,11 @@ public class Constants{
     }
 
     public static final int TALON_TIMEOUT = 10;
+    
+    public static class FieldGeometry {
+        public static final Pose2d OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 5.81, new Rotation2d()); // the opponent location is x:0, y:2.4
+        public static final Pose2d INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 5.81, new Rotation2d()); // the opponent location is x:-0.78, y:2.4
+    }
 
     public static final class Intake {
         public static final double INTAKE_POWER = 0.5;
@@ -160,9 +169,12 @@ public class Constants{
     }
 
     public static class Turret {
+        public static final double VISION_TIMEOUT_SECONDS = 1;
+
         public static final int TICKS_PER_DEGREE = 1;
         public static final double MINIMUM_POSITION = -200;
         public static final double MAXIMUM_POSITION = 200;
+        public static final int CENTER_POSITION = 2048;
 
         public static double KP = 0;
         public static double KI = 0;
@@ -189,6 +201,7 @@ public class Constants{
         public static final int TICKS_PER_ROTATION = 36;
         public static final double KP = 0.085; // 0.13
         public static final double KI = 0.0;
+
         public static final double KD = 0.00;
         public static final double KF = 0.003;
         public static final double MAX_ACCELERATION = 2;
