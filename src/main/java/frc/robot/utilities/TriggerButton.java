@@ -27,7 +27,7 @@ public class TriggerButton extends Button {
     }
 
     public TriggerButton(XboxController xbox, GenericHID.Hand wantedHand, double startingValue) {
-        this(xbox, wantedHand == GenericHID.Hand.kLeft ? 2 : 3, startingValue); //Allow inputting xbox triggers directly.
+        this(xbox, wantedHand == GenericHID.Hand.kLeft ? XboxController.Axis.kLeftTrigger.value : XboxController.Axis.kRightTrigger.value, startingValue); //Allow inputting xbox triggers directly.
     }
 
     /**

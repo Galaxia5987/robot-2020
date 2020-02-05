@@ -23,8 +23,8 @@ public class OI {
     public static JoystickButton rb = new JoystickButton(xbox, 5);
     public static JoystickButton start = new JoystickButton(xbox, 8);
     public static JoystickButton select = new JoystickButton(xbox, 7);
-    public static JoystickButton x = new JoystickButton(xbox, 4);
-    public static JoystickButton y = new JoystickButton(xbox, 3);
+    public static JoystickButton x = new JoystickButton(xbox, 3);
+    public static JoystickButton y = new JoystickButton(xbox, 4);
     public static JoystickButton b = new JoystickButton(xbox, 2);
     public static JoystickButton a = new JoystickButton(xbox, 1);
 
