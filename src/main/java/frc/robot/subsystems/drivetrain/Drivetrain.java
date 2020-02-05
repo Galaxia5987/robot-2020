@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
@@ -46,7 +48,17 @@ public class Drivetrain extends SubsystemBase {
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
     public UnitModel unitModel = lowGearUnitModel;
+    private NetworkTable localizationTable = NetworkTableInstance.getDefault().getTable("localization");
+    private NetworkTableEntry x = localizationTable.getEntry("x");
+    private NetworkTableEntry y = localizationTable.getEntry("y");
+    private NetworkTableEntry velocity = localizationTable.getEntry("velocity");
+    private NetworkTableEntry theta = localizationTable.getEntry("theta");
+    private NetworkTableEntry angularVelocity = localizationTable.getEntry("angular-velocity");
+    private NetworkTableEntry accelerationBias = localizationTable.getEntry("acceleration-bias");
+    private NetworkTableEntry encoderLeft = localizationTable.getEntry("left-encoder");
+    private NetworkTableEntry encoderRight = localizationTable.getEntry("right-encoder");
     private FullLocalization localization;
+    private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())),new Pose2d(0, 0, new Rotation2d()));
 
     /**
      * The gear shifter will be programmed according to the following terms
@@ -251,12 +263,29 @@ public class Drivetrain extends SubsystemBase {
     public void periodic() { // This method will be called once per scheduler run
         UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
         unitModel = lowGearUnitModel;
-        Pose2d current = localization.update( new Rotation2d( Math.toRadians(RobotContainer.navx.getAngle())),
+        Pose2d current = localization.update( new Rotation2d( Math.toRadians(navx.getAngle())),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition()),
-                RobotContainer.navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION,
+                navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION,
                 localizationTimer.get()
         );
+
+        differentialDriveOdometry.update(new Rotation2d( Math.toRadians(navx.getAngle())),
+                unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
+                unitModel.toUnits(rightMaster.getSelectedSensorPosition()));
+
+        SmartDashboard.putNumber(" simple x", differentialDriveOdometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber(" simple y", differentialDriveOdometry.getPoseMeters().getTranslation().getY());
+        SmartDashboard.putNumber(" simple angle", differentialDriveOdometry.getPoseMeters().getRotation().getRadians());
+
+        x.setDouble(localization.filter.model.state_estimate.data[0][0]);
+        y.setDouble(localization.filter.model.state_estimate.data[1][0]);
+        velocity.setDouble(localization.filter.model.state_estimate.data[2][0]);
+        theta.setDouble(localization.filter.model.state_estimate.data[3][0]);
+        angularVelocity.setDouble(localization.filter.model.state_estimate.data[4][0]);
+        accelerationBias.setDouble(localization.filter.model.state_estimate.data[5][0]);
+        encoderLeft.setDouble(leftMaster.getSelectedSensorPosition());
+        encoderRight.setDouble(rightMaster.getSelectedSensorPosition());
 
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
