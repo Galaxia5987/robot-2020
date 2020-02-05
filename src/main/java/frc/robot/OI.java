@@ -15,18 +15,18 @@ public class OI {
     public static final int xboxRightXStick = 4;
     public static final int xboxRightYStick = 5;
     //Controllers are defined here. (Only the RobotContainer and OI should access them)
-    static Joystick rightStick = new Joystick(0);
-    static Joystick leftStick = new Joystick(1);
-    static XboxController xbox = new XboxController(2);
-    public static ButtonCombination select_start = new ButtonCombination(xbox, 7, 8);
-    public static JoystickButton lb = new JoystickButton(xbox, 6);
-    public static JoystickButton rb = new JoystickButton(xbox, 5);
-    public static JoystickButton start = new JoystickButton(xbox, 8);
-    public static JoystickButton select = new JoystickButton(xbox, 7);
-    public static JoystickButton x = new JoystickButton(xbox, 3);
-    public static JoystickButton y = new JoystickButton(xbox, 4);
-    public static JoystickButton b = new JoystickButton(xbox, 2);
-    public static JoystickButton a = new JoystickButton(xbox, 1);
+    static final Joystick rightStick = new Joystick(0);
+    static final Joystick leftStick = new Joystick(1);
+    static final XboxController xbox = new XboxController(2);
+    public final static ButtonCombination select_start = new ButtonCombination(xbox, 7, 8);
+    public final static JoystickButton lb = new JoystickButton(xbox, 6);
+    public final static JoystickButton rb = new JoystickButton(xbox, 5);
+    public final static JoystickButton start = new JoystickButton(xbox, 8);
+    public final static JoystickButton select = new JoystickButton(xbox, 7);
+    public final static JoystickButton x = new JoystickButton(xbox, 3);
+    public final static JoystickButton y = new JoystickButton(xbox, 4);
+    public final static JoystickButton b = new JoystickButton(xbox, 2);
+    public final static JoystickButton a = new JoystickButton(xbox, 1);
 
     public static double getLeftXboxX() {
         return xbox.getRawAxis(xboxLeftXStick);
