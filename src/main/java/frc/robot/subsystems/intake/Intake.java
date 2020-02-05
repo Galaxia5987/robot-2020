@@ -1,12 +1,24 @@
 package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.AnalogEncoder;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
+import frc.robot.utilities.DeadbandProximity;
 import frc.robot.utilities.State;
 
+import java.util.function.Supplier;
+
+import static frc.robot.Constants.Conveyor.INTAKE_PROXIMITY_MAX_VOLTAGE;
+import static frc.robot.Constants.Conveyor.INTAKE_PROXIMITY_MIN_VOLTAGE;
+import static frc.robot.Constants.TALON_TIMEOUT;
+import static frc.robot.Ports.Conveyor.INTAKE_PROXIMITY;
 import static frc.robot.Ports.Intake.*;
 
 /**
@@ -18,10 +30,12 @@ import static frc.robot.Ports.Intake.*;
  * {@using DoubleSolenoid}
  */
 public class Intake extends SubsystemBase {
-    private VictorSPX motor = new VictorSPX(MOTOR);
+    private TalonSRX motor = new TalonSRX(MOTOR);
     private DoubleSolenoid retractor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
+    public DeadbandProximity intakeProximity = new DeadbandProximity(INTAKE_PROXIMITY, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
 
     public Intake() {
+        motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
     }
 
@@ -83,4 +97,6 @@ public class Intake extends SubsystemBase {
     public void powerWheels(double power) {
         motor.set(ControlMode.PercentOutput, power);
     }
+
+
 }
