@@ -50,7 +50,7 @@ public class PositionControl extends CommandBase {
                 colorWheel.setPower(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
             else
                 colorWheel.setPower(joystickInput.get());
-            if (distanceFromTarget == 0)
+            if (distanceFromTarget == 0 && endTimer.get() == 0)
                 endTimer.start();
             else if (distanceFromTarget != 0)
                 endTimer.reset();
