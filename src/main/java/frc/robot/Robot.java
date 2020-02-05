@@ -25,7 +25,7 @@ import frc.robot.utilities.TrajectoryLoader;
  */
 public class Robot extends TimedRobot {
     public static final boolean debug = true;
-    // The roborio has built in pull up resistors, Bridge signal and ground pins on Robot A DIO 0
+    // The roboRIO has built-in pull up resistors, bridge signal and ground pins on Robot A DIO 0.
     public static boolean isRobotA = !new DigitalInput(0).get();
     public static boolean hasShifter = true;
 
@@ -125,4 +125,3 @@ public class Robot extends TimedRobot {
     }
 
 }
-
