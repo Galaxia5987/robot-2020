@@ -57,6 +57,7 @@ public class Turret extends SubsystemBase {
         // Configure soft limits for the subsystem.
         motor.configReverseSoftLimitEnable(IS_USING_SOFT_LIMITS, TALON_TIMEOUT);
         motor.configForwardSoftLimitEnable(IS_USING_SOFT_LIMITS, TALON_TIMEOUT);
+        motor.configSoftLimitDisableNeutralOnLOS(DISABLE_SOFT_LIMITS_ON_DISCONNECT, TALON_TIMEOUT);
         motor.configReverseSoftLimitThreshold(unitModel.toTicks(MINIMUM_POSITION));
         motor.configForwardSoftLimitThreshold(unitModel.toTicks(MAXIMUM_POSITION));
     }
