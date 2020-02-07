@@ -31,7 +31,7 @@ public class Conveyor extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private Supplier<Integer> proximitySupplier = motor::getSelectedSensorPosition;
     private DeadbandProximity shooterProximity = new DeadbandProximity(proximitySupplier, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
-    public DeadbandProximity intakeProximity = new DeadbandProximity(intake.getProximity(), INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
+    public DeadbandProximity intakeProximity = new DeadbandProximity(intake.getProximitySupplier(), INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
     private Solenoid gate = new Solenoid(GATE); //mechanical stop
     private int ballsCount = STARTING_AMOUNT;
 

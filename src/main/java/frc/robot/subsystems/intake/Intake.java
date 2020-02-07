@@ -59,7 +59,7 @@ public class Intake extends SubsystemBase {
         setPosition(!isOpen());
     }
 
-    public Supplier<Integer> getProximity(){
+    public Supplier<Integer> getProximitySupplier(){
         return proximitySupplier;
     }
     /**
