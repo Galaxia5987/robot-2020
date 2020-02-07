@@ -63,7 +63,7 @@ public class Drivetrain extends SubsystemBase {
         leftSlave.follow(leftMaster);
         motorConfigurations.setNeutralMode(NeutralMode.Brake);
         motorConfigurations.setEnableVoltageCompensation(true);
-        motorConfigurations.configureVoltageCompensationSaturation(12.0);
+        motorConfigurations.configureVoltageCompensationSaturation(12);
         motorConfigurations.setPidSet(pidSet[0], pidSet[1], pidSet[2], pidSet[3]);
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setEnableCurrentLimit(true);
