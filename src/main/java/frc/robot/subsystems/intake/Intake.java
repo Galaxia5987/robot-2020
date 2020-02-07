@@ -64,9 +64,10 @@ public class Intake extends SubsystemBase {
      *
      * @return Proximity voltage reading in native units.
      */
-    public int getSensorVoltage(){
+    public int getSensorValue(){
         return motor.getSelectedSensorPosition();
     }
+
     /**
      * OPEN is in the state where the intake is functional
      * CLOSE for the state of bringing the intake in.
