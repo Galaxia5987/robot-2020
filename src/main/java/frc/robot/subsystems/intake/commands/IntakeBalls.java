@@ -39,8 +39,10 @@ public class IntakeBalls extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if(conveyor != null)
-            return conveyor.getBallsCount() >= 5 && !OI.a.get();
+        if(conveyor != null) {
+            final boolean buttonNotPressed = !OI.a.get();
+            return conveyor.getBallsCount() >= 5 && buttonNotPressed;
+        }
         return false;
     }
 

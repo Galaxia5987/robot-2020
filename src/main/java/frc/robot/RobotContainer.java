@@ -47,10 +47,11 @@ public class RobotContainer {
     public static final Shooter shooter = new Shooter();
     private final Command m_autoCommand = null;
 
+    /**
+     * The container for the robot.  Contains subsystems, OI devices, and commands.
+     */
     public RobotContainer() {
-        colorWheel.setDefaultCommand(new ManualControl(colorWheel));
-        turret.setDefaultCommand(new JoystickTurret(turret));
-        drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
+        configureDefaultCommands();
         configureButtonBindings();
         if (Robot.debug) {
             startFireLog();
@@ -58,7 +59,15 @@ public class RobotContainer {
     }
 
     /**
-     * The container for the robot.  Contains subsystems, OI devices, and commands.
+     * Defines the default command of each mechanism on the robot.
+     */
+    private void configureDefaultCommands(){
+        colorWheel.setDefaultCommand(new ManualControl(colorWheel));
+        turret.setDefaultCommand(new JoystickTurret(turret));
+        drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
+    }
+    /**
+     * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
         OI.a.whenPressed(new IntakeBalls(intake, 0.4));
