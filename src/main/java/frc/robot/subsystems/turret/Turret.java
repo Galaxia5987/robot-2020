@@ -112,19 +112,6 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * @return the same position rotated 360 degrees or the current position in ticks
-     */
-    public double center(double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
-        double middle = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
-        if (currentPosition > (180 + middle)) {
-            currentPosition -= 360;
-        } else if (currentPosition < (-180 + middle)) {
-            currentPosition += 360;
-        }
-        return currentPosition;
-    }
-
-    /**
      * set the position to the current position to stop the turret at the target position.
      */
     public void stop() {
