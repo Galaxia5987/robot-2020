@@ -163,17 +163,17 @@ public class Conveyor extends SubsystemBase {
     public boolean isGateOpen() {
         if (Robot.isRobotA)
             return DoubleSolenoid.Value.kForward == gateA.get();
-        return gateB.get();
+        return gateB.get() != IS_GATE_REVERSED;
     }
 
     public void openGate(boolean open) {
         if (Robot.isRobotA) {
-            if (open)
+            if (open != IS_GATE_REVERSED)
                 gateA.set(DoubleSolenoid.Value.kForward);
             else
                 gateA.set(DoubleSolenoid.Value.kReverse);
         } else {
-            gateB.set(open);
+            gateB.set(open != IS_GATE_REVERSED);
         }
     }
 
