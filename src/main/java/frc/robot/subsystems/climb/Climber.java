@@ -76,7 +76,10 @@ public class Climber extends SubsystemBase {
      */
     public void releaseStopper() {
         if (safeToClimb()) {
-            stopper.set(DoubleSolenoid.Value.kReverse);
+            if (Robot.isRobotA)
+                stopperA.set(DoubleSolenoid.Value.kReverse);
+            else
+                stopperB.set(Constants.Climber.RELEASE);
         }
     }
 
@@ -84,7 +87,10 @@ public class Climber extends SubsystemBase {
      * Engage the mechanical stopper to lock the climber.
      */
     public void engageStopper() {
-        stopper.set(DoubleSolenoid.Value.kForward);
+        if (Robot.isRobotA)
+            stopperA.set(DoubleSolenoid.Value.kForward);
+        else
+            stopperB.set(Constants.Climber.ENGAGE);
     }
 
     /**
@@ -93,7 +99,9 @@ public class Climber extends SubsystemBase {
      * @return the state of the mechanical stopper
      */
     public boolean isStopperEngaged() {
-        return stopper.get().equals(DoubleSolenoid.Value.kForward);
+        if (Robot.isRobotA)
+            return stopperA.get().equals(DoubleSolenoid.Value.kForward);
+        return stopperB.get() == Constants.Climber.ENGAGE;
     }
 
     /**
