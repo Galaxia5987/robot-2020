@@ -46,13 +46,7 @@ public class RobotContainer {
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
-    private final JoystickButton rightJoystickButton3 = new JoystickButton(rightStick, 3);
     private final Shooter shooter = new Shooter();
-    public static JoystickButton a = new JoystickButton(xbox, 1);
-    public static JoystickButton b = new JoystickButton(xbox, 2);
-    public static JoystickButton y = new JoystickButton(xbox, 3);
-    private final JoystickButton rs = new JoystickButton(xbox, 10);
-    private final StickButton rightY = new StickButton(xbox, 5, 0.1);
     private final Intake intake = new Intake();
     private  Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
