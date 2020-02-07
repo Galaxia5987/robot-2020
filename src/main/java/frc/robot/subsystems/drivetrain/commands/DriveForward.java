@@ -9,7 +9,7 @@ package frc.robot.subsystems.drivetrain.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
+import frc.robot.OI;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
 /**
@@ -49,8 +49,8 @@ public class DriveForward extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        double leftJoystick = Math.abs(RobotContainer.leftJoystick.getY());
-        double rightJoystick = Math.abs(RobotContainer.rightJoystick.getY());
+        double leftJoystick = Math.abs(OI.getLeftStickForward());
+        double rightJoystick = Math.abs(OI.getRightStickForward());
         return leftJoystick > Constants.Drivetrain.JOYSTICK_END_THRESHOLD ||
                 rightJoystick > Constants.Drivetrain.JOYSTICK_END_THRESHOLD;
     }

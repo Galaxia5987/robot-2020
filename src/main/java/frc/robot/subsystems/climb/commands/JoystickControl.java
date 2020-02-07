@@ -9,7 +9,7 @@ package frc.robot.subsystems.climb.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
+import frc.robot.OI;
 import frc.robot.subsystems.climb.Climber;
 
 /**
@@ -42,11 +42,11 @@ public class JoystickControl extends CommandBase {
     @Override
     public void execute() {
         if (controlEachSide) {
-            leftInput = RobotContainer.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
-            rightInput = RobotContainer.getRightXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
+            leftInput = OI.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
+            rightInput = OI.getRightXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
         }
         else {
-            leftInput = RobotContainer.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
+            leftInput = OI.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
             rightInput = -leftInput;
         }
         climber.setLeftHeight(leftInput + climber.getLeftHeight());
