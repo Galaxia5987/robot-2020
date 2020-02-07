@@ -31,7 +31,7 @@ import static frc.robot.Ports.Intake.*;
 public class Intake extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DoubleSolenoid retractor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
-    private Supplier<Integer> proximityValue = () -> motor.getSelectedSensorPosition();
+    private Supplier<Integer> proximityValue = motor::getSelectedSensorPosition;
 
     public Intake() {
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
