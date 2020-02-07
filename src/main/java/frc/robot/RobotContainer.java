@@ -113,7 +113,6 @@ public class RobotContainer {
      */
     public RobotContainer() {
         // Configure the button bindings
-        drivetrain.setDefaultCommand(new RunCommand(()->drivetrain.setPower(leftJoystick.getY(), rightJoystick.getY()), drivetrain));
         configureButtonBindings();
         if (Robot.debug) {
             startValueTuner();
