@@ -9,7 +9,9 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.VictorConfiguration;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -26,6 +28,8 @@ public class Shooter extends SubsystemBase {
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
 
     public Shooter() {
+        VictorConfiguration slaveConfigs = new VictorConfiguration();
+
         // Basic motor configurations
         // Master configurations
         shooterMaster.configFactoryDefault();
@@ -45,22 +49,22 @@ public class Shooter extends SubsystemBase {
         shooterMaster.enableVoltageCompensation(true);
         shooterMaster.configPeakCurrentLimit(MAX_CURRENT);
 
+        shooterMaster.configPeakCurrentLimit(0);
+        shooterMaster.configContinuousCurrentLimit(40);
+        shooterMaster.enableCurrentLimit(true);
+
         // Slave configuration
         shooterSlave1.follow(shooterMaster);
         shooterSlave2.follow(shooterMaster);
         shooterSlave1.setInverted(IS_SLAVE_1_INVERTED);
         shooterSlave2.setInverted(IS_SLAVE_2_INVERTED);
 
-        // Electrical (slave)
-        shooterSlave1.configVoltageCompSaturation(12);
-        shooterSlave1.enableVoltageCompensation(true);
-
-        shooterSlave2.configVoltageCompSaturation(12);
-        shooterSlave2.enableVoltageCompensation(true);
-
         shooterMaster.setNeutralMode(NeutralMode.Coast);
-        shooterSlave1.setNeutralMode(NeutralMode.Coast);
-        shooterSlave2.setNeutralMode(NeutralMode.Coast);
+
+        slaveConfigs.setNeutralMode(NeutralMode.Coast);
+        slaveConfigs.setEnableVoltageCompensation(true);
+        slaveConfigs.setVoltageCompensationSaturation(12);
+        UtilityFunctions.configAllVictors(slaveConfigs, shooterSlave1, shooterSlave2);
     }
 
     /**
