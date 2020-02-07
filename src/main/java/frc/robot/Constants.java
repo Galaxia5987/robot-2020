@@ -174,7 +174,9 @@ public class Constants{
         public static final int TICKS_PER_DEGREE = 1;
         public static final double MINIMUM_POSITION = -200;
         public static final double MAXIMUM_POSITION = 200;
-        public static final int CENTER_POSITION = 2048;
+
+        public static final double STARTING_ANGLE = 150;
+        public static final int STARTING_POSITION = 2048;
 
         public static double KP = 0;
         public static double KI = 0;
