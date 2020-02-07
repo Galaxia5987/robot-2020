@@ -1,6 +1,7 @@
 package frc.robot;
 
 
+
 public class Ports {
     public class climber {
         public static final int LEFT_MOTOR = 40;
@@ -20,6 +21,8 @@ public class Ports {
         public static final int INTAKE_PROXIMITY = 0;
         public static final int SHOOTER_PROXIMITY = 1;
 
+        public static final int FORWARD_GATE = 1;
+        public static final int REVERSE_GATE = 2;
         public static final int GATE = 4; // Port of the stopper solenoid.
     }
 
