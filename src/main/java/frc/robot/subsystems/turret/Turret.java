@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
@@ -55,8 +54,8 @@ public class Turret extends SubsystemBase {
         motor.configPeakCurrentLimit(MAX_CURRENT);
 
         // Configure soft limits for the subsystem.
-        motor.configReverseSoftLimitEnable(IS_USING_SOFT_LIMITS, TALON_TIMEOUT);
-        motor.configForwardSoftLimitEnable(IS_USING_SOFT_LIMITS, TALON_TIMEOUT);
+        motor.configReverseSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
+        motor.configForwardSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
         motor.configSoftLimitDisableNeutralOnLOS(DISABLE_SOFT_LIMITS_ON_DISCONNECT, TALON_TIMEOUT);
         motor.configReverseSoftLimitThreshold(unitModel.toTicks(MINIMUM_POSITION));
         motor.configForwardSoftLimitThreshold(unitModel.toTicks(MAXIMUM_POSITION));
