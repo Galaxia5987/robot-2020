@@ -24,7 +24,6 @@ import static frc.robot.Ports.Intake.*;
 public class Intake extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DoubleSolenoid retractor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
-    private Supplier<Integer> proximitySupplier = motor::getSelectedSensorPosition;
 
     public Intake() {
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
@@ -59,8 +58,14 @@ public class Intake extends SubsystemBase {
         setPosition(!isOpen());
     }
 
-    public Supplier<Integer> getProximitySupplier(){
-        return proximitySupplier;
+    /**
+     * Returns the reading from the potentiometer through the talon. Note, this value is an integer,
+     * and ranges from 0-1023, similarly to how Arduino devices read voltage.
+     *
+     * @return Proximity voltage reading in native units.
+     */
+    public int getSensorVoltage(){
+        return motor.getSelectedSensorPosition();
     }
     /**
      * OPEN is in the state where the intake is functional
