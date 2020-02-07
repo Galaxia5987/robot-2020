@@ -31,8 +31,4 @@ public class CenterTurret extends CommandBase {
         return Math.abs(turret.getAngle() - initialPosition) <= ANGLE_THRESHOLD;
     }
 
-    @Override
-    public void end(boolean interrupted) {
-        turret.stop();
-    }
 }

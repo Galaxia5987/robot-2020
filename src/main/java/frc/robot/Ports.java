@@ -3,8 +3,8 @@ package frc.robot;
 
 public class Ports {
     public class climber {
-        public static final int LEFT_MOTOR = 61;
-        public static final int RIGHT_MOTOR = 62;
+        public static final int LEFT_MOTOR = 40;
+        public static final int RIGHT_MOTOR = 41;
         public static final int STOPPER_FORWARD = 3;
         public static final int STOPPER_REVERSE = 0;
         public static final boolean LEFT_MOTOR_INVERTED = false;
@@ -48,9 +48,11 @@ public class Ports {
         public static final int LEFT_SLAVE = 11;
         public static final int RIGHT_MASTER = 12;
         public static final int RIGHT_SLAVE = 13;
+
         public static final int SHIFTER_FORWARD_PORT = 6;
         public static final int SHIFTER_REVERSE_PORT = 5;
         public static final int SHIFTER_PORT = 5;
+
     }
 
     public static class ColorWheel {

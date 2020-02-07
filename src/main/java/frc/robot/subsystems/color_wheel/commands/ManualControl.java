@@ -16,6 +16,7 @@ public class ManualControl extends CommandBase {
     private ColorWheel colorWheel;
     private Supplier<Double> joystickInput =  OI::getRightXboxX;
 
+
     public ManualControl(ColorWheel colorWheel) {
         this.colorWheel = colorWheel;
     }
@@ -28,7 +29,6 @@ public class ManualControl extends CommandBase {
     @Override
     public void execute() {
             colorWheel.setPower(joystickInput.get());
-
     }
 
     @Override

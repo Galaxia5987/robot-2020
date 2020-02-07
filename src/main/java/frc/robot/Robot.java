@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,7 +25,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
     public static final boolean debug = true;
-    public static boolean isRobotA = true;
+    // The roboRIO has built-in pull up resistors, bridge signal and ground pins on Robot A DIO 0.
+    public static boolean isRobotA = !new DigitalInput(0).get();
     public static boolean hasShifter = true;
     public static boolean shootingManualMode = false;
 
@@ -122,4 +126,3 @@ public class Robot extends TimedRobot {
     }
 
 }
-
