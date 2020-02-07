@@ -32,7 +32,8 @@ import static frc.robot.Ports.Intake.*;
 public class Intake extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DoubleSolenoid retractor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
-    public DeadbandProximity intakeProximity = new DeadbandProximity(INTAKE_PROXIMITY, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
+    private Supplier<Double> proximityValue = () -> new AnalogInput(INTAKE_PROXIMITY).getVoltage();
+    public DeadbandProximity intakeProximity = new DeadbandProximity(proximityValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
 
     public Intake() {
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);

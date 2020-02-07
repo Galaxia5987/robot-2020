@@ -2,6 +2,7 @@ package frc.robot.subsystems.conveyor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
@@ -9,6 +10,8 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.utilities.DeadbandProximity;
 import frc.robot.utilities.State;
 
+
+import java.util.function.Supplier;
 
 import static frc.robot.Constants.Conveyor.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -27,7 +30,8 @@ public class Conveyor extends SubsystemBase {
     private Intake intake;
     private UnitModel unitConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
-    private DeadbandProximity shooterProximity = new DeadbandProximity(SHOOTER_PROXIMITY, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
+    private Supplier<Double> proximityValue = () -> new AnalogInput(SHOOTER_PROXIMITY).getVoltage();
+    private DeadbandProximity shooterProximity = new DeadbandProximity(proximityValue, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
     private Solenoid gate = new Solenoid(GATE); //mechanical stop
     private int ballsCount = STARTING_AMOUNT;
 
@@ -95,7 +99,7 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if(!isGateOpen()) return;
+        if (!isGateOpen()) return;
         motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_POWER);
     }
 
@@ -172,8 +176,8 @@ public class Conveyor extends SubsystemBase {
      *
      * @param state state of the stopper, OPEN / CLOSE
      */
-    public void setGate(State state){
-        switch (state){
+    public void setGate(State state) {
+        switch (state) {
             case OPEN:
                 openGate(true);
                 break;
