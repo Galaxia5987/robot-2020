@@ -18,15 +18,16 @@ public class OI {
     static final Joystick rightStick = new Joystick(0);
     static final Joystick leftStick = new Joystick(1);
     static final XboxController xbox = new XboxController(2);
-    public final static ButtonCombination select_start = new ButtonCombination(xbox, 7, 8);
-    public final static JoystickButton lb = new JoystickButton(xbox, 6);
-    public final static JoystickButton rb = new JoystickButton(xbox, 5);
-    public final static JoystickButton start = new JoystickButton(xbox, 8);
-    public final static JoystickButton select = new JoystickButton(xbox, 7);
+
+    public final static JoystickButton a = new JoystickButton(xbox, 1);
+    public final static JoystickButton b = new JoystickButton(xbox, 2);
     public final static JoystickButton x = new JoystickButton(xbox, 3);
     public final static JoystickButton y = new JoystickButton(xbox, 4);
-    public final static JoystickButton b = new JoystickButton(xbox, 2);
-    public final static JoystickButton a = new JoystickButton(xbox, 1);
+    public final static JoystickButton lb = new JoystickButton(xbox, 5);
+    public final static JoystickButton rb = new JoystickButton(xbox, 6);
+    public final static JoystickButton select = new JoystickButton(xbox, 7);
+    public final static JoystickButton start = new JoystickButton(xbox, 8);
+    public final static ButtonCombination select_start = new ButtonCombination(xbox, 7, 8);
 
     public static double getXboxLX() {
         return xbox.getRawAxis(xboxLeftXStick);
@@ -36,12 +37,12 @@ public class OI {
         return xbox.getRawAxis(xboxLeftYStick);
     }
 
-    public static double getXboxRY() {
-        return xbox.getRawAxis(xboxRightYStick);
-    }
-
     public static double getXboxRX() {
         return xbox.getRawAxis(xboxRightXStick);
+    }
+
+    public static double getXboxRY() {
+        return xbox.getRawAxis(xboxRightYStick);
     }
 
     public static double getLeftStickForward(){
