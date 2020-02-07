@@ -32,6 +32,7 @@ public class Conveyor extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private Supplier<Integer> proximityValue = () -> motor.getSelectedSensorPosition();
     private DeadbandProximity shooterProximity = new DeadbandProximity(proximityValue, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
+    public DeadbandProximity intakeProximity = new DeadbandProximity(intake.getProximity(), INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
     private Solenoid gate = new Solenoid(GATE); //mechanical stop
     private int ballsCount = STARTING_AMOUNT;
 
@@ -54,23 +55,23 @@ public class Conveyor extends SubsystemBase {
     public void periodic() {
         updateSensors();
         //If the intake senses an object, and it hasn't in the previous state, and the wheels are turning outwards, add a ball to the count
-        if (intake.intakeProximity.getToggle() && intakeSensedBall() && (getPower() >= 0)) {
+        if (intakeProximity.getToggle() && intakeSensedBall() && (getPower() >= 0)) {
             incrementBallsCount(1);
-            intake.intakeProximity.resetToggle();
+            intakeProximity.resetToggle();
             shooterProximity.resetToggle();
         }
         //If the conveyor proximity loses an object, and it hasn't been off before and the conveyor is spinning outwards, remove a ball from the count
         //Additionally, if the conveyor outtakes a ball and the sensor sees the ball pass it, decrement the count aswell.
         if ((!shooterProximity.getState() && shooterProximity.getToggle() && (getPower() > 0)) ||
-                (intake.intakeProximity.getToggle() && !intakeSensedBall() && (getPower() < 0))) {
+                (intakeProximity.getToggle() && !intakeSensedBall() && (getPower() < 0))) {
             decrementBallsCount(1);
-            intake.intakeProximity.resetToggle();
+            intakeProximity.resetToggle();
             shooterProximity.resetToggle();
         }
     }
 
     private void updateSensors() {
-        intake.intakeProximity.update();
+        intakeProximity.update();
         shooterProximity.update();
     }
 
@@ -163,7 +164,7 @@ public class Conveyor extends SubsystemBase {
      * @return whether a power cell is in the intake.
      */
     public boolean intakeSensedBall() {
-        return intake.intakeProximity.getState();
+        return intakeProximity.getState();
     }
 
     public boolean isGateOpen() {

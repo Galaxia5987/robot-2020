@@ -32,7 +32,6 @@ public class Intake extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DoubleSolenoid retractor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
     private Supplier<Integer> proximityValue = () -> motor.getSelectedSensorPosition();
-    public DeadbandProximity intakeProximity = new DeadbandProximity(proximityValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
 
     public Intake() {
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
@@ -67,6 +66,9 @@ public class Intake extends SubsystemBase {
         setPosition(!isOpen());
     }
 
+    public Supplier<Integer> getProximity(){
+        return proximityValue;
+    }
     /**
      * OPEN is in the state where the intake is functional
      * CLOSE for the state of bringing the intake in.
