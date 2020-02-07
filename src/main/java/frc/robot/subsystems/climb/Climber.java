@@ -11,16 +11,19 @@ import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 
 public class Climber extends SubsystemBase {
 
     private final TalonSRX leftMotor = new TalonSRX(Ports.climber.LEFT_MOTOR);
     private final TalonSRX rightMotor = new TalonSRX(Ports.climber.RIGHT_MOTOR);
-    private final DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
+    private DoubleSolenoid stopperA = null;
+    private Solenoid stopperB = null;
     private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
 
     /**
@@ -60,6 +63,10 @@ public class Climber extends SubsystemBase {
         leftMotor.setNeutralMode(NeutralMode.Coast);
         rightMotor.setNeutralMode(NeutralMode.Coast);
 
+        if (Robot.isRobotA)
+            stopperA = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
+        else
+            stopperB = new Solenoid(Ports.climber.STOPPER);
     }
 
     /**
