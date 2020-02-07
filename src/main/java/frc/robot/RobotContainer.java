@@ -10,11 +10,13 @@ package frc.robot;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
 import frc.robot.subsystems.climb.commands.JoystickControl;
 import frc.robot.subsystems.climb.commands.ReleaseRods;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
@@ -30,11 +32,8 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
-
 import frc.robot.subsystems.turret.commands.TurretSwitching;
 import frc.robot.utilities.StickButton;
-import frc.robot.subsystems.turret.commands.CenterTurret;
-import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
