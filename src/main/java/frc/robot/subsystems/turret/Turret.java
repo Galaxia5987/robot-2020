@@ -6,11 +6,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
-import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.utilities.Utils;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -169,7 +167,7 @@ public class Turret extends SubsystemBase {
      * DESTROY ITSELF... be warned! do not use this midgame!
      */
     public void resetEncoder(){
-        double currentPosition = Math.IEEEremainder(motor.getSelectedSensorPosition(1) - Constants.Turret.CENTER_POSITION, unitModel.toTicks(360));
+        double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(motor.getSelectedSensorPosition(1) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
         motor.setSelectedSensorPosition((int)currentPosition);
     }
 }
