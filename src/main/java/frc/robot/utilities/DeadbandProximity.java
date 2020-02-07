@@ -66,7 +66,9 @@ public class DeadbandProximity {
      * @return whether the proximity sense a object.
      */
     private boolean isObjectClose() {
-        return getVoltage() > maxVoltage;
+        return value.get() > maxVoltage;
+    }
+
     }
 
     /**
@@ -76,6 +78,6 @@ public class DeadbandProximity {
      * @return whether the proximity lost the object.
      */
     private boolean isObjectAway() {
-        return getVoltage() < minVoltage;
+        return value.get() < minVoltage;
     }
 }
