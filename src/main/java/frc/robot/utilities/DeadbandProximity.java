@@ -13,11 +13,11 @@ import java.util.function.Supplier;
 public class DeadbandProximity {
     private double minVoltage;
     private double maxVoltage;
-    private Supplier<Double> value;
+    private Supplier<Integer> value;
     private boolean objectSensed = false;
     private boolean toggle = false;
 
-    public DeadbandProximity(Supplier<Double> value, double minVoltage, double maxVoltage) {
+    public DeadbandProximity(Supplier<Integer> value, double minVoltage, double maxVoltage) {
         this.value = value;
         this.maxVoltage = maxVoltage;
         this.minVoltage = minVoltage;

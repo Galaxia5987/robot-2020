@@ -18,7 +18,6 @@ import java.util.function.Supplier;
 import static frc.robot.Constants.Conveyor.INTAKE_PROXIMITY_MAX_VOLTAGE;
 import static frc.robot.Constants.Conveyor.INTAKE_PROXIMITY_MIN_VOLTAGE;
 import static frc.robot.Constants.TALON_TIMEOUT;
-import static frc.robot.Ports.Conveyor.INTAKE_PROXIMITY;
 import static frc.robot.Ports.Intake.*;
 
 /**
@@ -32,7 +31,7 @@ import static frc.robot.Ports.Intake.*;
 public class Intake extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DoubleSolenoid retractor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
-    private Supplier<Double> proximityValue = () -> new AnalogInput(INTAKE_PROXIMITY).getVoltage();
+    private Supplier<Integer> proximityValue = () -> motor.getSelectedSensorPosition();
     public DeadbandProximity intakeProximity = new DeadbandProximity(proximityValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
 
     public Intake() {

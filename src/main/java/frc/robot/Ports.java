@@ -16,8 +16,6 @@ public class Ports {
     public static class Conveyor {
         public static final int MOTOR = 21;
         public static final boolean MOTOR_INVERTED = false;
-        public static final int INTAKE_PROXIMITY = 0;
-        public static final int SHOOTER_PROXIMITY = 1;
         public static final int GATE = 4; // Port of the stopper solenoid.
     }
     public static final int TALON_PID_SLOT = 0;
