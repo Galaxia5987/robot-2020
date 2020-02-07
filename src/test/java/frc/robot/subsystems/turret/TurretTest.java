@@ -35,19 +35,6 @@ public class TurretTest {
         Assert.assertEquals(turret.getNearestTurretPosition(173, -247, minPos, maxPos), -187, 0.1);
     }
 
-
-    @Test
-    public void center() {
-        double currentPos = 200;
-        double minPos = -200;
-        double maxPos = 200;
-        Assert.assertEquals(turret.center(currentPos, minPos, maxPos), -160, 0.1);
-        Assert.assertEquals(turret.center(-20, minPos, maxPos), -20, 0.1);
-        Assert.assertEquals(turret.center(-180, minPos, maxPos), -180, 0.1);
-        Assert.assertEquals(turret.center(-200, minPos, maxPos), 160, 0.1);
-        Assert.assertEquals(turret.center(50, minPos, maxPos), 50, 0.1);
-    }
-
     @Test
     public void TurretLocalization() {
         // Inner port tests
