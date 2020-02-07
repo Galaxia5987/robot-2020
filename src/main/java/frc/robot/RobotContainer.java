@@ -27,8 +27,12 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.utilities.StickButton;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
+
+import static frc.robot.OI.rightStick;
+import static frc.robot.OI.xbox;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -39,13 +43,13 @@ import org.techfire225.webapp.Webserver;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
+    private final Drivetrain drivetrain = new Drivetrain();
+    private final ColorWheel colorWheel = new ColorWheel();
+    private final Shooter shooter = new Shooter();
+    private final Intake intake = new Intake();
+    private  Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
-    public static final ColorWheel colorWheel = new ColorWheel();
     public static final Turret turret = new Turret();
-    public static final Conveyor conveyor = new Conveyor();
-    public static final Drivetrain drivetrain = new Drivetrain();
-    public static final Intake intake = new Intake();
-    public static final Shooter shooter = new Shooter();
     private final Command m_autoCommand = null;
 
     /**
