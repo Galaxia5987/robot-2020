@@ -72,7 +72,7 @@ public class Intake extends SubsystemBase {
      *
      * @param state state of the intake, OPEN / CLOSE / TOGGLE
      */
-    public void setState(State state){
+    public void setPosition(State state){
         switch (state) {
             case OPEN:
                 setPosition(true);
