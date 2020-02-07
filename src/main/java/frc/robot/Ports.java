@@ -8,6 +8,7 @@ public class Ports {
         public static final int RIGHT_MOTOR = 41;
         public static final int STOPPER_FORWARD = 3;
         public static final int STOPPER_REVERSE = 0;
+        public static final int STOPPER = 2;
         public static final boolean LEFT_MOTOR_INVERTED = false;
         public static final boolean RIGHT_MOTOR_INVERTED = false;
         public static final boolean LEFT_ENCODER_INVERTED = false;
