@@ -28,19 +28,19 @@ public class OI {
     public final static JoystickButton b = new JoystickButton(xbox, 2);
     public final static JoystickButton a = new JoystickButton(xbox, 1);
 
-    public static double getLeftXboxX() {
+    public static double getXboxLX() {
         return xbox.getRawAxis(xboxLeftXStick);
     }
 
-    public static double getLeftXboxY() {
+    public static double getXboxLY() {
         return xbox.getRawAxis(xboxLeftYStick);
     }
 
-    public static double getRightXboxY() {
+    public static double getXboxRY() {
         return xbox.getRawAxis(xboxRightYStick);
     }
 
-    public static double getRightXboxX() {
+    public static double getXboxRX() {
         return xbox.getRawAxis(xboxRightXStick);
     }
 
