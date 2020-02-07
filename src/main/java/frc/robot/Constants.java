@@ -175,10 +175,8 @@ public class Constants{
         public static final double MINIMUM_POSITION = -200;
         public static final double MAXIMUM_POSITION = 200;
         public static final int CENTER_POSITION = 2048;
-        public static final double RIGHT_DEAD_ZONE_MINIMUM = 0;
-        public static final double RIGHT_DEAD_ZONE_MAXIMUM = 0;
-        public static final double LEFT_DEAD_ZONE_MINIMUM = 0;
-        public static final double LEFT_DEAD_ZONE_MAXIMUM = 0;
+        public static final double DEAD_ZONE_MINIMUM = 0;
+        public static final double DEAD_ZONE_MAXIMUM = 0;
 
         public static double KP = 0;
         public static double KI = 0;
