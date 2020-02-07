@@ -137,8 +137,6 @@ public class Constants{
         public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber
         public static final double RAMP_RATE = 0;
         public static final long DELAY_BETWEEN_COMMANDS = 0;
-        public static final boolean RELEASE = false;
-        public static final boolean ENGAGE = true;
     }
 
     public static class Conveyor {
