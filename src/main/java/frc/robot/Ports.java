@@ -19,18 +19,16 @@ public class Ports {
     public static class Conveyor {
         public static final int MOTOR = 21;
         public static final boolean MOTOR_INVERTED = false;
-
         public static final int INTAKE_PROXIMITY = 0;
         public static final int SHOOTER_PROXIMITY = 1;
-
         public static final int FORWARD_GATE = 1;
         public static final int REVERSE_GATE = 2;
         public static final int GATE = 4; // Port of the stopper solenoid.
         public static final boolean IS_GATE_REVERSED = false;
     }
-
+  
     public static final int TALON_PID_SLOT = 0;
-
+  
     public static final class Intake {
         public static final int MOTOR = 20;
         public static final boolean MOTOR_INVERTED = true;
@@ -40,13 +38,11 @@ public class Ports {
         public static final int SOLENOID = 3;
         public static final boolean IS_SOLENOID_REVERSED = false;
     }
-
     public static class Turret {
         public static final int MOTOR = 22;
         public static final boolean IS_MOTOR_INVERTED = false;
         public static final boolean IS_ENCODER_INVERTED = false;
     }
-
     public static class Shooter {
         public static final int MASTER = 23;
         public static final int SLAVE_1 = 24;
@@ -63,9 +59,9 @@ public class Ports {
         public static final int RIGHT_MASTER = 12;
         public static final int RIGHT_SLAVE = 13;
 
-        public static final int SHIFTER_FORWARD_PORT = 1;
-        public static final int SHIFTER_REVERSE_PORT = 2;
-        public static final int SHIFTER_PORT = 1;
+        public static final int SHIFTER_FORWARD_PORT = 6;
+        public static final int SHIFTER_REVERSE_PORT = 5;
+        public static final int SHIFTER_PORT = 5;
         public static final boolean IS_SHIFTER_REVERSED = false;
     }
 
