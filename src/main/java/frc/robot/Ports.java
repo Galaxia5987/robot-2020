@@ -11,7 +11,7 @@ public class Ports {
         public static final int STOPPER = 2;
         public static final boolean LEFT_MOTOR_INVERTED = false;
         public static final boolean RIGHT_MOTOR_INVERTED = false;
-        public static final boolean LEFT_ENCODER_INVERTED = false;
+        public static final boolean LEFT_ENCODER_INVERTED = true;
         public static final boolean RIGHT_ENCODER_INVERTED = false;
         public static final boolean IS_STOPPER_REVERSED = false;
     }
@@ -31,7 +31,7 @@ public class Ports {
   
     public static final class Intake {
         public static final int MOTOR = 20;
-        public static final boolean MOTOR_INVERTED = true;
+        public static final boolean MOTOR_INVERTED = false;
         public static final boolean IS_FORWARD_OPEN = true; //if kForward of the solenoid opens the intake or reverse.
         public static final int FOLD_SOLENOID_REVERSE = 1;
         public static final int FOLD_SOLENOID_FORWARD = 2;
@@ -40,8 +40,8 @@ public class Ports {
     }
     public static class Turret {
         public static final int MOTOR = 22;
-        public static final boolean IS_MOTOR_INVERTED = false;
-        public static final boolean IS_ENCODER_INVERTED = false;
+        public static final boolean IS_MOTOR_INVERTED = true;
+        public static final boolean IS_ENCODER_INVERTED = true;
     }
     public static class Shooter {
         public static final int MASTER = 23;
@@ -50,7 +50,7 @@ public class Ports {
         public static final boolean IS_MASTER_INVERTED = false;
         public static final boolean IS_SLAVE_1_INVERTED = true;
         public static final boolean IS_SLAVE_2_INVERTED = false;
-        public static final boolean IS_ENCODER_INVERTED = false;
+        public static final boolean IS_ENCODER_INVERTED = true;
     }
 
     public static class Drivetrain {
@@ -67,5 +67,6 @@ public class Ports {
 
     public static class ColorWheel {
         public static final int MOTOR = 30;
+        public static final boolean IS_MOTOR_REVERSED = true;
     }
 }

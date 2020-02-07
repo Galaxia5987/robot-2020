@@ -22,6 +22,8 @@ import frc.robot.Ports;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 
+import static frc.robot.Ports.ColorWheel.IS_MOTOR_REVERSED;
+
 public class ColorWheel extends SubsystemBase {
 
     //Color sensor definitions
@@ -41,6 +43,7 @@ public class ColorWheel extends SubsystemBase {
     private boolean manual = false;
 
     public ColorWheel() {
+        motor.setInverted(IS_MOTOR_REVERSED);
         colorMatcher.addColorMatch(BlueTarget);
         colorMatcher.addColorMatch(GreenTarget);
         colorMatcher.addColorMatch(RedTarget);
@@ -106,6 +109,8 @@ public class ColorWheel extends SubsystemBase {
         match = colorMatcher.matchClosestColor(colorSensor.getColor());
         Color detectedColor = colorSensor.getColor();
         colorString = colorToString();
+
+
         SmartDashboard.putNumber("Red", detectedColor.red);
         SmartDashboard.putNumber("Green", detectedColor.green);
         SmartDashboard.putNumber("Blue", detectedColor.blue);
