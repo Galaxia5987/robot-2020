@@ -44,11 +44,10 @@ public class Conveyor extends SubsystemBase {
         motor.configPeakCurrentLimit(MAX_CURRENT);
         motor.configClosedloopRamp(RAMP_RATE);
 
-        if (Robot.isRobotA) {
+        if (Robot.isRobotA)
             gateA = new DoubleSolenoid(FORWARD_GATE, REVERSE_GATE);
-        } else {
+        else
             gateB = new Solenoid(GATE);
-        }
     }
 
     @Override
@@ -162,11 +161,18 @@ public class Conveyor extends SubsystemBase {
     }
 
     public boolean isGateOpen() {
-        return gate.get();
+        return DoubleSolenoid.Value.kForward == gateA.get();
     }
 
     public void openGate(boolean open) {
-        gate.set(open);
+        if (Robot.isRobotA) {
+            if (open)
+                gateA.set(DoubleSolenoid.Value.kForward);
+            else
+                gateA.set(DoubleSolenoid.Value.kReverse);
+        } else {
+            gateB.set(open);
+        }
     }
 
     /**
