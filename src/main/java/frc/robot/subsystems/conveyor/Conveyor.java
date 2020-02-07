@@ -2,8 +2,10 @@ package frc.robot.subsystems.conveyor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.DeadbandProximity;
 import frc.robot.utilities.State;
@@ -26,7 +28,8 @@ public class Conveyor extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DeadbandProximity intakeProximity = new DeadbandProximity(INTAKE_PROXIMITY, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
     private DeadbandProximity shooterProximity = new DeadbandProximity(SHOOTER_PROXIMITY, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
-    private Solenoid gate = new Solenoid(GATE); //mechanical stop
+    private DoubleSolenoid gateA = null; //mechanical stop
+    private Solenoid gateB = null; //mechanical stop
     private int ballsCount = STARTING_AMOUNT;
 
     public Conveyor() {
@@ -40,6 +43,11 @@ public class Conveyor extends SubsystemBase {
         motor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT);
         motor.configPeakCurrentLimit(MAX_CURRENT);
         motor.configClosedloopRamp(RAMP_RATE);
+
+        if (Robot.isRobotA)
+            gateA = new DoubleSolenoid(FORWARD_GATE, REVERSE_GATE);
+        else
+            gateB = new Solenoid(GATE);
     }
 
     @Override
@@ -153,11 +161,20 @@ public class Conveyor extends SubsystemBase {
     }
 
     public boolean isGateOpen() {
-        return gate.get();
+        if (Robot.isRobotA)
+            return DoubleSolenoid.Value.kForward == gateA.get();
+        return gateB.get() != IS_GATE_REVERSED;
     }
 
     public void openGate(boolean open) {
-        gate.set(open);
+        if (Robot.isRobotA) {
+            if (open != IS_GATE_REVERSED)
+                gateA.set(DoubleSolenoid.Value.kForward);
+            else
+                gateA.set(DoubleSolenoid.Value.kReverse);
+        } else {
+            gateB.set(open != IS_GATE_REVERSED);
+        }
     }
 
     /**
