@@ -3,6 +3,7 @@ package frc.robot.subsystems.intake.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.utilities.State;
 
 public class OuttakeBalls extends CommandBase {
     private Intake intake;
@@ -24,7 +25,7 @@ public class OuttakeBalls extends CommandBase {
 
     @Override
     public void initialize() {
-        intake.setPosition(false);
+        intake.setPosition(State.OPEN);
         intake.powerWheels(speed);
         conveyor.setPower(speed);
     }
