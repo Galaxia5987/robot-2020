@@ -33,9 +33,9 @@ public class TriggerButton extends Button {
     }
 
     /**
-     * Gets the value of the joystick button.
+     * Gets the state of the joystick button, if it under or over the threshold.
      *
-     * @return The value of the joystick button
+     * @return The state of the joystick button
      */
     @Override
     public boolean get() {

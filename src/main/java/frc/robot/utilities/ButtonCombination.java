@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 /**
  * Extension of the button class, triggers a command when all of the buttons are pressed simultaneously
  *
- * @author paulo
+ * @author Paulo Khayat
  */
 public class ButtonCombination extends Button {
 
@@ -25,10 +25,10 @@ public class ButtonCombination extends Button {
     }
     @Override
     public boolean get() {
-        boolean arePressed = true;
         for (int button : buttons){
-            arePressed = arePressed && m_joystick.getRawButton(button);
+            if (!m_joystick.getRawButton(button))
+                return false;
         }
-        return arePressed;
+        return true;
     }
 }
