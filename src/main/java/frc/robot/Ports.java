@@ -36,6 +36,7 @@ public class Ports {
         public static final int FOLD_SOLENOID_REVERSE = 1;
         public static final int FOLD_SOLENOID_FORWARD = 2;
         public static final int SOLENOID = 3;
+        public static final boolean IS_SOLENOID_REVERSED = false;
     }
 
     public static class Turret {
@@ -63,6 +64,7 @@ public class Ports {
         public static final int SHIFTER_FORWARD_PORT = 1;
         public static final int SHIFTER_REVERSE_PORT = 2;
         public static final int SHIFTER_PORT = 1;
+        public static final boolean IS_SHIFTER_REVERSED = false;
     }
 
     public static class ColorWheel {
