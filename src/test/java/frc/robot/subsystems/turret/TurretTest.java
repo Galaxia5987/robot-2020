@@ -21,7 +21,7 @@ public class TurretTest {
         unitModel = new UnitModel(TICKS_PER_DEGREE);
     }
 
-    @Test
+    //@Test
     public void getNearestTurretPosition() {
         double targetAngle = 280;
         double currentPosition = 30;
@@ -35,7 +35,7 @@ public class TurretTest {
         Assert.assertEquals(turret.getNearestTurretPosition(173, -247, minPos, maxPos), -187, 0.1);
     }
 
-    @Test
+    //@Test
     public void TurretLocalization() {
         // Inner port tests
 //        Assert.assertEquals(turnLocalization.calculateTargetAngle(new Pose2d(7, 4, new Rotation2d(Math.toRadians(56.4)))), -45.893, 0.1);
