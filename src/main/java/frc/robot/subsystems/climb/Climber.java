@@ -18,6 +18,8 @@ import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 
+import static frc.robot.Ports.climber.IS_STOPPER_REVERSED;
+
 public class Climber extends SubsystemBase {
 
     private final TalonSRX leftMotor = new TalonSRX(Ports.climber.LEFT_MOTOR);
@@ -79,7 +81,7 @@ public class Climber extends SubsystemBase {
             if (Robot.isRobotA)
                 stopperA.set(DoubleSolenoid.Value.kReverse);
             else
-                stopperB.set(Constants.Climber.RELEASE);
+                stopperB.set(IS_STOPPER_REVERSED);
         }
     }
 
@@ -90,7 +92,7 @@ public class Climber extends SubsystemBase {
         if (Robot.isRobotA)
             stopperA.set(DoubleSolenoid.Value.kForward);
         else
-            stopperB.set(Constants.Climber.ENGAGE);
+            stopperB.set(!IS_STOPPER_REVERSED);
     }
 
     /**
@@ -101,7 +103,7 @@ public class Climber extends SubsystemBase {
     public boolean isStopperEngaged() {
         if (Robot.isRobotA)
             return stopperA.get().equals(DoubleSolenoid.Value.kForward);
-        return stopperB.get() == Constants.Climber.ENGAGE;
+        return stopperB.get() != IS_STOPPER_REVERSED;
     }
 
     /**
