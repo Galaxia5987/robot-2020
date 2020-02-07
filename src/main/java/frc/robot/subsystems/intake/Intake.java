@@ -27,11 +27,10 @@ public class Intake extends SubsystemBase {
     public Intake() {
         motor.setInverted(MOTOR_INVERTED);
 
-        if (Robot.isRobotA) 
+        if (Robot.isRobotA)
             retractorA = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
         else
             retractorB = new Solenoid(SOLENOID);
-
     }
 
     /**
@@ -42,7 +41,7 @@ public class Intake extends SubsystemBase {
     public boolean isOpen() {
         if (Robot.isRobotA)
             return retractorA.get() == Value.kForward;
-        return retractorB.get();
+        return retractorB.get() != IS_SOLENOID_REVERSED;
     }
 
     /**
@@ -56,7 +55,7 @@ public class Intake extends SubsystemBase {
         if (Robot.isRobotA)
             retractorA.set(open == IS_FORWARD_OPEN ? Value.kForward : Value.kReverse);
         else
-            retractorB.set(open);
+            retractorB.set(open != IS_SOLENOID_REVERSED);
     }
 
     /**
