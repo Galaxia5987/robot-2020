@@ -8,27 +8,36 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
+import frc.robot.subsystems.climb.commands.JoystickControl;
+import frc.robot.subsystems.climb.commands.ReleaseRods;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.led.LED;
 import frc.robot.subsystems.led.commnads.DimmingColor;
+import frc.robot.subsystems.color_wheel.commands.ManualControl;
+import frc.robot.subsystems.color_wheel.commands.PositionControl;
+import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.commands.IntakeBalls;
+import frc.robot.subsystems.intake.commands.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
-import frc.robot.subsystems.turret.commands.CenterTurret;
-import frc.robot.subsystems.turret.commands.TurnTurret;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.TurretSwitching;
+import frc.robot.utilities.StickButton;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -62,27 +71,44 @@ public class RobotContainer {
     private final JoystickButton a = new JoystickButton(xbox, 3);
     private final JoystickButton b = new JoystickButton(xbox, 4);
 
+
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        // Configure the button bindings
+        configureDefaultCommands();
         configureButtonBindings();
         if (Robot.debug) {
-            startValueTuner();
             startFireLog();
-            new ValueTuner().start();
         }
     // Set default commands for subsystems.
     led.setDefaultCommand(new DimmingColor(led, DEFAULT_COLOR));
     }
 
-    public static double getLeftXboxY() {
-        return xbox.getRawAxis(XboxLeftYStick);
+    /**
+     * Defines the default command of each mechanism on the robot.
+     */
+    private void configureDefaultCommands(){
+        colorWheel.setDefaultCommand(new ManualControl(colorWheel));
+        turret.setDefaultCommand(new JoystickTurret(turret));
+        drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
     }
-
-    public static double getRightXboxY() {
-        return xbox.getRawAxis(rightYStick);
+    /**
+     * Configures all of the button usages on the robot.
+     */
+    private void configureButtonBindings() {
+        OI.a.whenPressed(new IntakeBalls(intake, 0.4));
+        OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.4));
+        OI.b.whenPressed(new SpeedUp(shooter));
+        OI.y.whenPressed(new FeedTurret(conveyor));
+        OI.select.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
+        OI.rb.whenPressed(new RotationControl(colorWheel));
+        OI.lb.whenPressed(new PositionControl(colorWheel));
+        OI.select_start.whenHeld(new SequentialCommandGroup(
+                new WaitCommand(2),
+                new RunCommand(() -> Robot.shootingManualMode = true)
+        )); //If both buttons are held without being released the manualMode will be enabled.
+        OI.start.whenPressed(() -> Robot.shootingManualMode = false); //Pressing start disables the manual mode for shooting.
     }
 
     /**
@@ -103,22 +129,6 @@ public class RobotContainer {
         }
     }
 
-    public double getLeftXboxX() {
-        return xbox.getRawAxis(XboxLeftXStick);
-    }
-
-    /**
-     * Use this method to define your button->command mappings.  Buttons can be created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-     * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
-        rightJoystickButton3.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        a.whenPressed(new TurnTurret(turret, 45));
-        b.whenPressed(new CenterTurret(turret));
-    }
-
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
@@ -127,4 +137,5 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return null;
     }
+      
 }

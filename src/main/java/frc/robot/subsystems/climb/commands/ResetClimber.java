@@ -9,26 +9,22 @@ package frc.robot.subsystems.climb.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.OI;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 
 /**
- * This command would allow the driver to modify the robot's angle manually
- * with the value of the left xbox's joystick.
+ * This command would reset the rods height to 0 (their initial state).
  */
-public class JoystickControl extends CommandBase {
+public class ResetClimber extends CommandBase {
     private final Climber climber;
-    private boolean controlEachSide;
-    private double rightInput, leftInput;
 
     /**
-     * Creates a new joystick control command.
+     * Creates a new reset climber command.
      *
      * @param climber The subsystem used by this command.
      */
-    public JoystickControl(Climber climber, boolean controlEachSide) {
+    public ResetClimber(Climber climber) {
         this.climber = climber;
-        this.controlEachSide = controlEachSide;
         addRequirements(climber);
     }
 
@@ -41,16 +37,8 @@ public class JoystickControl extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (controlEachSide) {
-            leftInput = OI.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
-            rightInput = OI.getRightXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
-        }
-        else {
-            leftInput = OI.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
-            rightInput = -leftInput;
-        }
-        climber.setLeftHeight(leftInput + climber.getLeftHeight());
-        climber.setRightHeight(rightInput + climber.getRightHeight());
+        climber.setLeftHeight(0);
+        climber.setRightHeight(0);
     }
 
 
@@ -69,7 +57,9 @@ public class JoystickControl extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        return false;
+        boolean leftSideInPosition = Math.abs(climber.getLeftHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        boolean rightSideInPosition = Math.abs(climber.getRightHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        return leftSideInPosition && rightSideInPosition;
     }
 
 
