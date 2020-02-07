@@ -50,12 +50,12 @@ public class Conveyor extends SubsystemBase {
     public void periodic() {
         updateSensors();
         //If the intake senses an object, and it hasn't in the previous state, and the wheels are turning outwards, add a ball to the count
-        if (shooterSensedBall() && intakeSensedBall() && (getPower() >= 0))
+        if (intake.intakeProximity.getToggle() && intakeSensedBall() && (getPower() >= 0))
                 incrementBallsCount(1);
         //If the conveyor proximity loses an object, and it hasn't been off before and the conveyor is spinning outwards, remove a ball from the count
         //Additionally, if the conveyor outtakes a ball and the sensor sees the ball pass it, decrement the count aswell.
         if ( (!shooterProximity.getState() && shooterProximity.getToggle() && (getPower() > 0)) ||
-                (!shooterSensedBall() && intakeSensedBall() && (getPower() < 0)))
+                (intake.intakeProximity.getToggle() && !intakeSensedBall() && (getPower() < 0)))
                 decrementBallsCount(1);
     }
 
