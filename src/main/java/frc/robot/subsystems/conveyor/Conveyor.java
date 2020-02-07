@@ -2,7 +2,6 @@ package frc.robot.subsystems.conveyor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
@@ -30,8 +29,8 @@ public class Conveyor extends SubsystemBase {
     private Intake intake;
     private UnitModel unitConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
-    private Supplier<Integer> proximityValue = motor::getSelectedSensorPosition;
-    private DeadbandProximity shooterProximity = new DeadbandProximity(proximityValue, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
+    private Supplier<Integer> proximitySupplier = motor::getSelectedSensorPosition;
+    private DeadbandProximity shooterProximity = new DeadbandProximity(proximitySupplier, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
     public DeadbandProximity intakeProximity = new DeadbandProximity(intake.getProximity(), INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
     private Solenoid gate = new Solenoid(GATE); //mechanical stop
     private int ballsCount = STARTING_AMOUNT;

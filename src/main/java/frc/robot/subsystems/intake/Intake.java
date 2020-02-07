@@ -3,20 +3,13 @@ package frc.robot.subsystems.intake;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.wpilibj.AnalogEncoder;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
-import frc.robot.utilities.DeadbandProximity;
 import frc.robot.utilities.State;
 
 import java.util.function.Supplier;
 
-import static frc.robot.Constants.Conveyor.INTAKE_PROXIMITY_MAX_VOLTAGE;
-import static frc.robot.Constants.Conveyor.INTAKE_PROXIMITY_MIN_VOLTAGE;
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Intake.*;
 
@@ -31,7 +24,7 @@ import static frc.robot.Ports.Intake.*;
 public class Intake extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private DoubleSolenoid retractor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
-    private Supplier<Integer> proximityValue = motor::getSelectedSensorPosition;
+    private Supplier<Integer> proximitySupplier = motor::getSelectedSensorPosition;
 
     public Intake() {
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
@@ -67,7 +60,7 @@ public class Intake extends SubsystemBase {
     }
 
     public Supplier<Integer> getProximity(){
-        return proximityValue;
+        return proximitySupplier;
     }
     /**
      * OPEN is in the state where the intake is functional
