@@ -25,6 +25,7 @@ public class Ports {
         public static final int FORWARD_GATE = 1;
         public static final int REVERSE_GATE = 2;
         public static final int GATE = 4; // Port of the stopper solenoid.
+        public static final boolean IS_GATE_REVERSED = false;
     }
 
     public static final int TALON_PID_SLOT = 0;
