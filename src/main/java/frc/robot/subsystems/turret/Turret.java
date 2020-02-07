@@ -6,11 +6,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
-import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.utilities.Utils;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -34,7 +32,7 @@ public class Turret extends SubsystemBase {
     private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private double targetAngle;
     private boolean isGoingClockwise = true;
-
+    private double turretBacklash; //The angle in degrees which the turret is off from the motor (clockwise). this angle changes based on the turning direction.
     /**
      * configures the encoder and PID constants.
      */
@@ -60,13 +58,13 @@ public class Turret extends SubsystemBase {
      * Corrects subsystem's backlash.
      */
     public void correctBacklash(){
-        int currentVelocity = motor.getSelectedSensorVelocity();
+        double currentVelocity = unitModel.toVelocity(motor.getSelectedSensorVelocity());
         if (Math.abs(currentVelocity) <= VELOCITY_MINIMUM)
             return;
         boolean changedDirection = !(isGoingClockwise == currentVelocity > 0); // Checks whether the turret switched directions since the last movement
         if (changedDirection) {
-            motor.setSelectedSensorPosition(unitModel.toTicks(getAngle() + (isGoingClockwise ? BACKLASH_ANGLE : -BACKLASH_ANGLE)));
             isGoingClockwise = !isGoingClockwise;
+            turretBacklash = isGoingClockwise ? BACKLASH_ANGLE / 2. : -BACKLASH_ANGLE / 2.;
         }
     }
 
@@ -76,7 +74,7 @@ public class Turret extends SubsystemBase {
      * @return the angle of the turret
      */
     public double getAngle() {
-        return unitModel.toUnits(motor.getSelectedSensorPosition());
+        return unitModel.toUnits(motor.getSelectedSensorPosition()) - turretBacklash; //subtract backlash to get turret angle, add to get motor angle.
     }
 
     /**
@@ -85,8 +83,8 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
-        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
+        targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle + turretBacklash)); //Set the position to the target angle plus the backlash the turret creates.
     }
 
     /**
@@ -169,7 +167,7 @@ public class Turret extends SubsystemBase {
      * DESTROY ITSELF... be warned! do not use this midgame!
      */
     public void resetEncoder(){
-        double currentPosition = Math.IEEEremainder(motor.getSelectedSensorPosition(1) - Constants.Turret.CENTER_POSITION, unitModel.toTicks(360));
+        double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(motor.getSelectedSensorPosition(1) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
         motor.setSelectedSensorPosition((int)currentPosition);
     }
 }
