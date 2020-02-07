@@ -130,7 +130,7 @@ public class Drivetrain extends SubsystemBase {
         if (Robot.isRobotA)
             gearShifterA.set(DoubleSolenoid.Value.kForward);
         else
-            gearShifterB.set(true);
+            gearShifterB.set(!IS_SHIFTER_REVERSED);
     }
 
     private void shiftLow() {
@@ -138,7 +138,7 @@ public class Drivetrain extends SubsystemBase {
         if (Robot.isRobotA)
             gearShifterA.set(DoubleSolenoid.Value.kReverse);
         else
-            gearShifterB.set(false);
+            gearShifterB.set(IS_SHIFTER_REVERSED);
     }
 
     /**
