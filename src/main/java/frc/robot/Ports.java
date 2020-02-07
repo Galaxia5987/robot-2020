@@ -35,6 +35,7 @@ public class Ports {
         public static final boolean IS_FORWARD_OPEN = true; //if kForward of the solenoid opens the intake or reverse.
         public static final int FOLD_SOLENOID_REVERSE = 1;
         public static final int FOLD_SOLENOID_FORWARD = 2;
+        public static final int SOLENOID = 3;
     }
 
     public static class Turret {
