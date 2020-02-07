@@ -69,6 +69,8 @@ public class DeadbandProximity {
         return value.get() > maxVoltage;
     }
 
+    public void resetToggle(){
+        toggle = false;
     }
 
     /**
