@@ -7,12 +7,11 @@ import frc.robot.utilities.Utils;
 import java.util.function.Supplier;
 import static frc.robot.Constants.Turret.MAXIMUM_POSITION;
 import static frc.robot.Constants.Turret.MINIMUM_POSITION;
-import static frc.robot.RobotContainer.TURRET_JOYSTICK_SPEED;\
 import static frc.robot.Constants.Turret.*;
 
 public class JoystickTurret extends CommandBase {
     private static Turret turret;
-    private Supplier<Double> joystickInput = OI::getXboxY;
+    private Supplier<Double> joystickInput = OI::getLeftXboxY;
 
     public JoystickTurret(Turret turret) {
         this.turret = turret;
