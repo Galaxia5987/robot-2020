@@ -163,10 +163,10 @@ public class Turret extends SubsystemBase {
      * @return whether the turret is in its dead zone in which it cannot shoot
      */
     public boolean inDeadZone(){
-        return (getAngle() > Constants.Turret.RIGHT_DEAD_ZONE_MINIMUM
-                && getAngle() < Constants.Turret.RIGHT_DEAD_ZONE_MAXIMUM)
-                || (getAngle() > Constants.Turret.LEFT_DEAD_ZONE_MINIMUM
-                && getAngle() < Constants.Turret.LEFT_DEAD_ZONE_MAXIMUM);
+        return (getAngle() > RIGHT_DEAD_ZONE_MINIMUM
+                && getAngle() < RIGHT_DEAD_ZONE_MAXIMUM)
+                || (getAngle() > LEFT_DEAD_ZONE_MINIMUM
+                && getAngle() < LEFT_DEAD_ZONE_MAXIMUM);
     }
     /**
      * runs periodically, updates the constants and resets encoder position if the hall effect is closed
