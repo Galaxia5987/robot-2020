@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
@@ -155,7 +154,19 @@ public class Turret extends SubsystemBase {
     }
     
     public boolean isTurretReady(){
-        return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
+        return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD && !inDeadZone();
+    }
+
+    /**
+     * Because of the climbing rods' height there are dead zones where the turret cannot see a target
+     * or cannot shoot because the rods are blocking it's path.
+     * @return whether the turret is in its dead zone in which it cannot shoot
+     */
+    public boolean inDeadZone(){
+        return (getAngle() > Constants.Turret.RIGHT_DEAD_ZONE_MINIMUM
+                && getAngle() < Constants.Turret.RIGHT_DEAD_ZONE_MAXIMUM)
+                || (getAngle() > Constants.Turret.LEFT_DEAD_ZONE_MINIMUM
+                && getAngle() < Constants.Turret.LEFT_DEAD_ZONE_MAXIMUM);
     }
     /**
      * runs periodically, updates the constants and resets encoder position if the hall effect is closed
