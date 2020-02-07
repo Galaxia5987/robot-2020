@@ -10,13 +10,9 @@ package frc.robot;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
-import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
-import frc.robot.subsystems.climb.commands.JoystickControl;
-import frc.robot.subsystems.climb.commands.ReleaseRods;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
@@ -32,10 +28,12 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
-import frc.robot.subsystems.turret.commands.TurretSwitching;
 import frc.robot.utilities.StickButton;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
+
+import static frc.robot.OI.rightStick;
+import static frc.robot.OI.xbox;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -48,17 +46,17 @@ public class RobotContainer {
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
-    private final JoystickButton rightJoystickButton3 = new JoystickButton(rightJoystick, 3);
+    private final JoystickButton rightJoystickButton3 = new JoystickButton(rightStick, 3);
     private final Shooter shooter = new Shooter();
     public static JoystickButton a = new JoystickButton(xbox, 1);
     public static JoystickButton b = new JoystickButton(xbox, 2);
     public static JoystickButton y = new JoystickButton(xbox, 3);
     private final JoystickButton rs = new JoystickButton(xbox, 10);
     private final StickButton rightY = new StickButton(xbox, 5, 0.1);
-    private static Conveyor conveyor = new Conveyor(intake);
+    private final Intake intake = new Intake();
+    private  Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
     public static final Turret turret = new Turret();
-    public static final Shooter shooter = new Shooter();
     private final Command m_autoCommand = null;
 
     /**
