@@ -161,7 +161,9 @@ public class Conveyor extends SubsystemBase {
     }
 
     public boolean isGateOpen() {
-        return DoubleSolenoid.Value.kForward == gateA.get();
+        if (Robot.isRobotA)
+            return DoubleSolenoid.Value.kForward == gateA.get();
+        return gateB.get();
     }
 
     public void openGate(boolean open) {
