@@ -1,7 +1,8 @@
 package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -9,6 +10,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.utilities.State;
 
+import java.util.function.Supplier;
+
+import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Intake.*;
 
 /**
@@ -20,11 +24,12 @@ import static frc.robot.Ports.Intake.*;
  * {@using DoubleSolenoid}
  */
 public class Intake extends SubsystemBase {
-    private VictorSPX motor = new VictorSPX(MOTOR);
+    private TalonSRX motor = new TalonSRX(MOTOR);
     private DoubleSolenoid retractorA = null;
     private Solenoid retractorB = null;
 
     public Intake() {
+        motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
 
         if (Robot.isRobotA)
@@ -64,6 +69,16 @@ public class Intake extends SubsystemBase {
      */
     public void togglePosition() {
         setPosition(!isOpen());
+    }
+
+    /**
+     * Returns the reading from the potentiometer through the talon. Note, this value is an integer,
+     * and ranges from 0-1023, similarly to how Arduino devices read voltage.
+     *
+     * @return Proximity voltage reading in native units.
+     */
+    public int getSensorValue(){
+        return motor.getSelectedSensorPosition();
     }
 
     /**
