@@ -2,20 +2,23 @@ package frc.robot.utilities;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
+import java.util.function.Supplier;
+
 /**
  * This class is a modification of the regular proximity class, which adds a deadband, to insure that the sensor
  * does not toggle multiple times.
  * this is crucial for the conveyor, because the amount of balls that enter are counted by the amount of times
  * the sensor switches from false to true.
  */
-public class DeadbandProximity extends AnalogInput {
+public class DeadbandProximity {
     private double minVoltage;
     private double maxVoltage;
+    private Supplier<Double> value;
     private boolean objectSensed = false;
     private boolean toggle = false;
 
-    public DeadbandProximity(int port, double minVoltage, double maxVoltage) {
-        super(port);
+    public DeadbandProximity(Supplier<Double> value, double minVoltage, double maxVoltage) {
+        this.value = value;
         this.maxVoltage = maxVoltage;
         this.minVoltage = minVoltage;
     }
