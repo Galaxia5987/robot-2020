@@ -13,6 +13,7 @@ public class Ports {
         public static final boolean RIGHT_MOTOR_INVERTED = false;
         public static final boolean LEFT_ENCODER_INVERTED = false;
         public static final boolean RIGHT_ENCODER_INVERTED = false;
+        public static final boolean IS_STOPPER_REVERSED = false;
     }
 
     public static class Conveyor {
