@@ -19,21 +19,21 @@ public class Constants{
     public static final double ROBOT_WIDTH = 0;
 
     public static class Drivetrain {
-        public static final double[] VELOCITY_PID_SET = {0.0001, 0, 2, 0};//PID set for the velocity drive of the wheels
+        public static final double[] VELOCITY_PID_SET = {0.0, 0, 0, 0};//PID set for the velocity drive of the wheels
         public static final double SHIFTER_COOLDOWN = 0.5;//Time after shifting the shifter is not to be used
         public static final double HIGH_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into high gear
         public static final double LOW_ACCELERATION_THRESHOLD = 0;//Threshold for the acceleration required to go into low gear
         public static final double TURNING_TOLERANCE = 0;//Stops the robot from shifting while the robot is turning
-        public static final int LOW_TICKS_PER_METER = 28914;//unit conversion while the robot is on low gear
-        public static final int HIGH_TICKS_PER_METER = 0;//unit conversion while the robot is on high gear
+        public static final double WHEEL_DIAMETER = 6*0.0254;
+        public static final int LOW_TICKS_PER_METER = (int) (4096 * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI));//unit conversion while the robot is on low gear
+        public static final int HIGH_TICKS_PER_METER = (int) (4096 * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI));//unit conversion while the robot is on high gear
         public static final double HIGH_GEAR_MIN_VELOCITY = 0;
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
         public static final double GRAVITY_ACCELERATION = 9.80665;
         public static final boolean RIGHT_MASTER_INVERTED = true;
         public static final boolean RIGHT_SLAVE_INVERTED = true;
-        public static final double TRACK_WIDTH = 0.72;
+        public static final double TRACK_WIDTH = 0.6649; //TODO: this is horizontal distance between the wheels, we might need diagonal.
         public static final boolean GYRO_INVERTED = true;
-        public static final double WHEEL_DIAMETER = 0.1016;
         public static final double JOYSTICK_END_THRESHOLD = 0;
     }
 
@@ -126,21 +126,20 @@ public class Constants{
     public static class Climber {
         public static final int MOTION_MAGIC_VELOCITY = 0;
         public static final int MOTION_MAGIC_ACCELERATION = 0;
-        public static final int TICKS_PER_METER = 1;
+        public static final int TICKS_PER_METER = (int)(4096 * 0.03 * Math.PI);
         public static final double[] CLIMB_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
         public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
         public static final double ARBITRARY_FEEDFORWARD = 0;
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0; // The allowed tolerance between the current height to the desired height
         public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle
-        public static final double MAX_HEIGHT = 2; // The allowed maximum height of the subsystem
+        public static final double MAX_HEIGHT = 0.913; // The allowed maximum height of the subsystem
         public static final double MODIFY_JOYSTICK_RATE = 0; // The factor which the value of the joystick is multiply by to calculate the change rate
         public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber
         public static final double RAMP_RATE = 0;
-        public static final long DELAY_BETWEEN_COMMANDS = 0;
     }
 
     public static class Conveyor {
-        public static final int TICK_PER_METERS = 0;
+        public static final int TICK_PER_METERS = (int) (0.0382 * 4096);
 
         public static final double KP = 0.0;
         public static final double KI = 0.0;
@@ -171,7 +170,7 @@ public class Constants{
     public static class Turret {
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
-        public static final int TICKS_PER_DEGREE = 1;
+        public static final int TICKS_PER_DEGREE = 4096;
         public static final double MINIMUM_POSITION = -200;
         public static final double MAXIMUM_POSITION = 200;
 
@@ -200,7 +199,7 @@ public class Constants{
 
 
     public static class Shooter {
-        public static final int TICKS_PER_ROTATION = 36;
+        public static final int TICKS_PER_ROTATION = 4096;
         public static final double KP = 0.085; // 0.13
         public static final double KI = 0.0;
 

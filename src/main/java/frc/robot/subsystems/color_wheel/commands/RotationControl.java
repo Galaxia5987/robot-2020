@@ -20,10 +20,6 @@ public class RotationControl extends CommandBase {
     private double counterClockwiseSpins = 0;//Counts the counterclockwise spins of the control panel
     private ColorWheel colorWheel;
 
-    private Supplier<Double> joystickInput = OI::getXboxRX;
-
-
-
     public RotationControl(ColorWheel colorWheel) {
         this.colorWheel = colorWheel;
     }
