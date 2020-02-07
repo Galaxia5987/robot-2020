@@ -99,6 +99,4 @@ public class Intake extends SubsystemBase {
     public void powerWheels(double power) {
         motor.set(ControlMode.PercentOutput, power);
     }
-
-
 }
