@@ -5,7 +5,9 @@ import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.utilities.State;
 
 import java.util.function.Supplier;
@@ -23,11 +25,17 @@ import static frc.robot.Ports.Intake.*;
  */
 public class Intake extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
-    private DoubleSolenoid retractor = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
+    private DoubleSolenoid retractorA = null;
+    private Solenoid retractorB = null;
 
     public Intake() {
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
+
+        if (Robot.isRobotA)
+            retractorA = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
+        else
+            retractorB = new Solenoid(SOLENOID);
     }
 
     /**
@@ -36,7 +44,9 @@ public class Intake extends SubsystemBase {
      * @return whether the intake mechanism is open to intake Power Cells.
      */
     public boolean isOpen() {
-        return retractor.get() == Value.kForward;
+        if (Robot.isRobotA)
+            return retractorA.get() == Value.kForward;
+        return retractorB.get() != IS_SOLENOID_REVERSED;
     }
 
     /**
@@ -47,7 +57,10 @@ public class Intake extends SubsystemBase {
      *           If set to false, the intake will close inside the robot.
      */
     public void setPosition(boolean open) {
-        retractor.set(open == IS_FORWARD_OPEN ? Value.kForward : Value.kReverse);
+        if (Robot.isRobotA)
+            retractorA.set(open == IS_FORWARD_OPEN ? Value.kForward : Value.kReverse);
+        else
+            retractorB.set(open != IS_SOLENOID_REVERSED);
     }
 
     /**
@@ -77,16 +90,13 @@ public class Intake extends SubsystemBase {
     public void setPosition(State state){
         switch (state) {
             case OPEN:
-                retractor.set(Value.kForward);
+                setPosition(true);
                 break;
             case CLOSE:
-                retractor.set(Value.kReverse);
+                setPosition(false);
                 break;
             case TOGGLE:
-                if (isOpen())
-                    retractor.set(Value.kForward);
-                else
-                    retractor.set(Value.kReverse);
+                togglePosition();
                 break;
         }
     }

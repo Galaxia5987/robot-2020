@@ -12,20 +12,25 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.TalonConfiguration;
 
 import static frc.robot.Constants.Climber.CLIMB_PIDF;
 
+import static frc.robot.Ports.climber.IS_STOPPER_REVERSED;
+
 public class Climber extends SubsystemBase {
 
     private final TalonSRX leftMotor = new TalonSRX(Ports.climber.LEFT_MOTOR);
     private final TalonSRX rightMotor = new TalonSRX(Ports.climber.RIGHT_MOTOR);
-    private final DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
+    private DoubleSolenoid stopperA = null;
+    private Solenoid stopperB = null;
     private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
 
     /**
@@ -47,13 +52,18 @@ public class Climber extends SubsystemBase {
 
         leftMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
         rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
-
+      
         talonConfigs.setPidSet(CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3]);
         talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector);
         talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.NormallyOpen);
         talonConfigs.setNeutralMode(NeutralMode.Coast);
         talonConfigs.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
         UtilityFunctions.configAllTalons(talonConfigs, leftMotor, rightMotor);
+
+        if (Robot.isRobotA)
+            stopperA = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
+        else
+            stopperB = new Solenoid(Ports.climber.STOPPER);
     }
 
     /**
@@ -63,7 +73,10 @@ public class Climber extends SubsystemBase {
      */
     public void releaseStopper() {
         if (safeToClimb()) {
-            stopper.set(DoubleSolenoid.Value.kReverse);
+            if (Robot.isRobotA)
+                stopperA.set(DoubleSolenoid.Value.kReverse);
+            else
+                stopperB.set(IS_STOPPER_REVERSED);
         }
     }
 
@@ -71,7 +84,10 @@ public class Climber extends SubsystemBase {
      * Engage the mechanical stopper to lock the climber.
      */
     public void engageStopper() {
-        stopper.set(DoubleSolenoid.Value.kForward);
+        if (Robot.isRobotA)
+            stopperA.set(DoubleSolenoid.Value.kForward);
+        else
+            stopperB.set(!IS_STOPPER_REVERSED);
     }
 
     /**
@@ -80,7 +96,9 @@ public class Climber extends SubsystemBase {
      * @return the state of the mechanical stopper
      */
     public boolean isStopperEngaged() {
-        return stopper.get().equals(DoubleSolenoid.Value.kForward);
+        if (Robot.isRobotA)
+            return stopperA.get().equals(DoubleSolenoid.Value.kForward);
+        return stopperB.get() != IS_STOPPER_REVERSED;
     }
 
     /**
