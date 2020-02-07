@@ -2,6 +2,7 @@ package frc.robot.subsystems.color_wheel.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.OI;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 
 import java.util.function.Supplier;
@@ -13,9 +14,7 @@ import java.util.function.Supplier;
  */
 public class ManualControl extends CommandBase {
     private ColorWheel colorWheel;
-
-    private Supplier<Double> joystickInput = null;
-
+    private Supplier<Double> joystickInput =  OI::getRightXboxX;
 
 
     public ManualControl(ColorWheel colorWheel) {
