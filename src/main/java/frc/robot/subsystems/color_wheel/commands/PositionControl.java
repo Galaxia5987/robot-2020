@@ -18,7 +18,7 @@ public class PositionControl extends CommandBase {
     private int currentColor;
     private Timer endTimer = new Timer(); // Used to make sure we don't overshoot over the wanted color.
     private ColorWheel colorWheel;
-    private Supplier<Double> joystickInput = OI::getXboxY; // Controls the power the
+    private Supplier<Double> joystickInput = OI::getRightXboxX; // Controls the power the
 
     public PositionControl(ColorWheel colorWheel) {
         this.colorWheel = colorWheel;

@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.color_wheel.commands.ManualControl;
 
 public class ColorWheel extends SubsystemBase {
 
