@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
     public static final boolean debug = true;
     // The roboRIO has built-in pull up resistors, bridge signal and ground pins on Robot A DIO 0.
     public static boolean isRobotA = !new DigitalInput(0).get();
-    public static boolean hasShifter = true;
     public static boolean shootingManualMode = false;
     public static Compressor compressor = new Compressor();
     public static PowerDistributionPanel pdp = new PowerDistributionPanel();

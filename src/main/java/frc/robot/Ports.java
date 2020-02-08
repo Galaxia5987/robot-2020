@@ -1,8 +1,9 @@
 package frc.robot;
 
 
-
 public class Ports {
+
+    public static final int TALON_PID_SLOT = 0;
 
     public static class Conveyor {
         public static final int FUNNEL = 19;
@@ -25,8 +26,6 @@ public class Ports {
         public static final int SOLENOID = 2;
         public static final boolean IS_SOLENOID_REVERSED = false;
     }
-
-    public static final int TALON_PID_SLOT = 0;
 
     public static class Shooter {
         public static final int MASTER = 23;
@@ -56,7 +55,11 @@ public class Ports {
         public static final boolean IS_SHIFTER_REVERSED = false;
     }
 
-    public class climber {
+    public static class ColorWheel {
+        public static final int MOTOR = 30;
+    }
+
+    public class Climber {
         public static final int LEFT_MOTOR = 40;
         public static final int RIGHT_MOTOR = 41;
         public static final int STOPPER_FORWARD = 3;
@@ -69,7 +72,4 @@ public class Ports {
         public static final boolean IS_STOPPER_REVERSED = false;
     }
 
-    public static class ColorWheel {
-        public static final int MOTOR = 30;
-    }
 }

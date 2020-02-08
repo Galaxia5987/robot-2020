@@ -9,7 +9,6 @@ package frc.robot.subsystems.climb;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -23,12 +22,12 @@ import frc.robot.utilities.TalonConfiguration;
 
 import static frc.robot.Constants.Climber.CLIMB_PIDF;
 
-import static frc.robot.Ports.climber.IS_STOPPER_REVERSED;
+import static frc.robot.Ports.Climber.IS_STOPPER_REVERSED;
 
 public class Climber extends SubsystemBase {
 
-    private final TalonSRX leftMotor = new TalonSRX(Ports.climber.LEFT_MOTOR);
-    private final TalonSRX rightMotor = new TalonSRX(Ports.climber.RIGHT_MOTOR);
+    private final TalonSRX leftMotor = new TalonSRX(Ports.Climber.LEFT_MOTOR);
+    private final TalonSRX rightMotor = new TalonSRX(Ports.Climber.RIGHT_MOTOR);
     private DoubleSolenoid stopperA = null;
     private Solenoid stopperB = null;
     private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
@@ -38,8 +37,8 @@ public class Climber extends SubsystemBase {
      */
     public Climber() {
         TalonConfiguration talonConfigs = new TalonConfiguration();
-        leftMotor.setInverted(Ports.climber.LEFT_MOTOR_INVERTED);
-        rightMotor.setInverted(Ports.climber.RIGHT_MOTOR_INVERTED);
+        leftMotor.setInverted(Ports.Climber.LEFT_MOTOR_INVERTED);
+        rightMotor.setInverted(Ports.Climber.RIGHT_MOTOR_INVERTED);
 
         leftMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
         rightMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
@@ -47,8 +46,8 @@ public class Climber extends SubsystemBase {
         leftMotor.configMotionAcceleration(Constants.Climber.MOTION_MAGIC_ACCELERATION);
         rightMotor.configMotionAcceleration(Constants.Climber.MOTION_MAGIC_ACCELERATION);
 
-        leftMotor.setSensorPhase(Ports.climber.LEFT_ENCODER_INVERTED);
-        rightMotor.setSensorPhase(Ports.climber.RIGHT_ENCODER_INVERTED);
+        leftMotor.setSensorPhase(Ports.Climber.LEFT_ENCODER_INVERTED);
+        rightMotor.setSensorPhase(Ports.Climber.RIGHT_ENCODER_INVERTED);
 
         leftMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
         rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
@@ -61,9 +60,9 @@ public class Climber extends SubsystemBase {
         UtilityFunctions.configAllTalons(talonConfigs, leftMotor, rightMotor);
 
         if (Robot.isRobotA)
-            stopperA = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
+            stopperA = new DoubleSolenoid(Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
         else
-            stopperB = new Solenoid(Ports.climber.STOPPER);
+            stopperB = new Solenoid(Ports.Climber.STOPPER);
     }
 
     /**
