@@ -76,8 +76,8 @@ public class Constants{
 
 
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
-        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.5;
-        public static final double FUNNEL_MOTOR_FEED_POWER = 0.2;
+        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.7;
+        public static final double FUNNEL_MOTOR_FEED_POWER = 0.3;
         public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0;
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
