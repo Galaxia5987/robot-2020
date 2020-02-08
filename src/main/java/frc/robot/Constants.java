@@ -36,7 +36,6 @@ public class Constants{
         public static final double TURNING_TOLERANCE = 0; // Stops the robot from shifting while the robot is turning.
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
-        public static final boolean GYRO_INVERTED = false;
         public static final double JOYSTICK_END_THRESHOLD = 0;
     }
 

@@ -213,7 +213,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the robot's heading in degrees, from -180 to 180
      */
     public double getHeading() {
-        return Math.IEEEremainder(navx.getAngle(), 360) * (GYRO_INVERTED ? -1 : 1);
+        return Math.IEEEremainder(navx.getAngle(), 360);
     }
 
     public Pose2d getPose() {
@@ -252,7 +252,7 @@ public class Drivetrain extends SubsystemBase {
 
         FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
         FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(getHeading()));
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle()));
     }
 
     public enum shiftModes {
