@@ -37,8 +37,8 @@ public class Ports {
 
     public static class Turret {
         public static final int MOTOR = 22;
-        public static final boolean IS_MOTOR_INVERTED = false;
-        public static final boolean IS_ENCODER_INVERTED = false;
+        public static final boolean IS_MOTOR_INVERTED = true;
+        public static final boolean IS_ENCODER_INVERTED = true;
     }
 
     public static class Drivetrain {
