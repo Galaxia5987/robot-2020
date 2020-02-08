@@ -75,12 +75,6 @@ public class Drivetrain extends SubsystemBase {
 
     public void shiftGear(shiftModes mode) {
         switch (mode) {
-            case TOGGLE:
-                if (canShiftHigh())
-                    shiftHigh();
-                else if (canShiftLow())
-                    shiftLow();
-                break;
             case LOW:
                 if (canShiftLow())
                     shiftLow();
@@ -89,8 +83,6 @@ public class Drivetrain extends SubsystemBase {
                 if (canShiftHigh())
                     shiftHigh();
                 break;
-            default:
-                return;
         }
     }
 
@@ -255,8 +247,11 @@ public class Drivetrain extends SubsystemBase {
         FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle()));
     }
 
+    /**
+     * shiftModes.HIGH is the default on the robot, and means high speed.
+     * shiftModes.LOW is for low speed, but more power.
+     */
     public enum shiftModes {
-        TOGGLE,
         HIGH,
         LOW
     }
