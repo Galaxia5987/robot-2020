@@ -5,6 +5,7 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 
 public class OuttakeBalls extends CommandBase {
+    private final double conveyorSpeed;
     private Intake intake;
     private Conveyor conveyor;
     private double speed;
@@ -15,18 +16,20 @@ public class OuttakeBalls extends CommandBase {
      *
      * @param speed
      */
-    public OuttakeBalls(Conveyor conveyor, Intake intake, double speed) {
+    public OuttakeBalls(Conveyor conveyor, Intake intake, double speed, double conveyorSpeed) {
         addRequirements(intake, conveyor);
         this.conveyor = conveyor;
         this.intake = intake;
         this.speed = -speed;
+        this.conveyorSpeed = -conveyorSpeed;
     }
 
     @Override
     public void initialize() {
         intake.setPosition(false);
         intake.powerWheels(speed);
-        conveyor.setPower(speed);
+        conveyor.setFunnelPower(speed);
+        conveyor.setConveyorPower(conveyorSpeed);
     }
 
     @Override

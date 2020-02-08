@@ -86,6 +86,7 @@ public class RobotContainer {
 //        OI.y.whenPressed(new TurnTurret(turret, 27));
 //        OI.x.whenPressed(new InstantCommand(() -> intake.setPosition(State.TOGGLE)));
         OI.b.whileHeld(new IntakeBalls(intake, 0.35));
+        OI.a.whileHeld(new OuttakeBalls(conveyor, intake, 0.2, 0.5));
         OI.select.whileHeld(new FeedTurret(conveyor));
 //
 //        OI.a.whenPressed(new InstantCommand(() -> conveyor.openGate(true)));//0
