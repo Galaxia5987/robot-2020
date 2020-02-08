@@ -69,5 +69,6 @@ public class Ports {
 
     public static class ColorWheel {
         public static final int MOTOR = 30;
+        public static final boolean IS_MOTOR_REVERSED = true;
     }
 }

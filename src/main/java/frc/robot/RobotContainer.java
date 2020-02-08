@@ -49,9 +49,9 @@ public class RobotContainer {
     public static final Climber climber = new Climber();
     public static final ColorWheel colorWheel = new ColorWheel();
     public static final Turret turret = new Turret();
-    public static final Conveyor conveyor = new Conveyor();
-    public static final Drivetrain drivetrain = new Drivetrain();
     public static final Intake intake = new Intake();
+    public static final Conveyor conveyor = new Conveyor(intake);
+    public static final Drivetrain drivetrain = new Drivetrain();
     public static final Shooter shooter = new Shooter();
     private final Command m_autoCommand = null;
 
