@@ -18,14 +18,16 @@ public class Constants{
     public static final int TALON_TIMEOUT = 10;
 
     public static class Drivetrain {
+        //Remember! High gear == High speed!
         public static final double WHEEL_DIAMETER = 6*0.0254;
         public static final double TRACK_WIDTH = 0.6649; //TODO: this is horizontal distance between the wheels, we might need diagonal.
 
-        public static final int LOW_TICKS_PER_METER = (int) (4096 * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI)); //unit conversion while the robot is on low gear
-        public static final int HIGH_TICKS_PER_METER = (int) (4096 * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI)); //unit conversion while the robot is on high gear
+        public static final int LOW_TICKS_PER_METER = (int) (4096 * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI)); // TICKS * RATIO / CIRCUMFERENCE
+        public static final int HIGH_TICKS_PER_METER = (int) (4096 * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI)); // TICKS * RATIO / CIRCUMFERENCE
 
         public static final double[] VELOCITY_PID_SET = {0.0, 0, 0, 0}; //PID set for the velocity drive of the wheels
 
+        //Shifter enabled constants
         public static final double SHIFTER_COOLDOWN = 0.5; //Time after shifting the shifter is not to be used
         public static final double HIGH_ACCELERATION_THRESHOLD = 0; //Threshold for the acceleration required to go into high gear
         public static final double LOW_ACCELERATION_THRESHOLD = 0; //Threshold for the acceleration required to go into low gear
