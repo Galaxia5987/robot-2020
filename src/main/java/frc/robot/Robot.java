@@ -7,12 +7,7 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -29,6 +24,8 @@ public class Robot extends TimedRobot {
     public static boolean isRobotA = !new DigitalInput(0).get();
     public static boolean hasShifter = true;
     public static boolean shootingManualMode = false;
+    public static PowerDistributionPanel pdp = new PowerDistributionPanel();
+    public static Compressor compressor = new Compressor();
 
     private Command m_autonomousCommand;
     public static Timer robotTimer = new Timer();
