@@ -22,6 +22,7 @@ import frc.robot.utilities.TalonConfiguration;
 
 import static frc.robot.Constants.Climber.CLIMB_PIDF;
 
+import static frc.robot.Constants.Climber.CLIMB_RELEASE_PIDF;
 import static frc.robot.Ports.Climber.IS_STOPPER_REVERSED;
 
 public class Climber extends SubsystemBase {
@@ -52,12 +53,30 @@ public class Climber extends SubsystemBase {
         leftMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
         rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
       
-        talonConfigs.setPidSet(CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3]);
         talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector);
         talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.NormallyOpen);
         talonConfigs.setNeutralMode(NeutralMode.Coast);
         talonConfigs.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
         UtilityFunctions.configAllTalons(talonConfigs, leftMotor, rightMotor);
+
+        leftMotor.config_kP(0,CLIMB_PIDF[0]);
+        leftMotor.config_kI(0,CLIMB_PIDF[1]);
+        leftMotor.config_kD(0,CLIMB_PIDF[2]);
+        leftMotor.config_kF(0,CLIMB_PIDF[3]);
+        rightMotor.config_kP(0,CLIMB_PIDF[0]);
+        rightMotor.config_kI(0,CLIMB_PIDF[1]);
+        rightMotor.config_kD(0,CLIMB_PIDF[2]);
+        rightMotor.config_kF(0,CLIMB_PIDF[3]);
+
+        leftMotor.config_kP(1,CLIMB_RELEASE_PIDF[0]);
+        leftMotor.config_kI(1,CLIMB_RELEASE_PIDF[1]);
+        leftMotor.config_kD(1,CLIMB_RELEASE_PIDF[2]);
+        leftMotor.config_kF(1,CLIMB_RELEASE_PIDF[3]);
+        rightMotor.config_kP(1,CLIMB_RELEASE_PIDF[0]);
+        rightMotor.config_kI(1,CLIMB_RELEASE_PIDF[1]);
+        rightMotor.config_kD(1,CLIMB_RELEASE_PIDF[2]);
+        rightMotor.config_kF(1,CLIMB_RELEASE_PIDF[3]);
+
 
         if (Robot.isRobotA)
             stopperA = new DoubleSolenoid(Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
