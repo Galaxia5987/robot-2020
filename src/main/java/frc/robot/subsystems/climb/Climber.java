@@ -40,11 +40,11 @@ public class Climber extends SubsystemBase {
         leftMotor.setInverted(Ports.Climber.LEFT_MOTOR_INVERTED);
         rightMotor.setInverted(Ports.Climber.RIGHT_MOTOR_INVERTED);
 
-        leftMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
-        rightMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
+        leftMotor.configMotionCruiseVelocity(unitModel.toTicks100ms(Constants.Climber.MOTION_MAGIC_VELOCITY));
+        rightMotor.configMotionCruiseVelocity(unitModel.toTicks100ms(Constants.Climber.MOTION_MAGIC_VELOCITY));
 
-        leftMotor.configMotionAcceleration(Constants.Climber.MOTION_MAGIC_ACCELERATION);
-        rightMotor.configMotionAcceleration(Constants.Climber.MOTION_MAGIC_ACCELERATION);
+        leftMotor.configMotionAcceleration(unitModel.toTicks100ms(Constants.Climber.MOTION_MAGIC_ACCELERATION));
+        rightMotor.configMotionAcceleration(unitModel.toTicks100ms(Constants.Climber.MOTION_MAGIC_ACCELERATION));
 
         leftMotor.setSensorPhase(Ports.Climber.LEFT_ENCODER_INVERTED);
         rightMotor.setSensorPhase(Ports.Climber.RIGHT_ENCODER_INVERTED);
