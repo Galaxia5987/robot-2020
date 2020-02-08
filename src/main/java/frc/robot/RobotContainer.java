@@ -8,8 +8,15 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,7 +47,12 @@ import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurretSwitching;
 import frc.robot.utilities.StickButton;
 import frc.robot.valuetuner.ValueTuner;
+import org.ghrobotics.lib.debug.FalconDashboard;
 import org.techfire225.webapp.Webserver;
+
+import static frc.robot.Constants.Drivetrain.GRAVITY_ACCELERATION;
+import static frc.robot.Constants.Drivetrain.GYRO_INVERTED;
+import static frc.robot.Constants.ROBOT_WIDTH;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -65,6 +77,10 @@ public class RobotContainer {
     public static final Shooter shooter = new Shooter();
     public static final AHRS navx = new AHRS(SPI.Port.kMXP);
     private final Command m_autoCommand = null;
+
+    private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())),new Pose2d(0, 0, new Rotation2d()));
+    private FullLocalization localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
+
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -130,5 +146,29 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return null;
     }
+
+    public void periodic(){
+
+        Pose2d current = localization.update( new Rotation2d( Math.toRadians(navx.getAngle())),
+                drivetrain.getLeftPosition(),
+                drivetrain.getRightPosition(),
+                navx.getWorldLinearAccelY()*GRAVITY_ACCELERATION,
+                Robot.robotTimer.get()
+        );
+
+        differentialDriveOdometry.update(new Rotation2d( Math.toRadians(navx.getAngle())),
+                drivetrain.getLeftPosition(),
+                drivetrain.getRightPosition());
+
+        SmartDashboard.putNumber(" simple x", differentialDriveOdometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber(" simple y", differentialDriveOdometry.getPoseMeters().getTranslation().getY());
+        SmartDashboard.putNumber(" simple angle", differentialDriveOdometry.getPoseMeters().getRotation().getRadians());
+
+        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
+        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
+
+    }
+
       
 }

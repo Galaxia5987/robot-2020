@@ -1,6 +1,9 @@
 package frc.robot.subsystems.drivetrain;
 
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
@@ -8,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.drivetrain.EKF.KalmanFilter;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialObservation;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialProcess;
+import org.ghrobotics.lib.debug.FalconDashboard;
 
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
@@ -16,6 +20,8 @@ import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialProces
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+import static frc.robot.Constants.Drivetrain.GYRO_INVERTED;
+import static frc.robot.RobotContainer.navx;
 import static java.lang.Math.abs;
 
 /**
@@ -46,6 +52,16 @@ public class FullLocalization {
     private double m_prevLeftDistance;
     private double m_prevRightDistance;
     private double m_prev_time;
+
+    private NetworkTable localizationTable = NetworkTableInstance.getDefault().getTable("localization");
+    private NetworkTableEntry x = localizationTable.getEntry("x");
+    private NetworkTableEntry y = localizationTable.getEntry("y");
+    private NetworkTableEntry velocity = localizationTable.getEntry("velocity");
+    private NetworkTableEntry theta = localizationTable.getEntry("theta");
+    private NetworkTableEntry angularVelocity = localizationTable.getEntry("angular-velocity");
+    private NetworkTableEntry accelerationBias = localizationTable.getEntry("acceleration-bias");
+    private NetworkTableEntry encoderLeft = localizationTable.getEntry("left-encoder");
+    private NetworkTableEntry encoderRight = localizationTable.getEntry("right-encoder");
 
     /**
      * Constructs a DifferentialDriveOdometry object.
@@ -158,9 +174,17 @@ public class FullLocalization {
                 filter.model.state_estimate.data[1][0],
                 phi);
 
+        x.setDouble(filter.model.state_estimate.data[0][0]);
+        y.setDouble(filter.model.state_estimate.data[1][0]);
+        velocity.setDouble(filter.model.state_estimate.data[2][0]);
+        theta.setDouble(filter.model.state_estimate.data[3][0]);
+        angularVelocity.setDouble(filter.model.state_estimate.data[4][0]);
+        accelerationBias.setDouble(filter.model.state_estimate.data[5][0]);
 
         m_prev_time = time;
         return m_poseMeters;
+
+
     }
 
     // Detect encoder slipping condition by comparing gyro and encoder readings.
