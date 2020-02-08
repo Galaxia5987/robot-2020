@@ -56,7 +56,10 @@ public class Turret extends SubsystemBase {
         motor.config_kF(0, KF, TALON_TIMEOUT);
         motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
         motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
-        motor.configPeakCurrentLimit(MAX_CURRENT);
+        motor.configPeakCurrentLimit(0);
+        motor.configContinuousCurrentLimit(MAX_CURRENT);
+        motor.configPeakCurrentDuration(0);
+        motor.enableCurrentLimit(true);
 
         motor.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         motor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
