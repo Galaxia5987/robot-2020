@@ -104,7 +104,7 @@ public class Constants{
 
 
         public static double KP = 4.07;
-        public static double KI = 0;
+        public static double KI = 0.0005;
         public static double KD = 2.3;
         public static double KF = 0.00912;
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
