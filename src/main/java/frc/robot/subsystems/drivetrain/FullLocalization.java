@@ -22,7 +22,9 @@ import org.ghrobotics.lib.debug.FalconDashboard;
 /*----------------------------------------------------------------------------*/
 
 import static frc.robot.Constants.Drivetrain.GYRO_INVERTED;
+import static frc.robot.Constants.FieldGeometry.OUTER_POWER_PORT_LOCATION;
 import static frc.robot.RobotContainer.drivetrain;
+import static frc.robot.RobotContainer.turret;
 import static frc.robot.RobotContainer.navx;
 import static java.lang.Math.abs;
 
@@ -64,6 +66,12 @@ public class FullLocalization {
     private NetworkTableEntry accelerationBias = localizationTable.getEntry("acceleration-bias");
     private NetworkTableEntry encoderLeft = localizationTable.getEntry("left-encoder");
     private NetworkTableEntry encoderRight = localizationTable.getEntry("right-encoder");
+
+    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
+    private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
+    private NetworkTableEntry visionDistance = visionTable.getEntry("distance");
+    private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
+
 
     /**
      * Constructs a DifferentialDriveOdometry object.
@@ -152,19 +160,28 @@ public class FullLocalization {
         m_prevLeftDistance = leftDistanceMeters;
         m_prevRightDistance = rightDistanceMeters;
 
-         var angle = gyroAngle; // .plus(m_gyroOffset); TODO think how to use offset
+        var angle = gyroAngle; // .plus(m_gyroOffset); TODO think how to use offset
+        double target_angle = turret.getAngle() + visionAngle.getDouble(0);
+        double target_range = visionDistance.getDouble(1);
+
+        final Pose2d target_POS = OUTER_POWER_PORT_LOCATION;
+
 
 
         double dt = time - m_prev_time;
         // Observation object holds the new measurements
-        observation.SetMeasurement(gyroAngle.getRadians(), deltaLeftDistance, deltaRightDistance, dt);
+        observation.SetMeasurement(gyroAngle.getRadians(), deltaLeftDistance, deltaRightDistance,target_range,
+                Math.toRadians(target_angle), target_POS , dt);
         // Acceleration enters the process and not the observation
         process.setAcc(acc);
 
         // Check if encoders are valid or slipping:
         observation.setEncoderValid(EncoderValid(angle, deltaLeftDistance, deltaRightDistance));
 
+        observation.setTargetValid(visionValid.getBoolean(false));
+
         m_previousAngle = gyroAngle;
+
 
 
         // The main estimate step:
