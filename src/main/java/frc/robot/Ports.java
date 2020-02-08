@@ -59,7 +59,7 @@ public class Ports {
         public static final int MOTOR = 30;
     }
 
-    public class Climber {
+    public static class Climber {
         public static final int LEFT_MOTOR = 40;
         public static final int RIGHT_MOTOR = 41;
         public static final int STOPPER_FORWARD = 3;
