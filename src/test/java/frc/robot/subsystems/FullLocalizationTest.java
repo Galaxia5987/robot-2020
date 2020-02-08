@@ -50,10 +50,10 @@ public class FullLocalizationTest {
         phi[0] = 0;
         x[0] = 0;
         y[0] = 0;
-        right_track_pos_x[0] = x[0] + m_width/2*sin(phi[0]);
-        right_track_pos_y[0] = y[0] - m_width/2*cos(phi[0]);
-        left_track_pos_x[0] = x[0] - m_width/2*sin(phi[0]);
-        left_track_pos_y[0] = y[0] + m_width/2*cos(phi[0]);
+        right_track_pos_x[0] = x[0] + m_width/2*sin(-phi[0]);
+        right_track_pos_y[0] = y[0] - m_width/2*cos(-phi[0]);
+        left_track_pos_x[0] = x[0] - m_width/2*sin(-phi[0]);
+        left_track_pos_y[0] = y[0] + m_width/2*cos(-phi[0]);
         right_track[0]=0;
         left_track[0]=0;
 
@@ -67,10 +67,10 @@ public class FullLocalizationTest {
             y[i] = y[i-1] + dt*(v[i] + v[i-1])/2*sin((phi[i]+phi[i-1])/2);
 
 
-            right_track_pos_x[i] = x[i] + m_width/2*sin(phi[i]);
-            right_track_pos_y[i] = y[i] - m_width/2*cos(phi[i]);
-            left_track_pos_x[i] = x[i] - m_width/2*sin(phi[i]);
-            left_track_pos_y[i] = y[i] + m_width/2*cos(phi[i]);
+            right_track_pos_x[i] = x[i] + m_width/2*sin(-phi[i]);
+            right_track_pos_y[i] = y[i] - m_width/2*cos(-phi[i]);
+            left_track_pos_x[i] = x[i] - m_width/2*sin(-phi[i]);
+            left_track_pos_y[i] = y[i] + m_width/2*cos(-phi[i]);
 
             left_track[i] =left_track[i-1] +  sqrt( pow(left_track_pos_x[i]-left_track_pos_x[i-1],2) + pow(left_track_pos_y[i]-left_track_pos_y[i-1],2)   );
             right_track[i] = right_track[i-1]  + sqrt( pow(right_track_pos_x[i]-right_track_pos_x[i-1],2) + pow(right_track_pos_y[i]-right_track_pos_y[i-1],2)   );
@@ -130,10 +130,10 @@ public class FullLocalizationTest {
         phi[0] = 0;
         x[0] = 0;
         y[0] = 0;
-        right_track_pos_x[0] = x[0] + m_width/2*sin(phi[0]);
-        right_track_pos_y[0] = y[0] - m_width/2*cos(phi[0]);
-        left_track_pos_x[0] = x[0] - m_width/2*sin(phi[0]);
-        left_track_pos_y[0] = y[0] + m_width/2*cos(phi[0]);
+        right_track_pos_x[0] = x[0] + m_width/2*sin(-phi[0]);
+        right_track_pos_y[0] = y[0] - m_width/2*cos(-phi[0]);
+        left_track_pos_x[0] = x[0] - m_width/2*sin(-phi[0]);
+        left_track_pos_y[0] = y[0] + m_width/2*cos(-phi[0]);
         right_track[0]=0;
         left_track[0]=0;
 
@@ -147,10 +147,10 @@ public class FullLocalizationTest {
             y[i] = y[i-1] + dt*(v[i] + v[i-1])/2*sin((phi[i]+phi[i-1])/2);
 
 
-            right_track_pos_x[i] = x[i] + m_width/2*sin(phi[i]);
-            right_track_pos_y[i] = y[i] - m_width/2*cos(phi[i]);
-            left_track_pos_x[i] = x[i] - m_width/2*sin(phi[i]);
-            left_track_pos_y[i] = y[i] + m_width/2*cos(phi[i]);
+            right_track_pos_x[i] = x[i] + m_width/2*sin(-phi[i]);
+            right_track_pos_y[i] = y[i] - m_width/2*cos(-phi[i]);
+            left_track_pos_x[i] = x[i] - m_width/2*sin(-phi[i]);
+            left_track_pos_y[i] = y[i] + m_width/2*cos(-phi[i]);
 
             left_track[i] =left_track[i-1] +  sqrt( pow(left_track_pos_x[i]-left_track_pos_x[i-1],2) + pow(left_track_pos_y[i]-left_track_pos_y[i-1],2)   );
             right_track[i] = right_track[i-1]  + sqrt( pow(right_track_pos_x[i]-right_track_pos_x[i-1],2) + pow(right_track_pos_y[i]-right_track_pos_y[i-1],2)   );
@@ -227,10 +227,10 @@ public class FullLocalizationTest {
         phi[0] = 0;
         x[0] = 0;
         y[0] = 0;
-        right_track_pos_x[0] = x[0] + m_width/2*sin(phi[0]);
-        right_track_pos_y[0] = y[0] - m_width/2*cos(phi[0]);
-        left_track_pos_x[0] = x[0] - m_width/2*sin(phi[0]);
-        left_track_pos_y[0] = y[0] + m_width/2*cos(phi[0]);
+        right_track_pos_x[0] = x[0] + m_width/2*sin(-phi[0]);
+        right_track_pos_y[0] = y[0] - m_width/2*cos(-phi[0]);
+        left_track_pos_x[0] = x[0] - m_width/2*sin(-phi[0]);
+        left_track_pos_y[0] = y[0] + m_width/2*cos(-phi[0]);
         right_track[0]=0;
         left_track[0]=0;
 
@@ -245,10 +245,10 @@ public class FullLocalizationTest {
             y[i] = y[i-1] + dt*(v[i] + v[i-1])/2*sin((phi[i]+phi[i-1])/2);
 
 
-            right_track_pos_x[i] = x[i] + m_width/2*sin(phi[i]);
-            right_track_pos_y[i] = y[i] - m_width/2*cos(phi[i]);
-            left_track_pos_x[i] = x[i] - m_width/2*sin(phi[i]);
-            left_track_pos_y[i] = y[i] + m_width/2*cos(phi[i]);
+            right_track_pos_x[i] = x[i] + m_width/2*sin(-phi[i]);
+            right_track_pos_y[i] = y[i] - m_width/2*cos(-phi[i]);
+            left_track_pos_x[i] = x[i] - m_width/2*sin(-phi[i]);
+            left_track_pos_y[i] = y[i] + m_width/2*cos(-phi[i]);
 
             left_track[i] =left_track[i-1] +  sqrt( pow(left_track_pos_x[i]-left_track_pos_x[i-1],2) + pow(left_track_pos_y[i]-left_track_pos_y[i-1],2)   );
             right_track[i] = right_track[i-1]  + sqrt( pow(right_track_pos_x[i]-right_track_pos_x[i-1],2) + pow(right_track_pos_y[i]-right_track_pos_y[i-1],2)   );
