@@ -71,9 +71,9 @@ public class Drivetrain extends SubsystemBase {
         Utils.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
         if(Robot.hasShifter) {
             if (Robot.isRobotA)
-                gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+                gearShifterA = new DoubleSolenoid(0, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
             else
-                gearShifterB = new Solenoid(1, SHIFTER_PORT);
+                gearShifterB = new Solenoid(0, SHIFTER_PORT);
         }
     }
 
