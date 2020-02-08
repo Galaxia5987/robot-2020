@@ -11,7 +11,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
@@ -48,7 +47,7 @@ public class RobotContainer {
     private final ColorWheel colorWheel = new ColorWheel();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
-    private  Conveyor conveyor = new Conveyor(intake);
+    private final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
     public static final Turret turret = new Turret();
     private final Command m_autoCommand = null;
@@ -80,10 +79,10 @@ public class RobotContainer {
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.4));
         OI.b.whenPressed(new SpeedUp(shooter));
         OI.y.whenPressed(new FeedTurret(conveyor));
-        OI.select.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
+        OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
         OI.lb.whenPressed(new PositionControl(colorWheel));
-        OI.select_start.whenHeld(new SequentialCommandGroup(
+        OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
         )); //If both buttons are held without being released the manualMode will be enabled.

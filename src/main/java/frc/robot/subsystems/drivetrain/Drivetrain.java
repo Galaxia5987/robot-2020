@@ -59,6 +59,8 @@ public class Drivetrain extends SubsystemBase {
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setInverted(RIGHT_MASTER_INVERTED);
         rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
+        leftMaster.setInverted(LEFT_MASTER_INVERTED);
+        leftSlave.setInverted(LEFT_SLAVE_INVERTED);
         rightSlave.follow(rightMaster);
         leftSlave.follow(leftMaster);
         motorConfigurations.setNeutralMode(NeutralMode.Brake);
@@ -69,12 +71,10 @@ public class Drivetrain extends SubsystemBase {
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setSupplyCurrentLimit(40);
         Utils.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
-        if(Robot.hasShifter) {
-            if (Robot.isRobotA)
-                gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
-            else
-                gearShifterB = new Solenoid(1, SHIFTER_PORT);
-        }
+        if (Robot.isRobotA)
+            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+        else
+            gearShifterB = new Solenoid(1, SHIFTER_PORT);
     }
 
     public void shiftGear(shiftModes mode) {
