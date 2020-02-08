@@ -59,8 +59,8 @@ public class OdometryInertialObservation  extends ObservationModel {
         double omega = x[4][0];
 
         h[0][0] = phi; // First measurement is the gyro angle
-        h[1][0] = v - m_Rl*omega; // Second measurement is the left encoder
-        h[2][0] = v + m_Rr*omega; // Third measurement is the right encoder
+        h[1][0] = v + m_Rl*omega; // Second measurement is the left encoder
+        h[2][0] = v - m_Rr*omega; // Third measurement is the right encoder
     }
 
     @Override
@@ -68,8 +68,8 @@ public class OdometryInertialObservation  extends ObservationModel {
         j[0][3] = 1;
         j[1][2] = 1;
         j[2][2] = 1;
-        j[1][4] = -m_Rl;
-        j[2][4] = m_Rr;
+        j[1][4] = m_Rl;
+        j[2][4] = -m_Rr; // TODO: check if the direction of encoders is correct in Kalman tuning
 
     }
 
