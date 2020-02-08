@@ -167,7 +167,7 @@ public class Drivetrain extends SubsystemBase {
                 && (double) navx.getRawAccelX() < LOW_ACCELERATION_THRESHOLD
                 && !isShiftedLow()
                 && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE
-                && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_OUTPUT;
+                && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_VELOCITY;
     }
 
     /**
@@ -256,7 +256,7 @@ public class Drivetrain extends SubsystemBase {
 
         FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
         FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(getHeading()));
     }
 
     public enum shiftModes {
