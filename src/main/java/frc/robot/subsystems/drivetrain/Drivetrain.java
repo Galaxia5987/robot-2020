@@ -274,7 +274,7 @@ public class Drivetrain extends SubsystemBase {
         Pose2d current = localization.update( new Rotation2d( Math.toRadians(navx.getAngle())),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition()),
-                navx.getWorldLinearAccelX()*GRAVITY_ACCELERATION,
+                navx.getWorldLinearAccelY()*GRAVITY_ACCELERATION,
                 localizationTimer.get()
         );
 
