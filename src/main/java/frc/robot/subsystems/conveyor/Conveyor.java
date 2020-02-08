@@ -52,8 +52,8 @@ public class Conveyor extends SubsystemBase {
         motor.config_kI(0, KI, TALON_TIMEOUT);
         motor.config_kD(0, KD, TALON_TIMEOUT);
 
-        motor.configMotionCruiseVelocity(CRUISE_VELOCITY);
-        motor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT);
+        motor.configMotionCruiseVelocity(unitConverter.toTicks100ms(CRUISE_VELOCITY));
+        motor.configMotionAcceleration(unitConverter.toTicks100ms(CRUISE_ACCELERATION), TALON_TIMEOUT);
         motor.configPeakCurrentLimit(0);
         motor.configContinuousCurrentLimit(30);
         motor.enableCurrentLimit(true);

@@ -76,8 +76,8 @@ public class Constants{
 
 
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
-        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.5;
-        public static final double FUNNEL_MOTOR_FEED_POWER = 0.2;
+        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.7;
+        public static final double FUNNEL_MOTOR_FEED_POWER = 0.3;
         public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0;
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
@@ -104,7 +104,7 @@ public class Constants{
 
 
         public static double KP = 4.07;
-        public static double KI = 0;
+        public static double KI = 0.0005;
         public static double KD = 2.3;
         public static double KF = 0.00912;
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
@@ -115,7 +115,7 @@ public class Constants{
         public static final double VISION_KI = 0;
         public static final double VISION_KD = 0;
 
-        public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
+        public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
         public static final int MAX_CURRENT = 35; // [A]
         public static final double ANGLE_THRESHOLD = 1;
