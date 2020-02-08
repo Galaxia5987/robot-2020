@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.subsystems.drivetrain.EKF.KalmanFilter;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialObservation;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialProcess;
@@ -21,6 +22,7 @@ import org.ghrobotics.lib.debug.FalconDashboard;
 /*----------------------------------------------------------------------------*/
 
 import static frc.robot.Constants.Drivetrain.GYRO_INVERTED;
+import static frc.robot.RobotContainer.drivetrain;
 import static frc.robot.RobotContainer.navx;
 import static java.lang.Math.abs;
 
@@ -186,6 +188,17 @@ public class FullLocalization {
 
 
     }
+
+    public Pose2d getPose() {
+        return getPoseMeters();
+    }
+
+    public void setPose(Pose2d pose, Rotation2d rotation) {
+        drivetrain.resetEncoders();
+        navx.reset();
+        resetPosition(pose, rotation, Robot.robotTimer.get());
+    }
+
 
     // Detect encoder slipping condition by comparing gyro and encoder readings.
     public boolean EncoderValid(Rotation2d gyroAngle, double deltaLeftDistance,

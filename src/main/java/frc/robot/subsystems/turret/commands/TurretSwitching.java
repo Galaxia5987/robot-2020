@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.FullLocalization;
 import frc.robot.subsystems.turret.Turret;
 
 public class TurretSwitching extends CommandBase {
@@ -12,9 +13,9 @@ public class TurretSwitching extends CommandBase {
     private final Turret turret;
     private final Timer timer = new Timer();
 
-    public TurretSwitching(Turret turret, Drivetrain drivetrain) {
+    public TurretSwitching(Turret turret, FullLocalization localization) {
         this.turret = turret;
-        this.turnLocalization = new TurnLocalization(turret, drivetrain);
+        this.turnLocalization = new TurnLocalization(turret, localization);
         this.visionTurret = new VisionTurret(turret);
     }
 

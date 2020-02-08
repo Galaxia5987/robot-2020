@@ -250,6 +250,11 @@ public class Drivetrain extends SubsystemBase {
         rightMaster.set(ControlMode.PercentOutput, rightPower);
     }
 
+    public void resetEncoders() {
+        leftMaster.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
+    }
+
     @Override
     public void periodic() { // This method will be called once per scheduler run
         UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;

@@ -8,9 +8,6 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -18,17 +15,12 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.drivetrain.FullLocalization;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.climb.Climber;
-import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
-import frc.robot.subsystems.climb.commands.JoystickControl;
-import frc.robot.subsystems.climb.commands.ReleaseRods;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
@@ -44,8 +36,6 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
-import frc.robot.subsystems.turret.commands.TurretSwitching;
-import frc.robot.utilities.StickButton;
 import frc.robot.valuetuner.ValueTuner;
 import org.ghrobotics.lib.debug.FalconDashboard;
 import org.techfire225.webapp.Webserver;
@@ -79,7 +69,7 @@ public class RobotContainer {
     private final Command m_autoCommand = null;
 
     private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())),new Pose2d(0, 0, new Rotation2d()));
-    private FullLocalization localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
+    public static final FullLocalization localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
 
 
     /**
@@ -169,6 +159,5 @@ public class RobotContainer {
         FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
 
     }
-
       
 }
