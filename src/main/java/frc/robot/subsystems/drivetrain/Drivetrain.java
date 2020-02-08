@@ -43,7 +43,6 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
-    private FalconConfiguration configurations = new FalconConfiguration();
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
@@ -73,6 +72,8 @@ public class Drivetrain extends SubsystemBase {
 
 
     public Drivetrain() {
+        FalconConfiguration motorConfigurations = new FalconConfiguration();
+
         new WebConstantPIDTalon("drivetrainLeft", pidSet[0], pidSet[1], pidSet[2], pidSet[3], leftMaster);
         new WebConstantPIDTalon("drivetrainRight", pidSet[0], pidSet[1], pidSet[2], pidSet[3], rightMaster);
         rightMaster.setSelectedSensorPosition(0);
@@ -81,13 +82,20 @@ public class Drivetrain extends SubsystemBase {
         rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
         rightSlave.follow(rightMaster);
         leftSlave.follow(leftMaster);
-        configurations.setNeutralMode(NeutralMode.Brake);
-        configurations.setEnableVoltageCompensation(true);
-        configurations.configureVoltageCompensationSaturation(12.0);
-        configurations.setPidSet(pidSet[0], pidSet[1], pidSet[2], pidSet[3]);
-        configurations.setEnableCurrentLimit(true);
-        configurations.setEnableCurrentLimit(true);
-        configurations.setSupplyCurrentLimit(40);
+        motorConfigurations.setNeutralMode(NeutralMode.Brake);
+        motorConfigurations.setEnableVoltageCompensation(true);
+        motorConfigurations.configureVoltageCompensationSaturation(12);
+        motorConfigurations.setPidSet(pidSet[0], pidSet[1], pidSet[2], pidSet[3]);
+        motorConfigurations.setEnableCurrentLimit(true);
+        motorConfigurations.setEnableCurrentLimit(true);
+        motorConfigurations.setSupplyCurrentLimit(40);
+        Utils.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
+        if(Robot.hasShifter) {
+            if (Robot.isRobotA)
+                gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+            else
+                gearShifterB = new Solenoid(1, SHIFTER_PORT);
+        }
         localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
         localizationTimer.reset();
         localizationTimer.start();

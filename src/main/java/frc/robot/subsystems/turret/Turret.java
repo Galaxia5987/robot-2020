@@ -6,8 +6,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.utilities.Utils;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -27,7 +30,8 @@ public class Turret extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
     private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
-    private NetworkTableEntry visionAngle = visionTable.getEntry("visionAngle");
+    private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
+    private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private double targetAngle;
     private boolean isGoingClockwise = true;
 
@@ -36,7 +40,11 @@ public class Turret extends SubsystemBase {
      */
     public Turret() {
         motor.configFactoryDefault();
+
+        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 1, TALON_TIMEOUT); // Todo: check if this experimental idea works.
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
+        resetEncoder();
+        
         motor.setInverted(IS_MOTOR_INVERTED);
         motor.setSensorPhase(IS_ENCODER_INVERTED);
         motor.config_kP(0, KP, TALON_TIMEOUT);
@@ -47,7 +55,6 @@ public class Turret extends SubsystemBase {
         motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
         motor.configPeakCurrentLimit(MAX_CURRENT);
     }
-
 
     /**
      * Corrects subsystem's backlash.
@@ -107,37 +114,35 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * @return the same position rotated 360 degrees or the current position in ticks
-     */
-    public double center(double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
-        double middle = (MINIMUM_POSITION + MAXIMUM_POSITION) / 2;
-        if (currentPosition > (180 + middle)) {
-            currentPosition -= 360;
-        } else if (currentPosition < (-180 + middle)) {
-            currentPosition += 360;
-        }
-        return currentPosition;
-    }
-
-    /**
      * set the position to the current position to stop the turret at the target position.
      */
     public void stop() {
         motor.set(ControlMode.MotionMagic, getAngle());
     }
 
-    public double getVisionAngle() {
+    /**
+     * @return the angle to the target from the vision network table.
+     */
+    public double getVisionAngle(){
         return visionAngle.getDouble(0);
     }
 
-    public void setPower(double speed) {
-        if (speed > 0 && getAngle() >= MAXIMUM_POSITION || speed < 0 && getAngle() <= MINIMUM_POSITION) {
-            speed = 0;
-        }
-        motor.set(ControlMode.PercentOutput, speed);
+    /**
+     * @return whether the vision has calculated the angle to the target.
+     */
+    public boolean hasVisionAngle() {
+        return visionValid.getBoolean(false);
     }
 
-    public boolean isTurretReady() {
+    /**
+     * set the power the turret will turn.
+     * @param speed the speed the turret will turn.
+     */
+    public void setPower(double speed){
+        motor.set(ControlMode.PercentOutput, speed);   
+    }
+    
+    public boolean isTurretReady(){
         return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
     }
     /**
@@ -148,4 +153,23 @@ public class Turret extends SubsystemBase {
         correctBacklash();
     }
 
+    /**
+     * @return whether the current angle is within the turrets limits.
+     */
+    public boolean inCorrectRange() {
+        return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
+    }
+
+    /**
+     * Resets the turret position based on the absolute encoder of the turret.
+     *
+     * IMPORTANT: since the turrets absolute encoder only reads 360 degrees,
+     * we assume the reading to be from -180 to 180. If the turret is reset
+     * when it is more than half a rotation from the starting angle, the turret will
+     * DESTROY ITSELF... be warned! do not use this midgame!
+     */
+    public void resetEncoder(){
+        double currentPosition = Math.IEEEremainder(motor.getSelectedSensorPosition(1) - Constants.Turret.CENTER_POSITION, unitModel.toTicks(360));
+        motor.setSelectedSensorPosition((int)currentPosition);
+    }
 }

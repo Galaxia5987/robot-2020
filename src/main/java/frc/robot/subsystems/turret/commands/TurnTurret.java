@@ -12,24 +12,12 @@ public class TurnTurret extends CommandBase {
 
     private Turret turret;
     private double angle;
-    private boolean stop = true;
 
 
     public TurnTurret(Turret turret, double angle) {
         this.turret = turret;
         addRequirements(turret);
         this.angle = angle;
-    }
-
-    public TurnTurret(Turret turret){
-        this(turret, turret.getVisionAngle());
-    }
-
-    public TurnTurret(Turret turret, boolean stop){
-        addRequirements(turret);
-        this.turret = turret;
-        this.angle = turret.getVisionAngle();
-        this.stop = stop;
     }
 
     // Called just before this Command runs the first time
@@ -46,11 +34,7 @@ public class TurnTurret extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return turret.isTurretReady() && stop;
+        return Math.abs(turret.getAngle() - angle) <= ANGLE_THRESHOLD;
     }
 
-    @Override
-    public void end(boolean interrupted) {
-        turret.stop();
-    }
 }
