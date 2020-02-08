@@ -47,15 +47,15 @@ public class Turret extends SubsystemBase {
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 1, TALON_TIMEOUT); // Todo: check if this experimental idea works.
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         resetEncoder();
-        
+
         motor.setInverted(IS_MOTOR_INVERTED);
         motor.setSensorPhase(IS_ENCODER_INVERTED);
         motor.config_kP(0, KP, TALON_TIMEOUT);
         motor.config_kI(0, KI, TALON_TIMEOUT);
         motor.config_kD(0, KD, TALON_TIMEOUT);
         motor.config_kF(0, KF, TALON_TIMEOUT);
-        motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
-        motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
+        motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
+        motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
         motor.configPeakCurrentLimit(0);
         motor.configContinuousCurrentLimit(MAX_CURRENT);
         motor.configPeakCurrentDuration(0);
