@@ -7,8 +7,7 @@ import frc.robot.subsystems.turret.Turret;
 
 import java.util.function.Supplier;
 
-import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_FEED_POWER;
-import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_OPEN_FEED_POWER;
+import static frc.robot.Constants.Conveyor.*;
 import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
 
 /**
@@ -48,7 +47,8 @@ public class FeedTurret extends CommandBase {
                 conveyor.stop();
         }
         else
-            conveyor.setPower(CONVEYOR_MOTOR_OPEN_FEED_POWER);
+            conveyor.setConveyorPower(CONVEYOR_MOTOR_OPEN_FEED_POWER);
+            conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER);
     }
 
     @Override

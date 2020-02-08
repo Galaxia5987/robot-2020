@@ -131,8 +131,22 @@ public class Conveyor extends SubsystemBase {
     /**
      * stop the conveyor's motors from moving.
      */
+    @Deprecated
     public void stop() {
+        stopAll();
+    }
+
+    public void stopAll() {
+        stopConveyor();
+        stopFunnel();
+    }
+
+    public void stopConveyor() {
         motor.set(ControlMode.PercentOutput, 0);
+    }
+
+    public void stopFunnel() {
+        funnel.set(ControlMode.PercentOutput, 0);
     }
 
     /**
