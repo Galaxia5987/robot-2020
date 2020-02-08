@@ -59,6 +59,7 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         if (Robot.debug) {
+            startValueTuner();
             startFireLog();
         }
     }
