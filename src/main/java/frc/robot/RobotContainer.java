@@ -47,7 +47,7 @@ public class RobotContainer {
     private final ColorWheel colorWheel = new ColorWheel();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
-    private  Conveyor conveyor = new Conveyor(intake);
+    private final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
     public static final Turret turret = new Turret();
     private final Command m_autoCommand = null;
