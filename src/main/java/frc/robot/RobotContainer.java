@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.XboxController;
@@ -62,6 +63,7 @@ public class RobotContainer {
     public static final Drivetrain drivetrain = new Drivetrain();
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
+    public static final AHRS navx = new AHRS(SPI.Port.kMXP);
     private final Command m_autoCommand = null;
 
     /**
