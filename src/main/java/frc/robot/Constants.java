@@ -75,7 +75,8 @@ public class Constants{
 
 
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
-        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0;
+        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.5;
+        public static final double FUNNEL_MOTOR_FEED_POWER = 0.2;
         public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0;
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
@@ -93,19 +94,21 @@ public class Constants{
     public static class Turret {
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
-        public static final int TICKS_PER_DEGREE = 4096;
-        public static final double MINIMUM_POSITION = -200;
-        public static final double MAXIMUM_POSITION = 200;
+        public static final int TICKS_PER_DEGREE = 4096/360;
+        public static final double MINIMUM_POSITION = -30;
+        public static final double MAXIMUM_POSITION = 245;
 
-        public static final double STARTING_ANGLE = 150;
-        public static final int STARTING_POSITION = 2048;
+        public static final double STARTING_ANGLE = 90;
+        public static final int STARTING_POSITION = 3395;
 
-        public static double KP = 0;
+
+        public static double KP = 4.07;
         public static double KI = 0;
-        public static double KD = 0;
-        public static double KF = 0;
-        public static final int MOTION_MAGIC_CRUISE_VELOCITY = 0;
-        public static final int MOTION_MAGIC_ACCELERATION = 0;
+        public static double KD = 2.3;
+        public static double KF = 0.00912;
+        public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
+        public static final int MOTION_MAGIC_ACCELERATION = 16;
+
 
         public static final double VISION_KP = 0;
         public static final double VISION_KI = 0;

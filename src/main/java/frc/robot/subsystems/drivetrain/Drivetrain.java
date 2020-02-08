@@ -57,10 +57,6 @@ public class Drivetrain extends SubsystemBase {
         new WebConstantPIDTalon("drivetrainRight", pidSet[0], pidSet[1], pidSet[2], pidSet[3], rightMaster);
         rightMaster.setSelectedSensorPosition(0);
         leftMaster.setSelectedSensorPosition(0);
-        rightMaster.setInverted(RIGHT_MASTER_INVERTED);
-        rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
-        leftMaster.setInverted(LEFT_MASTER_INVERTED);
-        leftSlave.setInverted(LEFT_SLAVE_INVERTED);
         rightSlave.follow(rightMaster);
         leftSlave.follow(leftMaster);
         motorConfigurations.setNeutralMode(NeutralMode.Brake);
