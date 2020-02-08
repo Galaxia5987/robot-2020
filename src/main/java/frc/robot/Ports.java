@@ -71,4 +71,17 @@ public class Ports {
         public static final int MOTOR = 30;
         public static final boolean IS_MOTOR_REVERSED = true;
     }
+
+    public static class Climber {
+        public static final int LEFT_MOTOR = 40;
+        public static final int RIGHT_MOTOR = 41;
+        public static final int STOPPER_FORWARD = 3;
+        public static final int STOPPER_REVERSE = 0;
+        public static final int STOPPER = 2;
+        public static final boolean LEFT_MOTOR_INVERTED = false;
+        public static final boolean RIGHT_MOTOR_INVERTED = false;
+        public static final boolean LEFT_ENCODER_INVERTED = false;
+        public static final boolean RIGHT_ENCODER_INVERTED = false;
+        public static final boolean IS_STOPPER_REVERSED = false;
+    }
 }

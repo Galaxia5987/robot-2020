@@ -10,38 +10,35 @@ import frc.robot.utilities.ButtonCombination;
  * This should not be confused with RobotContainer, which sets up autonomous commands and maps commands to buttons.
  */
 public class OI {
-    public static final int xboxLeftXStick = 0;
-    public static final int xboxLeftYStick = 1;
-    public static final int xboxRightXStick = 4;
-    public static final int xboxRightYStick = 5;
     //Controllers are defined here. (Only the RobotContainer and OI should access them)
     static final Joystick rightStick = new Joystick(0);
     static final Joystick leftStick = new Joystick(1);
     static final XboxController xbox = new XboxController(2);
-    public final static ButtonCombination select_start = new ButtonCombination(xbox, 7, 8);
-    public final static JoystickButton lb = new JoystickButton(xbox, 6);
-    public final static JoystickButton rb = new JoystickButton(xbox, 5);
-    public final static JoystickButton start = new JoystickButton(xbox, 8);
-    public final static JoystickButton select = new JoystickButton(xbox, 7);
-    public final static JoystickButton x = new JoystickButton(xbox, 3);
-    public final static JoystickButton y = new JoystickButton(xbox, 4);
-    public final static JoystickButton b = new JoystickButton(xbox, 2);
-    public final static JoystickButton a = new JoystickButton(xbox, 1);
 
-    public static double getLeftXboxX() {
-        return xbox.getRawAxis(xboxLeftXStick);
+    public final static JoystickButton a = new JoystickButton(xbox, XboxController.Button.kA.value);
+    public final static JoystickButton b = new JoystickButton(xbox, XboxController.Button.kB.value);
+    public final static JoystickButton x = new JoystickButton(xbox, XboxController.Button.kX.value);
+    public final static JoystickButton y = new JoystickButton(xbox, XboxController.Button.kY.value);
+    public final static JoystickButton lb = new JoystickButton(xbox, XboxController.Button.kBumperLeft.value);
+    public final static JoystickButton rb = new JoystickButton(xbox, XboxController.Button.kBumperRight.value);
+    public final static JoystickButton back = new JoystickButton(xbox, XboxController.Button.kBack.value);
+    public final static JoystickButton start = new JoystickButton(xbox, XboxController.Button.kStart.value);
+    public final static ButtonCombination back_start = new ButtonCombination(xbox, XboxController.Button.kBack.value, XboxController.Button.kStart.value);
+
+    public static double getXboxLX() {
+        return xbox.getRawAxis(XboxController.Axis.kLeftX.value);
     }
 
-    public static double getLeftXboxY() {
-        return xbox.getRawAxis(xboxLeftYStick);
+    public static double getXboxLY() {
+        return xbox.getRawAxis(XboxController.Axis.kLeftY.value);
     }
 
-    public static double getRightXboxY() {
-        return xbox.getRawAxis(xboxRightYStick);
+    public static double getXboxRX() {
+        return xbox.getRawAxis(XboxController.Axis.kRightX.value);
     }
 
-    public static double getRightXboxX() {
-        return xbox.getRawAxis(xboxRightXStick);
+    public static double getXboxRY() {
+        return xbox.getRawAxis(XboxController.Axis.kRightY.value);
     }
 
     public static double getLeftStickForward(){
