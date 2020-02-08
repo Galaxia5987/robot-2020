@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static spark.Spark.post;
 
 /**
- * This class holds all the key value constants that will show up in the value tuner
+ * This class holds all the key value constants that will show up in the value tuner.
  */
 public class WebConstant {
     private static Map<String, ConstantObject> constantMap = new ConcurrentHashMap<>();

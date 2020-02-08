@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static spark.Spark.post;
 
 /**
- * This class holds all the Talon PID constants that will show up in the value tuner
+ * This class holds all the Talon PID constants that will show up in the value tuner.
  */
 public class WebConstantPIDTalon {
     private static Map<String, TalonConstant> constantMap = new ConcurrentHashMap<>();
