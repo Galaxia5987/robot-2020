@@ -50,7 +50,9 @@ public class Conveyor extends SubsystemBase {
 
         motor.configMotionCruiseVelocity(CRUISE_VELOCITY);
         motor.configMotionAcceleration(CRUISE_ACCELERATION, TALON_TIMEOUT);
-        motor.configPeakCurrentLimit(MAX_CURRENT);
+        motor.configPeakCurrentLimit(0);
+        motor.configContinuousCurrentLimit(30);
+        motor.enableCurrentLimit(true);
         motor.configClosedloopRamp(RAMP_RATE);
 
         if (Robot.isRobotA)
