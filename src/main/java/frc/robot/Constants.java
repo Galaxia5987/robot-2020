@@ -115,7 +115,7 @@ public class Constants{
         public static final double VISION_KI = 0;
         public static final double VISION_KD = 0;
 
-        public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
+        public static final double TURRET_JOYSTICK_SPEED = 20; //Coefficient of the joystick value per degree.
 
         public static final int MAX_CURRENT = 35; // [A]
         public static final double ANGLE_THRESHOLD = 1;

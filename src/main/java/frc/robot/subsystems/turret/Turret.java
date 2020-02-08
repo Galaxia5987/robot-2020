@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.Utils;
+import frc.robot.valuetuner.WebConstantPIDTalon;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Constants.Turret.*;
@@ -52,6 +54,7 @@ public class Turret extends SubsystemBase {
         motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
         motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
         motor.configPeakCurrentLimit(MAX_CURRENT);
+        new WebConstantPIDTalon("turret", KP, KI, KD, KF, motor);
     }
 
     /**
@@ -149,6 +152,8 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         correctBacklash();
+        FireLog.log("turretSetpoint", targetAngle);
+        FireLog.log("turretCurrent", getAngle());
     }
 
     /**
