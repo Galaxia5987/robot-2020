@@ -31,7 +31,7 @@ public class Constants{
         public static final double LOW_GEAR_MIN_OUTPUT = 0;
         public static final double GRAVITY_ACCELERATION = 9.80665;
         public static final double TRACK_WIDTH = 0.6649; //TODO: this is horizontal distance between the wheels, we might need diagonal.
-        public static final boolean GYRO_INVERTED = true;
+        public static final boolean GYRO_INVERTED = false;
         public static final double JOYSTICK_END_THRESHOLD = 0;
     }
 
