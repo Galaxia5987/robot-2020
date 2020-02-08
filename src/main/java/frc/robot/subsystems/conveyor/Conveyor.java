@@ -223,4 +223,11 @@ public class Conveyor extends SubsystemBase {
                 break;
         }
     }
+
+    @Deprecated
+    public void setPower(double speed) {
+        setConveyorPower(speed);
+        setFunnelPower(speed);
+    }
+
 }

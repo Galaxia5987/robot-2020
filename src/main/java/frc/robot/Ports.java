@@ -5,7 +5,7 @@ package frc.robot;
 public class Ports {
 
     public static class Conveyor {
-        public static final int FUNNEL = 0;
+        public static final int FUNNEL = 19;
         public static final int MOTOR = 21;
         public static final boolean MOTOR_INVERTED = false;
         public static final boolean FUNNEL_INVERTED = false;
