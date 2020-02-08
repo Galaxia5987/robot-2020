@@ -12,8 +12,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 /**
- * The value tuner is a simple interface that allows you to change constants during run time
- * This can be done through the web interface located at http://10.59.87.2:5802 (Roborio IP, port 5802)
+ * The value tuner is a simple interface that allows you to change constants during run time.
+ * This can be done by accessing the web interface located at http://10.59.87.2:5802 (roboRIO IP, port 5802).
  *
  * The tuner provides 2 main interface classes:
  *   {@link WebConstant}
@@ -24,20 +24,20 @@ import static spark.Spark.post;
  * Upon instantiation these interfaces will automatically configure themselves into the web interface
  *
  * Example usage:
- *  public static WebConstant vision_kP = new WebConstant("vision_kP")
- *  vision_Kp.get()
- *  new WebConstantPIDTalon("turretTalon", pidSet[0], pidSet[1], pidSet[2], pidSet[3], turretMaster)
+ *  public static WebConstant vision_kP = new WebConstant("vision_kP");
+ *  vision_Kp.get();
+ *  new WebConstantPIDTalon("turretTalon", pidSet[0], pidSet[1], pidSet[2], pidSet[3], turretMaster);
  *
  *  Notes:
- *    - A value key should only be used once, hence its recommended to use static when instantiating constants
+ *    - A value key should only be used once, hence it's recommended to use static when instantiating constants.
  */
 public class ValueTuner {
 
     /**
-     * Starts the value tuner web server
+     * Starts the value tuner web server.
      */
     public void start() {
-        //Main route serving the tuner.vm template
+        // Main route serving the tuner.vm template.
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             List<ConstantObject> constants = new ArrayList<>(WebConstant.getConstantMap().values());
@@ -49,7 +49,7 @@ public class ValueTuner {
             );
         });
 
-        //Set route for normal constants
+        // Set route for normal constants.
         post("/set", (request, response) -> {
             String key = request.queryParamOrDefault("key", null);
             String value = request.queryParamOrDefault("value", null);
@@ -60,7 +60,7 @@ public class ValueTuner {
             return "set";
         });
 
-        //Set route for talon constants
+        // Set route for Talon constants.
         post("/setTalon", (request, response) -> {
             String key = request.queryParamOrDefault("key", null);
             String kP = request.queryParamOrDefault("kP", null);
