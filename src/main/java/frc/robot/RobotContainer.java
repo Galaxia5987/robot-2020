@@ -76,10 +76,10 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whenPressed(new IntakeBalls(intake, 0.35));
+        OI.a.whileHeld(new IntakeBalls(intake, 0.35));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.2, 0.5));
         OI.b.whenPressed(new SpeedUp(shooter));
-        OI.y.whenPressed(new FeedTurret(conveyor));
+        OI.y.whileHeld(new FeedTurret(conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
         OI.lb.whenPressed(new PositionControl(colorWheel));
