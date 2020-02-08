@@ -7,8 +7,8 @@ public class Ports {
         public static final int MOTOR = 21;
         public static final boolean MOTOR_INVERTED = false;
         public static final int SHOOTER_PROXIMITY = 1;
-        public static final int FORWARD_GATE = 1;
-        public static final int REVERSE_GATE = 0;
+        public static final int FORWARD_GATE = 5;
+        public static final int REVERSE_GATE = 4;
         public static final int GATE = 0; // Port of the stopper solenoid.
         public static final boolean IS_GATE_REVERSED = false;
     }
@@ -47,8 +47,8 @@ public class Ports {
         public static final int RIGHT_MASTER = 12;
         public static final int RIGHT_SLAVE = 13;
 
-        public static final int SHIFTER_FORWARD_PORT = 2;
-        public static final int SHIFTER_REVERSE_PORT = 3;
+        public static final int SHIFTER_FORWARD_PORT = 1;
+        public static final int SHIFTER_REVERSE_PORT = 0;
         public static final int SHIFTER_PORT = 3;
         public static final boolean IS_SHIFTER_REVERSED = false;
     }
@@ -56,8 +56,8 @@ public class Ports {
     public class climber {
         public static final int LEFT_MOTOR = 40;
         public static final int RIGHT_MOTOR = 41;
-        public static final int STOPPER_FORWARD = 5;
-        public static final int STOPPER_REVERSE = 4;
+        public static final int STOPPER_FORWARD = 3;
+        public static final int STOPPER_REVERSE = 2;
         public static final int STOPPER = 4;
         public static final boolean LEFT_MOTOR_INVERTED = false;
         public static final boolean RIGHT_MOTOR_INVERTED = false;
