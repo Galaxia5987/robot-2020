@@ -75,12 +75,6 @@ public class Drivetrain extends SubsystemBase {
 
     public void shiftGear(shiftModes mode) {
         switch (mode) {
-            case TOGGLE:
-                if (canShiftHigh())
-                    shiftHigh();
-                else if (canShiftLow())
-                    shiftLow();
-                break;
             case LOW:
                 if (canShiftLow())
                     shiftLow();
@@ -89,8 +83,6 @@ public class Drivetrain extends SubsystemBase {
                 if (canShiftHigh())
                     shiftHigh();
                 break;
-            default:
-                return;
         }
     }
 
@@ -163,7 +155,7 @@ public class Drivetrain extends SubsystemBase {
                 && (double) navx.getRawAccelX() < LOW_ACCELERATION_THRESHOLD
                 && !isShiftedLow()
                 && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE
-                && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_OUTPUT;
+                && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_VELOCITY;
     }
 
     /**
@@ -213,7 +205,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the robot's heading in degrees, from -180 to 180
      */
     public double getHeading() {
-        return Math.IEEEremainder(navx.getAngle(), 360) * (GYRO_INVERTED ? -1 : 1);
+        return Math.IEEEremainder(navx.getAngle(), 360);
     }
 
     public Pose2d getPose() {
@@ -252,11 +244,14 @@ public class Drivetrain extends SubsystemBase {
 
         FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
         FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle()));
     }
 
+    /**
+     * shiftModes.HIGH is the default on the robot, and means high speed.
+     * shiftModes.LOW is for low speed, but more power.
+     */
     public enum shiftModes {
-        TOGGLE,
         HIGH,
         LOW
     }
