@@ -2,10 +2,12 @@ package frc.robot.subsystems.conveyor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.subsystems.intake.Intake;
@@ -30,6 +32,7 @@ public class Conveyor extends SubsystemBase {
     private Intake intake;
     private UnitModel unitConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
+    private VictorSPX funnel = new VictorSPX(FUNNEL);
     
     
     private DeadbandProximity shooterProximity = new DeadbandProximity(new AnalogInput(SHOOTER_PROXIMITY)::getValue, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
@@ -43,6 +46,7 @@ public class Conveyor extends SubsystemBase {
         intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
 
         motor.setInverted(MOTOR_INVERTED);
+        funnel.setInverted(FUNNEL_INVERTED);
 
         motor.config_kP(0, KP, TALON_TIMEOUT);
         motor.config_kI(0, KI, TALON_TIMEOUT);
@@ -108,8 +112,12 @@ public class Conveyor extends SubsystemBase {
      *
      * @param power The power given to the motor from -1 to 1.
      */
-    public void setPower(double power) {
+    public void setConveyorPower(double power) {
         motor.set(ControlMode.PercentOutput, power);
+    }
+
+    public void setFunnelPower(double power){
+        funnel.set(ControlMode.PercentOutput, power);
     }
 
     /**
