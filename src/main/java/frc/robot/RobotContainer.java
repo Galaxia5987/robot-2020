@@ -9,10 +9,9 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
 import frc.robot.subsystems.climb.commands.JoystickControl;
@@ -26,14 +25,9 @@ import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.IntakeBalls;
-import frc.robot.subsystems.intake.commands.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
-import frc.robot.subsystems.turret.commands.JoystickTurret;
-import frc.robot.subsystems.turret.commands.TurretSwitching;
-import frc.robot.utilities.StickButton;
+import frc.robot.utilities.State;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -44,7 +38,6 @@ import org.techfire225.webapp.Webserver;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public static final Climber climber = new Climber();
     public static final ColorWheel colorWheel = new ColorWheel();
@@ -53,6 +46,7 @@ public class RobotContainer {
     public static final Drivetrain drivetrain = new Drivetrain();
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
+    // The robot's subsystems and commands are defined here...
     private final Command m_autoCommand = null;
 
     /**
@@ -118,5 +112,5 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return null;
     }
-      
+
 }
