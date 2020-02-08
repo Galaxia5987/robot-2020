@@ -164,6 +164,7 @@ public class Turret extends SubsystemBase {
         correctBacklash();
         SmartDashboard.putNumber("turretSetpoint", targetAngle);
         SmartDashboard.putNumber("turretCurrent", getAngle());
+        SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
         FireLog.log("turretSetpoint", targetAngle);
         FireLog.log("turretCurrent", getAngle());
     }

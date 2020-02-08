@@ -27,6 +27,7 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.utilities.StickButton;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
@@ -76,10 +77,10 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whenPressed(new IntakeBalls(intake, 0.35));
+        OI.a.whenPressed(new TurnTurret(turret, 180));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.2, 0.5));
-        OI.b.whenPressed(new SpeedUp(shooter));
-        OI.y.whenPressed(new FeedTurret(conveyor));
+        OI.b.whenPressed(new TurnTurret(turret, 0));
+        OI.y.whenPressed(new TurnTurret(turret, 90));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
         OI.lb.whenPressed(new PositionControl(colorWheel));
