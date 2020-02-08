@@ -40,8 +40,6 @@ public class ColorWheel extends SubsystemBase {
 
     private ColorMatchResult match;
 
-    private boolean manual = false;
-
     public ColorWheel() {
         motor.setInverted(IS_MOTOR_REVERSED);
         colorMatcher.addColorMatch(BlueTarget);
@@ -53,14 +51,6 @@ public class ColorWheel extends SubsystemBase {
 
     public String getColorString() {
         return colorString;
-    }
-
-    public void setManual(boolean manual){
-        this.manual = manual;
-    }
-
-    public boolean isManual(){
-        return manual;
     }
 
     public int indexOfColor(String color) {
