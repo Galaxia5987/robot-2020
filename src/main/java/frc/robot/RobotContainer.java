@@ -75,8 +75,8 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whenPressed(new IntakeBalls(intake, 0.4));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.4));
+        OI.a.whenPressed(new IntakeBalls(intake, 0.35));
+        OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.2, 0.5));
         OI.b.whenPressed(new SpeedUp(shooter));
         OI.y.whenPressed(new FeedTurret(conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
@@ -115,5 +115,5 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return null;
     }
-      
+
 }
