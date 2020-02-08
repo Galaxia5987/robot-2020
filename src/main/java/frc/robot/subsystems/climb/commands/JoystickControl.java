@@ -29,6 +29,7 @@ public class JoystickControl extends CommandBase {
     public JoystickControl(Climber climber, boolean controlEachSide) {
         this.climber = climber;
         this.controlEachSide = controlEachSide;
+        climber.changePIDFSlot(0);
         addRequirements(climber);
     }
 

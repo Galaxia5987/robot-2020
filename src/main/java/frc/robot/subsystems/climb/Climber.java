@@ -193,6 +193,11 @@ public class Climber extends SubsystemBase {
         rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
     }
 
+    public void changePIDFSlot(int slot){
+        rightMotor.selectProfileSlot(slot, 0);
+        leftMotor.selectProfileSlot(slot, 0);
+    }
+
     /**
      * Return a normalized constrained in a certain range.
      *

@@ -32,6 +32,7 @@ public class ReleaseRods extends CommandBase {
     public ReleaseRods(Climber climber, double setpointHeight) {
         this.climber = climber;
         this.setpointHeight = setpointHeight;
+        climber.changePIDFSlot(1);
         addRequirements(climber);
     }
 
