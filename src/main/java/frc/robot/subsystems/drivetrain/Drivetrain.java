@@ -59,6 +59,13 @@ public class Drivetrain extends SubsystemBase {
         leftMaster.setSelectedSensorPosition(0);
         rightSlave.follow(rightMaster);
         leftSlave.follow(leftMaster);
+
+        //Inversions
+        rightMaster.setInverted(RIGHT_MASTER_INVERTED);
+        rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
+        leftMaster.setInverted(LEFT_MASTER_INVERTED);
+        leftSlave.setInverted(LEFT_SLAVE_INVERTED);
+
         motorConfigurations.setNeutralMode(NeutralMode.Brake);
         motorConfigurations.setEnableVoltageCompensation(true);
         motorConfigurations.configureVoltageCompensationSaturation(12);
