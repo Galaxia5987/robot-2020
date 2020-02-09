@@ -21,8 +21,8 @@ public class Ports {
         public static final int MOTOR = 20;
         public static final boolean MOTOR_INVERTED = false;
         public static final boolean IS_FORWARD_OPEN = true; //if kForward of the solenoid opens the intake or reverse.
-        public static final int FOLD_SOLENOID_REVERSE = 6;
-        public static final int FOLD_SOLENOID_FORWARD = 7;
+        public static final int FOLD_SOLENOID_REVERSE = 7;
+        public static final int FOLD_SOLENOID_FORWARD = 6;
         public static final int SOLENOID = 2;
         public static final boolean IS_SOLENOID_REVERSED = false;
     }
