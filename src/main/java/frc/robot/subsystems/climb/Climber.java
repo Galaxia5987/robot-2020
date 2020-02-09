@@ -45,7 +45,6 @@ public class Climber extends SubsystemBase {
 
         leftMotor.configMotionAcceleration(unitModel.toTicks100ms(Constants.Climber.MOTION_MAGIC_ACCELERATION));
         rightMotor.configMotionAcceleration(unitModel.toTicks100ms(Constants.Climber.MOTION_MAGIC_ACCELERATION));
-
         leftMotor.setSensorPhase(Ports.Climber.LEFT_ENCODER_INVERTED);
         rightMotor.setSensorPhase(Ports.Climber.RIGHT_ENCODER_INVERTED);
 
@@ -55,8 +54,15 @@ public class Climber extends SubsystemBase {
         talonConfigs.setPidSet(CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3]);
         talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.Deactivated);
         talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.Disabled);
+        talonConfigs.setReverseLimitSwitchSource(LimitSwitchSource.Deactivated);
+        talonConfigs.setReverseLimitSwitchNormal(LimitSwitchNormal.Disabled);
+
         talonConfigs.setNeutralMode(NeutralMode.Coast);
         talonConfigs.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+        talonConfigs.setPeakCurrentLimit(0);
+        talonConfigs.setContinuousCurrentLimit(35);
+        talonConfigs.setEnableCurrentLimit(true);
         UtilityFunctions.configAllTalons(talonConfigs, leftMotor, rightMotor);
 
         if (Robot.isRobotA)
