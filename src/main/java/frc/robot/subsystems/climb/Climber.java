@@ -118,6 +118,14 @@ public class Climber extends SubsystemBase {
         }
     }
 
+    public void setLeftPower(double power) {
+        leftMotor.set(ControlMode.PercentOutput, power);
+    }
+
+    public void setRightPower(double power) {
+        rightMotor.set(ControlMode.PercentOutput, power);
+    }
+
     /**
      * @return the current height of the right side of the climber in meters.
      */
