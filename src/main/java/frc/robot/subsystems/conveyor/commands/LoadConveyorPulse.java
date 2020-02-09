@@ -8,7 +8,7 @@ import frc.robot.utilities.State;
 import static frc.robot.Constants.Conveyor.*;
 
 /**
- * Turn the conveyor and close the gate
+ * Turn the conveyor in pulses and close the gate
  */
 public class LoadConveyorPulse extends CommandBase {
     private Conveyor conveyor;
