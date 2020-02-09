@@ -23,8 +23,8 @@ public class UtilityFunctions {
             talon.configSelectedFeedbackSensor(configs.getFeedbackDevice());
             talon.enableVoltageCompensation(configs.isEnableVoltageCompensation());
             talon.enableCurrentLimit(configs.isEnableCurrentLimit());
+            talon.configContinuousCurrentLimit(configs.getContinuousCurrentLimit());
             talon.configPeakCurrentLimit(configs.getPeakCurrentLimit());
-
         }
 
     }
