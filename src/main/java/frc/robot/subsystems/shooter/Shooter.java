@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.VictorConfiguration;
+import frc.robot.valuetuner.WebConstantPIDTalon;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -38,7 +39,7 @@ public class Shooter extends SubsystemBase {
         shooterMaster.setSensorPhase(IS_ENCODER_INVERTED);
 
         // Closed loop control
-        shooterMaster.configClosedloopRamp(MAX_ACCELERATION);
+        shooterMaster.configClosedloopRamp(RAMP_RATE);
         shooterMaster.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
         shooterMaster.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         shooterMaster.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
@@ -65,6 +66,7 @@ public class Shooter extends SubsystemBase {
         slaveConfigs.setEnableVoltageCompensation(true);
         slaveConfigs.setVoltageCompensationSaturation(12);
         UtilityFunctions.configAllVictors(slaveConfigs, shooterSlave1, shooterSlave2);
+        new WebConstantPIDTalon("shooterTalon", KP, KI, KD, KF, shooterMaster);
     }
 
     /**
@@ -105,5 +107,9 @@ public class Shooter extends SubsystemBase {
 
     public double getVisionDistance(){
         return visionDistance.getDouble(0);
+    }
+
+    public double footFungus(){
+        return shooterMaster.getMotorOutputVoltage();
     }
 }

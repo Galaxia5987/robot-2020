@@ -132,12 +132,12 @@ public class Constants{
 
     public static class Shooter {
         public static final int TICKS_PER_ROTATION = 4096;
-        public static final double KP = 0.085; // 0.13
+        public static final double KP = 0.0; // 0.13
         public static final double KI = 0.0;
 
         public static final double KD = 0.00;
-        public static final double KF = 0.003;
-        public static final double MAX_ACCELERATION = 2;
+        public static final double KF = 0.00015;
+        public static final double RAMP_RATE = 0;
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
