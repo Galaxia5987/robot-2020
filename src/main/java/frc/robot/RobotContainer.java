@@ -76,7 +76,7 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whileHeld(new IntakeBalls(intake, 0.35));
+        OI.a.whileHeld(new IntakeBalls(intake));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.2, 0.5));
         OI.b.whenPressed(new SpeedUp(shooter));
         OI.y.whileHeld(new FeedTurret(conveyor));

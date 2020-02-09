@@ -19,7 +19,7 @@ public class PickupBalls extends ParallelDeadlineGroup {
         super(new LoadConveyor(conveyor));
         addRequirements(intake, conveyor);
         addCommands(
-                new IntakeBalls(intake, INTAKE_POWER)
+                new IntakeBalls(intake)
         );
     }
 }

@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import frc.robot.valuetuner.WebConstant;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -59,7 +60,7 @@ public class Constants{
     }
 
     public static final class Intake {
-        public static final double INTAKE_POWER = 0.5;
+        public static final WebConstant INTAKE_POWER = new WebConstant("intakePower", 0.5);
     }
 
     public static class Conveyor {
@@ -76,8 +77,8 @@ public class Constants{
 
 
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
-        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.7;
-        public static final double FUNNEL_MOTOR_FEED_POWER = 0.3;
+        public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorPower", 0.7);
+        public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelPower", 0.3);
         public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0;
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
