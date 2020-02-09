@@ -13,6 +13,6 @@ public class JoystickDrive extends CommandBase {
 
     @Override
     public void execute() {
-        drivetrain.setPower(Math.pow(OI.getLeftStickForward(), 3), Math.pow(OI.getRightStickForward(), 3));
+        drivetrain.setPower(OI.getLeftStickForward() * 0.7, OI.getRightStickForward() * 0.7);
     }
 }
