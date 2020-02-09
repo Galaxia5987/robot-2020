@@ -60,7 +60,7 @@ public class Constants{
     }
 
     public static final class Intake {
-        public static final WebConstant INTAKE_POWER = new WebConstant("intakePower", 0.5);
+        public static final WebConstant INTAKE_POWER = new WebConstant("intakePower", 0.4);
     }
 
     public static class Conveyor {
@@ -75,7 +75,7 @@ public class Constants{
 
         public static final int MAX_CURRENT = 0;
 
-        public static WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.5);
+        public static WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.25);
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
         public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorPower", 0.7);
         public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelPower", 0.3);
