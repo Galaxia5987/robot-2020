@@ -53,8 +53,8 @@ public class Climber extends SubsystemBase {
         rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
       
         talonConfigs.setPidSet(CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3]);
-        talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector);
-        talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.NormallyOpen);
+        talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.Deactivated);
+        talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.Disabled);
         talonConfigs.setNeutralMode(NeutralMode.Coast);
         talonConfigs.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
         UtilityFunctions.configAllTalons(talonConfigs, leftMotor, rightMotor);
