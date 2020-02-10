@@ -74,9 +74,7 @@ public class Constants{
         public static final int CRUISE_ACCELERATION = 0;
         public static final double RAMP_RATE = 0;
 
-        public static final int MAX_CURRENT = 0;
-
-        public static WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
+        public static final WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
         public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.7);
         public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
