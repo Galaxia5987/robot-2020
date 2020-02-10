@@ -1,5 +1,6 @@
 package frc.robot.subsystems.turret.commands;
 
+import com.stormbots.MiniPID;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.turret.Turret;
@@ -25,7 +26,7 @@ public class VisionTurret extends CommandBase {
         anglePid.setP(VISION_KP.get());
         anglePid.setI(VISION_KI.get());
         anglePid.setD(VISION_KD.get());
-        turret.setPower(anglePid.calculate(turret.getVisionAngle(), 0));
+        turret.setPower(-anglePid.calculate(turret.getVisionAngle(), 0));
     }
 
 }

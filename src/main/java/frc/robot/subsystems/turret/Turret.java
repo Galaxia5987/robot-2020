@@ -32,7 +32,7 @@ import static frc.robot.Ports.Turret.*;
 public class Turret extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
-    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
+    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("ps3");
     private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
     private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private double targetAngle;
@@ -60,6 +60,13 @@ public class Turret extends SubsystemBase {
         motor.configContinuousCurrentLimit(MAX_CURRENT);
         motor.configPeakCurrentDuration(0);
         motor.enableCurrentLimit(true);
+
+        // Configure soft limits for the subsystem.
+        motor.configReverseSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
+        motor.configForwardSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
+        motor.configSoftLimitDisableNeutralOnLOS(DISABLE_SOFT_LIMITS_ON_DISCONNECT, TALON_TIMEOUT);
+        motor.configReverseSoftLimitThreshold(unitModel.toTicks(MINIMUM_POSITION));
+        motor.configForwardSoftLimitThreshold(unitModel.toTicks(MAXIMUM_POSITION));
 
         motor.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         motor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
