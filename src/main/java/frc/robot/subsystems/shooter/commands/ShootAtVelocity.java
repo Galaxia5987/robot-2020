@@ -1,8 +1,5 @@
 package frc.robot.subsystems.shooter.commands;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
@@ -29,7 +26,7 @@ public class ShootAtVelocity extends CommandBase {
         shooter.setSpeed(setpoint);
         FireLog.log("shooterSpeed", shooter.getSpeed());
         FireLog.log("shooterSetpoint", setpoint);
-        SmartDashboard.putNumber("shooterVoltage", shooter.footFungus());
+        SmartDashboard.putNumber("shooterVoltage", shooter.getMasterVoltage());
     }
 
     // Make this return true when this Command no longer needs to run execute()

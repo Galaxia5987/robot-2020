@@ -109,7 +109,7 @@ public class Shooter extends SubsystemBase {
         return visionDistance.getDouble(0);
     }
 
-    public double footFungus(){
+    public double getMasterVoltage() {
         return shooterMaster.getMotorOutputVoltage();
     }
 }
