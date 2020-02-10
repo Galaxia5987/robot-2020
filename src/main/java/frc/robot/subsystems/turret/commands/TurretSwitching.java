@@ -25,13 +25,12 @@ public class TurretSwitching extends CommandBase {
 
     @Override
     public void execute() {
-        if(turret.hasVisionAngle() && turret.inCorrectRange()) {
+        if (turret.hasVisionAngle() && turret.inCorrectRange()) {
             timer.reset();
             visionTurret.execute();
-        }
-        else {
+        } else {
             timer.start();
-            if(timer.get() > Constants.Turret.VISION_TIMEOUT_SECONDS) {
+            if (timer.get() > Constants.Turret.VISION_TIMEOUT_SECONDS) {
                 turnLocalization.execute();
             }
         }
