@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static final boolean debug = true;
+    public static final boolean debug = isDebug() && !DriverStation.getInstance().isFMSAttached();
     // The roboRIO has built-in pull up resistors, bridge signal and ground pins on Robot A DIO 0.
     public static boolean isRobotA = !new DigitalInput(0).get();
     public static boolean shootingManualMode = false;
@@ -30,6 +30,13 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     public static Timer robotTimer = new Timer();
     private RobotContainer m_robotContainer;
+
+    /**
+     * @return Robot in debug mode
+     */
+    public static boolean isDebug() {
+        return true;
+    }
 
     /**
      * This function is run when the robot is first started up and should be used for any
