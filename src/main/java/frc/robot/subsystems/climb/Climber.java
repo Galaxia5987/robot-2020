@@ -45,7 +45,6 @@ public class Climber extends SubsystemBase {
 
         leftMotor.configMotionAcceleration(unitModel.toTicks100ms(Constants.Climber.MOTION_MAGIC_ACCELERATION));
         rightMotor.configMotionAcceleration(unitModel.toTicks100ms(Constants.Climber.MOTION_MAGIC_ACCELERATION));
-
         leftMotor.setSensorPhase(Ports.Climber.LEFT_ENCODER_INVERTED);
         rightMotor.setSensorPhase(Ports.Climber.RIGHT_ENCODER_INVERTED);
 
@@ -53,10 +52,17 @@ public class Climber extends SubsystemBase {
         rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
       
         talonConfigs.setPidSet(CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3]);
-        talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector);
-        talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.NormallyOpen);
+        talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.Deactivated);
+        talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.Disabled);
+        talonConfigs.setReverseLimitSwitchSource(LimitSwitchSource.Deactivated);
+        talonConfigs.setReverseLimitSwitchNormal(LimitSwitchNormal.Disabled);
+
         talonConfigs.setNeutralMode(NeutralMode.Coast);
         talonConfigs.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+        talonConfigs.setPeakCurrentLimit(0);
+        talonConfigs.setContinuousCurrentLimit(35);
+        talonConfigs.setEnableCurrentLimit(true);
         UtilityFunctions.configAllTalons(talonConfigs, leftMotor, rightMotor);
 
         if (Robot.isRobotA)
@@ -116,6 +122,14 @@ public class Climber extends SubsystemBase {
         if (safeToClimb()) {
             leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
         }
+    }
+
+    public void setLeftPower(double power) {
+        leftMotor.set(ControlMode.PercentOutput, power);
+    }
+
+    public void setRightPower(double power) {
+        rightMotor.set(ControlMode.PercentOutput, power);
     }
 
     /**

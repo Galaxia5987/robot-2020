@@ -1,37 +1,35 @@
 package frc.robot.subsystems.intake.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.utilities.State;
 
 public class IntakeBalls extends CommandBase {
-    private double power;
     private Intake intake;
     private Conveyor conveyor = null;
 
-    public IntakeBalls(Intake intake, double power) {
+    public IntakeBalls(Intake intake) {
         addRequirements(intake);
         this.intake = intake;
-        this.power = power;
     }
 
     /**
      * Second constructor, where conveyor is given, and the isFinished works based on the ball count.
      * @param intake intake subsystem
      * @param conveyor conveyor subsystem (optional)
-     * @param power (motor power)
      */
-    public IntakeBalls(Intake intake, Conveyor conveyor, double power){
-        this(intake, power);
+    public IntakeBalls(Intake intake, Conveyor conveyor){
+        this(intake);
         this.conveyor = conveyor;
     }
 
     @Override
     public void initialize() {
         intake.setPosition(State.OPEN);
-        intake.powerWheels(power);
+        intake.powerWheels(Constants.Intake.INTAKE_POWER.get());
     }
 
     @Override

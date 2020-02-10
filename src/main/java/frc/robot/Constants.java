@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import frc.robot.valuetuner.WebConstant;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -59,7 +60,8 @@ public class Constants{
     }
 
     public static final class Intake {
-        public static final double INTAKE_POWER = 0.5;
+        public static final WebConstant INTAKE_POWER = new WebConstant("intakePower", 0.4);
+        public static final WebConstant OUTTAKE_POWER = new WebConstant("intakeOutPower", 0.2);
     }
 
     public static class Conveyor {
@@ -74,11 +76,14 @@ public class Constants{
 
         public static final int MAX_CURRENT = 0;
 
-
+        public static WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
-        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.7;
-        public static final double FUNNEL_MOTOR_FEED_POWER = 0.3;
-        public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0;
+        public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.7);
+        public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
+        public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorPower", 0.7);
+        public static final WebConstant CONVEYOR_OUTTAKE_POWER = new WebConstant("conveyorOuttakePower", 0.5);
+        public static final WebConstant FUNNEL_OUTTAKE_POWER = new WebConstant("funnelOuttakePower", 0.5);
+
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
@@ -100,7 +105,7 @@ public class Constants{
         public static final double MAXIMUM_POSITION = 245;
 
         public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 3395;
+        public static final int STARTING_POSITION = 3256;
 
 
         public static double KP = 4.07;
@@ -127,12 +132,12 @@ public class Constants{
 
     public static class Shooter {
         public static final int TICKS_PER_ROTATION = 4096;
-        public static final double KP = 0.085; // 0.13
+        public static final double KP = 0.0; // 0.13
         public static final double KI = 0.0;
 
         public static final double KD = 0.00;
-        public static final double KF = 0.003;
-        public static final double MAX_ACCELERATION = 2;
+        public static final double KF = 0.00015;
+        public static final double RAMP_RATE = 0;
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
@@ -174,7 +179,7 @@ public class Constants{
 
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0; // The allowed tolerance between the current height to the desired height.
         public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle.
-        public static final double MODIFY_JOYSTICK_RATE = 0; // The factor which the value of the joystick is multiplied by to calculate the change rate.
+        public static final WebConstant MODIFY_JOYSTICK_RATE = new WebConstant("climbJoystickRate", 0.7); // The factor which the value of the joystick is multiplied by to calculate the change rate.
         public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber.
         public static final double DISTANCE_BETWEEN_RODS = 0; // The distance between both climbing rods.
     }
