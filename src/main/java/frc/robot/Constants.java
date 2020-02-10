@@ -80,7 +80,7 @@ public class Constants{
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
         public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.7);
         public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
-        public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorPower", 0.7);
+        public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.7);
         public static final WebConstant CONVEYOR_OUTTAKE_POWER = new WebConstant("conveyorOuttakePower", 0.5);
         public static final WebConstant FUNNEL_OUTTAKE_POWER = new WebConstant("funnelOuttakePower", 0.5);
 
@@ -116,9 +116,9 @@ public class Constants{
         public static final int MOTION_MAGIC_ACCELERATION = 16;
 
 
-        public static final double VISION_KP = 0;
-        public static final double VISION_KI = 0;
-        public static final double VISION_KD = 0;
+        public static final WebConstant VISION_KP = new WebConstant("visionKp", 0.018);
+        public static final WebConstant VISION_KI = new WebConstant("visionKi", 0);
+        public static final WebConstant VISION_KD = new WebConstant("visionKd", 0.0005);
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
@@ -132,12 +132,11 @@ public class Constants{
 
     public static class Shooter {
         public static final int TICKS_PER_ROTATION = 4096;
-        public static final double KP = 0.0; // 0.13
+        public static final double KP = 0.3; // 0.13
         public static final double KI = 0.0;
 
-        public static final double KD = 0.00;
-        public static final double KF = 0.00015;
-        public static final double RAMP_RATE = 0;
+        public static final double KD = 1.5;
+        public static final double KF = 0.014;
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]

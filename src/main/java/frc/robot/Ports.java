@@ -41,6 +41,9 @@ public class Ports {
         public static final int MOTOR = 22;
         public static final boolean IS_MOTOR_INVERTED = true;
         public static final boolean IS_ENCODER_INVERTED = true;
+
+        public static final boolean ENABLE_SOFT_LIMITS = true;
+        public static final boolean DISABLE_SOFT_LIMITS_ON_DISCONNECT = true;
     }
 
     public static class Drivetrain {

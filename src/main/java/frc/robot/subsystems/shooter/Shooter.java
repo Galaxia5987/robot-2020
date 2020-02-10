@@ -39,7 +39,6 @@ public class Shooter extends SubsystemBase {
         shooterMaster.setSensorPhase(IS_ENCODER_INVERTED);
 
         // Closed loop control
-        shooterMaster.configClosedloopRamp(RAMP_RATE);
         shooterMaster.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
         shooterMaster.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         shooterMaster.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
