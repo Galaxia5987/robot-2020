@@ -116,9 +116,9 @@ public class Constants{
         public static final int MOTION_MAGIC_ACCELERATION = 16;
 
 
-        public static final double VISION_KP = 0;
-        public static final double VISION_KI = 0;
-        public static final double VISION_KD = 0;
+        public static final WebConstant VISION_KP = new WebConstant("visionKp", 0);
+        public static final WebConstant VISION_KI = new WebConstant("visionKi", 0);
+        public static final WebConstant VISION_KD = new WebConstant("visionKd", 0);
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
