@@ -178,7 +178,7 @@ public class Turret extends SubsystemBase {
      * when it is more than half a rotation from the starting angle, the turret will
      * DESTROY ITSELF... be warned! do not use this midgame!
      */
-    public void resetEncoder(){
+    public void resetEncoder() {
         double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(Math.floorMod(motor.getSelectedSensorPosition(1), 4096) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
         motor.setSelectedSensorPosition((int)currentPosition);
     }
