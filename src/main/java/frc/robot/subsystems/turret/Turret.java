@@ -186,7 +186,7 @@ public class Turret extends SubsystemBase {
      * DESTROY ITSELF... be warned! do not use this midgame!
      */
     public void resetEncoder(){
-        double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(motor.getSelectedSensorPosition(1) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
+        double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(Math.floorMod(motor.getSelectedSensorPosition(1), 4096) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
         motor.setSelectedSensorPosition((int)currentPosition);
     }
 

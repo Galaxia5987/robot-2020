@@ -103,8 +103,7 @@ public class Constants{
         public static final double MAXIMUM_POSITION = 245;
 
         public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 3256;
-
+        public static final int STARTING_POSITION = 3070;
 
         public static double KP = 4.07;
         public static double KI = 0.0005;
