@@ -74,16 +74,16 @@ public class Constants{
         public static final int CRUISE_ACCELERATION = 0;
         public static final double RAMP_RATE = 0;
 
-        public static final double FUNNEL_MOTOR_FEED_POWER = 0.3; // Funnel intake and feed power
+        public static final double FUNNEL_FEED_POWER = 0.3;
         public static final double FUNNEL_OUTTAKE_POWER =  0.5;
 
+        public static final double CONVEYOR_INTAKE_POWER = 0.25;
         public static final double PULSE_INTERVAL = 0.1;
 
-        public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0.25;
-        public static final double CONVEYOR_MOTOR_FEED_POWER = 0.7;
-        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.7;
+        public static final double CONVEYOR_SMART_FEED_POWER = 0.7;
+        public static final double CONVEYOR_FEED_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
-        public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
+        public static final double CONVEYOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
         public static final double INTAKE_PROXIMITY_MAX_VOLTAGE = 2; //The minimum voltage for which the sensor would see a ball
@@ -105,7 +105,7 @@ public class Constants{
 
         public static final double STARTING_ANGLE = 90;
         public static final int STARTING_POSITION = 3070;
-        
+
         public static double KP = 4.07;
         public static double KI = 0.0005;
         public static double KD = 2.3;

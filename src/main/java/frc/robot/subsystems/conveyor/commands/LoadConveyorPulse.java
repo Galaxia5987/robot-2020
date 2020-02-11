@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.utilities.State;
-import frc.robot.valuetuner.WebConstant;
 
 import static frc.robot.Constants.Conveyor.*;
 
@@ -22,7 +21,7 @@ public class LoadConveyorPulse extends CommandBase {
     @Override
     public void initialize() {
         conveyor.setGate(State.CLOSE);
-        conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER);
+        conveyor.setFunnelPower(FUNNEL_FEED_POWER);
         timer.reset();
         timer.start();
     }
@@ -30,7 +29,7 @@ public class LoadConveyorPulse extends CommandBase {
     @Override
     public void execute() {
         if(timer.get() % (2 * PULSE_INTERVAL) <= PULSE_INTERVAL){
-            conveyor.setConveyorPower(CONVEYOR_MOTOR_INTAKE_POWER);
+            conveyor.setConveyorPower(CONVEYOR_INTAKE_POWER);
         }
         else {
             conveyor.stopConveyor();
