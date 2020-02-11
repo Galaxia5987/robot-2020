@@ -98,7 +98,7 @@ public class Constants{
     public static class Turret {
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
-        public static final int TICKS_PER_DEGREE = 4096/360;
+        public static final double TICKS_PER_DEGREE = 4096/360.0;
         public static final double MINIMUM_POSITION = -30;
         public static final double MAXIMUM_POSITION = 245;
 
