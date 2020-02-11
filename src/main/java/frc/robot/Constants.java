@@ -23,8 +23,8 @@ public class Constants{
         public static final double WHEEL_DIAMETER = 6*0.0254;
         public static final double TRACK_WIDTH = 0.6649; // TODO: this is horizontal distance between the wheels, we might need a diagonal distance.
 
-        public static final int LOW_TICKS_PER_METER = (int) (4096 * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI)); // TICKS * RATIO / CIRCUMFERENCE
-        public static final int HIGH_TICKS_PER_METER = (int) (4096 * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI)); // TICKS * RATIO / CIRCUMFERENCE
+        public static final double LOW_TICKS_PER_METER = 4096 * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
+        public static final double HIGH_TICKS_PER_METER = 4096 * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
 
         public static final double[] VELOCITY_PID_SET = {0.0, 0, 0, 0}; // PID gains set for the velocity drive of the wheels.
 
@@ -65,7 +65,7 @@ public class Constants{
     }
 
     public static class Conveyor {
-        public static final int TICK_PER_METERS = (int) (0.0382 * 4096);
+        public static final double TICK_PER_METERS = 0.0382 * 4096;
 
         public static final double KP = 0.0;
         public static final double KI = 0.0;
@@ -98,7 +98,7 @@ public class Constants{
     public static class Turret {
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
-        public static final int TICKS_PER_DEGREE = 4096/360;
+        public static final double TICKS_PER_DEGREE = 4096/360.0;
         public static final double MINIMUM_POSITION = -30;
         public static final double MAXIMUM_POSITION = 245;
 
@@ -129,7 +129,7 @@ public class Constants{
 
 
     public static class Shooter {
-        public static final int TICKS_PER_ROTATION = 4096;
+        public static final double TICKS_PER_ROTATION = 4096;
         public static final double KP = 0.3; // 0.13
         public static final double KI = 0.0;
 
@@ -161,7 +161,7 @@ public class Constants{
     }
 
     public static class Climber {
-        public static final int TICKS_PER_METER = (int)(4096 * 0.03 * Math.PI); // TICKS * diameter * pi
+        public static final double TICKS_PER_METER = 4096 * 0.03 * Math.PI; // TICKS * diameter * pi
 
         public static final double[] CLIMB_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
         public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
