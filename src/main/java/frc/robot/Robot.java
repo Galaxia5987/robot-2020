@@ -49,7 +49,6 @@ public class Robot extends TimedRobot {
         robotTimer.reset();
         robotTimer.start();
         m_robotContainer = new RobotContainer();
-        compressor.stop();
     }
 
     /**

@@ -29,7 +29,6 @@ import static frc.robot.Ports.Conveyor.*;
  * {@using 3xProximities}
  */
 public class Conveyor extends SubsystemBase {
-    private Intake intake;
     private UnitModel unitConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
     private VictorSPX funnel = new VictorSPX(FUNNEL);
@@ -42,7 +41,6 @@ public class Conveyor extends SubsystemBase {
     private int ballsCount = STARTING_AMOUNT;
 
     public Conveyor(Intake intake) {
-        this.intake = intake;
         intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
 
         motor.setInverted(MOTOR_INVERTED);
@@ -53,7 +51,7 @@ public class Conveyor extends SubsystemBase {
         motor.config_kD(0, KD, TALON_TIMEOUT);
 
         motor.configMotionCruiseVelocity(unitConverter.toTicks100ms(CRUISE_VELOCITY));
-        motor.configMotionAcceleration(unitConverter.toTicks100ms(CRUISE_ACCELERATION), TALON_TIMEOUT);
+        motor.configMotionAcceleration(unitConverter.toTicks100ms(CRUISE_ACCELERATION));
         motor.configPeakCurrentLimit(0);
         motor.configContinuousCurrentLimit(30);
         motor.enableCurrentLimit(true);

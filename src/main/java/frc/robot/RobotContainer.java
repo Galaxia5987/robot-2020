@@ -19,22 +19,18 @@ import frc.robot.subsystems.color_wheel.commands.PositionControl;
 import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
-import frc.robot.subsystems.conveyor.commands.LoadConveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.IntakeBalls;
-import frc.robot.subsystems.intake.commands.OuttakeBalls;
+import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.StickButton;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
-
-import static frc.robot.OI.rightStick;
-import static frc.robot.OI.xbox;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -80,7 +76,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.whenPressed(new SpeedUp(shooter));
+        OI.b.toggleWhenPressed(new VisionTurret(turret));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));

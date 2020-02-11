@@ -32,9 +32,6 @@ import static frc.robot.Ports.Turret.*;
 public class Turret extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
-    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("ps3");
-    private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
-    private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private double targetAngle;
     private boolean isGoingClockwise = true;
     private double turretBacklash; //The angle in degrees which the turret is off from the motor (clockwise). this angle changes based on the turning direction.
@@ -54,6 +51,12 @@ public class Turret extends SubsystemBase {
         motor.config_kI(0, KI, TALON_TIMEOUT);
         motor.config_kD(0, KD, TALON_TIMEOUT);
         motor.config_kF(0, KF, TALON_TIMEOUT);
+
+        motor.config_kP(1, VisionKP, TALON_TIMEOUT);
+        motor.config_kI(1, VisionKI, TALON_TIMEOUT);
+        motor.config_kD(1, VisionKD, TALON_TIMEOUT);
+        motor.config_kF(1, VisionKF, TALON_TIMEOUT);
+
         motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
         motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
         motor.configPeakCurrentLimit(0);
@@ -107,6 +110,11 @@ public class Turret extends SubsystemBase {
         motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle + turretBacklash)); //Set the position to the target angle plus the backlash the turret creates.
     }
 
+    public void setAnglePosition(double angle) {
+        targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        motor.set(ControlMode.Position, unitModel.toTicks(targetAngle + turretBacklash));
+    }
+
     /**
      * change the angle to the desired angle,
      * the value can be between -360 to 360 degrees.
@@ -136,20 +144,6 @@ public class Turret extends SubsystemBase {
      */
     public void stop() {
         motor.set(ControlMode.MotionMagic, getAngle());
-    }
-
-    /**
-     * @return the angle to the target from the vision network table.
-     */
-    public double getVisionAngle(){
-        return visionAngle.getDouble(0);
-    }
-
-    /**
-     * @return whether the vision has calculated the angle to the target.
-     */
-    public boolean hasVisionAngle() {
-        return visionValid.getBoolean(false);
     }
 
     /**
@@ -194,5 +188,9 @@ public class Turret extends SubsystemBase {
     public void resetEncoder(){
         double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(motor.getSelectedSensorPosition(1) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
         motor.setSelectedSensorPosition((int)currentPosition);
+    }
+
+    public void setTalonSlot(int slot) {
+        motor.selectProfileSlot(slot, 0);
     }
 }
