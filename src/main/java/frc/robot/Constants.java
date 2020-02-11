@@ -75,10 +75,10 @@ public class Constants{
         public static final double RAMP_RATE = 0;
 
         public static final WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
-        public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
+        public static final double CONVEYOR_MOTOR_FEED_POWER = 0.7;
         public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.7);
         public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
-        public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.7);
+        public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.25);
         public static final WebConstant CONVEYOR_OUTTAKE_POWER = new WebConstant("conveyorOuttakePower", 0.5);
         public static final WebConstant FUNNEL_OUTTAKE_POWER = new WebConstant("funnelOuttakePower", 0.5);
 
@@ -103,7 +103,7 @@ public class Constants{
         public static final double MAXIMUM_POSITION = 245;
 
         public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 3256;
+        public static final int STARTING_POSITION = 3070;
 
 
         public static double KP = 4.07;
@@ -118,7 +118,7 @@ public class Constants{
         public static final WebConstant VISION_KI = new WebConstant("visionKi", 0);
         public static final WebConstant VISION_KD = new WebConstant("visionKd", 0.0005);
 
-        public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
+        public static final double TURRET_JOYSTICK_SPEED = 32; //Coefficient of the joystick value per degree.
 
         public static final int MAX_CURRENT = 35; // [A]
         public static final double ANGLE_THRESHOLD = 1;
