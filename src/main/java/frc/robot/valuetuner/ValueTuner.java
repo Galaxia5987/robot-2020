@@ -69,16 +69,16 @@ public class ValueTuner {
             String kF = request.queryParamOrDefault("kF", null);
             TalonConstant talon = WebConstantPIDTalon.getConstantMap().get(key);
             if (kP != null) {
-                talon.getTalon().config_kP(1, Double.parseDouble(kP));
+                talon.getTalon().config_kP(0, Double.parseDouble(kP));
             }
             if (kI != null) {
-                talon.getTalon().config_kI(1, Double.parseDouble(kI));
+                talon.getTalon().config_kI(0, Double.parseDouble(kI));
             }
             if (kD != null) {
-                talon.getTalon().config_kD(1, Double.parseDouble(kD));
+                talon.getTalon().config_kD(0, Double.parseDouble(kD));
             }
             if (kF != null) {
-                talon.getTalon().config_kF(1, Double.parseDouble(kF));
+                talon.getTalon().config_kF(0, Double.parseDouble(kF));
             }
             return "set";
         });

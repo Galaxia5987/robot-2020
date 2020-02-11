@@ -28,6 +28,7 @@ import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.DirectVisionTurret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.StickButton;
 import frc.robot.valuetuner.ValueTuner;
@@ -75,9 +76,9 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whileHeld(new FeedTurret(conveyor));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.toggleWhenPressed(new DirectVisionTurret(turret));
+        OI.a.whileHeld(new TurnTurret(turret, 0));
+        OI.x.whileHeld(new TurnTurret(turret, 180));
+        OI.b.toggleWhenPressed(new TurnTurret(turret, 90));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));

@@ -32,6 +32,9 @@ public class Intake extends SubsystemBase {
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
 
+        motor.enableVoltageCompensation(true);
+        motor.configVoltageCompSaturation(12.0);
+
         if (Robot.isRobotA)
             retractorA = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
         else

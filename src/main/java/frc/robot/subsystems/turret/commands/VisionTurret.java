@@ -13,18 +13,16 @@ public class VisionTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        turret.setTalonSlot(1);
         VisionModule.setLeds(true);
     }
 
     @Override
     public void execute() {
-        this.turret.setAnglePosition(turret.getAngle() + VisionModule.getVisionAngle());
+        turret.setAngle(turret.getAngle() + VisionModule.getVisionAngle());
     }
 
     @Override
     public void end(boolean interrupted) {
-        turret.setTalonSlot(0);
         VisionModule.setLeds(false);
     }
 }

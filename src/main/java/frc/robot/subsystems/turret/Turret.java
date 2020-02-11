@@ -52,11 +52,6 @@ public class Turret extends SubsystemBase {
         motor.config_kD(0, KD, TALON_TIMEOUT);
         motor.config_kF(0, KF, TALON_TIMEOUT);
 
-        motor.config_kP(1, VisionKP, TALON_TIMEOUT);
-        motor.config_kI(1, VisionKI, TALON_TIMEOUT);
-        motor.config_kD(1, VisionKD, TALON_TIMEOUT);
-        motor.config_kF(1, VisionKF, TALON_TIMEOUT);
-
         motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
         motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
         motor.configPeakCurrentLimit(0);
@@ -73,6 +68,9 @@ public class Turret extends SubsystemBase {
 
         motor.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         motor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+
+        motor.enableVoltageCompensation(true);
+        motor.configVoltageCompSaturation(12.0);
 
         new WebConstantPIDTalon("turret", KP, KI, KD, KF, motor);
     }
@@ -107,12 +105,7 @@ public class Turret extends SubsystemBase {
      */
     public void setAngle(double angle) {
         targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
-        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle + turretBacklash)); //Set the position to the target angle plus the backlash the turret creates.
-    }
-
-    public void setAnglePosition(double angle) {
-        targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
-        motor.set(ControlMode.Position, unitModel.toTicks(targetAngle + turretBacklash));
+        motor.set(ControlMode.Position, unitModel.toTicks(targetAngle + turretBacklash)); //Set the position to the target angle plus the backlash the turret creates.
     }
 
     /**
@@ -190,7 +183,4 @@ public class Turret extends SubsystemBase {
         motor.setSelectedSensorPosition((int)currentPosition);
     }
 
-    public void setTalonSlot(int slot) {
-        motor.selectProfileSlot(slot, 0);
-    }
 }

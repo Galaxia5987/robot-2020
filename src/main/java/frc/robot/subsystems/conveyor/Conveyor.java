@@ -57,6 +57,12 @@ public class Conveyor extends SubsystemBase {
         motor.enableCurrentLimit(true);
         motor.configClosedloopRamp(RAMP_RATE);
 
+        motor.enableVoltageCompensation(true);
+        motor.configVoltageCompSaturation(12.0);
+
+        funnel.enableVoltageCompensation(true);
+        funnel.configVoltageCompSaturation(12.0);
+
         if (Robot.isRobotA)
             gateA = new DoubleSolenoid(FORWARD_GATE, REVERSE_GATE);
         else
