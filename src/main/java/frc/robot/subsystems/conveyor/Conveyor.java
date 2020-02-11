@@ -119,14 +119,6 @@ public class Conveyor extends SubsystemBase {
     }
 
     /**
-     * feed the conveyor in one Power Cell per run.
-     */
-    public void feed() {
-        if (!isGateOpen()) return;
-        motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_POWER);
-    }
-
-    /**
      * stop the conveyor's motors from moving.
      */
     @Deprecated

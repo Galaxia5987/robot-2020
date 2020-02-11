@@ -7,6 +7,8 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.utilities.State;
 
+import static frc.robot.Constants.Intake.INTAKE_POWER;
+
 public class IntakeBalls extends CommandBase {
     private Intake intake;
     private Conveyor conveyor = null;
@@ -29,7 +31,7 @@ public class IntakeBalls extends CommandBase {
     @Override
     public void initialize() {
         intake.setPosition(State.OPEN);
-        intake.powerWheels(Constants.Intake.INTAKE_POWER.get());
+        intake.powerWheels(INTAKE_POWER);
     }
 
     @Override

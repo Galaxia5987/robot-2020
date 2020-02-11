@@ -6,6 +6,10 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.utilities.State;
 
+import static frc.robot.Constants.Conveyor.CONVEYOR_OUTTAKE_POWER;
+import static frc.robot.Constants.Conveyor.FUNNEL_OUTTAKE_POWER;
+import static frc.robot.Constants.Intake.OUTTAKE_POWER;
+
 public class OuttakeBalls extends CommandBase {
     private Intake intake;
     private Conveyor conveyor;
@@ -25,9 +29,9 @@ public class OuttakeBalls extends CommandBase {
     @Override
     public void initialize() {
         intake.setPosition(State.CLOSE);
-        intake.powerWheels(-Constants.Intake.OUTTAKE_POWER.get());
-        conveyor.setFunnelPower(-Constants.Conveyor.FUNNEL_OUTTAKE_POWER.get());
-        conveyor.setConveyorPower(-Constants.Conveyor.CONVEYOR_OUTTAKE_POWER.get());
+        intake.powerWheels(-OUTTAKE_POWER);
+        conveyor.setFunnelPower(-FUNNEL_OUTTAKE_POWER);
+        conveyor.setConveyorPower(-CONVEYOR_OUTTAKE_POWER);
     }
 
     @Override

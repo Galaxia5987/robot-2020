@@ -60,8 +60,8 @@ public class Constants{
     }
 
     public static final class Intake {
-        public static final WebConstant INTAKE_POWER = new WebConstant("intakePower", 0.4);
-        public static final WebConstant OUTTAKE_POWER = new WebConstant("intakeOutPower", 0.2);
+        public static final double INTAKE_POWER = 0.4;
+        public static final double OUTTAKE_POWER = 0.2;
     }
 
     public static class Conveyor {
@@ -74,14 +74,15 @@ public class Constants{
         public static final int CRUISE_ACCELERATION = 0;
         public static final double RAMP_RATE = 0;
 
-        public static final WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
-        public static final double CONVEYOR_MOTOR_FEED_POWER = 0.7;
-        public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.7);
-        public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
-        public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.25);
-        public static final WebConstant CONVEYOR_OUTTAKE_POWER = new WebConstant("conveyorOuttakePower", 0.5);
-        public static final WebConstant FUNNEL_OUTTAKE_POWER = new WebConstant("funnelOuttakePower", 0.5);
+        public static final double FUNNEL_MOTOR_FEED_POWER = 0.3; // Funnel intake and feed power
+        public static final double FUNNEL_OUTTAKE_POWER =  0.5;
 
+        public static final double PULSE_INTERVAL = 0.1;
+
+        public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0.25;
+        public static final double CONVEYOR_MOTOR_FEED_POWER = 0.7;
+        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.7;
+        public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
@@ -104,8 +105,7 @@ public class Constants{
 
         public static final double STARTING_ANGLE = 90;
         public static final int STARTING_POSITION = 3070;
-
-
+        
         public static double KP = 4.07;
         public static double KI = 0.0005;
         public static double KD = 2.3;
@@ -113,10 +113,9 @@ public class Constants{
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
         public static final int MOTION_MAGIC_ACCELERATION = 16;
 
-
-        public static final WebConstant VISION_KP = new WebConstant("visionKp", 0.018);
-        public static final WebConstant VISION_KI = new WebConstant("visionKi", 0);
-        public static final WebConstant VISION_KD = new WebConstant("visionKd", 0.0005);
+        public static final double VISION_KP = 0.018;
+        public static final double VISION_KI = 0;
+        public static final double VISION_KD = 0.0005;
 
         public static final double TURRET_JOYSTICK_SPEED = 32; //Coefficient of the joystick value per degree.
 
