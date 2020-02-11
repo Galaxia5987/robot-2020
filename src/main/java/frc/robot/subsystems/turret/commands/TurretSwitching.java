@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.turret.Turret;
+import frc.robot.utilities.VisionModule;
 
 public class TurretSwitching extends CommandBase {
     private final TurnLocalization turnLocalization;
@@ -25,7 +26,7 @@ public class TurretSwitching extends CommandBase {
 
     @Override
     public void execute() {
-        if (turret.hasVisionAngle() && turret.inCorrectRange()) {
+        if (VisionModule.hasVisionAngle() && turret.inCorrectRange()) {
             timer.reset();
             visionTurret.execute();
         } else {
