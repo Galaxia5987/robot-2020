@@ -114,6 +114,7 @@ public class Constants{
         public static double KI = 0.01;
         public static double KD = 50;
         public static double KF = 0;
+
         public static double ALLOWABLE_ERROR = 0.3;
 
         public static double MOTION_MAGIC_KP = 4.07;
@@ -138,7 +139,7 @@ public class Constants{
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
         public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
 
-        public static final double CONTROL_MODE_THRESHOLD = 50;
+        public static final double CONTROL_MODE_THRESHOLD = 60;
     }
 
 
