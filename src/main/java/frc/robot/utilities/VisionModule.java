@@ -20,7 +20,7 @@ public class VisionModule {
     /**
      * @return whether the vision sees the target
      */
-    public static boolean isValid() {
+    public static boolean targetSeen() {
         return visionValid.getBoolean(false);
     }
 

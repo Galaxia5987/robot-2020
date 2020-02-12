@@ -26,7 +26,7 @@ public class TurretSwitching extends CommandBase {
 
     @Override
     public void execute() {
-        if (VisionModule.isValid() && turret.inCorrectRange()) {
+        if (VisionModule.targetSeen() && turret.inCorrectRange()) {
             timer.reset();
             visionTurret.execute();
         } else {
