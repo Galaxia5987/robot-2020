@@ -34,11 +34,10 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
+    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -138,9 +137,9 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Checks if the drivetrain is  able to switch to highgear
+     * Checks if the drivetrain is  able to switch to high gear
      *
-     * @return
+     * @return if the drivetrain can shift to high gear
      */
     private boolean canShiftHigh() {
         return shiftCooldown.get() > SHIFTER_COOLDOWN
@@ -187,6 +186,7 @@ public class Drivetrain extends SubsystemBase {
 
     /**
      * Indicates whether the shifter is on a high gear
+     *
      * @return
      */
     public boolean isShiftedHigh() {
@@ -200,6 +200,7 @@ public class Drivetrain extends SubsystemBase {
 
     /**
      * Indicates whether the shifter is on a low gear
+     *
      * @return
      */
     public boolean isShiftedLow() {
@@ -232,7 +233,7 @@ public class Drivetrain extends SubsystemBase {
         rightMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(rightVelocity), DemandType.ArbitraryFeedForward, rightFF);
     }
 
-    public void setPower(double leftPower, double rightPower){
+    public void setPower(double leftPower, double rightPower) {
         leftMaster.set(ControlMode.PercentOutput, leftPower);
         rightMaster.set(ControlMode.PercentOutput, rightPower);
     }
