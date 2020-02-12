@@ -125,8 +125,6 @@ public class Constants{
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
         public static final int MOTION_MAGIC_ACCELERATION = 16;
 
-        public static final WebConstant CW_FRICTION_COEFFICIENT = new WebConstant("visionFrictionCW", 0.793 / 12);
-        public static final WebConstant CCW_FRICTION_COEFFICIENT = new WebConstant("visionFrictionCCW", 0.978 / 12);
         public static final WebConstant DIRECT_VISION_KP = new WebConstant("visionKp", 0.01);
         public static final WebConstant DIRECT_VISION_KI = new WebConstant("visionKi", 0.001);
         public static final WebConstant DIRECT_VISION_KD = new WebConstant("visionKd", 0);

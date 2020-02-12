@@ -28,12 +28,6 @@ public class DirectVisionTurret extends CommandBase {
         anglePid.setI(DIRECT_VISION_KI.get());
         anglePid.setD(DIRECT_VISION_KD.get());
         double power = -anglePid.calculate(VisionModule.getVisionAngle(), 0);
-        if(power > 0) {
-            power += CW_FRICTION_COEFFICIENT.get();
-        }
-        else if(power < 0) {
-            power -= CCW_FRICTION_COEFFICIENT.get();
-        }
         turret.setPower(power);
     }
 
