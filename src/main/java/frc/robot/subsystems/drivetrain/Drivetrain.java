@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
@@ -27,6 +28,7 @@ import org.ghrobotics.lib.debug.FalconDashboard;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
+import static frc.robot.Ports.PCM;
 import static frc.robot.RobotContainer.navx;
 
 public class Drivetrain extends SubsystemBase {
@@ -75,9 +77,9 @@ public class Drivetrain extends SubsystemBase {
         motorConfigurations.setSupplyCurrentLimit(40);
         Utils.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
         if (Robot.isRobotA)
-            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+            gearShifterA = new DoubleSolenoid(PCM, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
         else
-            gearShifterB = new Solenoid(1, SHIFTER_PORT);
+            gearShifterB = new Solenoid(PCM, SHIFTER_PORT);
     }
 
     public void shiftGear(shiftModes mode) {
