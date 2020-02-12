@@ -18,9 +18,9 @@ public class VisionModule {
     }
 
     /**
-     * @return whether the vision has calculated the angle to the target.
+     * @return whether the vision sees the target
      */
-    public static boolean hasVisionAngle() {
+    public static boolean isValid() {
         return visionValid.getBoolean(false);
     }
 
