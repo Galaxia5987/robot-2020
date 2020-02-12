@@ -56,7 +56,6 @@ public class ReleaseRods extends CommandBase {
     public void end(boolean interrupted) {
         climber.setRightPower(0);
         climber.setLeftPower(0);
-        climber.engageStopper();
     }
 
 
