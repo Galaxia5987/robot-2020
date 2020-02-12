@@ -58,9 +58,9 @@ public class Conveyor extends SubsystemBase {
         motor.configClosedloopRamp(RAMP_RATE);
 
         if (Robot.isRobotA)
-            gateA = new DoubleSolenoid(FORWARD_GATE, REVERSE_GATE);
+            gateA = new DoubleSolenoid(50, FORWARD_GATE, REVERSE_GATE);
         else
-            gateB = new Solenoid(GATE);
+            gateB = new Solenoid(50, GATE);
     }
 
     @Override

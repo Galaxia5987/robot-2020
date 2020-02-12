@@ -33,9 +33,9 @@ public class Intake extends SubsystemBase {
         motor.setInverted(MOTOR_INVERTED);
 
         if (Robot.isRobotA)
-            retractorA = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
+            retractorA = new DoubleSolenoid(50, FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
         else
-            retractorB = new Solenoid(SOLENOID);
+            retractorB = new Solenoid(50, SOLENOID);
     }
 
     /**

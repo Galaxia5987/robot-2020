@@ -75,9 +75,9 @@ public class Drivetrain extends SubsystemBase {
         motorConfigurations.setSupplyCurrentLimit(40);
         Utils.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
         if (Robot.isRobotA)
-            gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+            gearShifterA = new DoubleSolenoid(50, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
         else
-            gearShifterB = new Solenoid(1, SHIFTER_PORT);
+            gearShifterB = new Solenoid(50, SHIFTER_PORT);
     }
 
     public void shiftGear(shiftModes mode) {
