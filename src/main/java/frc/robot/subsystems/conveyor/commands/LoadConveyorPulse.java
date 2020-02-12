@@ -1,5 +1,6 @@
 package frc.robot.subsystems.conveyor.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.utilities.State;
@@ -7,12 +8,13 @@ import frc.robot.utilities.State;
 import static frc.robot.Constants.Conveyor.*;
 
 /**
- * Turn the conveyor and close the gate
+ * Turn the conveyor in pulses and close the gate
  */
-public class LoadConveyor extends CommandBase {
+public class LoadConveyorPulse extends CommandBase {
     private Conveyor conveyor;
+    private Timer timer = new Timer();
 
-    public LoadConveyor(Conveyor conveyor) {
+    public LoadConveyorPulse(Conveyor conveyor) {
         this.conveyor = conveyor;
         addRequirements(conveyor);
     }
@@ -20,11 +22,19 @@ public class LoadConveyor extends CommandBase {
     @Override
     public void initialize() {
         conveyor.setGate(State.CLOSE);
-        conveyor.setPower(CONVEYOR_MOTOR_INTAKE_POWER.get());
+        conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
+        timer.reset();
+        timer.start();
     }
 
     @Override
     public void execute() {
+        if(timer.get() % (2 * PULSE_INTERVAL.get()) <= PULSE_INTERVAL.get()){
+            conveyor.setConveyorPower(CONVEYOR_MOTOR_INTAKE_POWER.get());
+        }
+        else {
+            conveyor.stopConveyor();
+        }
     }
 
     @Override
@@ -34,6 +44,6 @@ public class LoadConveyor extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        conveyor.stop();
+        conveyor.stopAll();
     }
 }
