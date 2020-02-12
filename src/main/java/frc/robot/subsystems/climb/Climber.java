@@ -39,6 +39,9 @@ public class Climber extends SubsystemBase {
      * Creates a new climb Subsystem.
      */
     public Climber() {
+        leftMotor.configFactoryDefault();
+        rightMotor.configFactoryDefault();
+
         TalonConfiguration talonConfigs = new TalonConfiguration();
         leftMotor.setInverted(Ports.Climber.LEFT_MOTOR_INVERTED);
         rightMotor.setInverted(Ports.Climber.RIGHT_MOTOR_INVERTED);

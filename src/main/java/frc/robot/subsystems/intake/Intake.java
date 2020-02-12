@@ -30,6 +30,7 @@ public class Intake extends SubsystemBase {
     private Solenoid retractorB = null;
 
     public Intake() {
+        motor.configFactoryDefault();
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
 

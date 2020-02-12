@@ -34,6 +34,9 @@ public class Shooter extends SubsystemBase {
         // Basic motor configurations
         // Master configurations
         shooterMaster.configFactoryDefault();
+        shooterSlave1.configFactoryDefault();
+        shooterSlave2.configFactoryDefault();
+
         shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         shooterMaster.setInverted(IS_MASTER_INVERTED);
         shooterMaster.setSensorPhase(IS_ENCODER_INVERTED);
