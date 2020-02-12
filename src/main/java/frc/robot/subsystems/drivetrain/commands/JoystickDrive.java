@@ -17,9 +17,9 @@ public class JoystickDrive extends CommandBase {
     public void execute() {
         double rightPower = 0;
         double leftPower = 0;
-        if (Math.abs(OI.getLeftStickForward()) < JOYSTICK_MIN_THRESHOLD)
+        if (Math.abs(OI.getLeftStickForward()) > JOYSTICK_MIN_THRESHOLD)
            leftPower =  OI.getLeftStickForward() * 0.7;
-        if (Math.abs(OI.getRightStickForward()) < JOYSTICK_MIN_THRESHOLD)
+        if (Math.abs(OI.getRightStickForward()) > JOYSTICK_MIN_THRESHOLD)
             rightPower = OI.getRightStickForward() * 0.7;
         drivetrain.setPower(leftPower, rightPower);
     }
