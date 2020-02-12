@@ -100,8 +100,12 @@ public class Shooter extends SubsystemBase {
         return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE;
     }
 
+    public void setPower(double power) {
+        shooterMaster.set(ControlMode.PercentOutput, power);
+    }
+
     public void stop() {
-        setSpeed(0);
+        setPower(0);
     }
 
     public double getVisionDistance(){
