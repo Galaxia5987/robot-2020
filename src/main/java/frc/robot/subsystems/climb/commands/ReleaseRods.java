@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
+import org.techfire225.webapp.FireLog;
+
+import static frc.robot.Constants.Climber.CLIMB_HEIGHT;
 
 /**
  * This command would allow the driver to modify the robot's angle manually
@@ -19,40 +22,41 @@ import frc.robot.subsystems.climb.Climber;
  */
 public class ReleaseRods extends CommandBase {
     private final Climber climber;
-    private double currentHeight;
     private double setpointHeight;
-
-
 
     /**
      * Creates a new joystick control command.
      *
      * @param climber The subsystem used by this command.
      */
-    public ReleaseRods(Climber climber, double setpointHeight) {
+    public ReleaseRods(Climber climber) {
         this.climber = climber;
-        this.setpointHeight = setpointHeight;
         addRequirements(climber);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        this.setpointHeight = CLIMB_HEIGHT.get();
         climber.releaseStopper();
         climber.changePIDFSlot(1);
+        climber.setLeftHeight(setpointHeight);
+        climber.setRightHeight(setpointHeight);
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
+        FireLog.log("climbLeftHeight", climber.getLeftHeight());
+        FireLog.log("climbRightHeight", climber.getRightHeight());
+        FireLog.log("climberSetpoint", setpointHeight);
     }
-
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-
+        climber.setRightPower(0);
+        climber.setLeftPower(0);
+        climber.engageStopper();
     }
 
 
@@ -64,6 +68,7 @@ public class ReleaseRods extends CommandBase {
      */
     @Override
     public final boolean isFinished() {
+        double currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
         return Math.abs(setpointHeight - currentHeight) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
     }
 
