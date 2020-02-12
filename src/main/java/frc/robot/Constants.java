@@ -107,12 +107,13 @@ public class Constants{
         public static final int STARTING_POSITION = 2680;
 
         public static final int POSITION_PID_SLOT = 0;
+        public static final int MOTION_MAGIC_PID_SLOT = 1;
+        
         public static double KP = 3.5;
         public static double KI = 0.0005;
         public static double KD = 2.3;
         public static double KF = 0.00912;
 
-        public static final int MOTION_MAGIC_PID_SLOT = 0;
         public static double MOTION_MAGIC_KP = 3.5;
         public static double MOTION_MAGIC_KI = 0.0005;
         public static double MOTION_MAGIC_KD = 2.3;
