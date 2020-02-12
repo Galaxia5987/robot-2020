@@ -35,7 +35,6 @@ public class PIDClimbAndBalance extends CommandBase {
         this.climber = climber;
         this.setpointHeightFromGround = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
         this.setpointAngle = 0;
-        climber.changePIDFSlot(0);
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(climber);
     }
@@ -69,6 +68,7 @@ public class PIDClimbAndBalance extends CommandBase {
     @Override
     public void initialize() {
         climber.releaseStopper();
+        climber.changePIDFSlot(0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

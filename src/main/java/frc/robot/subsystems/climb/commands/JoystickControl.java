@@ -29,7 +29,6 @@ public class JoystickControl extends CommandBase {
     public JoystickControl(Climber climber, boolean controlEachSide) {
         this.climber = climber;
         this.controlEachSide = controlEachSide;
-        climber.changePIDFSlot(0);
         addRequirements(climber);
     }
 
@@ -37,6 +36,7 @@ public class JoystickControl extends CommandBase {
     @Override
     public void initialize() {
         climber.releaseStopper();
+        climber.changePIDFSlot(0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

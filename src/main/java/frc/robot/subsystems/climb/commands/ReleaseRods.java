@@ -32,7 +32,6 @@ public class ReleaseRods extends CommandBase {
     public ReleaseRods(Climber climber, double setpointHeight) {
         this.climber = climber;
         this.setpointHeight = setpointHeight;
-        climber.changePIDFSlot(1);
         addRequirements(climber);
     }
 
@@ -40,6 +39,7 @@ public class ReleaseRods extends CommandBase {
     @Override
     public void initialize() {
         climber.releaseStopper();
+        climber.changePIDFSlot(1);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
