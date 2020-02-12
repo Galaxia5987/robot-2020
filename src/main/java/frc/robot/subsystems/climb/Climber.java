@@ -179,20 +179,6 @@ public class Climber extends SubsystemBase {
         return Robot.debug || DriverStation.getInstance().getMatchTime() > 120;
     }
 
-    /**
-     * Reset the encoder position to the maximal height of the left side of subsystem, in case it reaches the limit.
-     */
-    public void resetLeft() {
-        leftMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
-    }
-
-    /**
-     * Reset the encoder position to the maximal height of right side of the subsystem, in case it reaches the limit.
-     */
-    public void resetRight() {
-        rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
-    }
-
     public void changePIDFSlot(int slot) {
         rightMotor.selectProfileSlot(slot, 0);
         leftMotor.selectProfileSlot(slot, 0);

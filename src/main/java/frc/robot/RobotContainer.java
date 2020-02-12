@@ -15,6 +15,7 @@ import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.commands.JoystickControl;
 import frc.robot.subsystems.climb.commands.ReleaseRods;
+import frc.robot.subsystems.climb.commands.ResetClimber;
 import frc.robot.subsystems.climb.commands.ToggleStopper;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
@@ -78,7 +79,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         OI.a.whenPressed(new ToggleStopper(climber));
         OI.x.whileHeld(new ReleaseRods(climber));
-        OI.b.whenPressed(new SpeedUp(shooter));
+        OI.b.whileHeld(new ResetClimber(climber));
         OI.y.whenPressed(new ToggleStopper(climber));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
