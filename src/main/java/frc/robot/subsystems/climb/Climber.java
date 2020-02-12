@@ -85,9 +85,9 @@ public class Climber extends SubsystemBase {
 
 
         if (Robot.isRobotA)
-            stopperA = new DoubleSolenoid(50, Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
+            stopperA = new DoubleSolenoid(Ports.PCM, Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
         else
-            stopperB = new Solenoid(50, Ports.Climber.STOPPER);
+            stopperB = new Solenoid(Ports.PCM, Ports.Climber.STOPPER);
     }
 
     /**

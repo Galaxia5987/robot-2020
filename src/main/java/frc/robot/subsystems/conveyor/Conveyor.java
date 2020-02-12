@@ -18,6 +18,7 @@ import frc.robot.utilities.State;
 import static frc.robot.Constants.Conveyor.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Conveyor.*;
+import static frc.robot.Ports.PCM;
 
 /**
  * @author Barel
@@ -58,9 +59,9 @@ public class Conveyor extends SubsystemBase {
         motor.configClosedloopRamp(RAMP_RATE);
 
         if (Robot.isRobotA)
-            gateA = new DoubleSolenoid(50, FORWARD_GATE, REVERSE_GATE);
+            gateA = new DoubleSolenoid(PCM, FORWARD_GATE, REVERSE_GATE);
         else
-            gateB = new Solenoid(50, GATE);
+            gateB = new Solenoid(PCM, GATE);
     }
 
     @Override
