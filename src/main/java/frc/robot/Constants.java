@@ -116,7 +116,7 @@ public class Constants{
         public static double KF = 0;
         public static double ALLOWABLE_ERROR = 0.3;
 
-        public static double MOTION_MAGIC_KP = 3.5;
+        public static double MOTION_MAGIC_KP = 4.07;
         public static double MOTION_MAGIC_KI = 0.0005;
         public static double MOTION_MAGIC_KD = 2.3;
         public static double MOTION_MAGIC_KF = 0.00912;
