@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     /**
      * @return Robot in debug mode
      */
-    public static boolean isDebug() {
+    private static boolean isDebug() {
         return true;
     }
 
@@ -50,6 +50,8 @@ public class Robot extends TimedRobot {
         robotTimer.start();
         m_robotContainer = new RobotContainer();
         compressor.stop();
+        SmartDashboard.putBoolean("Robot A", isRobotA);
+        SmartDashboard.putBoolean("Debug", debug);
     }
 
     /**
