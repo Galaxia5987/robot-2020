@@ -21,6 +21,7 @@ public class RotationControl extends CommandBase {
     private ColorWheel colorWheel;
 
     public RotationControl(ColorWheel colorWheel) {
+        addRequirements(colorWheel);
         this.colorWheel = colorWheel;
     }
 

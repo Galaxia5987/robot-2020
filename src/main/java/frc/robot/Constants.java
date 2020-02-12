@@ -3,6 +3,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.valuetuner.WebConstant;
+import org.apache.commons.lang.math.DoubleRange;
+import org.apache.commons.lang.math.IntRange;
+import org.apache.commons.lang3.Range;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -99,8 +102,8 @@ public class Constants{
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
         public static final double TICKS_PER_DEGREE = 4096/360.0;
-        public static final double MINIMUM_POSITION = -30;
-        public static final double MAXIMUM_POSITION = 245;
+
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-30, 245);
 
         public static final double STARTING_ANGLE = 90;
         public static final int STARTING_POSITION = 3256;
