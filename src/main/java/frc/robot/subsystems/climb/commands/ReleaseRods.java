@@ -39,6 +39,7 @@ public class ReleaseRods extends CommandBase {
     @Override
     public void initialize() {
         climber.releaseStopper();
+        climber.changePIDFSlot(1);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

@@ -12,6 +12,7 @@ public class TurnLocalization extends CommandBase {
     private final Drivetrain drivetrain;
 
     public TurnLocalization(Turret turret, Drivetrain drivetrain) {
+        addRequirements(turret, drivetrain);
         this.turret = turret;
         this.drivetrain = drivetrain;
     }

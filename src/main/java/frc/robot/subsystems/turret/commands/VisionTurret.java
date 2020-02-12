@@ -1,5 +1,6 @@
 package frc.robot.subsystems.turret.commands;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.utilities.VisionModule;

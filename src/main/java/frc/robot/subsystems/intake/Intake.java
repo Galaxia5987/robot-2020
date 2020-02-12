@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.utilities.State;
 
@@ -14,6 +15,7 @@ import java.util.function.Supplier;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Intake.*;
+import static frc.robot.Ports.PCM;
 
 /**
  * @author Barel
@@ -36,9 +38,9 @@ public class Intake extends SubsystemBase {
         motor.configVoltageCompSaturation(12.0);
 
         if (Robot.isRobotA)
-            retractorA = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
+            retractorA = new DoubleSolenoid(PCM, FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
         else
-            retractorB = new Solenoid(SOLENOID);
+            retractorB = new Solenoid(PCM, SOLENOID);
     }
 
     /**

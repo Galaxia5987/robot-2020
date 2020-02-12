@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.valuetuner.WebConstant;
+import org.apache.commons.lang.math.DoubleRange;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -99,8 +100,8 @@ public class Constants{
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
         public static final double TICKS_PER_DEGREE = 4096/360.0;
-        public static final double MINIMUM_POSITION = -30;
-        public static final double MAXIMUM_POSITION = 245;
+
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-30, 245);
 
         public static final double STARTING_ANGLE = 90;
         public static final int STARTING_POSITION = 2680;
@@ -165,6 +166,8 @@ public class Constants{
         public static final double TICKS_PER_METER = 4096 * 0.03 * Math.PI; // TICKS * diameter * pi
 
         public static final double[] CLIMB_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] CLIMB_RELEASE_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+
         public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
 
         public static final double MAX_HEIGHT = 0.913; // The allowed maximum height of the subsystem.

@@ -61,8 +61,8 @@ public class Turret extends SubsystemBase {
         motor.configReverseSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
         motor.configForwardSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
         motor.configSoftLimitDisableNeutralOnLOS(DISABLE_SOFT_LIMITS_ON_DISCONNECT, TALON_TIMEOUT);
-        motor.configReverseSoftLimitThreshold(unitModel.toTicks(MINIMUM_POSITION));
-        motor.configForwardSoftLimitThreshold(unitModel.toTicks(MAXIMUM_POSITION));
+        motor.configReverseSoftLimitThreshold(unitModel.toTicks(ALLOWED_ANGLES.getMinimumDouble()));
+        motor.configForwardSoftLimitThreshold(unitModel.toTicks(ALLOWED_ANGLES.getMaximumDouble()));
 
         motor.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         motor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
@@ -102,7 +102,7 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
+        targetAngle = getNearestTurretPosition(angle, getAngle(), ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
         motor.set(ControlMode.Position, unitModel.toTicks(targetAngle + turretBacklash)); //Set the position to the target angle plus the backlash the turret creates.
     }
 
@@ -165,7 +165,7 @@ public class Turret extends SubsystemBase {
      * @return whether the current angle is within the turrets limits.
      */
     public boolean inCorrectRange() {
-        return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
+        return ALLOWED_ANGLES.containsDouble(getAngle());
     }
 
     /**
