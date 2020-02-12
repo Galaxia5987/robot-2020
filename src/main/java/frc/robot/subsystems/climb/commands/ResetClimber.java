@@ -32,15 +32,9 @@ public class ResetClimber extends CommandBase {
     public void initialize() {
         climber.releaseStopper();
         climber.changePIDFSlot(0);
-    }
-
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() {
         climber.setLeftHeight(0);
         climber.setRightHeight(0);
     }
-
 
     // Called once the command ends or is interrupted.
     @Override
