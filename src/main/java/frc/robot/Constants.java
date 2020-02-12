@@ -108,9 +108,10 @@ public class Constants{
         public static final int STARTING_POSITION = 2680;
 
         public static double KP = 3.5;
-        public static double KI = 0.0005;
-        public static double KD = 2.3;
-        public static double KF = 0.00912;
+        public static double KI = 0.01;
+        public static double KD = 50;
+        public static double KF = 0;
+        public static double ALLOWABLE_ERROR = 0.3;
 
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
         public static final int MOTION_MAGIC_ACCELERATION = 16;

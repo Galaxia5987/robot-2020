@@ -49,6 +49,7 @@ public class Turret extends SubsystemBase {
         motor.config_kI(0, KI, TALON_TIMEOUT);
         motor.config_kD(0, KD, TALON_TIMEOUT);
         motor.config_kF(0, KF, TALON_TIMEOUT);
+        motor.configAllowableClosedloopError(0, unitModel.toTicks(ALLOWABLE_ERROR));
 
         motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
         motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));

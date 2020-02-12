@@ -82,7 +82,7 @@ public class RobotContainer {
         OI.b.toggleWhenPressed(new DirectVisionTurret(turret));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.whenPressed(new RotationControl(colorWheel));
+        OI.rb.toggleWhenPressed(new VisionTurret(turret));
         OI.lb.whenPressed(new PositionControl(colorWheel));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
