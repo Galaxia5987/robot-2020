@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.JoystickControl;
+import frc.robot.subsystems.climb.commands.ReleaseRods;
+import frc.robot.subsystems.climb.commands.ToggleStopper;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
@@ -64,18 +67,19 @@ public class RobotContainer {
      * Defines the default command of each mechanism on the robot.
      */
     private void configureDefaultCommands(){
-        colorWheel.setDefaultCommand(new ManualControl(colorWheel));
-        turret.setDefaultCommand(new JoystickTurret(turret));
-        drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
+//        colorWheel.setDefaultCommand(new ManualControl(colorWheel));
+//        turret.setDefaultCommand(new JoystickTurret(turret));
+//        drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
+        climber.setDefaultCommand(new JoystickControl(climber, true, true));
     }
     /**
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whileHeld(new FeedTurret(conveyor));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
+        OI.a.whenPressed(new ToggleStopper(climber));
+        OI.x.whileHeld(new ReleaseRods(climber));
         OI.b.whenPressed(new SpeedUp(shooter));
-        OI.y.whileHeld(new PickupBalls(intake, conveyor));
+        OI.y.whenPressed(new ToggleStopper(climber));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
         OI.lb.whenPressed(new PositionControl(colorWheel));
