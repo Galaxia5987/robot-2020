@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.valuetuner.WebConstant;
 import org.apache.commons.lang.math.DoubleRange;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -39,6 +38,8 @@ public class Constants{
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
+
+        public static final double JOYSTICK_MIN_THRESHOLD = 0.05;
     }
 
     public static class Autonomous {
@@ -163,20 +164,20 @@ public class Constants{
     }
 
     public static class Climber {
-        public static final double TICKS_PER_METER = 4096 * 0.03 * Math.PI; // TICKS * diameter * pi
+        public static final double TICKS_PER_METER = 4096 * 0.03 * Math.PI * 100; // TICKS * diameter * pi
 
-        public static final double[] CLIMB_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
-        public static final double[] CLIMB_RELEASE_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] CLIMB_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] CLIMB_RELEASE_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
 
         public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
 
-        public static final double MAX_HEIGHT = 0.913; // The allowed maximum height of the subsystem.
+        public static final double MAX_HEIGHT = 0.75; // The allowed maximum height of the subsystem.
 
-        public static final int MOTION_MAGIC_VELOCITY = 0;
-        public static final int MOTION_MAGIC_ACCELERATION = 0;
         public static final double ARBITRARY_FEEDFORWARD = 0;
 
         public static final double RAMP_RATE = 0;
+
+        public static final WebConstant CLIMB_HEIGHT = new WebConstant("climbSetpointHeight", 0.3);
 
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0; // The allowed tolerance between the current height to the desired height.
         public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle.

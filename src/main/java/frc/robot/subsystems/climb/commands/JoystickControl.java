@@ -45,11 +45,11 @@ public class JoystickControl extends CommandBase {
     @Override
     public void execute() {
         if (controlEachSide) {
-            leftInput = OI.getXboxLY() * Constants.Climber.MODIFY_JOYSTICK_RATE.get();
-            rightInput = OI.getXboxRY() * Constants.Climber.MODIFY_JOYSTICK_RATE.get();
+            leftInput = -OI.getXboxLY() * Constants.Climber.MODIFY_JOYSTICK_RATE.get();
+            rightInput = -OI.getXboxRY() * Constants.Climber.MODIFY_JOYSTICK_RATE.get();
         }
         else {
-            leftInput = OI.getXboxLY() * Constants.Climber.MODIFY_JOYSTICK_RATE.get();
+            leftInput = -OI.getXboxLY() * Constants.Climber.MODIFY_JOYSTICK_RATE.get();
             rightInput = -leftInput;
         }
         if(manual) {
