@@ -29,6 +29,10 @@ public class Shooter extends SubsystemBase {
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
 
     public Shooter() {
+        shooterMaster.configFactoryDefault();
+        shooterSlave1.configFactoryDefault();
+        shooterSlave2.configFactoryDefault();
+
         VictorConfiguration slaveConfigs = new VictorConfiguration();
 
         // Basic motor configurations
