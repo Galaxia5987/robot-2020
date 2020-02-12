@@ -38,6 +38,7 @@ public class FollowPath extends CommandBase {
     private final Drivetrain drivetrain;
 
     public FollowPath(Drivetrain drivetrain, Trajectory trajectory) {
+        addRequirements(drivetrain);
         this.trajectory = trajectory;
         this.drivetrain = drivetrain;
     }

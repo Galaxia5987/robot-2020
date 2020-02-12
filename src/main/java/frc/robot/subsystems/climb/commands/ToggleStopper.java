@@ -7,6 +7,7 @@ public class ToggleStopper extends InstantCommand {
     private final Climber climber;
 
     public ToggleStopper(Climber climber) {
+        addRequirements(climber);
         this.climber = climber;
     }
 
