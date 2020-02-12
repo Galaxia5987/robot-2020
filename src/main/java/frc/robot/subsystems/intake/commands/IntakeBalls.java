@@ -18,11 +18,13 @@ public class IntakeBalls extends CommandBase {
 
     /**
      * Second constructor, where conveyor is given, and the isFinished works based on the ball count.
-     * @param intake intake subsystem
+     *
+     * @param intake   intake subsystem
      * @param conveyor conveyor subsystem (optional)
      */
-    public IntakeBalls(Intake intake, Conveyor conveyor){
-        this(intake);
+    public IntakeBalls(Intake intake, Conveyor conveyor) {
+        addRequirements(intake, conveyor);
+        this.intake = intake;
         this.conveyor = conveyor;
     }
 
@@ -38,7 +40,7 @@ public class IntakeBalls extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if(conveyor != null) {
+        if (conveyor != null) {
             final boolean buttonNotPressed = !OI.a.get();
             return conveyor.getBallsCount() >= 5 && buttonNotPressed;
         }

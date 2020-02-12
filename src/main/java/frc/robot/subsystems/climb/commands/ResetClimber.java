@@ -9,7 +9,6 @@ package frc.robot.subsystems.climb.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 
 /**
@@ -32,6 +31,7 @@ public class ResetClimber extends CommandBase {
     @Override
     public void initialize() {
         climber.releaseStopper();
+        climber.changePIDFSlot(0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

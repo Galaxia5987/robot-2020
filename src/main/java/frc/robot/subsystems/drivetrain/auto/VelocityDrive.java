@@ -21,6 +21,7 @@ public class VelocityDrive extends CommandBase {
     private static final WebConstant desiredVelocity = new WebConstant("desiredVelocity", 1);
 
     public VelocityDrive(Drivetrain drivetrain, boolean usePid, boolean useFF) {
+        addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.usePid = usePid;
         this.useFF = useFF;

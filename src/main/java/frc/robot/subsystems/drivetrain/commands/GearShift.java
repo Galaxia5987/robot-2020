@@ -21,13 +21,16 @@ public class GearShift extends InstantCommand {
     private Drivetrain.shiftModes shiftmode;
     private final Drivetrain drivetrain;
 
-    /**
-     *
-     */
-    public GearShift(Drivetrain drivetrain, Drivetrain.shiftModes shiftmode) {
-        this.shiftmode = shiftmode;
-        this.drivetrain = drivetrain;
-    }
+  /**
+   *
+   *
+   *
+   */
+  public GearShift(Drivetrain drivetrain, Drivetrain.shiftModes shiftmode) {
+    addRequirements(drivetrain);
+    this.shiftmode = shiftmode;
+    this.drivetrain = drivetrain;
+  }
 
     // Called when the command is initially scheduled.
     @Override

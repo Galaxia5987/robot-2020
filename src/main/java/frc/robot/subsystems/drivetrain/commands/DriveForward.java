@@ -23,6 +23,7 @@ public class DriveForward extends CommandBase {
      *
      */
     public DriveForward(Drivetrain drivetrain, double leftPower, double rightPower) {
+        addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.leftPower = leftPower;
         this.rightPower = rightPower;
