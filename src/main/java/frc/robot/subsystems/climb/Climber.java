@@ -21,16 +21,16 @@ import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.TalonConfiguration;
 
 import static frc.robot.Constants.Climber.CLIMB_PIDF;
-
+import static frc.robot.Constants.Climber.CLIMB_RELEASE_PIDF;
 import static frc.robot.Ports.Climber.IS_STOPPER_REVERSED;
 
 public class Climber extends SubsystemBase {
 
     private final TalonSRX leftMotor = new TalonSRX(Ports.Climber.LEFT_MOTOR);
     private final TalonSRX rightMotor = new TalonSRX(Ports.Climber.RIGHT_MOTOR);
+    private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
     private DoubleSolenoid stopperA = null;
     private Solenoid stopperB = null;
-    private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
 
     /**
      * Creates a new climb Subsystem.
@@ -64,6 +64,25 @@ public class Climber extends SubsystemBase {
         talonConfigs.setContinuousCurrentLimit(35);
         talonConfigs.setEnableCurrentLimit(true);
         UtilityFunctions.configAllTalons(talonConfigs, leftMotor, rightMotor);
+
+        leftMotor.config_kP(0, CLIMB_PIDF[0]);
+        leftMotor.config_kI(0, CLIMB_PIDF[1]);
+        leftMotor.config_kD(0, CLIMB_PIDF[2]);
+        leftMotor.config_kF(0, CLIMB_PIDF[3]);
+        rightMotor.config_kP(0, CLIMB_PIDF[0]);
+        rightMotor.config_kI(0, CLIMB_PIDF[1]);
+        rightMotor.config_kD(0, CLIMB_PIDF[2]);
+        rightMotor.config_kF(0, CLIMB_PIDF[3]);
+
+        leftMotor.config_kP(1, CLIMB_RELEASE_PIDF[0]);
+        leftMotor.config_kI(1, CLIMB_RELEASE_PIDF[1]);
+        leftMotor.config_kD(1, CLIMB_RELEASE_PIDF[2]);
+        leftMotor.config_kF(1, CLIMB_RELEASE_PIDF[3]);
+        rightMotor.config_kP(1, CLIMB_RELEASE_PIDF[0]);
+        rightMotor.config_kI(1, CLIMB_RELEASE_PIDF[1]);
+        rightMotor.config_kD(1, CLIMB_RELEASE_PIDF[2]);
+        rightMotor.config_kF(1, CLIMB_RELEASE_PIDF[3]);
+
 
         if (Robot.isRobotA)
             stopperA = new DoubleSolenoid(Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
@@ -188,6 +207,11 @@ public class Climber extends SubsystemBase {
         rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
     }
 
+    public void changePIDFSlot(int slot) {
+        rightMotor.selectProfileSlot(slot, 0);
+        leftMotor.selectProfileSlot(slot, 0);
+    }
+
     /**
      * Return a normalized constrained in a certain range.
      *
@@ -203,7 +227,7 @@ public class Climber extends SubsystemBase {
         return setpoint;
     }
 
-    public double normalizeDelta(double delta){
+    public double normalizeDelta(double delta) {
         if (delta > Constants.Climber.MAX_DIFFERENCE) {
             return Constants.Climber.MAX_DIFFERENCE;
         } else if (delta < -Constants.Climber.MAX_DIFFERENCE) {

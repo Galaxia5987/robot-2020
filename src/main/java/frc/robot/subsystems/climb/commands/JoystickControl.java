@@ -38,6 +38,7 @@ public class JoystickControl extends CommandBase {
     @Override
     public void initialize() {
         climber.releaseStopper();
+        climber.changePIDFSlot(0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

@@ -167,6 +167,8 @@ public class Constants{
         public static final double TICKS_PER_METER = 4096 * 0.03 * Math.PI; // TICKS * diameter * pi
 
         public static final double[] CLIMB_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] CLIMB_RELEASE_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+
         public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
 
         public static final double MAX_HEIGHT = 0.913; // The allowed maximum height of the subsystem.
