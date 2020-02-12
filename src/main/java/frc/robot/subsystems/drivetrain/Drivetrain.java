@@ -144,7 +144,8 @@ public class Drivetrain extends SubsystemBase {
     private boolean canShiftHigh() {
         return !isShifting
                 && !isShiftedHigh()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) < TURNING_TOLERANCE;
+                && Math.abs(getLeftVelocity() - getRightVelocity()) < TURNING_TOLERANCE
+                && (getLeftVelocity() + getRightVelocity()) / 2 > HIGH_GEAR_MIN_VELOCITY;
     }
 
     /**
@@ -155,7 +156,9 @@ public class Drivetrain extends SubsystemBase {
     private boolean canShiftLow() {
         return !isShifting
                 && !isShiftedLow()
+                && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_VELOCITY
                 && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE;
+
     }
 
     /**
