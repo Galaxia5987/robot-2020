@@ -7,8 +7,9 @@ import frc.robot.valuetuner.WebConstant;
 import org.techfire225.webapp.FireLog;
 
 public class ShootAtVelocity extends CommandBase {
-    private final Shooter shooter;
     static WebConstant targetVelocity = new WebConstant("shooterTargetVelocity", 0);
+    private final Shooter shooter;
+
     public ShootAtVelocity(Shooter shooter) {
         this.shooter = shooter;
         addRequirements(shooter);

@@ -26,6 +26,7 @@ public class GearShift extends CommandBase {
    *
    */
   public GearShift(Drivetrain drivetrain, Drivetrain.shiftModes shiftmode) {
+    addRequirements(drivetrain);
     this.shiftmode = shiftmode;
     this.drivetrain = drivetrain;
   }

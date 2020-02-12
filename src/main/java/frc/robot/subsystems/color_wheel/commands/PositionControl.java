@@ -20,6 +20,7 @@ public class PositionControl extends CommandBase {
     private ColorWheel colorWheel;
 
     public PositionControl(ColorWheel colorWheel) {
+        addRequirements(colorWheel);
         this.colorWheel = colorWheel;
     }
 
