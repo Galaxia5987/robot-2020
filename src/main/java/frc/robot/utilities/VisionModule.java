@@ -24,7 +24,7 @@ public class VisionModule {
         return visionValid.getBoolean(false);
     }
 
-    public static void setLeds(boolean on) {
+    public static void setLEDs(boolean on) {
         leds.setBoolean(on);
     }
 

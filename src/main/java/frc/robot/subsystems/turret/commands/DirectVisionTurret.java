@@ -18,7 +18,7 @@ public class DirectVisionTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        VisionModule.setLeds(true);
+        VisionModule.setLEDs(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,7 +33,7 @@ public class DirectVisionTurret extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        VisionModule.setLeds(false);
+        VisionModule.setLEDs(false);
         turret.setAngle(turret.getAngle());
     }
 }
