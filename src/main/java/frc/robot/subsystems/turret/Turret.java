@@ -1,11 +1,10 @@
 package frc.robot.subsystems.turret;
 
-import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -33,6 +32,7 @@ public class Turret extends SubsystemBase {
     private double targetAngle;
     private boolean isGoingClockwise = true;
     private double turretBacklash; //The angle in degrees which the turret is off from the motor (clockwise). this angle changes based on the turning direction.
+
     /**
      * configures the encoder and PID constants.
      */
@@ -45,10 +45,15 @@ public class Turret extends SubsystemBase {
 
         motor.setInverted(IS_MOTOR_INVERTED);
         motor.setSensorPhase(IS_ENCODER_INVERTED);
-        motor.config_kP(0, KP, TALON_TIMEOUT);
-        motor.config_kI(0, KI, TALON_TIMEOUT);
-        motor.config_kD(0, KD, TALON_TIMEOUT);
-        motor.config_kF(0, KF, TALON_TIMEOUT);
+        motor.config_kP(POSITION_PID_SLOT, KP, TALON_TIMEOUT);
+        motor.config_kI(POSITION_PID_SLOT, KI, TALON_TIMEOUT);
+        motor.config_kD(POSITION_PID_SLOT, KD, TALON_TIMEOUT);
+        motor.config_kF(POSITION_PID_SLOT, KF, TALON_TIMEOUT);
+
+        motor.config_kP(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KP, TALON_TIMEOUT);
+        motor.config_kI(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KI, TALON_TIMEOUT);
+        motor.config_kD(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KD, TALON_TIMEOUT);
+        motor.config_kF(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KF, TALON_TIMEOUT);
 
         motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
         motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
@@ -76,7 +81,7 @@ public class Turret extends SubsystemBase {
     /**
      * Corrects subsystem's backlash.
      */
-    public void correctBacklash(){
+    public void correctBacklash() {
         double currentVelocity = unitModel.toVelocity(motor.getSelectedSensorVelocity());
         if (Math.abs(currentVelocity) <= VELOCITY_MINIMUM)
             return;
@@ -103,7 +108,15 @@ public class Turret extends SubsystemBase {
      */
     public void setAngle(double angle) {
         targetAngle = getNearestTurretPosition(angle, getAngle(), ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
-        motor.set(ControlMode.Position, unitModel.toTicks(targetAngle + turretBacklash)); //Set the position to the target angle plus the backlash the turret creates.
+        final int setpoint = unitModel.toTicks(targetAngle + turretBacklash);
+        if (Math.abs(setpoint - getAngle()) < ERROR_THRESHOLD) {
+            motor.selectProfileSlot(POSITION_PID_SLOT, 0);
+            motor.set(ControlMode.Position, setpoint); // Set the position to the target angle plus the backlash the turret creates.
+        } else {
+            motor.selectProfileSlot(MOTION_MAGIC_PID_SLOT, 0);
+            motor.set(ControlMode.MotionMagic, setpoint);
+        }
+
     }
 
     /**
@@ -139,15 +152,17 @@ public class Turret extends SubsystemBase {
 
     /**
      * set the power the turret will turn.
+     *
      * @param speed the speed the turret will turn.
      */
-    public void setPower(double speed){
-        motor.set(ControlMode.PercentOutput, speed);   
+    public void setPower(double speed) {
+        motor.set(ControlMode.PercentOutput, speed);
     }
-    
-    public boolean isTurretReady(){
+
+    public boolean isTurretReady() {
         return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
     }
+
     /**
      * runs periodically, updates the constants and resets encoder position if the hall effect is closed
      */
@@ -170,7 +185,7 @@ public class Turret extends SubsystemBase {
 
     /**
      * Resets the turret position based on the absolute encoder of the turret.
-     *
+     * <p>
      * IMPORTANT: since the turrets absolute encoder only reads 360 degrees,
      * we assume the reading to be from -180 to 180. If the turret is reset
      * when it is more than half a rotation from the starting angle, the turret will
@@ -178,7 +193,7 @@ public class Turret extends SubsystemBase {
      */
     public void resetEncoder() {
         double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(Math.floorMod(motor.getSelectedSensorPosition(1), 4096) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
-        motor.setSelectedSensorPosition((int)currentPosition);
+        motor.setSelectedSensorPosition((int) currentPosition);
     }
 
 }
