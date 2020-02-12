@@ -75,10 +75,10 @@ public class Ports {
         public static final int STOPPER_FORWARD = 3;
         public static final int STOPPER_REVERSE = 2;
         public static final int STOPPER = 4;
-        public static final boolean LEFT_MOTOR_INVERTED = true;
-        public static final boolean RIGHT_MOTOR_INVERTED = false;
-        public static final boolean LEFT_ENCODER_INVERTED = false;
-        public static final boolean RIGHT_ENCODER_INVERTED = false;
+        public static final boolean LEFT_MOTOR_INVERTED = false;
+        public static final boolean RIGHT_MOTOR_INVERTED = true;
+        public static final boolean LEFT_ENCODER_INVERTED = true;
+        public static final boolean RIGHT_ENCODER_INVERTED = true;
         public static final boolean IS_STOPPER_REVERSED = false;
     }
 
