@@ -165,15 +165,6 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * Because of the climbing rods' height there are dead zones where the turret cannot see a target
-     * or cannot shoot because the rods are blocking it's path.
-     * @return whether the turret is in its dead zone in which it cannot shoot
-     */
-    public boolean inDeadZone(){
-        return (getAngle() > DEAD_ZONE_MINIMUM
-                && getAngle() < DEAD_ZONE_MAXIMUM);
-    }
-    /**
      * runs periodically, updates the constants and resets encoder position if the hall effect is closed
      */
     @Override
@@ -190,7 +181,16 @@ public class Turret extends SubsystemBase {
      * @return whether the current angle is within the turrets limits.
      */
     public boolean inCorrectRange() {
-        return ALLOWED_ANGLES.containsDouble(getAngle());
+        return ALLOWED_ANGLES.containsDouble(getAngle()) && !inDeadZone();
+    }
+
+    /**
+     * Because of the climbing rods' height there are dead zones where the turret cannot see a target
+     * or cannot shoot because the rods are blocking it's path.
+     * @return whether the turret is in its dead zone in which it cannot shoot
+     */
+    public boolean inDeadZone(){
+        return DEAD_ZONE_ANGLES.containsDouble(getAngle());
     }
 
     /**
