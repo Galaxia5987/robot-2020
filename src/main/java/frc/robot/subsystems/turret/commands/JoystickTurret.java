@@ -23,8 +23,9 @@ public class JoystickTurret extends CommandBase {
 
     @Override
     public void execute() {
+        double input = joystickInput.get();
         if(Math.abs(input) < JOYSTICK_DEADBAND) return;
-        double position = turret.getAngle() + joystickInput.get() * TURRET_JOYSTICK_SPEED;
+        double position = turret.getAngle() + input * TURRET_JOYSTICK_SPEED;
         turret.setAngle(position);
     }
 
