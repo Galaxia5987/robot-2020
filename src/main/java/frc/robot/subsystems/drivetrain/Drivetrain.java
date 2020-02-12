@@ -89,6 +89,11 @@ public class Drivetrain extends SubsystemBase {
                 if (canShiftHigh())
                     shiftHigh();
                 break;
+            case TOGGLE:
+                if (isShiftedHigh())
+                    shiftGear(shiftModes.LOW);
+                else
+                    shiftGear(shiftModes.HIGH);
         }
     }
 
@@ -255,6 +260,7 @@ public class Drivetrain extends SubsystemBase {
      */
     public enum shiftModes {
         HIGH,
-        LOW
+        LOW,
+        TOGGLE
     }
 }
