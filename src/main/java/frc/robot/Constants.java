@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.valuetuner.WebConstant;
 import org.apache.commons.lang.math.DoubleRange;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -39,6 +38,8 @@ public class Constants{
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
+
+        public static final double JOYSTICK_MIN_THRESHOLD = 0.05;
     }
 
     public static class Autonomous {
