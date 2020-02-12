@@ -96,10 +96,8 @@ public class Drivetrain extends SubsystemBase {
      * Start the cooldown of the shifter so it won't shift too open
      */
     public void startCooldown() {
-        if (getCooldown() >= 0.05) {
-            shiftCooldown.start();
-            isShifting = true;
-        }
+        shiftCooldown.start();
+        isShifting = true;
     }
 
     /**
