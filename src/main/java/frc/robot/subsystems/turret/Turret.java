@@ -109,7 +109,7 @@ public class Turret extends SubsystemBase {
     public void setAngle(double angle) {
         targetAngle = getNearestTurretPosition(angle, getAngle(), ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
         final int setpoint = unitModel.toTicks(targetAngle + turretBacklash);
-        if (Math.abs(setpoint - getAngle()) < ERROR_THRESHOLD) {
+        if (Math.abs(setpoint - getAngle()) < CONTROL_MODE_THRESHOLD) {
             motor.selectProfileSlot(POSITION_PID_SLOT, 0);
             motor.set(ControlMode.Position, setpoint); // Set the position to the target angle plus the backlash the turret creates.
         } else {

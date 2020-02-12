@@ -135,7 +135,7 @@ public class Constants{
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
         public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
 
-        public static final double ERROR_THRESHOLD = 0;
+        public static final double CONTROL_MODE_THRESHOLD = 0;
     }
 
 
