@@ -44,6 +44,9 @@ public class ColorWheel extends SubsystemBase {
         colorMatcher.addColorMatch(RedTarget);
         colorMatcher.addColorMatch(YellowTarget);
         motor.setNeutralMode(NeutralMode.Brake);
+
+        motor.enableVoltageCompensation(true);
+        motor.configVoltageCompSaturation(12.0);
     }
 
     public String getColorString() {
