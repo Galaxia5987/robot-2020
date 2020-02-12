@@ -18,6 +18,7 @@ public class ManualControl extends CommandBase {
 
 
     public ManualControl(ColorWheel colorWheel) {
+        addRequirements(colorWheel);
         this.colorWheel = colorWheel;
     }
 

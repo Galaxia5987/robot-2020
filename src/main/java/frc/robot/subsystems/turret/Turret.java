@@ -2,14 +2,19 @@ package frc.robot.subsystems.turret;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.Utils;
+import frc.robot.valuetuner.WebConstantPIDTalon;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Constants.Turret.*;
@@ -27,7 +32,7 @@ import static frc.robot.Ports.Turret.*;
 public class Turret extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
-    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
+    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("ps3");
     private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
     private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private double targetAngle;
@@ -42,16 +47,31 @@ public class Turret extends SubsystemBase {
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 1, TALON_TIMEOUT); // Todo: check if this experimental idea works.
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         resetEncoder();
-        
+
         motor.setInverted(IS_MOTOR_INVERTED);
         motor.setSensorPhase(IS_ENCODER_INVERTED);
         motor.config_kP(0, KP, TALON_TIMEOUT);
         motor.config_kI(0, KI, TALON_TIMEOUT);
         motor.config_kD(0, KD, TALON_TIMEOUT);
         motor.config_kF(0, KF, TALON_TIMEOUT);
-        motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
-        motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
-        motor.configPeakCurrentLimit(MAX_CURRENT);
+        motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
+        motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
+        motor.configPeakCurrentLimit(0);
+        motor.configContinuousCurrentLimit(MAX_CURRENT);
+        motor.configPeakCurrentDuration(0);
+        motor.enableCurrentLimit(true);
+
+        // Configure soft limits for the subsystem.
+        motor.configReverseSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
+        motor.configForwardSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
+        motor.configSoftLimitDisableNeutralOnLOS(DISABLE_SOFT_LIMITS_ON_DISCONNECT, TALON_TIMEOUT);
+        motor.configReverseSoftLimitThreshold(unitModel.toTicks(MINIMUM_POSITION));
+        motor.configForwardSoftLimitThreshold(unitModel.toTicks(MAXIMUM_POSITION));
+
+        motor.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+        motor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+
+        new WebConstantPIDTalon("turret", KP, KI, KD, KF, motor);
     }
 
     /**
@@ -149,6 +169,11 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         correctBacklash();
+        SmartDashboard.putNumber("turretSetpoint", targetAngle);
+        SmartDashboard.putNumber("turretCurrent", getAngle());
+        SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
+        FireLog.log("turretSetpoint", targetAngle);
+        FireLog.log("turretCurrent", getAngle());
     }
 
     /**

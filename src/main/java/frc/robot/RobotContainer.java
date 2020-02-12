@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
@@ -21,18 +22,13 @@ import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.IntakeBalls;
-import frc.robot.subsystems.intake.commands.OuttakeBalls;
+import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
-import frc.robot.utilities.StickButton;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
-
-import static frc.robot.OI.rightStick;
-import static frc.robot.OI.xbox;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -59,6 +55,7 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         if (Robot.debug) {
+            startValueTuner();
             startFireLog();
         }
     }
@@ -75,10 +72,10 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whenPressed(new IntakeBalls(intake, 0.35));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.2, 0.5));
+        OI.a.whileHeld(new FeedTurret(conveyor));
+        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
         OI.b.whenPressed(new SpeedUp(shooter));
-        OI.y.whenPressed(new FeedTurret(conveyor));
+        OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
         OI.lb.whenPressed(new PositionControl(colorWheel));

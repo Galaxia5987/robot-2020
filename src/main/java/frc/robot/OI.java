@@ -11,8 +11,8 @@ import frc.robot.utilities.ButtonCombination;
  */
 public class OI {
     //Controllers are defined here. (Only the RobotContainer and OI should access them)
-    static final Joystick rightStick = new Joystick(0);
-    static final Joystick leftStick = new Joystick(1);
+    static final Joystick rightStick = new Joystick(1);
+    static final Joystick leftStick = new Joystick(0);
     static final XboxController xbox = new XboxController(2);
 
     public final static JoystickButton a = new JoystickButton(xbox, XboxController.Button.kA.value);
