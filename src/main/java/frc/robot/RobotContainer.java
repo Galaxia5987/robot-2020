@@ -79,7 +79,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor));
         OI.x.toggleWhenPressed(new ShootAtVelocity(shooter));
-        OI.b.toggleWhenPressed(new VisionTurret(turret));
+        OI.b.toggleWhenPressed(new DirectVisionTurret(turret));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));

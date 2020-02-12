@@ -40,5 +40,6 @@ public class DirectVisionTurret extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         VisionModule.setLeds(false);
+        turret.setAngle(turret.getAngle());
     }
 }
