@@ -2,9 +2,7 @@ package frc.robot;
 
 
 public class Ports {
-
     public static final int TALON_PID_SLOT = 0;
-    public static final int PCM = 50;
 
     public static class Conveyor {
         public static final int FUNNEL = 19;

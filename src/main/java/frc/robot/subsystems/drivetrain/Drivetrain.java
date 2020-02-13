@@ -28,7 +28,6 @@ import org.ghrobotics.lib.debug.FalconDashboard;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
-import static frc.robot.Ports.PCM;
 import static frc.robot.RobotContainer.navx;
 
 public class Drivetrain extends SubsystemBase {
@@ -57,6 +56,12 @@ public class Drivetrain extends SubsystemBase {
 
         new WebConstantPIDTalon("drivetrainLeft", pidSet[0], pidSet[1], pidSet[2], pidSet[3], leftMaster);
         new WebConstantPIDTalon("drivetrainRight", pidSet[0], pidSet[1], pidSet[2], pidSet[3], rightMaster);
+
+        rightMaster.configFactoryDefault();
+        rightSlave.configFactoryDefault();
+        leftMaster.configFactoryDefault();
+        leftSlave.configFactoryDefault();
+
         rightMaster.setSelectedSensorPosition(0);
         leftMaster.setSelectedSensorPosition(0);
         rightSlave.follow(rightMaster);
@@ -77,9 +82,9 @@ public class Drivetrain extends SubsystemBase {
         motorConfigurations.setSupplyCurrentLimit(40);
         Utils.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
         if (Robot.isRobotA)
-            gearShifterA = new DoubleSolenoid(PCM, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+            gearShifterA = new DoubleSolenoid(SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
         else
-            gearShifterB = new Solenoid(PCM, SHIFTER_PORT);
+            gearShifterB = new Solenoid(SHIFTER_PORT);
     }
 
     public void shiftGear(shiftModes mode) {

@@ -39,6 +39,9 @@ public class Climber extends SubsystemBase {
      * Creates a new climb Subsystem.
      */
     public Climber() {
+        leftMotor.configFactoryDefault();
+        rightMotor.configFactoryDefault();
+
         TalonConfiguration talonConfigs = new TalonConfiguration();
         leftMotor.setInverted(Ports.Climber.LEFT_MOTOR_INVERTED);
         rightMotor.setInverted(Ports.Climber.RIGHT_MOTOR_INVERTED);
@@ -85,9 +88,9 @@ public class Climber extends SubsystemBase {
         new WebConstantPIDTalon("climbRight", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], rightMotor);
 
         if (Robot.isRobotA)
-            stopperA = new DoubleSolenoid(Ports.PCM, Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
+            stopperA = new DoubleSolenoid(Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
         else
-            stopperB = new Solenoid(Ports.PCM, Ports.Climber.STOPPER);
+            stopperB = new Solenoid(Ports.Climber.STOPPER);
     }
 
     /**

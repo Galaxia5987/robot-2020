@@ -102,25 +102,34 @@ public class Constants{
 
         public static final double TICKS_PER_DEGREE = 4096/360.0;
 
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-30, 245);
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(0, 200);
 
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(0, 0);
 
         public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 3256;
+        public static final int STARTING_POSITION = 2680;
 
+        public static final int POSITION_PID_SLOT = 0;
+        public static final int MOTION_MAGIC_PID_SLOT = 1;
+        
+        public static double KP = 3.5;
+        public static double KI = 0.01;
+        public static double KD = 50;
+        public static double KF = 0;
 
-        public static double KP = 4.07;
-        public static double KI = 0.0005;
-        public static double KD = 2.3;
-        public static double KF = 0.00912;
+        public static double ALLOWABLE_ERROR = 0.3;
+
+        public static double MOTION_MAGIC_KP = 4.07;
+        public static double MOTION_MAGIC_KI = 0.0005;
+        public static double MOTION_MAGIC_KD = 2.3;
+        public static double MOTION_MAGIC_KF = 0.00912;
+
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
         public static final int MOTION_MAGIC_ACCELERATION = 16;
 
-
-        public static final WebConstant VISION_KP = new WebConstant("visionKp", 0.018);
-        public static final WebConstant VISION_KI = new WebConstant("visionKi", 0);
-        public static final WebConstant VISION_KD = new WebConstant("visionKd", 0.0005);
+        public static final WebConstant DIRECT_VISION_KP = new WebConstant("visionKp", 0.01);
+        public static final WebConstant DIRECT_VISION_KI = new WebConstant("visionKi", 0.001);
+        public static final WebConstant DIRECT_VISION_KD = new WebConstant("visionKd", 0);
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
@@ -129,6 +138,8 @@ public class Constants{
 
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
         public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
+
+        public static final double CONTROL_MODE_THRESHOLD = 60;
     }
 
 

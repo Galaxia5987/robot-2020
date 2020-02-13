@@ -18,10 +18,14 @@ public class JoystickDrive extends CommandBase {
         double rightPower = 0;
         double leftPower = 0;
         if (Math.abs(OI.getLeftStickForward()) > JOYSTICK_MIN_THRESHOLD)
-           leftPower =  OI.getLeftStickForward() * 0.7;
+            leftPower = OI.getLeftStickForward();
         if (Math.abs(OI.getRightStickForward()) > JOYSTICK_MIN_THRESHOLD)
-            rightPower = OI.getRightStickForward() * 0.7;
-        drivetrain.setPower(leftPower, rightPower);
+            rightPower = OI.getRightStickForward();
+        drivetrain.setPower(curveSpeed(leftPower), curveSpeed(rightPower));
     }
 
+    public double curveSpeed(double x) {
+        double sign = Math.signum(x);
+        return sign / (1 + Math.exp(-10 * (Math.abs(x) - 0.5)));
+    }
 }

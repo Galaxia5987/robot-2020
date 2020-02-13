@@ -18,7 +18,6 @@ import frc.robot.utilities.State;
 import static frc.robot.Constants.Conveyor.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Conveyor.*;
-import static frc.robot.Ports.PCM;
 
 /**
  * @author Barel
@@ -44,6 +43,9 @@ public class Conveyor extends SubsystemBase {
     public Conveyor(Intake intake) {
         intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
 
+        motor.configFactoryDefault();
+        funnel.configFactoryDefault();
+
         motor.setInverted(MOTOR_INVERTED);
         funnel.setInverted(FUNNEL_INVERTED);
 
@@ -58,10 +60,16 @@ public class Conveyor extends SubsystemBase {
         motor.enableCurrentLimit(true);
         motor.configClosedloopRamp(RAMP_RATE);
 
+        motor.enableVoltageCompensation(true);
+        motor.configVoltageCompSaturation(12.0);
+
+        funnel.enableVoltageCompensation(true);
+        funnel.configVoltageCompSaturation(12.0);
+
         if (Robot.isRobotA)
-            gateA = new DoubleSolenoid(PCM, FORWARD_GATE, REVERSE_GATE);
+            gateA = new DoubleSolenoid(FORWARD_GATE, REVERSE_GATE);
         else
-            gateB = new Solenoid(PCM, GATE);
+            gateB = new Solenoid(GATE);
     }
 
     @Override
