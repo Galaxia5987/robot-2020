@@ -14,10 +14,10 @@ import java.util.Optional;
  * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
-public class Constants{
-
+public class Constants {
     public static final int TALON_TIMEOUT = 10;
     public static final double VISION_MODULE_HEIGHT = 0.98;
+    public static final double VISION_MODULE_FRONT_DISTANCE = 0.325;
 
     public static class Drivetrain {
         //Remember! High gear == High speed!

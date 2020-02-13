@@ -5,14 +5,17 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class VisionModule {
+public class VisionModule extends SubsystemBase {
     private static NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("ps3");
     private static NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
     private static NetworkTableEntry visionPose = visionTable.getEntry("targetPose");
     private static NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private static NetworkTableEntry leds = visionTable.getEntry("leds");
+    public static VisionModule INSTANCE = new VisionModule();
 
     /**
      * @return the angle to the target from the vision network table.
@@ -37,8 +40,12 @@ public class VisionModule {
         return new Pose2d(pose[0], pose[1], new Rotation2d(pose[2]));
     }
 
-    public static double getNormalizedDistance() {
-        return Math.pow(getPose().getTranslation().getX(), 2) - Math.pow(Constants.FieldGeometry.PORT_HEIGHT - Constants.VISION_MODULE_HEIGHT, 2);
+    public static double getFrontDistance() {
+        return Math.sqrt(Math.pow(getPose().getTranslation().getX(), 2) - Math.pow(Constants.FieldGeometry.PORT_HEIGHT - Constants.VISION_MODULE_HEIGHT, 2)) - Constants.VISION_MODULE_FRONT_DISTANCE;
     }
 
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("visionFrontDistance", getFrontDistance());
+    }
 }
