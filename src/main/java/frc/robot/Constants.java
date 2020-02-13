@@ -17,6 +17,7 @@ import java.util.Optional;
 public class Constants{
 
     public static final int TALON_TIMEOUT = 10;
+    public static final double VISION_MODULE_HEIGHT = 0.98;
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
@@ -59,6 +60,7 @@ public class Constants{
     public static class FieldGeometry {
         public static final Pose2d OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 5.81, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
         public static final Pose2d INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 5.81, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+        public static final double PORT_HEIGHT = 2.4;
     }
 
     public static final class Intake {
