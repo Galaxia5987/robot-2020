@@ -42,7 +42,6 @@ public class Constants{
         public static final boolean RIGHT_SLAVE_INVERTED = true;
         public static final boolean LEFT_MASTER_INVERTED = false;
         public static final boolean LEFT_SLAVE_INVERTED = false;
-        public static final double TRACK_WIDTH = 0.72;
         public static final boolean GYRO_INVERTED = true;
    
         public static final double JOYSTICK_END_THRESHOLD = 0;

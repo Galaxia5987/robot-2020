@@ -8,26 +8,14 @@
 package frc.robot.subsystems.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Ports;
 import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
@@ -35,8 +23,11 @@ import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.ghrobotics.lib.debug.FalconDashboard;
 
 import static frc.robot.Constants.Drivetrain.*;
-import static frc.robot.Constants.ROBOT_WIDTH;
 import static frc.robot.Ports.Drivetrain.*;
+import static frc.robot.Ports.Drivetrain.LEFT_MASTER_INVERTED;
+import static frc.robot.Ports.Drivetrain.LEFT_SLAVE_INVERTED;
+import static frc.robot.Ports.Drivetrain.RIGHT_MASTER_INVERTED;
+import static frc.robot.Ports.Drivetrain.RIGHT_SLAVE_INVERTED;
 import static frc.robot.RobotContainer.navx;
 
 public class Drivetrain extends SubsystemBase {
@@ -264,11 +255,6 @@ public class Drivetrain extends SubsystemBase {
 
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
-
-        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
-        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle()));
-
     }
 
     /**

@@ -21,7 +21,6 @@ import org.ghrobotics.lib.debug.FalconDashboard;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-import static frc.robot.Constants.Drivetrain.GYRO_INVERTED;
 import static frc.robot.RobotContainer.drivetrain;
 import static frc.robot.RobotContainer.navx;
 import static java.lang.Math.abs;

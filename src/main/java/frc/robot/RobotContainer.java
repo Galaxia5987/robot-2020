@@ -53,7 +53,7 @@ public class RobotContainer {
 
     // The robot's subsystems and commands are defined here...
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
-    private final Drivetrain drivetrain = new Drivetrain();
+    public static Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
