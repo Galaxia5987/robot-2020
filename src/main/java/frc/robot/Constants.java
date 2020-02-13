@@ -57,7 +57,7 @@ public class Constants {
 
     public static class Vision {
         public static final double VISION_MODULE_HEIGHT = 0.98;
-        public static final double VISION_MODULE_FRONT_DISTANCE = 0.325;
+        public static final double VISION_MODULE_HOOD_DISTANCE = 0.28;
     }
 
     public static class FieldGeometry {
