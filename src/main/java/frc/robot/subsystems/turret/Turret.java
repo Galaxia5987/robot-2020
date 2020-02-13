@@ -219,7 +219,7 @@ public class Turret extends SubsystemBase {
      * @return the normalized setpoint.
      */
     public double normalizeSetpoint(double setpoint) {
-        return MathUtil.clamp(ALLOWED_ANGLES.getMinimumDouble(), setpoint, ALLOWED_ANGLES.getMaximumDouble());
+        return MathUtil.clamp(setpoint, ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
     }
 
 }
