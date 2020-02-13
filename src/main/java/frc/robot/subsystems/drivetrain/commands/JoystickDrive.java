@@ -5,6 +5,7 @@ import frc.robot.OI;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
 import static frc.robot.Constants.Drivetrain.JOYSTICK_MIN_THRESHOLD;
+import static frc.robot.Constants.Drivetrain.S_CURVE;
 
 public class JoystickDrive extends CommandBase {
     Drivetrain drivetrain;
@@ -26,6 +27,6 @@ public class JoystickDrive extends CommandBase {
 
     public double curveSpeed(double x) {
         double sign = Math.signum(x);
-        return sign / (1 + Math.exp(-10 * (Math.abs(x) - 0.5)));
+        return sign / (1 + Math.exp(-S_CURVE.get() * (Math.abs(x) - 0.5)));
     }
 }

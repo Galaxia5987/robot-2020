@@ -39,6 +39,8 @@ public class Constants {
         public static final double JOYSTICK_END_THRESHOLD = 0;
 
         public static final double JOYSTICK_MIN_THRESHOLD = 0.05;
+
+        public static final WebConstant S_CURVE = new WebConstant("s-curve", 7.2);
     }
 
     public static class Autonomous {
