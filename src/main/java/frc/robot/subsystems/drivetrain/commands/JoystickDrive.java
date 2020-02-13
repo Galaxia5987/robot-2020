@@ -6,6 +6,7 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 
 import static frc.robot.Constants.Drivetrain.JOYSTICK_MIN_THRESHOLD;
 import static frc.robot.Constants.Drivetrain.S_CURVE;
+import static java.lang.Math.signum;
 
 public class JoystickDrive extends CommandBase {
     Drivetrain drivetrain;
@@ -22,11 +23,17 @@ public class JoystickDrive extends CommandBase {
             leftPower = OI.getLeftStickForward();
         if (Math.abs(OI.getRightStickForward()) > JOYSTICK_MIN_THRESHOLD)
             rightPower = OI.getRightStickForward();
-        drivetrain.setPower(curveSpeed(leftPower), curveSpeed(rightPower));
+        drivetrain.setPower(bellCurveSpeed(leftPower), bellCurveSpeed(rightPower));
     }
 
     public double curveSpeed(double x) {
-        double sign = Math.signum(x);
+        double sign = signum(x);
         return sign / (1 + Math.exp(-S_CURVE.get() * (Math.abs(x) - 0.5)));
+    }
+
+    public double bellCurveSpeed(double x) {
+        double a = 1;
+        double b = 0.25;
+        return Math.exp(-Math.pow((Math.abs(x)-a), 2)/b)*Math.signum(x);
     }
 }
