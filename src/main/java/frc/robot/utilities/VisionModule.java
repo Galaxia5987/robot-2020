@@ -37,8 +37,8 @@ public class VisionModule {
         return new Pose2d(pose[0], pose[1], new Rotation2d(pose[2]));
     }
 
-    public static double getNormalizeDistance(){
-        return Math.pow(Constants.FieldGeometry.PORT_HEIGHT, 2) - Math.pow(Constants.VISION_MODULE_HEIGHT, 2);
+    public static double getNormalizedDistance() {
+        return Math.pow(getPose().getTranslation().getX(), 2) - Math.pow(Constants.FieldGeometry.PORT_HEIGHT - Constants.VISION_MODULE_HEIGHT, 2);
     }
 
 }
