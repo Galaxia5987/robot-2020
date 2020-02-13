@@ -260,10 +260,6 @@ public class Drivetrain extends SubsystemBase {
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
 
-        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
-        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle()));
-
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
     }
 
