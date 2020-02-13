@@ -104,7 +104,7 @@ public class Constants{
 
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(0, 200);
 
-        public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(0, 0);
+        public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double STARTING_ANGLE = 90;
         public static final int STARTING_POSITION = 2680;
