@@ -2,13 +2,13 @@ package frc.robot.subsystems.conveyor.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.utilities.State;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
 
 import java.util.function.Supplier;
 
-import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_FEED_POWER;
-import static frc.robot.Constants.Conveyor.CONVEYOR_MOTOR_OPEN_FEED_POWER;
+import static frc.robot.Constants.Conveyor.*;
 import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
 
 /**
@@ -36,19 +36,22 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.openGate(true);
+        conveyor.setGate(State.OPEN);
     }
 
     @Override
     public void execute() {
         if (smartFeed) {
-            if (isShooterReady.get() && isTurretReady.get())
-                conveyor.setPower(CONVEYOR_MOTOR_FEED_POWER);
+            if (isShooterReady.get() && isTurretReady.get()) {
+                conveyor.setConveyorPower(CONVEYOR_MOTOR_FEED_POWER);
+                conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
+            }
             else
                 conveyor.stop();
         }
         else
-            conveyor.setPower(CONVEYOR_MOTOR_OPEN_FEED_POWER);
+            conveyor.setConveyorPower(CONVEYOR_MOTOR_OPEN_FEED_POWER.get());
+            conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
     }
 
     @Override
@@ -59,6 +62,6 @@ public class FeedTurret extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         conveyor.stop();
-        conveyor.openGate(false);
+        conveyor.setGate(State.CLOSE);
     }
 }

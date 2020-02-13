@@ -68,6 +68,7 @@ public class CalculatedClimbAndBalance extends CommandBase {
     @Override
     public void initialize() {
         climber.releaseStopper();
+        climber.changePIDFSlot(0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -80,7 +81,7 @@ public class CalculatedClimbAndBalance extends CommandBase {
         //Calculate the error angle and the current height
         currentAngleError = setpointAngle - RobotContainer.navx.getRoll();
 
-        double targetDifference = Constants.ROBOT_WIDTH * Math.tan(Math.toRadians(currentAngleError));
+        double targetDifference = Constants.Climber.DISTANCE_BETWEEN_RODS * Math.tan(Math.toRadians(currentAngleError));
         //Fix the heights according to the angle of the robot
         if (currentAngleError > 0) {
             double[] heights = normalizeHeights(targetDifference, rightSetpointHeight, leftSetpointHeight, 0.2, Constants.Climber.MAX_HEIGHT);

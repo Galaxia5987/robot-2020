@@ -2,16 +2,16 @@ package frc.robot.subsystems.turret;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
-import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.utilities.Utils;
+import frc.robot.valuetuner.WebConstantPIDTalon;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Constants.Turret.*;
@@ -29,11 +29,9 @@ import static frc.robot.Ports.Turret.*;
 public class Turret extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
-    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
-    private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
-    private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private double targetAngle;
     private boolean isGoingClockwise = true;
+    private double turretBacklash; //The angle in degrees which the turret is off from the motor (clockwise). this angle changes based on the turning direction.
 
     /**
      * configures the encoder and PID constants.
@@ -44,29 +42,55 @@ public class Turret extends SubsystemBase {
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 1, TALON_TIMEOUT); // Todo: check if this experimental idea works.
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         resetEncoder();
-        
+
         motor.setInverted(IS_MOTOR_INVERTED);
         motor.setSensorPhase(IS_ENCODER_INVERTED);
-        motor.config_kP(0, KP, TALON_TIMEOUT);
-        motor.config_kI(0, KI, TALON_TIMEOUT);
-        motor.config_kD(0, KD, TALON_TIMEOUT);
-        motor.config_kF(0, KF, TALON_TIMEOUT);
-        motor.configMotionAcceleration(MOTION_MAGIC_ACCELERATION);
-        motor.configMotionCruiseVelocity(MOTION_MAGIC_CRUISE_VELOCITY);
-        motor.configPeakCurrentLimit(MAX_CURRENT);
+        motor.config_kP(POSITION_PID_SLOT, KP, TALON_TIMEOUT);
+        motor.config_kI(POSITION_PID_SLOT, KI, TALON_TIMEOUT);
+        motor.config_kD(POSITION_PID_SLOT, KD, TALON_TIMEOUT);
+        motor.config_kF(POSITION_PID_SLOT, KF, TALON_TIMEOUT);
+      
+        motor.configAllowableClosedloopError(POSITION_PID_SLOT, unitModel.toTicks(ALLOWABLE_ERROR));
+      
+        motor.config_kP(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KP, TALON_TIMEOUT);
+        motor.config_kI(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KI, TALON_TIMEOUT);
+        motor.config_kD(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KD, TALON_TIMEOUT);
+        motor.config_kF(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KF, TALON_TIMEOUT);
+
+        motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
+        motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
+        motor.configPeakCurrentLimit(0);
+        motor.configContinuousCurrentLimit(MAX_CURRENT);
+        motor.configPeakCurrentDuration(0);
+        motor.enableCurrentLimit(true);
+
+        // Configure soft limits for the subsystem.
+        motor.configReverseSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
+        motor.configForwardSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
+        motor.configSoftLimitDisableNeutralOnLOS(DISABLE_SOFT_LIMITS_ON_DISCONNECT, TALON_TIMEOUT);
+        motor.configReverseSoftLimitThreshold(unitModel.toTicks(ALLOWED_ANGLES.getMinimumDouble()));
+        motor.configForwardSoftLimitThreshold(unitModel.toTicks(ALLOWED_ANGLES.getMaximumDouble()));
+
+        motor.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+        motor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+
+        motor.enableVoltageCompensation(true);
+        motor.configVoltageCompSaturation(12.0);
+
+        new WebConstantPIDTalon("turret", KP, KI, KD, KF, motor);
     }
 
     /**
      * Corrects subsystem's backlash.
      */
-    public void correctBacklash(){
-        int currentVelocity = motor.getSelectedSensorVelocity();
+    public void correctBacklash() {
+        double currentVelocity = unitModel.toVelocity(motor.getSelectedSensorVelocity());
         if (Math.abs(currentVelocity) <= VELOCITY_MINIMUM)
             return;
         boolean changedDirection = !(isGoingClockwise == currentVelocity > 0); // Checks whether the turret switched directions since the last movement
         if (changedDirection) {
-            motor.setSelectedSensorPosition(unitModel.toTicks(getAngle() + (isGoingClockwise ? BACKLASH_ANGLE : -BACKLASH_ANGLE)));
             isGoingClockwise = !isGoingClockwise;
+            turretBacklash = isGoingClockwise ? BACKLASH_ANGLE / 2. : -BACKLASH_ANGLE / 2.;
         }
     }
 
@@ -76,7 +100,7 @@ public class Turret extends SubsystemBase {
      * @return the angle of the turret
      */
     public double getAngle() {
-        return unitModel.toUnits(motor.getSelectedSensorPosition());
+        return unitModel.toUnits(motor.getSelectedSensorPosition()) - turretBacklash; //subtract backlash to get turret angle, add to get motor angle.
     }
 
     /**
@@ -85,8 +109,19 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        double targetAngle = getNearestTurretPosition(angle, getAngle(), MINIMUM_POSITION, MAXIMUM_POSITION);
-        motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
+        targetAngle = getNearestTurretPosition(angle, getAngle(), ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
+        if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
+            setPidSlot(POSITION_PID_SLOT);
+            motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
+        } else {
+            setPidSlot(MOTION_MAGIC_PID_SLOT);
+            motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
+        }
+
+    }
+
+    public void setPidSlot(int slot) {
+        motor.selectProfileSlot(slot, 0);
     }
 
     /**
@@ -121,55 +156,58 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * @return the angle to the target from the vision network table.
-     */
-    public double getVisionAngle(){
-        return visionAngle.getDouble(0);
-    }
-
-    /**
-     * @return whether the vision has calculated the angle to the target.
-     */
-    public boolean hasVisionAngle() {
-        return visionValid.getBoolean(false);
-    }
-
-    /**
      * set the power the turret will turn.
+     *
      * @param speed the speed the turret will turn.
      */
-    public void setPower(double speed){
-        motor.set(ControlMode.PercentOutput, speed);   
+    public void setPower(double speed) {
+        motor.set(ControlMode.PercentOutput, speed);
     }
     
-    public boolean isTurretReady(){
-        return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
+    public boolean isTurretReady() {
+        return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD && !inDeadZone();
     }
+
     /**
      * runs periodically, updates the constants and resets encoder position if the hall effect is closed
      */
     @Override
     public void periodic() {
         correctBacklash();
+        SmartDashboard.putNumber("turretSetpoint", targetAngle);
+        SmartDashboard.putNumber("turretCurrent", getAngle());
+        SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
+        FireLog.log("turretSetpoint", targetAngle);
+        FireLog.log("turretCurrent", getAngle());
     }
 
     /**
      * @return whether the current angle is within the turrets limits.
      */
     public boolean inCorrectRange() {
-        return getAngle() > MINIMUM_POSITION && getAngle() < MAXIMUM_POSITION;
+        return ALLOWED_ANGLES.containsDouble(getAngle());
+    }
+
+    /**
+     * Because of the climbing rods' height there are dead zones where the turret cannot see a target
+     * or cannot shoot because the rods are blocking it's path.
+     * @return whether the turret is in its dead zone in which it cannot shoot
+     */
+    public boolean inDeadZone() {
+        return DEAD_ZONE_ANGLES.containsDouble(getAngle());
     }
 
     /**
      * Resets the turret position based on the absolute encoder of the turret.
-     *
+     * <p>
      * IMPORTANT: since the turrets absolute encoder only reads 360 degrees,
      * we assume the reading to be from -180 to 180. If the turret is reset
      * when it is more than half a rotation from the starting angle, the turret will
      * DESTROY ITSELF... be warned! do not use this midgame!
      */
-    public void resetEncoder(){
-        double currentPosition = Math.IEEEremainder(motor.getSelectedSensorPosition(1) - Constants.Turret.CENTER_POSITION, unitModel.toTicks(360));
-        motor.setSelectedSensorPosition((int)currentPosition);
+    public void resetEncoder() {
+        double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(Math.floorMod(motor.getSelectedSensorPosition(1), 4096) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
+        motor.setSelectedSensorPosition((int) currentPosition);
     }
+
 }

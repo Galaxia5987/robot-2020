@@ -18,9 +18,9 @@ public class PositionControl extends CommandBase {
     private int currentColor;
     private Timer endTimer = new Timer(); // Used to make sure we don't overshoot over the wanted color.
     private ColorWheel colorWheel;
-    private Supplier<Double> joystickInput = OI::getRightXboxX; // Controls the power the
 
     public PositionControl(ColorWheel colorWheel) {
+        addRequirements(colorWheel);
         this.colorWheel = colorWheel;
     }
 
@@ -44,17 +44,11 @@ public class PositionControl extends CommandBase {
         try {
             currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
             int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(FMSData))  - TILES_BEFORE_SENSOR, 4);
-            if (joystickInput.get() > 0.1)
-                colorWheel.setManual(true);
-            if (!colorWheel.isManual())
-                colorWheel.setPower(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
-            else
-                colorWheel.setPower(joystickInput.get());
+            colorWheel.setPower(POSITION_CONTROL_POWER * (Math.IEEEremainder(distanceFromTarget, 4) * kP));
             if (distanceFromTarget == 0 && endTimer.get() == 0)
                 endTimer.start();
             else if (distanceFromTarget != 0)
                 endTimer.reset();
-
         }
         catch (IllegalArgumentException e) {
             e.printStackTrace();
