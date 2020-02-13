@@ -31,6 +31,7 @@ public class Turret extends SubsystemBase {
     private UnitModel unitModel = new UnitModel(TICKS_PER_DEGREE);
     private double targetAngle;
     private boolean isGoingClockwise = true;
+    private boolean outOfRange = false;
     private double turretBacklash; //The angle in degrees which the turret is off from the motor (clockwise). this angle changes based on the turning direction.
 
     /**
@@ -49,9 +50,9 @@ public class Turret extends SubsystemBase {
         motor.config_kI(POSITION_PID_SLOT, KI, TALON_TIMEOUT);
         motor.config_kD(POSITION_PID_SLOT, KD, TALON_TIMEOUT);
         motor.config_kF(POSITION_PID_SLOT, KF, TALON_TIMEOUT);
-      
+
         motor.configAllowableClosedloopError(POSITION_PID_SLOT, unitModel.toTicks(ALLOWABLE_ERROR));
-      
+
         motor.config_kP(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KP, TALON_TIMEOUT);
         motor.config_kI(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KI, TALON_TIMEOUT);
         motor.config_kD(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KD, TALON_TIMEOUT);
@@ -163,7 +164,7 @@ public class Turret extends SubsystemBase {
     public void setPower(double speed) {
         motor.set(ControlMode.PercentOutput, speed);
     }
-    
+
     public boolean isTurretReady() {
         return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD && !inDeadZone();
     }
@@ -191,6 +192,7 @@ public class Turret extends SubsystemBase {
     /**
      * Because of the climbing rods' height there are dead zones where the turret cannot see a target
      * or cannot shoot because the rods are blocking it's path.
+     *
      * @return whether the turret is in its dead zone in which it cannot shoot
      */
     public boolean inDeadZone() {
