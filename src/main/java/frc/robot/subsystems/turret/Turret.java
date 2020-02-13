@@ -163,9 +163,9 @@ public class Turret extends SubsystemBase {
     public void setPower(double speed) {
         motor.set(ControlMode.PercentOutput, speed);
     }
-
+    
     public boolean isTurretReady() {
-        return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD;
+        return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD && !inDeadZone();
     }
 
     /**
@@ -186,6 +186,15 @@ public class Turret extends SubsystemBase {
      */
     public boolean inCorrectRange() {
         return ALLOWED_ANGLES.containsDouble(getAngle());
+    }
+
+    /**
+     * Because of the climbing rods' height there are dead zones where the turret cannot see a target
+     * or cannot shoot because the rods are blocking it's path.
+     * @return whether the turret is in its dead zone in which it cannot shoot
+     */
+    public boolean inDeadZone() {
+        return DEAD_ZONE_ANGLES.containsDouble(getAngle());
     }
 
     /**
