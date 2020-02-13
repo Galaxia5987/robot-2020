@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.Utils;
@@ -218,12 +219,7 @@ public class Turret extends SubsystemBase {
      * @return the normalized setpoint.
      */
     public double normalizeSetpoint(double setpoint) {
-        if (setpoint > ALLOWED_ANGLES.getMaximumDouble()) {
-            return ALLOWED_ANGLES.getMaximumDouble();
-        } else if (setpoint < ALLOWED_ANGLES.getMinimumDouble()) {
-            return ALLOWED_ANGLES.getMinimumDouble();
-        }
-        return setpoint;
+        return MathUtil.clamp(ALLOWED_ANGLES.getMinimumDouble(), setpoint, ALLOWED_ANGLES.getMaximumDouble());
     }
 
 }
