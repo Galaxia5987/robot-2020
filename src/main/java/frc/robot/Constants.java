@@ -145,9 +145,9 @@ public class Constants{
 
     public static class Shooter {
         public static final double TICKS_PER_ROTATION = 4096;
-        public static final double KP = 1; // 0.13
-        public static final double KI = 0.0;
 
+        public static final double KP = 1;
+        public static final double KI = 0.0;
         public static final double KD = 0;
         public static final double KF = 0.014;
 
