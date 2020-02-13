@@ -109,13 +109,13 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        targetAngle = angle;
+        targetAngle = normalizeSetpoint(angle);
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);
-            motor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(targetAngle))); // Set the position to the target angle plus the backlash the turret creates.
+            motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
         } else {
             setPidSlot(MOTION_MAGIC_PID_SLOT);
-            motor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetpoint(targetAngle)));
+            motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
         }
 
     }
