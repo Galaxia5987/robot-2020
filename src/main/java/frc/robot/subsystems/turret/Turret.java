@@ -49,9 +49,9 @@ public class Turret extends SubsystemBase {
         motor.config_kI(POSITION_PID_SLOT, KI, TALON_TIMEOUT);
         motor.config_kD(POSITION_PID_SLOT, KD, TALON_TIMEOUT);
         motor.config_kF(POSITION_PID_SLOT, KF, TALON_TIMEOUT);
-      
+
         motor.configAllowableClosedloopError(POSITION_PID_SLOT, unitModel.toTicks(ALLOWABLE_ERROR));
-      
+
         motor.config_kP(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KP, TALON_TIMEOUT);
         motor.config_kI(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KI, TALON_TIMEOUT);
         motor.config_kD(MOTION_MAGIC_PID_SLOT, MOTION_MAGIC_KD, TALON_TIMEOUT);
@@ -109,7 +109,7 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        targetAngle = getNearestTurretPosition(angle, getAngle(), ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
+        targetAngle = normalizeSetpoint(angle);
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);
             motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
@@ -129,7 +129,7 @@ public class Turret extends SubsystemBase {
      * the value can be between -360 to 360 degrees.
      *
      * @param targetAngle the desired angle.
-     * @return return the target angle in ticks.
+     * @return return the target angle in degrees.
      */
     public double getNearestTurretPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
         targetAngle = Utils.floorMod(targetAngle, 360);
@@ -163,7 +163,7 @@ public class Turret extends SubsystemBase {
     public void setPower(double speed) {
         motor.set(ControlMode.PercentOutput, speed);
     }
-    
+
     public boolean isTurretReady() {
         return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD && !inDeadZone();
     }
@@ -191,6 +191,7 @@ public class Turret extends SubsystemBase {
     /**
      * Because of the climbing rods' height there are dead zones where the turret cannot see a target
      * or cannot shoot because the rods are blocking it's path.
+     *
      * @return whether the turret is in its dead zone in which it cannot shoot
      */
     public boolean inDeadZone() {
@@ -208,6 +209,21 @@ public class Turret extends SubsystemBase {
     public void resetEncoder() {
         double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(Math.floorMod(motor.getSelectedSensorPosition(1), 4096) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
         motor.setSelectedSensorPosition((int) currentPosition);
+    }
+
+    /**
+     * Return a normalized constrained in a certain range.
+     *
+     * @param setpoint the setpoint.
+     * @return the normalized setpoint.
+     */
+    public double normalizeSetpoint(double setpoint) {
+        if (setpoint > ALLOWED_ANGLES.getMaximumDouble()) {
+            return ALLOWED_ANGLES.getMaximumDouble();
+        } else if (setpoint < ALLOWED_ANGLES.getMinimumDouble()) {
+            return ALLOWED_ANGLES.getMinimumDouble();
+        }
+        return setpoint;
     }
 
 }
