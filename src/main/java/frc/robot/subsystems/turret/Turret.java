@@ -112,10 +112,10 @@ public class Turret extends SubsystemBase {
         targetAngle = getNearestTurretPosition(angle, getAngle(), ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);
-            motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
+            motor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(targetAngle))); // Set the position to the target angle plus the backlash the turret creates.
         } else {
             setPidSlot(MOTION_MAGIC_PID_SLOT);
-            motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
+            motor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetpoint(targetAngle)));
         }
 
     }
@@ -209,6 +209,21 @@ public class Turret extends SubsystemBase {
     public void resetEncoder() {
         double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(Math.floorMod(motor.getSelectedSensorPosition(1), 4096) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
         motor.setSelectedSensorPosition((int) currentPosition);
+    }
+
+    /**
+     * Return a normalized constrained in a certain range.
+     *
+     * @param setpoint the setpoint.
+     * @return the normalized setpoint.
+     */
+    public double normalizeSetpoint(double setpoint) {
+        if (setpoint > ALLOWED_ANGLES.getMaximumDouble()) {
+            return ALLOWED_ANGLES.getMaximumDouble();
+        } else if (setpoint < ALLOWED_ANGLES.getMinimumDouble()) {
+            return ALLOWED_ANGLES.getMinimumDouble();
+        }
+        return setpoint;
     }
 
 }
