@@ -28,7 +28,7 @@ public class JoystickDrive extends CommandBase {
 
     public double curveSpeed(double x) {
         double sign = signum(x);
-        return sign / (1 + Math.exp(-S_CURVE.get() * (Math.abs(x) - 0.5)));
+        return sign / (1 + Math.exp(-7.2* (Math.abs(x) - 0.5)));
     }
 
     public double bellCurveSpeed(double x) {
