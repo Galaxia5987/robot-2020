@@ -16,8 +16,6 @@ import java.util.Optional;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
-    public static final double VISION_MODULE_HEIGHT = 0.98;
-    public static final double VISION_MODULE_FRONT_DISTANCE = 0.325;
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
@@ -55,6 +53,11 @@ public class Constants {
         // Ramsete controller constants
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
+    }
+
+    public static class Vision {
+        public static final double VISION_MODULE_HEIGHT = 0.98;
+        public static final double VISION_MODULE_FRONT_DISTANCE = 0.325;
     }
 
     public static class FieldGeometry {
