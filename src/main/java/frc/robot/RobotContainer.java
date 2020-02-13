@@ -133,8 +133,13 @@ public class RobotContainer {
         return null;
     }
 
-    public void periodic(){
+    public void init() {
+        navx.reset();
+        localization.resetPosition(new Pose2d(), new Rotation2d(), Robot.robotTimer.get());
+        differentialDriveOdometry.resetPosition(new Pose2d(), new Rotation2d());
+    }
 
+    public void periodic() {
         Pose2d current = localization.update( new Rotation2d( Math.toRadians(navx.getAngle())),
                 drivetrain.getLeftPosition(),
                 drivetrain.getRightPosition(),
@@ -149,11 +154,11 @@ public class RobotContainer {
         SmartDashboard.putNumber(" simple x", differentialDriveOdometry.getPoseMeters().getTranslation().getX());
         SmartDashboard.putNumber(" simple y", differentialDriveOdometry.getPoseMeters().getTranslation().getY());
         SmartDashboard.putNumber(" simple angle", differentialDriveOdometry.getPoseMeters().getRotation().getRadians());
+        SmartDashboard.putNumber("navx accel", navx.getWorldLinearAccelY() * GRAVITY_ACCELERATION);
 
         FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
         FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
         FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
-
     }
       
 }

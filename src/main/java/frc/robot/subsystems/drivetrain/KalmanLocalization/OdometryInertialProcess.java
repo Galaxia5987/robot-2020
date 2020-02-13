@@ -39,7 +39,7 @@ public class OdometryInertialProcess extends ProcessModel {
         // Sets initial variance for state variables.
         cov[0][0] = 0.01; // 10 cm accuracy for X
         cov[1][1] = 0.01; // 10 cm accuracy for Y
-        cov[2][2] = 0.1;  // 0.31 m/s accuracy for X
+        cov[2][2] = 0.0001;  // 0.01 m/s accuracy for X
         cov[3][3] = 8e-3; //  5 deg sqrd in rad for phi
         cov[4][4] = 1e-5; //  assume not moving : 0.2 deg/s for omega
         cov[5][5] = 1e0; //  assume 1 m/s^2

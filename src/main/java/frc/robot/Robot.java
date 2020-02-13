@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
         compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
+        m_robotContainer.init();
     }
 
     /**
@@ -70,6 +71,7 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        m_robotContainer.periodic();
     }
 
     /**
@@ -114,7 +116,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-      m_robotContainer.periodic();
     }
 
     @Override
