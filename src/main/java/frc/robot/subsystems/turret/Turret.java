@@ -160,7 +160,7 @@ public class Turret extends SubsystemBase {
         motor.set(ControlMode.PercentOutput, speed);   
     }
     
-    public boolean isTurretReady(){
+    public boolean isTurretReady() {
         return Math.abs(getAngle() - targetAngle) <= ANGLE_THRESHOLD && !inDeadZone();
     }
 
@@ -181,7 +181,7 @@ public class Turret extends SubsystemBase {
      * @return whether the current angle is within the turrets limits.
      */
     public boolean inCorrectRange() {
-        return ALLOWED_ANGLES.containsDouble(getAngle()) && !inDeadZone();
+        return ALLOWED_ANGLES.containsDouble(getAngle());
     }
 
     /**
@@ -189,7 +189,7 @@ public class Turret extends SubsystemBase {
      * or cannot shoot because the rods are blocking it's path.
      * @return whether the turret is in its dead zone in which it cannot shoot
      */
-    public boolean inDeadZone(){
+    public boolean inDeadZone() {
         return DEAD_ZONE_ANGLES.containsDouble(getAngle());
     }
 
