@@ -39,6 +39,8 @@ public class ColorWheel extends SubsystemBase {
     private ColorMatchResult match;
 
     public ColorWheel() {
+        motor.configFactoryDefault();
+
         colorMatcher.addColorMatch(BlueTarget);
         colorMatcher.addColorMatch(GreenTarget);
         colorMatcher.addColorMatch(RedTarget);

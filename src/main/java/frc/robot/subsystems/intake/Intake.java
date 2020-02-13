@@ -15,7 +15,6 @@ import java.util.function.Supplier;
 
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Intake.*;
-import static frc.robot.Ports.PCM;
 
 /**
  * @author Barel
@@ -31,6 +30,7 @@ public class Intake extends SubsystemBase {
     private Solenoid retractorB = null;
 
     public Intake() {
+        motor.configFactoryDefault();
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
 
@@ -38,9 +38,9 @@ public class Intake extends SubsystemBase {
         motor.configVoltageCompSaturation(12.0);
 
         if (Robot.isRobotA)
-            retractorA = new DoubleSolenoid(PCM, FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
+            retractorA = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
         else
-            retractorB = new Solenoid(PCM, SOLENOID);
+            retractorB = new Solenoid(SOLENOID);
     }
 
     /**
