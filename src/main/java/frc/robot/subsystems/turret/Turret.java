@@ -180,6 +180,22 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
         FireLog.log("turretSetpoint", targetAngle);
         FireLog.log("turretCurrent", getAngle());
+
+        if (getAngle() > ALLOWED_ANGLES.getMaximumDouble() && !outOfRange) {
+            motor.configForwardSoftLimitEnable(false, TALON_TIMEOUT);
+            motor.configReverseSoftLimitEnable(false, TALON_TIMEOUT);
+            outOfRange = true;
+        } else if (getAngle() < ALLOWED_ANGLES.getMinimumDouble() && !outOfRange) {
+            motor.configForwardSoftLimitEnable(false, TALON_TIMEOUT);
+            motor.configReverseSoftLimitEnable(false, TALON_TIMEOUT);
+            outOfRange = true;
+        }
+
+        if (getAngle() <= ALLOWED_ANGLES.getMinimumDouble() && getAngle() >= ALLOWED_ANGLES.getMinimumDouble() && outOfRange) {
+            motor.configReverseSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
+            motor.configForwardSoftLimitEnable(ENABLE_SOFT_LIMITS, TALON_TIMEOUT);
+            outOfRange = false;
+        }
     }
 
     /**
