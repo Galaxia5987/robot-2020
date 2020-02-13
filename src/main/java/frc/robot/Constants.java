@@ -14,8 +14,7 @@ import java.util.Optional;
  * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
-public class Constants{
-
+public class Constants {
     public static final int TALON_TIMEOUT = 10;
 
     public static class Drivetrain {
@@ -56,9 +55,15 @@ public class Constants{
         public static final double kZeta = 0.7;
     }
 
+    public static class Vision {
+        public static final double VISION_MODULE_HEIGHT = 0.98;
+        public static final double VISION_MODULE_FRONT_DISTANCE = 0.325;
+    }
+
     public static class FieldGeometry {
         public static final Pose2d OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 5.81, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
         public static final Pose2d INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 5.81, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+        public static final double PORT_HEIGHT = 2.4;
     }
 
     public static final class Intake {
