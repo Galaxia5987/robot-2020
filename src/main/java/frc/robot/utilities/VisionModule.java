@@ -7,10 +7,9 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 import static frc.robot.Constants.FieldGeometry.PORT_HEIGHT;
-import static frc.robot.Constants.Vision.VISION_MODULE_FRONT_DISTANCE;
+import static frc.robot.Constants.Vision.VISION_MODULE_HOOD_DISTANCE;
 import static frc.robot.Constants.Vision.VISION_MODULE_HEIGHT;
 
 public class VisionModule extends SubsystemBase {
@@ -45,7 +44,7 @@ public class VisionModule extends SubsystemBase {
     }
 
     public static double getFrontDistance() {
-        return Math.sqrt(Math.pow(getPose().getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) - VISION_MODULE_FRONT_DISTANCE;
+        return Math.sqrt(Math.pow(getPose().getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) - VISION_MODULE_HOOD_DISTANCE;
     }
 
     @Override
