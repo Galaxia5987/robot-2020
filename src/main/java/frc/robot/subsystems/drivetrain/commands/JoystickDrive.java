@@ -5,7 +5,6 @@ import frc.robot.OI;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
 import static frc.robot.Constants.Drivetrain.JOYSTICK_MIN_THRESHOLD;
-import static frc.robot.Constants.Drivetrain.S_CURVE;
 import static java.lang.Math.signum;
 
 public class JoystickDrive extends CommandBase {
