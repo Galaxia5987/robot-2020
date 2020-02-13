@@ -183,7 +183,7 @@ public class Constants {
     public static class Climber {
         public static final double TICKS_PER_METER = 4096 * 0.03 * Math.PI * 100; // TICKS * diameter * pi
 
-        public static final double[] CLIMB_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] CLIMB_PIDF = {0.4, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
         public static final double[] CLIMB_RELEASE_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
 
         public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
