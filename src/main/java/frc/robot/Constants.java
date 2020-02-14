@@ -159,6 +159,8 @@ public class Constants {
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double VELOCITY_TOLERANCE = 0; // the acceptable velocity threshold error of the shooter
+        public static final WebConstant VELOCITY_DAMPENING = new WebConstant("velocity_dampening", 1); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
+        public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
     }
 
     public static class ColorWheel{

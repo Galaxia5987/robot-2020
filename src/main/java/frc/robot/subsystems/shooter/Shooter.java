@@ -9,6 +9,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.Utils;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.techfire225.webapp.FireLog;
@@ -76,9 +77,18 @@ public class Shooter extends SubsystemBase {
      */
     public void setSpeed(double speed) {
         targetVelocity = speed;
-        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(targetVelocity));
     }
 
+    /**
+     * Power the motor periodically to get to the target velocity.
+     */
+    public void powerVelocity(){
+        double velocity = Utils.constrain(targetVelocity, getSpeed() - VELOCITY_DAMPENING.get(), getSpeed() + VELOCITY_DAMPENING.get());
+        if(getSpeed() > VELOCITY_DAMPENING_LIMIT.get()) //Make sure the velocity dampening doesn't work when shooting
+            shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(targetVelocity));
+        else
+            shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(velocity));
+    }
     /**
      * @param distance the distance away from the target.
      * @return the calculated velocity to get to the target in rps.
