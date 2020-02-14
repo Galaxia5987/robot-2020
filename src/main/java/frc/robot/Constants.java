@@ -153,7 +153,7 @@ public class Constants {
 
         public static final double KP = 1;
         public static final double KI = 0.0;
-        public static final double KD = 0;
+        public static final double KD = 1.5;
         public static final double KF = 0.014;
 
         public static final int MAX_CURRENT = 35; //[A]
