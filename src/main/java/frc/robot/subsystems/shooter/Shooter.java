@@ -47,6 +47,12 @@ public class Shooter extends SubsystemBase {
         shooterMaster.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         shooterMaster.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
 
+        shooterMaster.configPeakCurrentLimit(0);
+
+        shooterMaster.configPeakCurrentDuration(0);
+        shooterMaster.configContinuousCurrentLimit(MAX_CURRENT);
+        shooterMaster.enableCurrentLimit(true);
+
         // Slave configuration
         shooterSlave1.follow(shooterMaster);
         shooterSlave2.follow(shooterMaster);
