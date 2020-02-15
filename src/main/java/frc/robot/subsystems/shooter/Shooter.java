@@ -78,7 +78,7 @@ public class Shooter extends SubsystemBase {
      * @return the calculated velocity to get to the target in rps.
      */
     public double approximateVelocity(double distance) {
-        return (8.68 * Math.exp(0.1685 * distance));
+        return 0.1069*Math.pow(distance,4) - 2.4364*Math.pow(distance,3) + 19.814*Math.pow(distance,2) - 63.171*distance + 131.49; //The current reading as of 15.2.20
     }
 
     public double getTargetVelocity(){
