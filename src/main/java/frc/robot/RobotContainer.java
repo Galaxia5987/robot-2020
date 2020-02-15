@@ -24,11 +24,9 @@ import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
-import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -76,10 +74,11 @@ public class RobotContainer {
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.toggleWhenPressed(new ShootAtVelocity(shooter));
+        OI.b.whenPressed(new SpeedUp(shooter));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.toggleWhenPressed(new VisionTurret(turret));
+        OI.rb.whenPressed(new RotationControl(colorWheel));
+        OI.lb.whenPressed(new PositionControl(colorWheel));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
