@@ -42,8 +42,8 @@ public class VisionModule extends SubsystemBase {
 
     @Nullable
     public static Pose2d getPose() {
-        Double[] pose = visionPose.getDoubleArray(new Double[]{null, null, null});
-        if (pose[0] == null) {
+        Double[] pose = visionPose.getDoubleArray(new Double[]{});
+        if (pose.length == 0) {
             return null;
         }
         return new Pose2d(pose[0], pose[1], new Rotation2d(pose[2]));
