@@ -8,17 +8,13 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.drivetrain.FullLocalization;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
@@ -28,9 +24,9 @@ import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.FullLocalization;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
-import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
@@ -41,7 +37,7 @@ import org.techfire225.webapp.Webserver;
 
 import static frc.robot.Constants.Drivetrain.GRAVITY_ACCELERATION;
 import static frc.robot.Constants.Drivetrain.GYRO_INVERTED;
-import static frc.robot.Constants.ROBOT_WIDTH;
+import static frc.robot.Constants.EFFECTIVE_TURN_WIDTH;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -63,8 +59,8 @@ public class RobotContainer {
 
     private final Command m_autoCommand = null;
 
-    private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())),new Pose2d(0, 0, new Rotation2d()));
-    public static final FullLocalization localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
+    private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())), new Pose2d(0, 0, new Rotation2d()));
+    public static final FullLocalization localization = new FullLocalization(new Rotation2d(0), EFFECTIVE_TURN_WIDTH);
 
 
     /**

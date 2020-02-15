@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -51,7 +50,7 @@ public class Robot extends TimedRobot {
         robotTimer.reset();
         robotTimer.start();
         m_robotContainer = new RobotContainer();
-        compressor.stop();
+//        compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
         m_robotContainer.init();
