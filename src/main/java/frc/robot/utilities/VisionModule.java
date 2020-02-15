@@ -60,7 +60,7 @@ public class VisionModule extends SubsystemBase {
     public void periodic() {
         Double distance = getHoodDistance();
         if (distance != null) {
-            SmartDashboard.putNumber("visionFrontDistance", getHoodDistance());
+            SmartDashboard.putNumber("visionHoodDistance", getHoodDistance());
         }
     }
 }
