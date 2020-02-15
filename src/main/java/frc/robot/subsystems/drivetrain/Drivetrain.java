@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
@@ -173,24 +172,22 @@ public class Drivetrain extends SubsystemBase {
                 && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_VELOCITY;
     }
 
+    public UnitModel getCurrentUnitModel() {
+        return isShiftedHigh() ? highGearUnitModel : lowGearUnitModel;
+    }
+
     /**
      * @return the velocity of the right motor
      */
     public double getRightVelocity() {
-        if (isShiftedLow())
-            return lowGearUnitModel.toVelocity(rightMaster.getSelectedSensorVelocity());
-        else
-            return highGearUnitModel.toUnits(rightMaster.getSelectedSensorVelocity());
+        return getCurrentUnitModel().toVelocity(rightMaster.getSelectedSensorVelocity());
     }
 
     /**
      * @return the velocity of the left motor
      */
     public double getLeftVelocity() {
-        if (isShiftedLow())
-            return lowGearUnitModel.toVelocity(leftMaster.getSelectedSensorVelocity());
-        else
-            return highGearUnitModel.toUnits(leftMaster.getSelectedSensorVelocity());
+        return getCurrentUnitModel().toVelocity(leftMaster.getSelectedSensorVelocity());
     }
 
     /**
@@ -235,7 +232,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
-        UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
+        UnitModel unitModel = getCurrentUnitModel();
         leftMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(leftVelocity), DemandType.ArbitraryFeedForward, leftFF);
         rightMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(rightVelocity), DemandType.ArbitraryFeedForward, rightFF);
     }
@@ -247,8 +244,7 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() { // This method will be called once per scheduler run
-        UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
-        unitModel = lowGearUnitModel;
+        UnitModel unitModel = getCurrentUnitModel();
         Pose2d current = odometry.update(
                 Rotation2d.fromDegrees(getHeading()),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
