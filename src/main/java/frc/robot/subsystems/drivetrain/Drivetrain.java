@@ -14,9 +14,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
@@ -24,14 +21,13 @@ import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstantPIDTalon;
-import org.ghrobotics.lib.debug.FalconDashboard;
 
 import static frc.robot.Constants.Drivetrain.*;
-import static frc.robot.Ports.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.LEFT_MASTER_INVERTED;
 import static frc.robot.Ports.Drivetrain.LEFT_SLAVE_INVERTED;
 import static frc.robot.Ports.Drivetrain.RIGHT_MASTER_INVERTED;
 import static frc.robot.Ports.Drivetrain.RIGHT_SLAVE_INVERTED;
+import static frc.robot.Ports.Drivetrain.*;
 import static frc.robot.RobotContainer.navx;
 
 public class Drivetrain extends SubsystemBase {
@@ -42,7 +38,6 @@ public class Drivetrain extends SubsystemBase {
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
-    public UnitModel unitModel = lowGearUnitModel;
 
     /**
      * The gear shifter will be programmed according to the following terms
@@ -196,21 +191,22 @@ public class Drivetrain extends SubsystemBase {
         return getCurrentUnitModel().toVelocity(leftMaster.getSelectedSensorVelocity());
     }
 
-    public double getLeftPosition(){
-        return unitModel.toUnits(leftMaster.getSelectedSensorPosition());
+    public double getLeftPosition() {
+        return getCurrentUnitModel().toUnits(leftMaster.getSelectedSensorPosition());
     }
 
-    public double getRightPosition(){
-        return unitModel.toUnits(leftMaster.getSelectedSensorPosition());
+    public double getRightPosition() {
+        return getCurrentUnitModel().toUnits(rightMaster.getSelectedSensorPosition());
     }
 
     /**
      * Indicates whether the shifter is on a high gear
+     *
      * @return
      */
     public boolean isShiftedHigh() {
         if (Robot.isRobotA && gearShifterA != null)
-            return gearShifterA.get() == DoubleSolenoid.Value.kForward;
+            return gearShifterA.get() == DoubleSolenoid.Value.kForward || gearShifterA.get() == DoubleSolenoid.Value.kOff;
         else if (gearShifterB != null)
             return gearShifterB.get();
         else
@@ -256,6 +252,8 @@ public class Drivetrain extends SubsystemBase {
             resetCooldown();
 
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
+        SmartDashboard.putNumber("leftPosition", getLeftPosition());
+        SmartDashboard.putNumber("rightPosition", getRightPosition());
     }
 
     /**
