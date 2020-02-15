@@ -126,7 +126,7 @@ public class Constants {
         
         public static double KP = 3.5;
         public static double KI = 0.01;
-        public static double KD = 50;
+        public static double KD = 180;
         public static double KF = 0;
 
         public static double ALLOWABLE_ERROR = 0.3;

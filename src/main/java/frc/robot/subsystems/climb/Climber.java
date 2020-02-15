@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.Ports;
 import frc.robot.Robot;
@@ -194,21 +195,13 @@ public class Climber extends SubsystemBase {
      * @return the normalized setpoint.
      */
     public double normalizeSetpoint(double setpoint) {
-        if (setpoint > Constants.Climber.MAX_HEIGHT) {
-            return Constants.Climber.MAX_HEIGHT;
-        } else if (setpoint < 0) {
-            return 0;
-        }
-        return setpoint;
+        return MathUtil.clamp(setpoint, 0, Constants.Climber.MAX_HEIGHT);
+
     }
 
     public double normalizeDelta(double delta) {
-        if (delta > Constants.Climber.MAX_DIFFERENCE) {
-            return Constants.Climber.MAX_DIFFERENCE;
-        } else if (delta < -Constants.Climber.MAX_DIFFERENCE) {
-            return -Constants.Climber.MAX_DIFFERENCE;
-        }
-        return delta;
+        return MathUtil.clamp(delta, -Constants.Climber.MAX_DIFFERENCE, Constants.Climber.MAX_DIFFERENCE);
+
     }
 
     @Override
