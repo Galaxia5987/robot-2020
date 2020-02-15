@@ -50,10 +50,6 @@ public class Utils {
         return MathUtil.clamp(map(x, in_min, in_max, out_min, out_max), out_min, out_max);
     }
 
-    public static double constrain(double x, double min, double max){
-        return Math.max(min, Math.min(x, max));
-    }
-
     public static void configAllFalcons(FalconConfiguration configurations, TalonFX... falcons) {
         for (TalonFX falcon : falcons) {
             falcon.configAllSettings(configurations.motorConfigs);
