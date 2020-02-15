@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import javax.annotation.Nullable;
+
 import static frc.robot.Constants.FieldGeometry.PORT_HEIGHT;
 import static frc.robot.Constants.Vision.VISION_MODULE_HOOD_DISTANCE;
 import static frc.robot.Constants.Vision.VISION_MODULE_HEIGHT;
@@ -23,8 +25,8 @@ public class VisionModule extends SubsystemBase {
     /**
      * @return the angle to the target from the vision network table.
      */
-    public static double getVisionAngle(){
-        return visionAngle.getDouble(0);
+    public static double getVisionAngle() {
+        return visionAngle.getDouble(-100);
     }
 
     /**
@@ -38,17 +40,27 @@ public class VisionModule extends SubsystemBase {
         leds.setBoolean(on);
     }
 
+    @Nullable
     public static Pose2d getPose() {
-        Double[] pose = visionPose.getDoubleArray(new Double[]{});
+        Double[] pose = visionPose.getDoubleArray(new Double[]{null, null, null});
+        if (pose[0] == null) {
+            return null;
+        }
         return new Pose2d(pose[0], pose[1], new Rotation2d(pose[2]));
     }
 
-    public static double getFrontDistance() {
-        return Math.sqrt(Math.pow(getPose().getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) - VISION_MODULE_HOOD_DISTANCE;
+    @Nullable
+    public static Double getHoodDistance() {
+        Pose2d pose = getPose();
+        if (pose == null) return null;
+        return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) - VISION_MODULE_HOOD_DISTANCE;
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("visionFrontDistance", getFrontDistance());
+        Double distance = getHoodDistance();
+        if (distance != null) {
+            SmartDashboard.putNumber("visionFrontDistance", getHoodDistance());
+        }
     }
 }
