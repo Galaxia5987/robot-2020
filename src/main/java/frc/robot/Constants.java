@@ -29,10 +29,6 @@ public class Constants {
 
         //Shifter enabled constants
         public static final double SHIFTER_COOLDOWN = 0.5; // Time after shifting the shifter is not to be used.
-        public static final double HIGH_ACCELERATION_THRESHOLD = 0; // Threshold for the acceleration required to go into high gear.
-        public static final double LOW_ACCELERATION_THRESHOLD = 0; // Threshold for the acceleration required to go into low gear.
-        public static final double HIGH_GEAR_MIN_VELOCITY = 0;
-        public static final double LOW_GEAR_MIN_VELOCITY = 0;
         public static final double TURNING_TOLERANCE = 0; // Stops the robot from shifting while the robot is turning.
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
