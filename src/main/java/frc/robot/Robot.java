@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         m_robotContainer.periodic();
+        NetworkTableInstance.getDefault().flush();
     }
 
     /**
