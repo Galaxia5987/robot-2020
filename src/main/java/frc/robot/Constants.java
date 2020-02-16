@@ -33,7 +33,7 @@ public class Constants{
 
         //Shifter enabled constants
         public static final double SHIFTER_COOLDOWN = 0.5; // Time after shifting the shifter is not to be used.
-        public static final double TURNING_TOLERANCE = 0; // Stops the robot from shifting while the robot is turning.
+        public static final double TURNING_TOLERANCE = 0.5; // Stops the robot from shifting while the robot is turning.
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
