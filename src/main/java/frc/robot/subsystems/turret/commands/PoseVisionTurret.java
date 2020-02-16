@@ -23,7 +23,7 @@ public class PoseVisionTurret extends CommandBase {
     public void execute() {
         Pose2d visionPose = VisionModule.getPose();
         if(visionPose == null) return;
-        VisionModule.calculateTargetAngle(OUTER_POWER_PORT_LOCATION.relativeTo(visionPose), true);
+        VisionModule.calculateTargetAngle(visionPose.relativeTo(OUTER_POWER_PORT_LOCATION), true);
     }
 
     @Override
