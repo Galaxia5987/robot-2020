@@ -52,7 +52,18 @@ public class PositionControl extends CommandBase {
     public void execute() {
         currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
         int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(targetColorChar)) - TILES_BEFORE_SENSOR, 4);
-        colorWheel.setPower(Math.IEEEremainder(distanceFromTarget, 4) * kP.get());
+        switch (distanceFromTarget){
+            case(2):
+                colorWheel.setPower(kP.get());
+                break;
+            case(1):
+                colorWheel.setPower(kI.get());
+                break;
+            case(-1):
+                colorWheel.setPower(-kI.get());
+                break;
+            default:
+        }
         if (distanceFromTarget == 0 && endTimer.get() == 0)
             endTimer.start();
         else if (distanceFromTarget != 0)
