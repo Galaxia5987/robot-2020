@@ -4,9 +4,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.valuetuner.WebConstant;
 import org.apache.commons.lang.math.DoubleRange;
-import org.apache.commons.lang.math.IntRange;
-import org.apache.commons.lang3.Range;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -17,8 +14,7 @@ import java.util.Optional;
  * Place global constants in this class, and mechanism-specific constants inside their respective mechanism subclass.
  * When accessing a mechanism-specific port, call Constants.[MECHANISM].[CONSTANT]
  */
-public class Constants{
-
+public class Constants {
     public static final int TALON_TIMEOUT = 10;
 
     public static class Drivetrain {
@@ -26,8 +22,8 @@ public class Constants{
         public static final double WHEEL_DIAMETER = 6*0.0254;
         public static final double TRACK_WIDTH = 0.6649; // TODO: this is horizontal distance between the wheels, we might need a diagonal distance.
 
-        public static final double LOW_TICKS_PER_METER = 4096 * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
-        public static final double HIGH_TICKS_PER_METER = 4096 * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
+        public static final double LOW_TICKS_PER_METER = 2048. * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
+        public static final double HIGH_TICKS_PER_METER = 2048. * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
 
         public static final double[] VELOCITY_PID_SET = {0.0, 0, 0, 0}; // PID gains set for the velocity drive of the wheels.
 
@@ -37,6 +33,8 @@ public class Constants{
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
+
+        public static final double JOYSTICK_MIN_THRESHOLD = 0.08;
     }
 
     public static class Autonomous {
@@ -53,9 +51,15 @@ public class Constants{
         public static final double kZeta = 0.7;
     }
 
+    public static class Vision {
+        public static final double VISION_MODULE_HEIGHT = 0.98;
+        public static final double VISION_MODULE_HOOD_DISTANCE = 0.28;
+    }
+
     public static class FieldGeometry {
         public static final Pose2d OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 5.81, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
         public static final Pose2d INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 5.81, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+        public static final double PORT_HEIGHT = 2.4;
     }
 
     public static final class Intake {
@@ -99,23 +103,33 @@ public class Constants{
 
         public static final double TICKS_PER_DEGREE = 4096/360.0;
 
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-30, 245);
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
+        public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 3256;
+        public static final int STARTING_POSITION = 2630;
 
+        public static final int POSITION_PID_SLOT = 0;
+        public static final int MOTION_MAGIC_PID_SLOT = 1;
+        
+        public static double KP = 3.5;
+        public static double KI = 0.01;
+        public static double KD = 180;
+        public static double KF = 0;
 
-        public static double KP = 4.07;
-        public static double KI = 0.0005;
-        public static double KD = 2.3;
-        public static double KF = 0.00912;
+        public static double ALLOWABLE_ERROR = 0.3;
+
+        public static double MOTION_MAGIC_KP = 4.07;
+        public static double MOTION_MAGIC_KI = 0.0005;
+        public static double MOTION_MAGIC_KD = 2.3;
+        public static double MOTION_MAGIC_KF = 0.00912;
+
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
         public static final int MOTION_MAGIC_ACCELERATION = 16;
 
-
-        public static final WebConstant VISION_KP = new WebConstant("visionKp", 0.018);
-        public static final WebConstant VISION_KI = new WebConstant("visionKi", 0);
-        public static final WebConstant VISION_KD = new WebConstant("visionKd", 0.0005);
+        public static final WebConstant DIRECT_VISION_KP = new WebConstant("visionKp", 0.01);
+        public static final WebConstant DIRECT_VISION_KI = new WebConstant("visionKi", 0.001);
+        public static final WebConstant DIRECT_VISION_KD = new WebConstant("visionKd", 0);
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
@@ -124,15 +138,17 @@ public class Constants{
 
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
         public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
+
+        public static final double CONTROL_MODE_THRESHOLD = 60;
     }
 
 
     public static class Shooter {
         public static final double TICKS_PER_ROTATION = 4096;
-        public static final double KP = 0.3; // 0.13
-        public static final double KI = 0.0;
 
-        public static final double KD = 1.5;
+        public static final double KP = 1;
+        public static final double KI = 0.0;
+        public static final double KD = 0;
         public static final double KF = 0.014;
 
         public static final int MAX_CURRENT = 35; //[A]
@@ -160,22 +176,23 @@ public class Constants{
     }
 
     public static class Climber {
-        public static final double TICKS_PER_METER = 4096 * 0.03 * Math.PI; // TICKS * diameter * pi
+        public static final double TICKS_PER_METER = 4096 * 0.03 * Math.PI * 100; // TICKS * diameter * pi
 
-        public static final double[] CLIMB_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
-        public static final double[] CLIMB_RELEASE_PIDF = {0, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] CLIMB_PIDF = {0.4, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] CLIMB_RELEASE_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
 
         public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
 
-        public static final double MAX_HEIGHT = 0.913; // The allowed maximum height of the subsystem.
+        public static final double MAX_HEIGHT = 0.75; // The allowed maximum height of the subsystem.
 
-        public static final int MOTION_MAGIC_VELOCITY = 0;
-        public static final int MOTION_MAGIC_ACCELERATION = 0;
         public static final double ARBITRARY_FEEDFORWARD = 0;
 
         public static final double RAMP_RATE = 0;
 
-        public static final double ALLOWED_HEIGHT_TOLERANCE = 0; // The allowed tolerance between the current height to the desired height.
+        public static final WebConstant CLIMB_HEIGHT = new WebConstant("climbSetpointHeight", 0.3);
+        public static final WebConstant SIMPLE_CLIMB_HEIGHT = new WebConstant("simpleClimbHeight", 0.4);
+
+        public static final double ALLOWED_HEIGHT_TOLERANCE = 0.1; // The allowed tolerance between the current height to the desired height.
         public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle.
         public static final WebConstant MODIFY_JOYSTICK_RATE = new WebConstant("climbJoystickRate", 0.7); // The factor which the value of the joystick is multiplied by to calculate the change rate.
         public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber.
