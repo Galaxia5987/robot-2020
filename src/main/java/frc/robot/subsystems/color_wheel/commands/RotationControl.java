@@ -21,6 +21,10 @@ public class RotationControl extends CommandBase {
     private ColorWheel colorWheel;
 
     public RotationControl(ColorWheel colorWheel) {
+        clockwiseIndex = 0;
+        clockwiseSpins = 0;
+        counterClockwiseIndex = 0;
+        counterClockwiseSpins = 0;
         addRequirements(colorWheel);
         this.colorWheel = colorWheel;
     }
