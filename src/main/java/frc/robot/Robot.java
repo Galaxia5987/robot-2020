@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,6 +33,7 @@ public class Robot extends TimedRobot {
     public static Timer robotTimer = new Timer();
 
     private RobotContainer m_robotContainer;
+
 
     /**
      * @return Robot in debug mode
@@ -72,6 +75,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         m_robotContainer.periodic();
     }
+
 
     /**
      * This function is called once each time the robot enters Disabled mode.
