@@ -59,10 +59,11 @@ public class PositionControl extends CommandBase {
             case(1):
                 colorWheel.setPower(kI.get());
                 break;
-            case(-1):
+            case(3):
                 colorWheel.setPower(-kI.get());
                 break;
             default:
+                colorWheel.setPower(0);
         }
         if (distanceFromTarget == 0 && endTimer.get() == 0)
             endTimer.start();
