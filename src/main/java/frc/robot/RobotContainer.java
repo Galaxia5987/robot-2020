@@ -78,7 +78,7 @@ public class RobotContainer {
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
-        OI.lb.whenPressed(new PositionControl(colorWheel));
+        OI.lb.toggleWhenPressed(new PositionControl(colorWheel, "Green"));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
