@@ -3,6 +3,7 @@ package frc.robot.commandgroups;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
+import frc.robot.utilities.VisionModule;
 
 
 public class WaitForShootingVision extends CommandBase {
@@ -22,7 +23,8 @@ public class WaitForShootingVision extends CommandBase {
 
     @Override
     public void execute() {
-        shooter.approximateVelocity(shooter.getVisionDistance());
+        if(VisionModule.getHoodDistance() != null)
+        shooter.approximateVelocity(VisionModule.getHoodDistance());
 
     }
 
