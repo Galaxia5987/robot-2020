@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import javax.annotation.Nullable;
 
-import static frc.robot.Constants.FieldGeometry.PORT_HEIGHT;
+import static frc.robot.Constants.FieldGeometry.*;
 import static frc.robot.Constants.Vision.VISION_MODULE_HOOD_DISTANCE;
 import static frc.robot.Constants.Vision.VISION_MODULE_HEIGHT;
 
@@ -46,7 +46,7 @@ public class VisionModule extends SubsystemBase {
         if (pose.length == 0) {
             return null;
         }
-        return new Pose2d(pose[0], pose[1], new Rotation2d(pose[2]));
+        return new Pose2d(pose[0], pose[1], new Rotation2d(Math.toRadians(pose[2])));
     }
 
     @Nullable
@@ -62,5 +62,12 @@ public class VisionModule extends SubsystemBase {
         if (distance != null) {
             SmartDashboard.putNumber("visionHoodDistance", getHoodDistance());
         }
+    }
+
+    public static double calculateTargetAngle(Pose2d currentPosition, boolean innerPort) {
+        Pose2d targetLocation = innerPort ? INNER_POWER_PORT_LOCATION :  OUTER_POWER_PORT_LOCATION;
+        double deltaY = targetLocation.getTranslation().getY() - currentPosition.getTranslation().getY();
+        double deltaX = targetLocation.getTranslation().getX() - currentPosition.getTranslation().getX();
+        return Math.toDegrees(Math.atan2(deltaY, deltaX) - currentPosition.getRotation().getRadians());
     }
 }
