@@ -11,21 +11,8 @@ public class WaitForShootingVision extends CommandBase {
     private Turret turret;
 
     public WaitForShootingVision(Shooter shooter, Turret turret) { //This reads the values, so there is no reason to require.
-        addRequirements(shooter, turret);
         this.shooter = shooter;
         this.turret = turret;
-    }
-
-    @Override
-    public void initialize() {
-
-    }
-
-    @Override
-    public void execute() {
-        if(VisionModule.getHoodDistance() != null)
-        shooter.approximateVelocity(VisionModule.getHoodDistance());
-
     }
 
     @Override
@@ -33,8 +20,4 @@ public class WaitForShootingVision extends CommandBase {
         return shooter.isShooterReady() && turret.isTurretReady();
     }
 
-    @Override
-    public void end(boolean interrupted) {
-
-    }
 }
