@@ -3,9 +3,11 @@ package frc.robot.subsystems.shooter.commands;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.utilities.VisionModule;
 
 public class SpeedUp extends CommandBase {
     private NetworkTable velocityTable = NetworkTableInstance.getDefault().getTable("velocityTable");
@@ -22,8 +24,9 @@ public class SpeedUp extends CommandBase {
 
 
     public SpeedUp(Shooter shooter) {
-        this(shooter, shooter.getVisionDistance()); //TODO replace 3 with the vision distance output value
+        addRequirements(shooter);
         isVisionActive = true;
+        this.shooter = shooter;
     }
 
     // Called just before this Command runs the first time
@@ -34,10 +37,13 @@ public class SpeedUp extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        if (isVisionActive) {
-            distance = shooter.getVisionDistance();
+        if (isVisionActive && VisionModule.getHoodDistance() != null) {
+            distance = VisionModule.getHoodDistance();
         }
         shooter.setSpeed(shooter.approximateVelocity(distance));
+        SmartDashboard.putNumber("aproximateVelocity", shooter.approximateVelocity(distance));
+        SmartDashboard.putNumber("wallDistance", distance);
+
         velocityEntry.setDouble(shooter.getSpeed());
     }
 

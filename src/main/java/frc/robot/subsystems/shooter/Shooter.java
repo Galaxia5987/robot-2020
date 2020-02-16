@@ -24,8 +24,6 @@ public class Shooter extends SubsystemBase {
     private final VictorSPX shooterSlave1 = new VictorSPX(SLAVE_1);
     private final VictorSPX shooterSlave2 = new VictorSPX(SLAVE_2);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
-    private static final NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("shooter");
-    private static final NetworkTableEntry visionDistance = visionTable.getEntry("distance");
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
 
     public Shooter() {
@@ -94,7 +92,7 @@ public class Shooter extends SubsystemBase {
      * @return the calculated velocity to get to the target in rps.
      */
     public double approximateVelocity(double distance) {
-        return (8.68 * Math.exp(0.1685 * distance));
+        return 0.1069*Math.pow(distance,4) - 2.4364*Math.pow(distance,3) + 19.814*Math.pow(distance,2) - 63.171*distance + 131.49; //The current reading as of 15.2.20
     }
 
     public double getTargetVelocity(){
@@ -111,10 +109,6 @@ public class Shooter extends SubsystemBase {
 
     public void stop() {
         setPower(0);
-    }
-
-    public double getVisionDistance(){
-        return visionDistance.getDouble(0);
     }
 
     public double getMasterVoltage() {

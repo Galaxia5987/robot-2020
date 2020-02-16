@@ -107,19 +107,18 @@ public class Constants {
 
         public static final double TICKS_PER_DEGREE = 4096/360.0;
 
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(0, 200);
-
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 2680;
+        public static final int STARTING_POSITION = 2630;
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 1;
         
         public static double KP = 3.5;
         public static double KI = 0.01;
-        public static double KD = 50;
+        public static double KD = 180;
         public static double KF = 0;
 
         public static double ALLOWABLE_ERROR = 0.3;
