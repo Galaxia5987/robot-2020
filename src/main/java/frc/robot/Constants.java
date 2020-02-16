@@ -108,7 +108,6 @@ public class Constants {
         public static final double TICKS_PER_DEGREE = 4096/360.0;
 
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
-
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double STARTING_ANGLE = 90;
