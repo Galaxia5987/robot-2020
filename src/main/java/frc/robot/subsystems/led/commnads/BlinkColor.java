@@ -44,10 +44,10 @@ public class BlinkColor extends CommandBase {
         this.blinks = blinks * 2; // The blinks field counts periods where the LEDs are turned off too, so it's doubled.
         this.period = period;
 
-        this.blinksDone = 0;
+        blinksDone = 0;
         currentColor = color;
         timer = new Timer();
-        this.initialColorsBuffer = led.getCurrentBuffer();
+        initialColorsBuffer = led.getCurrentBuffer();
         addRequirements(led);
     }
 
