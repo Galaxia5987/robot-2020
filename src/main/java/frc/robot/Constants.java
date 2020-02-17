@@ -177,7 +177,7 @@ public class Constants {
         public static final double POSITION_CONTROL_TIMER = 1;
 
         /**
-         * This is not a real PID control
+         * This is not real PID control
          */
         public static WebConstant kP = new WebConstant("colorWheel_Distance_2", 0.5); //Percent output when distance from the color is 2
         public static WebConstant kI = new WebConstant("colorWheel_Distance_1", 0.3); //Percent output when distance from the color is 1
