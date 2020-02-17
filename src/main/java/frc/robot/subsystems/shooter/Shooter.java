@@ -3,15 +3,11 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.valuetuner.WebConstantPIDTalon;
-import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -44,6 +40,12 @@ public class Shooter extends SubsystemBase {
 
         shooterMaster.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         shooterMaster.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+
+        shooterMaster.configPeakCurrentLimit(0);
+
+        shooterMaster.configPeakCurrentDuration(0);
+        shooterMaster.configContinuousCurrentLimit(MAX_CURRENT);
+        shooterMaster.enableCurrentLimit(true);
 
         // Slave configuration
         shooterSlave1.follow(shooterMaster);
@@ -97,5 +99,13 @@ public class Shooter extends SubsystemBase {
 
     public double getMasterVoltage() {
         return shooterMaster.getMotorOutputVoltage();
+    }
+
+    @Override
+    public void periodic() {
+        if(getSpeed() < VELOCITY_DAMPENING_LIMIT.get())
+            shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
+        else
+            shooterMaster.configClosedloopRamp(0);
     }
 }
