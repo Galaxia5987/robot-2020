@@ -148,12 +148,16 @@ public class Constants {
 
         public static final double KP = 1;
         public static final double KI = 0.0;
-        public static final double KD = 0;
+        public static final double KD = 1.5;
         public static final double KF = 0.014;
+
+        public static DoubleRange ALLOWED_SHOOTING_RANGE = new DoubleRange(1, 10);
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double VELOCITY_TOLERANCE = 0; // the acceptable velocity threshold error of the shooter
+        public static final WebConstant VELOCITY_DAMP_RAMP = new WebConstant("damp_ramp", 1); // Damp ramp for that clamp on the accelerant
+        public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
     }
 
     public static class ColorWheel{

@@ -7,8 +7,8 @@ import java.util.function.Supplier;
 import static frc.robot.Constants.Turret.*;
 
 public class JoystickTurret extends CommandBase {
-    private static Turret turret;
-    private Supplier<Double> joystickInput = OI::getXboxLY;
+    private Turret turret;
+    private Supplier<Double> joystickInput = OI::getXboxLX;
     public static final double JOYSTICK_DEADBAND = 0.08;
 
     public JoystickTurret(Turret turret) {
