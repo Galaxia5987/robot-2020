@@ -81,6 +81,13 @@ public class FullLocalization {
         filter = new KalmanFilter(process);
         m_prev_time = 0;
         m_width = widthMeters;
+
+        process.setState(0, m_poseMeters.getTranslation().getX());
+        process.setState(1, m_poseMeters.getTranslation().getY());
+        process.setState(2, 0);
+        process.setState(3, m_poseMeters.getRotation().getRadians());
+        process.setState(4, 0);
+
     }
 
     /**
