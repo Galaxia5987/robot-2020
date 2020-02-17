@@ -7,12 +7,14 @@
 
 package frc.robot.subsystems.led;
 
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+
 import static frc.robot.Constants.LED.DIMNESS_INCREASE;
 
 /**
  * Buffer storage for Addressable LEDs.
  */
-public class ColorsBuffer extends edu.wpi.first.wpilibj.AddressableLEDBuffer {
+public class ColorsBuffer extends AddressableLEDBuffer {
     byte[] m_buffer;
 
     private double minDimness;
