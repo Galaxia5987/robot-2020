@@ -23,8 +23,8 @@ public class PoseVisionTurret extends CommandBase {
     @Override
     public void execute() {
         Pose2d robotPose = VisionModule.getRobotPose();
-        if(robotPose == null) return;
-        Utils.calculateTurretAngle(robotPose, true);
+        if(robotPose == null || turret.inDeadZone()) return;
+        turret.setAngle(Utils.calculateTurretAngle(robotPose, true));
     }
 
     @Override
