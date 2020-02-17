@@ -148,9 +148,7 @@ public class Drivetrain extends SubsystemBase {
      */
     private boolean canShiftHigh() {
         return !isShifting
-                && !isShiftedHigh()
-                && Math.abs(getLeftVelocity()) < SHIFT_SPEED_TOLERANCE
-                && Math.abs(getRightVelocity()) < SHIFT_SPEED_TOLERANCE;
+                && !isShiftedHigh();
     }
 
     /**
