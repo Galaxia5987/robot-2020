@@ -94,6 +94,10 @@ public class TalonConfiguration {
         setFGain(fGain);
     }
 
+    public double[] getPidSet() {
+        return pidSet;
+    }
+
     public void setNeutralMode(NeutralMode neutralMode) {
         this.neutralMode = neutralMode;
     }
