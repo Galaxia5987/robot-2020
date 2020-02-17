@@ -64,6 +64,7 @@ public class VisionModule extends SubsystemBase {
         }
     }
 
+    @Nullable
     public static Pose2d getRobotPose() {
         Pose2d visionPose = getPose();
         if(visionPose == null) return null;
