@@ -21,7 +21,8 @@ import frc.robot.subsystems.drivetrain.FullLocalization;
 import org.ghrobotics.lib.debug.FalconDashboard;
 import org.techfire225.webapp.FireLog;
 
-import static frc.robot.RobotContainer.localization;
+import static frc.robot.subsystems.drivetrain.Drivetrain.localization;
+
 
 /**
  * This command handles trajectory-following.
