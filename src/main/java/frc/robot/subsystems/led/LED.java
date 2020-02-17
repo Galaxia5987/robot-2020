@@ -25,7 +25,7 @@ import static frc.robot.Ports.LED.STRIP_LENGTH;
 public class LED extends SubsystemBase {
 
     private final AddressableLED strip;
-    private AddressableLEDBuffer colorsBuffer;
+    private ColorsBuffer colorsBuffer;
 
     /**
      * Creates a new LED subsystem.
@@ -33,7 +33,7 @@ public class LED extends SubsystemBase {
     public LED() {
         strip = new AddressableLED(STRIP);
 
-        colorsBuffer = new AddressableLEDBuffer(STRIP_LENGTH, MINIMAL_DIMNESS);
+        colorsBuffer = new ColorsBuffer(STRIP_LENGTH, MINIMAL_DIMNESS);
         // Set the color of the LEDs to Galaxia blue at startup.
         setWholeStrip(DEFAULT_COLOR);
         strip.setLength(STRIP_LENGTH);
@@ -109,7 +109,7 @@ public class LED extends SubsystemBase {
     /**
      * @return the current colors buffer.
      */
-    public AddressableLEDBuffer getCurrentBuffer() {
+    public ColorsBuffer getCurrentBuffer() {
         return colorsBuffer;
     }
 
@@ -118,7 +118,7 @@ public class LED extends SubsystemBase {
      *
      * @param colorBuffer colors buffer to set to
      */
-    public void setColorBuffer(AddressableLEDBuffer colorBuffer) {
+    public void setColorBuffer(ColorsBuffer colorBuffer) {
         colorsBuffer = colorBuffer;
     }
 

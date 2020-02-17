@@ -3,7 +3,7 @@ package frc.robot.subsystems.led.commnads;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.led.AddressableLEDBuffer;
+import frc.robot.subsystems.led.ColorsBuffer;
 import frc.robot.subsystems.led.LED;
 
 import static frc.robot.Constants.LED.BLINK_PAUSE;
@@ -15,7 +15,7 @@ public class BlinkColor extends CommandBase {
     private final int blinks;
     private final double period;
     private final Timer timer;
-    private final AddressableLEDBuffer initialColorsBuffer;
+    private final ColorsBuffer initialColorsBuffer;
     private Color currentColor;
     private int blinksDone;
 

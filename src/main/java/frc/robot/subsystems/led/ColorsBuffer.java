@@ -12,7 +12,7 @@ import static frc.robot.Constants.LED.DIMNESS_INCREASE;
 /**
  * Buffer storage for Addressable LEDs.
  */
-public class AddressableLEDBuffer extends edu.wpi.first.wpilibj.AddressableLEDBuffer {
+public class ColorsBuffer extends edu.wpi.first.wpilibj.AddressableLEDBuffer {
     byte[] m_buffer;
 
     private double minDimness;
@@ -25,7 +25,7 @@ public class AddressableLEDBuffer extends edu.wpi.first.wpilibj.AddressableLEDBu
      * @param length     The length of the buffer in pixels
      * @param minDimness The minimal dimness of the LEDs strip
      */
-    public AddressableLEDBuffer(int length, double minDimness) {
+    public ColorsBuffer(int length, double minDimness) {
         super(length);
         this.m_buffer = new byte[length * 4];
         this.minDimness = minDimness;
