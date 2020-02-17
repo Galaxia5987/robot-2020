@@ -151,6 +151,8 @@ public class Constants {
         public static final double KD = 1.5;
         public static final double KF = 0.014;
 
+        public static DoubleRange ALLOWED_SHOOTING_RANGE = new DoubleRange(1, 10);
+
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double VELOCITY_TOLERANCE = 0; // the acceptable velocity threshold error of the shooter

@@ -5,6 +5,8 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import static frc.robot.Constants.Shooter.ALLOWED_SHOOTING_RANGE;
+
 public class CustomDashboard extends SubsystemBase {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("dashboard");
     public static NetworkTable booleans = table.getSubTable("booleans");
@@ -50,5 +52,10 @@ public class CustomDashboard extends SubsystemBase {
 
     public static void setShift(boolean toggle) {
         shift.setBoolean(toggle);
+    }
+
+    @Override
+    public void periodic() {
+        setDistanceValid(ALLOWED_SHOOTING_RANGE.containsDouble(VisionModule.getHoodDistance()));
     }
 }
