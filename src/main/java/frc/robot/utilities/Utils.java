@@ -4,7 +4,11 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpiutil.math.MathUtil;
+
+import static frc.robot.Constants.FieldGeometry.INNER_POWER_PORT_LOCATION;
+import static frc.robot.Constants.FieldGeometry.OUTER_POWER_PORT_LOCATION;
 
 public class Utils {
 
@@ -66,5 +70,18 @@ public class Utils {
             falcon.config_kF(0, configurations.getPidSet()[3]);
 
         }
+    }
+
+    /**
+     * Calculates turret angle to inner or outer port.
+     * @param currentPosition Current robot pose
+     * @param innerPort Aim to inner port
+     * @return Turret angle
+     */
+    public static double calculateTurretAngle(Pose2d currentPosition, boolean innerPort) {
+        Pose2d targetLocation = innerPort ? INNER_POWER_PORT_LOCATION :  OUTER_POWER_PORT_LOCATION;
+        double deltaY = targetLocation.getTranslation().getY() - currentPosition.getTranslation().getY();
+        double deltaX = targetLocation.getTranslation().getX() - currentPosition.getTranslation().getX();
+        return Math.toDegrees(Math.atan2(deltaY, deltaX) - currentPosition.getRotation().getRadians());
     }
 }

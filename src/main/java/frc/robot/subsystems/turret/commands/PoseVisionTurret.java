@@ -3,6 +3,7 @@ package frc.robot.subsystems.turret.commands;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.turret.Turret;
+import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
 
 import static frc.robot.Constants.FieldGeometry.OUTER_POWER_PORT_LOCATION;
@@ -21,9 +22,9 @@ public class PoseVisionTurret extends CommandBase {
 
     @Override
     public void execute() {
-        Pose2d visionPose = VisionModule.getPose();
-        if(visionPose == null) return;
-        VisionModule.calculateTargetAngle(visionPose.relativeTo(OUTER_POWER_PORT_LOCATION), true);
+        Pose2d robotPose = VisionModule.getRobotPose();
+        if(robotPose == null) return;
+        Utils.calculateTurretAngle(robotPose, true);
     }
 
     @Override

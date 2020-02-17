@@ -64,10 +64,10 @@ public class VisionModule extends SubsystemBase {
         }
     }
 
-    public static double calculateTargetAngle(Pose2d currentPosition, boolean innerPort) {
-        Pose2d targetLocation = innerPort ? INNER_POWER_PORT_LOCATION :  OUTER_POWER_PORT_LOCATION;
-        double deltaY = targetLocation.getTranslation().getY() - currentPosition.getTranslation().getY();
-        double deltaX = targetLocation.getTranslation().getX() - currentPosition.getTranslation().getX();
-        return Math.toDegrees(Math.atan2(deltaY, deltaX) - currentPosition.getRotation().getRadians());
+    public static Pose2d getRobotPose() {
+        Pose2d visionPose = getPose();
+        if(visionPose == null) return null;
+        return visionPose.relativeTo(OUTER_POWER_PORT_LOCATION);
     }
+
 }
