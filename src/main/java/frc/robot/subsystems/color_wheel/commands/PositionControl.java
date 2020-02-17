@@ -11,7 +11,6 @@ import static frc.robot.Constants.ColorWheel.*;
  * The commands uses the date from the fms to rotate the control panel to the given color
  */
 public class PositionControl extends CommandBase {
-    private String targetColor = null;
     private char targetColorChar;
     private int currentColor;
     private Timer endTimer = new Timer(); // Used to make sure we don't overshoot over the wanted color.
@@ -22,16 +21,8 @@ public class PositionControl extends CommandBase {
         addRequirements(colorWheel);
         this.colorWheel = colorWheel;
     }
-
-    public PositionControl(ColorWheel colorWheel, String targetColor) {
-        addRequirements(colorWheel);
-        this.colorWheel = colorWheel;
-        this.targetColor = targetColor;
-    }
-
+    
     private char getColor() {
-        if (targetColor != null)
-            return targetColor.toUpperCase().charAt(0);
         String gameData = DriverStation.getInstance().getGameSpecificMessage();
         if (gameData.length() > 0) {
             gameData = gameData.toUpperCase();
