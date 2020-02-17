@@ -178,9 +178,11 @@ public class Constants {
 
         /**
          * This is not a real PID control
+         * Constants for a basic proportional control, when distance is 2 apply kP worth of percent output and apply kI when the distance is 1
+         * The names are a meme please do not take kp and ki seriously 
          */
-        public static WebConstant kP = new WebConstant("colorWheel_Distance_2", 0.5); //Percent output when distance from the color is 2
-        public static WebConstant kI = new WebConstant("colorWheel_Distance_1", 0.3); //Percent output when distance from the color is 1
+        public static WebConstant kP = new WebConstant("colorWheel_Distance_2", 0.5); //Proportional constant for the control wheel Percent output when distance from the color is 2
+        public static WebConstant kI = new WebConstant("colorWheel_Distance_1", 0.3); //Proportional constant for the control panel Percent output when distance from the color is 1
         public static final double ROTATION_CONTROL_POWER = 0.4;
     }
 
