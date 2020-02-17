@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 import javax.annotation.Nullable;
 
@@ -46,29 +47,56 @@ public class VisionModule extends SubsystemBase {
         if (pose.length == 0) {
             return null;
         }
-        return new Pose2d(pose[0], pose[1], new Rotation2d(Math.toRadians(pose[2])));
+        return new Pose2d(pose[0], pose[1], Rotation2d.fromDegrees(pose[2]));
+    }
+
+    @Nullable
+    public static Double getTargetDistance() {
+        Pose2d pose = getPose();
+        if (pose == null) return null;
+        return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) + Math.pow(pose.getTranslation().getY(), 2));
+    }
+
+    @Nullable
+    public static Double getRobotDistance() {
+        Double targetDistance = getTargetDistance();
+        if(targetDistance == null) return null;
+        return Math.sqrt(Math.pow(targetDistance, 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2));
     }
 
     @Nullable
     public static Double getHoodDistance() {
-        Pose2d pose = getPose();
-        if (pose == null) return null;
-        return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) + VISION_MODULE_HOOD_DISTANCE;
+        Double robotDistance = getRobotDistance();
+        if (robotDistance == null) return null;
+        return robotDistance + VISION_MODULE_HOOD_DISTANCE;
     }
 
     @Override
     public void periodic() {
         Double distance = getHoodDistance();
         if (distance != null) {
-            SmartDashboard.putNumber("visionHoodDistance", getHoodDistance());
+            SmartDashboard.putNumber("visionHoodDistance", distance);
+            SmartDashboard.putNumber("visionTargetDistance", getTargetDistance());
+            SmartDashboard.putNumber("visionRobotDistance", getRobotDistance());
+        }
+        Pose2d robotPose = getRobotPose();
+        if(robotPose != null) {
+            SmartDashboard.putNumber("visionRobotX", robotPose.getTranslation().getX());
+            SmartDashboard.putNumber("visionRobotY", robotPose.getTranslation().getY());
+            SmartDashboard.putNumber("visionRobotAngle", robotPose.getRotation().getDegrees());
         }
     }
 
     @Nullable
     public static Pose2d getRobotPose() {
         Pose2d visionPose = getPose();
-        if(visionPose == null) return null;
-        return visionPose.relativeTo(OUTER_POWER_PORT_LOCATION);
+        Double robotDistance = getRobotDistance();
+        if(visionPose == null || robotDistance == null) return null;
+        return new Pose2d(
+                OUTER_POWER_PORT_LOCATION.getTranslation().getX() - visionPose.getRotation().getCos() * robotDistance,
+                OUTER_POWER_PORT_LOCATION.getTranslation().getY() - visionPose.getRotation().getSin() * robotDistance,
+                Rotation2d.fromDegrees(visionPose.getRotation().getDegrees() - RobotContainer.turret.getAngle())
+        );
     }
 
 }
