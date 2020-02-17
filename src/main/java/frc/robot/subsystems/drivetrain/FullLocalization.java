@@ -158,7 +158,7 @@ public class FullLocalization {
         // Observation object holds the new measurements
         observation.SetMeasurement(gyroAngle.getRadians(), deltaLeftDistance, deltaRightDistance, dt);
         // Acceleration enters the process and not the observation
-        process.setAcc(acc);
+        process.setAcc(0);
 
         // Check if encoders are valid or slipping:
         observation.setEncoderValid(EncoderValid(angle, deltaLeftDistance, deltaRightDistance));
