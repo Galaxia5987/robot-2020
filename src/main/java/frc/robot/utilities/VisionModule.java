@@ -42,8 +42,8 @@ public class VisionModule extends SubsystemBase {
 
     @Nullable
     public static Pose2d getPose() {
-        Double[] pose = visionPose.getDoubleArray(new Double[]{null, null, null});
-        if (pose[0] == null) {
+        Double[] pose = visionPose.getDoubleArray(new Double[]{});
+        if (pose.length == 0) {
             return null;
         }
         return new Pose2d(pose[0], pose[1], new Rotation2d(pose[2]));
@@ -53,14 +53,14 @@ public class VisionModule extends SubsystemBase {
     public static Double getHoodDistance() {
         Pose2d pose = getPose();
         if (pose == null) return null;
-        return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) - VISION_MODULE_HOOD_DISTANCE;
+        return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) + VISION_MODULE_HOOD_DISTANCE;
     }
 
     @Override
     public void periodic() {
         Double distance = getHoodDistance();
         if (distance != null) {
-            SmartDashboard.putNumber("visionFrontDistance", getHoodDistance());
+            SmartDashboard.putNumber("visionHoodDistance", getHoodDistance());
         }
     }
 }
