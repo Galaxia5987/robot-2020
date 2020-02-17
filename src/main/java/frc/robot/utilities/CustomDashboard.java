@@ -3,11 +3,11 @@ package frc.robot.utilities;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class CustomDashboard {
+public class CustomDashboard extends SubsystemBase {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("dashboard");
     public static NetworkTable booleans = table.getSubTable("booleans");
-    public static NetworkTableEntry canShoot = table.getEntry("canShoot");
     public static NetworkTableEntry hasVision = table.getEntry("hasVision");
     public static NetworkTableEntry speedValid = table.getEntry("speedValid");
     public static NetworkTableEntry distanceValid = table.getEntry("distanceValid");
@@ -18,9 +18,7 @@ public class CustomDashboard {
     public static NetworkTableEntry climb = booleans.getEntry("climb");
     public static NetworkTableEntry shift = booleans.getEntry("shift");
 
-    public static void setCanShoot(boolean toggle) {
-        canShoot.setBoolean(toggle);
-    }
+    public static CustomDashboard INSTANCE = new CustomDashboard();
 
     public static void setHasVision(boolean toggle) {
         hasVision.setBoolean(toggle);
@@ -53,5 +51,4 @@ public class CustomDashboard {
     public void setShift(boolean toggle) {
         shift.setBoolean(toggle);
     }
-
 }

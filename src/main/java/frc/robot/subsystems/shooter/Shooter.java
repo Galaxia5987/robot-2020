@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 
@@ -107,5 +108,6 @@ public class Shooter extends SubsystemBase {
             shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
         else
             shooterMaster.configClosedloopRamp(0);
+        CustomDashboard.setSpeedValid(isShooterReady());
     }
 }

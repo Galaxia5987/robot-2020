@@ -62,5 +62,7 @@ public class VisionModule extends SubsystemBase {
         if (distance != null) {
             SmartDashboard.putNumber("visionHoodDistance", getHoodDistance());
         }
+        CustomDashboard.setHasVision(targetSeen());
+
     }
 }
