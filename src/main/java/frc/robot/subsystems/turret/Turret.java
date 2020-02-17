@@ -17,7 +17,6 @@ import org.techfire225.webapp.FireLog;
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Constants.Turret.*;
 import static frc.robot.Ports.Turret.*;
-import static frc.robot.RobotContainer.navx;
 
 /**
  * @author Adam & Barel
@@ -112,8 +111,14 @@ public class Turret extends SubsystemBase {
      */
     public void setAngle(double angle) {
         targetAngle = normalizeSetpoint(angle);
-        setPidSlot(POSITION_PID_SLOT);
-        motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
+        if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
+            setPidSlot(POSITION_PID_SLOT);
+            motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
+        } else {
+            setPidSlot(MOTION_MAGIC_PID_SLOT);
+            motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
+        }
+
     }
 
     public void setPidSlot(int slot) {
@@ -142,10 +147,6 @@ public class Turret extends SubsystemBase {
             }
         }
         return targetPosition;
-    }
-
-    public double getHeading() {
-        return Math.IEEEremainder(getAngle(), 360);
     }
 
     /**
