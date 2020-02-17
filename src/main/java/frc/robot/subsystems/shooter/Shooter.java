@@ -84,7 +84,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isShooterReady(){
-        return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE;
+        return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE && getSpeed() > MINIMAL_VELOCITY;
     }
 
     public void setPower(double power) {
