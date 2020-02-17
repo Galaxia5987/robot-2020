@@ -26,7 +26,7 @@ public class PositionControl extends CommandBase {
         String gameData = DriverStation.getInstance().getGameSpecificMessage();
         if (gameData.length() > 0) {
             gameData = gameData.toUpperCase();
-            if ("RGBY".indexOf(gameData.charAt(0)) > 0)
+            if ("RGBY.contains(gameData))
                 return gameData.charAt(0);
         }
         this.cancel();
