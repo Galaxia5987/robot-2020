@@ -1,28 +1,30 @@
 package frc.robot.subsystems.turret.commands;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.turret.Turret;
-
-import static frc.robot.Constants.Turret.*;
+import frc.robot.utilities.VisionModule;
 
 public class VisionTurret extends CommandBase {
-    private Turret turret;
-    private PIDController anglePid = new PIDController(VISION_KP, VISION_KI, VISION_KD);
+    private final Turret turret;
 
     public VisionTurret(Turret turret) {
-        addRequirements(turret);
         this.turret = turret;
+        addRequirements(turret);
     }
 
     @Override
     public void initialize() {
+        VisionModule.setLEDs(true);
     }
 
-    // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        turret.setPower(anglePid.calculate(turret.getVisionAngle(), 0));
+        if(turret.inDeadZone()) return;
+        turret.setAngle(turret.getAngle() + VisionModule.getVisionAngle());
     }
 
+    @Override
+    public void end(boolean interrupted) {
+        VisionModule.setLEDs(false);
+    }
 }

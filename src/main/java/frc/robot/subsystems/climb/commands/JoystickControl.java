@@ -18,6 +18,7 @@ import frc.robot.subsystems.climb.Climber;
  */
 public class JoystickControl extends CommandBase {
     private final Climber climber;
+    private final boolean manual;
     private boolean controlEachSide;
     private double rightInput, leftInput;
 
@@ -26,9 +27,10 @@ public class JoystickControl extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public JoystickControl(Climber climber, boolean controlEachSide) {
+    public JoystickControl(Climber climber, boolean controlEachSide, boolean manual) {
         this.climber = climber;
         this.controlEachSide = controlEachSide;
+        this.manual = manual;
         addRequirements(climber);
     }
 
@@ -36,21 +38,28 @@ public class JoystickControl extends CommandBase {
     @Override
     public void initialize() {
         climber.releaseStopper();
+        climber.changePIDFSlot(0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         if (controlEachSide) {
-            leftInput = OI.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
-            rightInput = OI.getRightXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
+            leftInput = -OI.getXboxLY() * Constants.Climber.MODIFY_JOYSTICK_RATE.get();
+            rightInput = -OI.getXboxRY() * Constants.Climber.MODIFY_JOYSTICK_RATE.get();
         }
         else {
-            leftInput = OI.getLeftXboxY() * Constants.Climber.MODIFY_JOYSTICK_RATE;
+            leftInput = -OI.getXboxLY() * Constants.Climber.MODIFY_JOYSTICK_RATE.get();
             rightInput = -leftInput;
         }
-        climber.setLeftHeight(leftInput + climber.getLeftHeight());
-        climber.setRightHeight(rightInput + climber.getRightHeight());
+        if(manual) {
+            climber.setLeftPower(leftInput);
+            climber.setRightPower(rightInput);
+        }
+        else {
+            climber.setLeftHeight(leftInput + climber.getLeftHeight());
+            climber.setRightHeight(rightInput + climber.getRightHeight());
+        }
     }
 
 

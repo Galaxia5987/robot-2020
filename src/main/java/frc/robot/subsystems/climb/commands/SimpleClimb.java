@@ -11,18 +11,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.climb.Climber;
 
-/**
- * This command would reset the rods height to 0 (their initial state).
- */
-public class ResetClimber extends CommandBase {
+import static frc.robot.Constants.Climber.SIMPLE_CLIMB_HEIGHT;
+
+public class SimpleClimb extends CommandBase {
     private final Climber climber;
 
-    /**
-     * Creates a new reset climber command.
-     *
-     * @param climber The subsystem used by this command.
-     */
-    public ResetClimber(Climber climber) {
+    public SimpleClimb(Climber climber) {
         this.climber = climber;
         addRequirements(climber);
     }
@@ -31,9 +25,9 @@ public class ResetClimber extends CommandBase {
     @Override
     public void initialize() {
         climber.releaseStopper();
-        climber.changePIDFSlot(1);
-        climber.setLeftHeight(0);
-        climber.setRightHeight(0);
+        climber.changePIDFSlot(0);
+        climber.setLeftHeight(SIMPLE_CLIMB_HEIGHT.get());
+        climber.setRightHeight(SIMPLE_CLIMB_HEIGHT.get());
     }
 
     // Called once the command ends or is interrupted.
@@ -51,8 +45,8 @@ public class ResetClimber extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        boolean leftSideInPosition = Math.abs(climber.getLeftHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
-        boolean rightSideInPosition = Math.abs(climber.getRightHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        boolean leftSideInPosition = Math.abs(SIMPLE_CLIMB_HEIGHT.get() - climber.getLeftHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        boolean rightSideInPosition = Math.abs(SIMPLE_CLIMB_HEIGHT.get() - climber.getRightHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
         return leftSideInPosition && rightSideInPosition;
     }
 

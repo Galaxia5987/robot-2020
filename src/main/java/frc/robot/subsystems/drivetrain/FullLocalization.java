@@ -27,6 +27,7 @@ import static frc.robot.RobotContainer.drivetrain;
 import static frc.robot.RobotContainer.turret;
 import static frc.robot.RobotContainer.navx;
 import static java.lang.Math.abs;
+import static java.lang.Math.min;
 
 /**
  * Class for localization using differntial drive odometry and inertial sensors. Odometry allows you to track the
@@ -42,11 +43,12 @@ import static java.lang.Math.abs;
  */
 public class FullLocalization {
 
+    private Pose2d m_poseInitialMeters;
     public KalmanFilter filter;
     private OdometryInertialProcess process;
     private OdometryInertialObservation observation;
     double m_width;     // Robot width - distance between wheel centers
-    final double MAX_ANGLE_DELTA_ENCODER_GYRO = 0.01; // allowed deviation in one cycle of between gyro and encoders. A larger value means wheel is slipping
+    final double MAX_ANGLE_DELTA_ENCODER_GYRO = 0.05; // allowed deviation in one cycle of between gyro and encoders. A larger value means wheel is slipping
 
 
     private Pose2d m_poseMeters;
@@ -83,13 +85,20 @@ public class FullLocalization {
                             Pose2d initialPoseMeters, double widthMeters) {
         m_poseMeters = initialPoseMeters;
         m_gyroOffset = m_poseMeters.getRotation().minus(gyroAngle);
-        m_previousAngle = initialPoseMeters.getRotation();
+        m_previousAngle = gyroAngle;
 
         observation = new OdometryInertialObservation(widthMeters / 2, widthMeters / 2);
         process = new OdometryInertialProcess();
         filter = new KalmanFilter(process);
         m_prev_time = 0;
         m_width = widthMeters;
+
+        process.setState(0, m_poseMeters.getTranslation().getX());
+        process.setState(1, m_poseMeters.getTranslation().getY());
+        process.setState(2, 0);
+        process.setState(3, m_poseMeters.getRotation().getRadians());
+        process.setState(4, 0);
+
     }
 
     /**
@@ -114,7 +123,7 @@ public class FullLocalization {
      */
     public void resetPosition(Pose2d poseMeters, Rotation2d gyroAngle, double time) {
         m_poseMeters = poseMeters;
-        m_previousAngle = poseMeters.getRotation();
+        m_previousAngle = gyroAngle;
         m_gyroOffset = m_poseMeters.getRotation().minus(gyroAngle);
 
         m_prevLeftDistance = 0.0;
@@ -125,7 +134,7 @@ public class FullLocalization {
         process.setState(0, poseMeters.getTranslation().getX());
         process.setState(1, poseMeters.getTranslation().getY());
         process.setState(2, 0);
-        process.setState(3, poseMeters.getRotation().minus(gyroAngle).getRadians());
+        process.setState(3, poseMeters.getRotation().getRadians());
         process.setState(4, 0);
 
     }
@@ -160,23 +169,21 @@ public class FullLocalization {
         m_prevLeftDistance = leftDistanceMeters;
         m_prevRightDistance = rightDistanceMeters;
 
-        var angle = gyroAngle; // .plus(m_gyroOffset); TODO think how to use offset
+         var angle = new Rotation2d( gyroAngle.getRadians() +  m_gyroOffset.getRadians());
         double target_angle = turret.getAngle() + visionAngle.getDouble(0);
         double target_range = visionDistance.getDouble(1);
 
         final Pose2d target_POS = OUTER_POWER_PORT_LOCATION;
 
-
-
-        double dt = time - m_prev_time;
+        double dt = Math.max(0.02,time - m_prev_time);
         // Observation object holds the new measurements
-        observation.SetMeasurement(gyroAngle.getRadians(), deltaLeftDistance, deltaRightDistance,target_range,
+        observation.SetMeasurement(angle.getRadians(), deltaLeftDistance, deltaRightDistance,target_range,
                 Math.toRadians(target_angle), target_POS , dt);
         // Acceleration enters the process and not the observation
-        process.setAcc(acc);
+        process.setAcc(0);
 
         // Check if encoders are valid or slipping:
-        observation.setEncoderValid(EncoderValid(angle, deltaLeftDistance, deltaRightDistance));
+        observation.setEncoderValid(EncoderValid(gyroAngle, deltaLeftDistance, deltaRightDistance));
 
         observation.setTargetValid(visionValid.getBoolean(false));
 
@@ -192,6 +199,7 @@ public class FullLocalization {
         m_poseMeters = new Pose2d(filter.model.state_estimate.data[0][0],
                 filter.model.state_estimate.data[1][0],
                 phi);
+
 
         x.setDouble(filter.model.state_estimate.data[0][0]);
         y.setDouble(filter.model.state_estimate.data[1][0]);

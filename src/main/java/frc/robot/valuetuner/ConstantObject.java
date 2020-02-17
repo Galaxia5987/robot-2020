@@ -1,9 +1,11 @@
 package frc.robot.valuetuner;
 
+/**
+ * This class holds a constant value by key.
+ */
 public class ConstantObject {
     private String key;
     private double value;
-
 
     public ConstantObject(String key, double value) {
         this.key = key;

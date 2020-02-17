@@ -21,7 +21,8 @@ import frc.robot.subsystems.drivetrain.FullLocalization;
 import org.ghrobotics.lib.debug.FalconDashboard;
 import org.techfire225.webapp.FireLog;
 
-import static frc.robot.RobotContainer.localization;
+import static frc.robot.subsystems.drivetrain.Drivetrain.localization;
+
 
 /**
  * This command handles trajectory-following.
@@ -41,6 +42,7 @@ public class FollowPath extends CommandBase {
     private final Drivetrain drivetrain;
 
     public FollowPath(Drivetrain drivetrain, Trajectory trajectory) {
+        addRequirements(drivetrain);
         this.trajectory = trajectory;
         this.drivetrain = drivetrain;
     }

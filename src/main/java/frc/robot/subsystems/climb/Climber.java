@@ -9,51 +9,89 @@ package frc.robot.subsystems.climb;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.Ports;
+import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.TalonConfiguration;
+import frc.robot.valuetuner.WebConstantPIDTalon;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Climber.CLIMB_PIDF;
+import static frc.robot.Constants.Climber.CLIMB_RELEASE_PIDF;
+import static frc.robot.Ports.Climber.IS_STOPPER_REVERSED;
 
 public class Climber extends SubsystemBase {
 
-    private final TalonSRX leftMotor = new TalonSRX(Ports.climber.LEFT_MOTOR);
-    private final TalonSRX rightMotor = new TalonSRX(Ports.climber.RIGHT_MOTOR);
-    private final DoubleSolenoid stopper = new DoubleSolenoid(Ports.climber.STOPPER_FORWARD, Ports.climber.STOPPER_REVERSE);
+    private final TalonSRX leftMotor = new TalonSRX(Ports.Climber.LEFT_MOTOR);
+    private final TalonSRX rightMotor = new TalonSRX(Ports.Climber.RIGHT_MOTOR);
     private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
+    private DoubleSolenoid stopperA = null;
+    private Solenoid stopperB = null;
 
     /**
      * Creates a new climb Subsystem.
      */
     public Climber() {
+        leftMotor.configFactoryDefault();
+        rightMotor.configFactoryDefault();
+
         TalonConfiguration talonConfigs = new TalonConfiguration();
-        leftMotor.setInverted(Ports.climber.LEFT_MOTOR_INVERTED);
-        rightMotor.setInverted(Ports.climber.RIGHT_MOTOR_INVERTED);
+        leftMotor.setInverted(Ports.Climber.LEFT_MOTOR_INVERTED);
+        rightMotor.setInverted(Ports.Climber.RIGHT_MOTOR_INVERTED);
 
-        leftMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
-        rightMotor.configMotionCruiseVelocity(Constants.Climber.MOTION_MAGIC_VELOCITY);
-
-        leftMotor.configMotionAcceleration(Constants.Climber.MOTION_MAGIC_ACCELERATION);
-        rightMotor.configMotionAcceleration(Constants.Climber.MOTION_MAGIC_ACCELERATION);
-
-        leftMotor.setSensorPhase(Ports.climber.LEFT_ENCODER_INVERTED);
-        rightMotor.setSensorPhase(Ports.climber.RIGHT_ENCODER_INVERTED);
+        leftMotor.setSensorPhase(Ports.Climber.LEFT_ENCODER_INVERTED);
+        rightMotor.setSensorPhase(Ports.Climber.RIGHT_ENCODER_INVERTED);
 
         leftMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
         rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
-
+      
         talonConfigs.setPidSet(CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3]);
-        talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector);
-        talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.NormallyOpen);
+        talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.Deactivated);
+        talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.Disabled);
+        talonConfigs.setReverseLimitSwitchSource(LimitSwitchSource.Deactivated);
+        talonConfigs.setReverseLimitSwitchNormal(LimitSwitchNormal.Disabled);
+
         talonConfigs.setNeutralMode(NeutralMode.Coast);
         talonConfigs.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+        talonConfigs.setPeakCurrentLimit(0);
+        talonConfigs.setContinuousCurrentLimit(35);
+        talonConfigs.setEnableCurrentLimit(true);
         UtilityFunctions.configAllTalons(talonConfigs, leftMotor, rightMotor);
+
+        leftMotor.config_kP(0, CLIMB_PIDF[0]);
+        leftMotor.config_kI(0, CLIMB_PIDF[1]);
+        leftMotor.config_kD(0, CLIMB_PIDF[2]);
+        leftMotor.config_kF(0, CLIMB_PIDF[3]);
+        rightMotor.config_kP(0, CLIMB_PIDF[0]);
+        rightMotor.config_kI(0, CLIMB_PIDF[1]);
+        rightMotor.config_kD(0, CLIMB_PIDF[2]);
+        rightMotor.config_kF(0, CLIMB_PIDF[3]);
+
+        leftMotor.config_kP(1, CLIMB_RELEASE_PIDF[0]);
+        leftMotor.config_kI(1, CLIMB_RELEASE_PIDF[1]);
+        leftMotor.config_kD(1, CLIMB_RELEASE_PIDF[2]);
+        leftMotor.config_kF(1, CLIMB_RELEASE_PIDF[3]);
+        rightMotor.config_kP(1, CLIMB_RELEASE_PIDF[0]);
+        rightMotor.config_kI(1, CLIMB_RELEASE_PIDF[1]);
+        rightMotor.config_kD(1, CLIMB_RELEASE_PIDF[2]);
+        rightMotor.config_kF(1, CLIMB_RELEASE_PIDF[3]);
+
+        new WebConstantPIDTalon("climbLeft", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], leftMotor);
+        new WebConstantPIDTalon("climbRight", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], rightMotor);
+
+        if (Robot.isRobotA)
+            stopperA = new DoubleSolenoid(Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
+        else
+            stopperB = new Solenoid(Ports.Climber.STOPPER);
     }
 
     /**
@@ -63,7 +101,10 @@ public class Climber extends SubsystemBase {
      */
     public void releaseStopper() {
         if (safeToClimb()) {
-            stopper.set(DoubleSolenoid.Value.kReverse);
+            if (Robot.isRobotA)
+                stopperA.set(DoubleSolenoid.Value.kReverse);
+            else
+                stopperB.set(IS_STOPPER_REVERSED);
         }
     }
 
@@ -71,7 +112,10 @@ public class Climber extends SubsystemBase {
      * Engage the mechanical stopper to lock the climber.
      */
     public void engageStopper() {
-        stopper.set(DoubleSolenoid.Value.kForward);
+        if (Robot.isRobotA)
+            stopperA.set(DoubleSolenoid.Value.kForward);
+        else
+            stopperB.set(!IS_STOPPER_REVERSED);
     }
 
     /**
@@ -80,7 +124,9 @@ public class Climber extends SubsystemBase {
      * @return the state of the mechanical stopper
      */
     public boolean isStopperEngaged() {
-        return stopper.get().equals(DoubleSolenoid.Value.kForward);
+        if (Robot.isRobotA)
+            return stopperA.get().equals(DoubleSolenoid.Value.kForward);
+        return stopperB.get() != IS_STOPPER_REVERSED;
     }
 
     /**
@@ -97,8 +143,16 @@ public class Climber extends SubsystemBase {
      */
     public void setLeftHeight(double height) {
         if (safeToClimb()) {
-            leftMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
+            leftMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
         }
+    }
+
+    public void setLeftPower(double power) {
+        leftMotor.set(ControlMode.PercentOutput, power);
+    }
+
+    public void setRightPower(double power) {
+        rightMotor.set(ControlMode.PercentOutput, power);
     }
 
     /**
@@ -115,7 +169,7 @@ public class Climber extends SubsystemBase {
      */
     public void setRightHeight(double height) {
         if (safeToClimb()) {
-            rightMotor.set(ControlMode.MotionMagic, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
+            rightMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
         }
     }
 
@@ -126,35 +180,12 @@ public class Climber extends SubsystemBase {
      * @return whether the robot should not climb
      */
     private boolean safeToClimb() {
-        return DriverStation.getInstance().getMatchTime() > 120;
+        return Robot.debug || DriverStation.getInstance().getMatchTime() > 120;
     }
 
-    /**
-     * @return whether the left elevator reached its limit.
-     */
-    public boolean isLeftOnLimit() {
-        return leftMotor.getSensorCollection().isFwdLimitSwitchClosed();
-    }
-
-    /**
-     * @return whether the right elevator reached its limit.
-     */
-    public boolean isRightOnLimit() {
-        return rightMotor.getSensorCollection().isFwdLimitSwitchClosed();
-    }
-
-    /**
-     * Reset the encoder position to the maximal height of the left side of subsystem, in case it reaches the limit.
-     */
-    public void resetLeft() {
-        leftMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
-    }
-
-    /**
-     * Reset the encoder position to the maximal height of right side of the subsystem, in case it reaches the limit.
-     */
-    public void resetRight() {
-        rightMotor.setSelectedSensorPosition(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
+    public void changePIDFSlot(int slot) {
+        rightMotor.selectProfileSlot(slot, 0);
+        leftMotor.selectProfileSlot(slot, 0);
     }
 
     /**
@@ -164,38 +195,25 @@ public class Climber extends SubsystemBase {
      * @return the normalized setpoint.
      */
     public double normalizeSetpoint(double setpoint) {
-        if (setpoint > Constants.Climber.MAX_HEIGHT) {
-            return Constants.Climber.MAX_HEIGHT;
-        } else if (setpoint < 0) {
-            return 0;
-        }
-        return setpoint;
+        return MathUtil.clamp(setpoint, 0, Constants.Climber.MAX_HEIGHT);
+
     }
 
-    public double normalizeDelta(double delta){
-        if (delta > Constants.Climber.MAX_DIFFERENCE) {
-            return Constants.Climber.MAX_DIFFERENCE;
-        } else if (delta < -Constants.Climber.MAX_DIFFERENCE) {
-            return -Constants.Climber.MAX_DIFFERENCE;
-        }
-        return delta;
+    public double normalizeDelta(double delta) {
+        return MathUtil.clamp(delta, -Constants.Climber.MAX_DIFFERENCE, Constants.Climber.MAX_DIFFERENCE);
+
     }
 
     @Override
     public void periodic() {
-        //Reset if the limit switch is pressed.
-        if (isLeftOnLimit()) {
-            resetLeft();
-        }
-        if (isRightOnLimit()) {
-            resetRight();
-        }
+        SmartDashboard.putNumber("climbLeftHeight", getLeftHeight());
+        SmartDashboard.putNumber("climbRightHeight", getRightHeight());
 
-        if (isRightOnLimit() || getRightHeight() >= Constants.Climber.MAX_HEIGHT) {
+        if (getRightHeight() >= Constants.Climber.MAX_HEIGHT) {
             setRightHeight(Constants.Climber.MAX_HEIGHT);
         }
 
-        if (isLeftOnLimit() || getLeftHeight() >= Constants.Climber.MAX_HEIGHT) {
+        if (getLeftHeight() >= Constants.Climber.MAX_HEIGHT) {
             setLeftHeight(Constants.Climber.MAX_HEIGHT);
         }
 

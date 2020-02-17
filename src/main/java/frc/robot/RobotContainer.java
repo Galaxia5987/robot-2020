@@ -8,18 +8,14 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj2.command.Command;
-
-import frc.robot.subsystems.drivetrain.FullLocalization;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commandgroups.OuttakeBalls;
+import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
@@ -28,10 +24,9 @@ import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.FullLocalization;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.IntakeBalls;
-import frc.robot.subsystems.intake.commands.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
@@ -42,7 +37,7 @@ import org.techfire225.webapp.Webserver;
 
 import static frc.robot.Constants.Drivetrain.GRAVITY_ACCELERATION;
 import static frc.robot.Constants.Drivetrain.GYRO_INVERTED;
-import static frc.robot.Constants.ROBOT_WIDTH;
+import static frc.robot.Constants.EFFECTIVE_TURN_WIDTH;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -52,24 +47,19 @@ import static frc.robot.Constants.ROBOT_WIDTH;
  */
 public class RobotContainer {
 
-    public static final Joystick rightJoystick = new Joystick(0);
-    public static final Joystick leftJoystick = new Joystick(1);
-    public static final int rightYStick = 5;
-    public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
-    public static final int XboxLeftXStick = 0;
-    public static final int XboxLeftYStick = 1;
+    // The robot's subsystems and commands are defined here...
+    public static AHRS navx = new AHRS(SPI.Port.kMXP);
+    public static Drivetrain drivetrain = new Drivetrain();
+    private final ColorWheel colorWheel = new ColorWheel();
+    private final Shooter shooter = new Shooter();
+    private final Intake intake = new Intake();
+    private final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
-    public static final ColorWheel colorWheel = new ColorWheel();
     public static final Turret turret = new Turret();
-    public static final Conveyor conveyor = new Conveyor();
-    public static final Drivetrain drivetrain = new Drivetrain();
-    public static final Intake intake = new Intake();
-    public static final Shooter shooter = new Shooter();
-    public static final AHRS navx = new AHRS(SPI.Port.kMXP);
+
     private final Command m_autoCommand = null;
 
-    private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())),new Pose2d(0, 0, new Rotation2d()));
-    public static final FullLocalization localization = new FullLocalization( new Rotation2d(0),ROBOT_WIDTH);
+
 
 
     /**
@@ -79,6 +69,7 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         if (Robot.debug) {
+            startValueTuner();
             startFireLog();
         }
     }
@@ -95,14 +86,14 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whenPressed(new IntakeBalls(intake, 0.4));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.4));
+        OI.a.whileHeld(new FeedTurret(conveyor));
+        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
         OI.b.whenPressed(new SpeedUp(shooter));
-        OI.y.whenPressed(new FeedTurret(conveyor));
-        OI.select.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
+        OI.y.whileHeld(new PickupBalls(intake, conveyor));
+        OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
         OI.lb.whenPressed(new PositionControl(colorWheel));
-        OI.select_start.whenHeld(new SequentialCommandGroup(
+        OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
         )); //If both buttons are held without being released the manualMode will be enabled.
@@ -137,27 +128,5 @@ public class RobotContainer {
         return null;
     }
 
-    public void periodic(){
-
-        Pose2d current = localization.update( new Rotation2d( Math.toRadians(navx.getAngle())),
-                drivetrain.getLeftPosition(),
-                drivetrain.getRightPosition(),
-                navx.getWorldLinearAccelY()*GRAVITY_ACCELERATION,
-                Robot.robotTimer.get()
-        );
-
-        differentialDriveOdometry.update(new Rotation2d( Math.toRadians(navx.getAngle())),
-                drivetrain.getLeftPosition(),
-                drivetrain.getRightPosition());
-
-        SmartDashboard.putNumber(" simple x", differentialDriveOdometry.getPoseMeters().getTranslation().getX());
-        SmartDashboard.putNumber(" simple y", differentialDriveOdometry.getPoseMeters().getTranslation().getY());
-        SmartDashboard.putNumber(" simple angle", differentialDriveOdometry.getPoseMeters().getRotation().getRadians());
-
-        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
-        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
-
-    }
-      
 }
+
