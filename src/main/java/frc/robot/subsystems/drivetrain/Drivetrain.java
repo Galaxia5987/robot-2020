@@ -252,6 +252,7 @@ public class Drivetrain extends SubsystemBase {
         FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle()));
 
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
+        SmartDashboard.putNumber("poseAngle", getPose().getRotation().getDegrees());
     }
 
     /**

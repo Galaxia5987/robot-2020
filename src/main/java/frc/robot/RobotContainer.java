@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.JoystickControl;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
@@ -27,6 +28,8 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.PoseVisionTurret;
+import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -67,6 +70,7 @@ public class RobotContainer {
         colorWheel.setDefaultCommand(new ManualControl(colorWheel));
         turret.setDefaultCommand(new JoystickTurret(turret));
         drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
+        climber.setDefaultCommand(new JoystickControl(climber, true, true));
     }
     /**
      * Configures all of the button usages on the robot.
@@ -77,8 +81,8 @@ public class RobotContainer {
         OI.b.whenPressed(new SpeedUp(shooter));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.whenPressed(new RotationControl(colorWheel));
-        OI.lb.whenPressed(new PositionControl(colorWheel));
+        OI.rb.toggleWhenPressed(new PoseVisionTurret(turret));
+        OI.lb.toggleWhenPressed(new VisionTurret(turret));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)

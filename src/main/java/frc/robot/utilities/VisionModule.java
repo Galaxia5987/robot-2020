@@ -13,6 +13,8 @@ import javax.annotation.Nullable;
 import static frc.robot.Constants.FieldGeometry.*;
 import static frc.robot.Constants.Vision.VISION_MODULE_HOOD_DISTANCE;
 import static frc.robot.Constants.Vision.VISION_MODULE_HEIGHT;
+import static frc.robot.RobotContainer.navx;
+import static frc.robot.RobotContainer.turret;
 
 public class VisionModule extends SubsystemBase {
     private static NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("ps3");
@@ -46,7 +48,7 @@ public class VisionModule extends SubsystemBase {
         if (pose.length == 0) {
             return null;
         }
-        return new Pose2d(pose[0], pose[1], new Rotation2d(Math.toRadians(pose[2])));
+        return new Pose2d(pose[0], pose[1], Rotation2d.fromDegrees(pose[2]));
     }
 
     @Nullable
@@ -62,12 +64,6 @@ public class VisionModule extends SubsystemBase {
         if (distance != null) {
             SmartDashboard.putNumber("visionHoodDistance", getHoodDistance());
         }
-    }
-
-    public static Pose2d getRobotPose() {
-        Pose2d visionPose = getPose();
-        if(visionPose == null) return null;
-        return visionPose.relativeTo(OUTER_POWER_PORT_LOCATION);
     }
 
 }
