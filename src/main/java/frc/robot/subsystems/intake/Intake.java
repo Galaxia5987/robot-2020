@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.utilities.State;
 
@@ -29,8 +30,12 @@ public class Intake extends SubsystemBase {
     private Solenoid retractorB = null;
 
     public Intake() {
+        motor.configFactoryDefault();
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
+
+        motor.enableVoltageCompensation(true);
+        motor.configVoltageCompSaturation(12.0);
 
         if (Robot.isRobotA)
             retractorA = new DoubleSolenoid(FOLD_SOLENOID_FORWARD, FOLD_SOLENOID_REVERSE);
