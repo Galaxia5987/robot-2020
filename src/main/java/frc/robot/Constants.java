@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
 import frc.robot.valuetuner.WebConstant;
 import org.apache.commons.lang.math.DoubleRange;
 
@@ -9,6 +10,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
+
+import static frc.robot.Constants.FieldGeometry.OUTER_POWER_PORT_LOCATION;
 
 /**
  * A class holding all of the constants of every mechanism on the robot.
@@ -47,6 +50,8 @@ public class Constants {
         public static final double JOYSTICK_END_THRESHOLD = 0;
 
         public static final double JOYSTICK_MIN_THRESHOLD = 0.08;
+
+        public static final Pose2d INTIAL_POSE = new Pose2d(OUTER_POWER_PORT_LOCATION.getTranslation().getX() - 10, OUTER_POWER_PORT_LOCATION.getTranslation().getY(), new Rotation2d());
     }
 
     public static class Autonomous {
