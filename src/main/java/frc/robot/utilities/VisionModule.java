@@ -53,7 +53,7 @@ public class VisionModule extends SubsystemBase {
     public static Double getHoodDistance() {
         Pose2d pose = getPose();
         if (pose == null) return null;
-        return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) - VISION_MODULE_HOOD_DISTANCE;
+        return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) + VISION_MODULE_HOOD_DISTANCE;
     }
 
     @Override
