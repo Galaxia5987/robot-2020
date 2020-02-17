@@ -43,6 +43,9 @@ public class Conveyor extends SubsystemBase {
     public Conveyor(Intake intake) {
         intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
 
+        motor.configFactoryDefault();
+        funnel.configFactoryDefault();
+
         motor.setInverted(MOTOR_INVERTED);
         funnel.setInverted(FUNNEL_INVERTED);
 
@@ -56,6 +59,12 @@ public class Conveyor extends SubsystemBase {
         motor.configContinuousCurrentLimit(30);
         motor.enableCurrentLimit(true);
         motor.configClosedloopRamp(RAMP_RATE);
+
+        motor.enableVoltageCompensation(true);
+        motor.configVoltageCompSaturation(12.0);
+
+        funnel.enableVoltageCompensation(true);
+        funnel.configVoltageCompSaturation(12.0);
 
         if (Robot.isRobotA)
             gateA = new DoubleSolenoid(FORWARD_GATE, REVERSE_GATE);

@@ -25,6 +25,10 @@ public class UtilityFunctions {
             talon.enableCurrentLimit(configs.isEnableCurrentLimit());
             talon.configContinuousCurrentLimit(configs.getContinuousCurrentLimit());
             talon.configPeakCurrentLimit(configs.getPeakCurrentLimit());
+            talon.config_kP(0, configs.getPidSet()[0]);
+            talon.config_kI(0, configs.getPidSet()[1]);
+            talon.config_kD(0, configs.getPidSet()[2]);
+            talon.config_kF(0, configs.getPidSet()[3]);
         }
 
     }
