@@ -80,7 +80,7 @@ public class RobotContainer {
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.toggleWhenPressed(new VisionTurret(turret));
-        OI.lb.toggleWhenPressed(new PoseVisionTurret(turret, drivetrain));
+        OI.lb.toggleWhenPressed(new PoseVisionTurret(turret));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
