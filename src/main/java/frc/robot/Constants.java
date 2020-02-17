@@ -106,8 +106,8 @@ public class Constants {
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
-        public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 2630;
+        public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
+        public static final int ZERO_POSITION = 552; //Encoder absolute position when the turret is facing forward. This might change occasionally.
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 1;
