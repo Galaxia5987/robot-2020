@@ -32,23 +32,23 @@ public class CustomDashboard extends SubsystemBase {
         distanceValid.setBoolean(toggle);
     }
 
-    public void setBallCount(int count) {
+    public static void setBallCount(int count) {
         ballCount.setNumber(count);
     }
 
-    public void setIntake(boolean toggle) {
+    public static void setIntake(boolean toggle) {
         intake.setBoolean(toggle);
     }
 
-    public void setGate(boolean toggle) {
+    public static void setGate(boolean toggle) {
         gate.setBoolean(toggle);
     }
 
-    public void setClimb(boolean toggle) {
+    public static void setClimb(boolean toggle) {
         climb.setBoolean(toggle);
     }
 
-    public void setShift(boolean toggle) {
+    public static void setShift(boolean toggle) {
         shift.setBoolean(toggle);
     }
 }
