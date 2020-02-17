@@ -91,6 +91,7 @@ public class Conveyor extends SubsystemBase {
             shooterProximity.resetToggle();
         }
         CustomDashboard.setBallCount(getBallsCount());
+        CustomDashboard.setGate(isGateOpen());
     }
 
     private void updateSensors() {
