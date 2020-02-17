@@ -111,7 +111,7 @@ public class KalmanRangeEstimatorTest {
         // The position must be correct despite no range data for 10 cycles
         assertEquals(R+V*40*dt, filter.GetRange() , 0.2);
 
-        assertEquals(V, filter.filter.model.state_estimate.data[1][0] , 0.1);
+        assertEquals(V, filter.filter.model.state_estimate.data[1][0] , 0.15);
 
     }
 }
