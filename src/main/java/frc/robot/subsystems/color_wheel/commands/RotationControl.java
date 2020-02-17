@@ -21,7 +21,6 @@ public class RotationControl extends CommandBase {
     private ColorWheel colorWheel;
 
     public RotationControl(ColorWheel colorWheel) {
-
         addRequirements(colorWheel);
         this.colorWheel = colorWheel;
     }
@@ -57,11 +56,7 @@ public class RotationControl extends CommandBase {
     }
 
     private void updateColorIndex() {
-        try {
-            sensorColorIndex = colorWheel.indexOfColor(colorWheel.getColorString());
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+        sensorColorIndex = colorWheel.indexOfColor(colorWheel.getColorString());
     }
 
     @Override
