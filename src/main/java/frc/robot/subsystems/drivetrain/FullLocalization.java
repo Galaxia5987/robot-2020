@@ -24,6 +24,7 @@ import org.ghrobotics.lib.debug.FalconDashboard;
 import static frc.robot.RobotContainer.drivetrain;
 import static frc.robot.RobotContainer.navx;
 import static java.lang.Math.abs;
+import static java.lang.Math.min;
 
 /**
  * Class for localization using differntial drive odometry and inertial sensors. Odometry allows you to track the
@@ -39,6 +40,7 @@ import static java.lang.Math.abs;
  */
 public class FullLocalization {
 
+    private Pose2d m_poseInitialMeters;
     public KalmanFilter filter;
     private OdometryInertialProcess process;
     private OdometryInertialObservation observation;
@@ -74,7 +76,7 @@ public class FullLocalization {
                             Pose2d initialPoseMeters, double widthMeters) {
         m_poseMeters = initialPoseMeters;
         m_gyroOffset = m_poseMeters.getRotation().minus(gyroAngle);
-        m_previousAngle = initialPoseMeters.getRotation();
+        m_previousAngle = gyroAngle;
 
         observation = new OdometryInertialObservation(widthMeters / 2, widthMeters / 2);
         process = new OdometryInertialProcess();
@@ -112,7 +114,7 @@ public class FullLocalization {
      */
     public void resetPosition(Pose2d poseMeters, Rotation2d gyroAngle, double time) {
         m_poseMeters = poseMeters;
-        m_previousAngle = poseMeters.getRotation();
+        m_previousAngle = gyroAngle;
         m_gyroOffset = m_poseMeters.getRotation().minus(gyroAngle);
 
         m_prevLeftDistance = 0.0;
@@ -123,7 +125,7 @@ public class FullLocalization {
         process.setState(0, poseMeters.getTranslation().getX());
         process.setState(1, poseMeters.getTranslation().getY());
         process.setState(2, 0);
-        process.setState(3, poseMeters.getRotation().minus(gyroAngle).getRadians());
+        process.setState(3, poseMeters.getRotation().getRadians());
         process.setState(4, 0);
 
     }
@@ -158,17 +160,17 @@ public class FullLocalization {
         m_prevLeftDistance = leftDistanceMeters;
         m_prevRightDistance = rightDistanceMeters;
 
-         var angle = gyroAngle; // .plus(m_gyroOffset); TODO think how to use offset
+         var angle = new Rotation2d( gyroAngle.getRadians() +  m_gyroOffset.getRadians());
 
 
-        double dt = time - m_prev_time;
+        double dt = Math.max(0.02,time - m_prev_time);
         // Observation object holds the new measurements
-        observation.SetMeasurement(gyroAngle.getRadians(), deltaLeftDistance, deltaRightDistance, dt);
+        observation.SetMeasurement(angle.getRadians(), deltaLeftDistance, deltaRightDistance, dt);
         // Acceleration enters the process and not the observation
         process.setAcc(0);
 
         // Check if encoders are valid or slipping:
-        observation.setEncoderValid(EncoderValid(angle, deltaLeftDistance, deltaRightDistance));
+        observation.setEncoderValid(EncoderValid(gyroAngle, deltaLeftDistance, deltaRightDistance));
 
         m_previousAngle = gyroAngle;
 
@@ -181,6 +183,7 @@ public class FullLocalization {
         m_poseMeters = new Pose2d(filter.model.state_estimate.data[0][0],
                 filter.model.state_estimate.data[1][0],
                 phi);
+
 
         x.setDouble(filter.model.state_estimate.data[0][0]);
         y.setDouble(filter.model.state_estimate.data[1][0]);
