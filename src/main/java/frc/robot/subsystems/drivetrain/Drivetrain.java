@@ -94,8 +94,8 @@ public class Drivetrain extends SubsystemBase {
             gearShifterB = new Solenoid(SHIFTER_PORT);
 
         navx.reset();
-        localization.resetPosition(new Pose2d(), new Rotation2d(), Robot.robotTimer.get());
-        differentialDriveOdometry.resetPosition(new Pose2d(), new Rotation2d());
+        localization.resetPosition(INTIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())), Robot.robotTimer.get());
+        differentialDriveOdometry.resetPosition(INTIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())));
     }
 
     public void shiftGear(shiftModes mode) {
