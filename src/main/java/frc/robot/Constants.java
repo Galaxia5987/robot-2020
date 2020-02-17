@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
-    public static final double EFFECTIVE_TURN_WIDTH = 1.46; // wheel center to wheel center [m]
+    public static final double EFFECTIVE_TURN_WIDTH = 0.73; // wheel center to wheel center [m]
 
     public static class Drivetrain {
         //Remember! High gear == High speed!

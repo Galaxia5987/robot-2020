@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
+
     /**
      * @return Robot in debug mode
      */
@@ -54,7 +56,6 @@ public class Robot extends TimedRobot {
 //        compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
-        m_robotContainer.init();
     }
 
     /**
@@ -71,9 +72,9 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        m_robotContainer.periodic();
         NetworkTableInstance.getDefault().flush();
     }
+
 
     /**
      * This function is called once each time the robot enters Disabled mode.

@@ -14,6 +14,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
@@ -21,8 +24,10 @@ import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstantPIDTalon;
+import org.ghrobotics.lib.debug.FalconDashboard;
 
 import static frc.robot.Constants.Drivetrain.*;
+import static frc.robot.Constants.EFFECTIVE_TURN_WIDTH;
 import static frc.robot.Ports.Drivetrain.LEFT_MASTER_INVERTED;
 import static frc.robot.Ports.Drivetrain.LEFT_SLAVE_INVERTED;
 import static frc.robot.Ports.Drivetrain.RIGHT_MASTER_INVERTED;
@@ -38,6 +43,8 @@ public class Drivetrain extends SubsystemBase {
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
+    public static final FullLocalization localization = new FullLocalization(new Rotation2d(0), EFFECTIVE_TURN_WIDTH);
+    private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())), new Pose2d(0, 0, new Rotation2d()));
 
     /**
      * The gear shifter will be programmed according to the following terms
@@ -85,6 +92,10 @@ public class Drivetrain extends SubsystemBase {
             gearShifterA = new DoubleSolenoid(SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
         else
             gearShifterB = new Solenoid(SHIFTER_PORT);
+
+        navx.reset();
+        localization.resetPosition(new Pose2d(), new Rotation2d(), Robot.robotTimer.get());
+        differentialDriveOdometry.resetPosition(new Pose2d(), new Rotation2d());
     }
 
     public void shiftGear(shiftModes mode) {
@@ -254,6 +265,26 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
         SmartDashboard.putNumber("leftPosition", getLeftPosition());
         SmartDashboard.putNumber("rightPosition", getRightPosition());
+
+        Pose2d current = localization.update( new Rotation2d( Math.toRadians(navx.getAngle())),
+                getLeftPosition(),
+                getRightPosition(),
+                navx.getWorldLinearAccelY()*GRAVITY_ACCELERATION,
+                Robot.robotTimer.get()
+        );
+
+        differentialDriveOdometry.update(new Rotation2d( Math.toRadians(navx.getAngle())),
+                getLeftPosition(),
+                getRightPosition());
+
+        SmartDashboard.putNumber(" simple x", differentialDriveOdometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber(" simple y", differentialDriveOdometry.getPoseMeters().getTranslation().getY());
+        SmartDashboard.putNumber(" simple angle", differentialDriveOdometry.getPoseMeters().getRotation().getRadians());
+        SmartDashboard.putNumber("navx accel", navx.getWorldLinearAccelY() * GRAVITY_ACCELERATION);
+
+        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
+        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
     }
 
     /**

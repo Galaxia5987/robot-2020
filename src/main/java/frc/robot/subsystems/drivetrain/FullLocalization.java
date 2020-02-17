@@ -43,7 +43,7 @@ public class FullLocalization {
     private OdometryInertialProcess process;
     private OdometryInertialObservation observation;
     double m_width;     // Robot width - distance between wheel centers
-    final double MAX_ANGLE_DELTA_ENCODER_GYRO = 0.01; // allowed deviation in one cycle of between gyro and encoders. A larger value means wheel is slipping
+    final double MAX_ANGLE_DELTA_ENCODER_GYRO = 0.05; // allowed deviation in one cycle of between gyro and encoders. A larger value means wheel is slipping
 
 
     private Pose2d m_poseMeters;
@@ -158,7 +158,7 @@ public class FullLocalization {
         // Observation object holds the new measurements
         observation.SetMeasurement(gyroAngle.getRadians(), deltaLeftDistance, deltaRightDistance, dt);
         // Acceleration enters the process and not the observation
-        process.setAcc(acc);
+        process.setAcc(0);
 
         // Check if encoders are valid or slipping:
         observation.setEncoderValid(EncoderValid(angle, deltaLeftDistance, deltaRightDistance));

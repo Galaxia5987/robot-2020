@@ -59,8 +59,7 @@ public class RobotContainer {
 
     private final Command m_autoCommand = null;
 
-    private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())), new Pose2d(0, 0, new Rotation2d()));
-    public static final FullLocalization localization = new FullLocalization(new Rotation2d(0), EFFECTIVE_TURN_WIDTH);
+
 
 
     /**
@@ -129,33 +128,5 @@ public class RobotContainer {
         return null;
     }
 
-    public void init() {
-        navx.reset();
-        localization.resetPosition(new Pose2d(), new Rotation2d(), Robot.robotTimer.get());
-        differentialDriveOdometry.resetPosition(new Pose2d(), new Rotation2d());
-    }
-
-    public void periodic() {
-        Pose2d current = localization.update( new Rotation2d( Math.toRadians(navx.getAngle())),
-                drivetrain.getLeftPosition(),
-                drivetrain.getRightPosition(),
-                navx.getWorldLinearAccelY()*GRAVITY_ACCELERATION,
-                Robot.robotTimer.get()
-        );
-
-        differentialDriveOdometry.update(new Rotation2d( Math.toRadians(navx.getAngle())),
-                drivetrain.getLeftPosition(),
-                drivetrain.getRightPosition());
-
-        SmartDashboard.putNumber(" simple x", differentialDriveOdometry.getPoseMeters().getTranslation().getX());
-        SmartDashboard.putNumber(" simple y", differentialDriveOdometry.getPoseMeters().getTranslation().getY());
-        SmartDashboard.putNumber(" simple angle", differentialDriveOdometry.getPoseMeters().getRotation().getRadians());
-        SmartDashboard.putNumber("navx accel", navx.getWorldLinearAccelY() * GRAVITY_ACCELERATION);
-
-        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
-        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
-    }
-      
 }
 
