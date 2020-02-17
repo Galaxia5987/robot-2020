@@ -8,6 +8,7 @@ import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VictorConfiguration;
+import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 
 import static frc.robot.Constants.Shooter.*;
@@ -87,7 +88,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isShooterReady(){
-        return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE;
+        return targetVelocity != 0 && Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE;
     }
 
     public void setPower(double power) {
@@ -109,5 +110,7 @@ public class Shooter extends SubsystemBase {
         else
             shooterMaster.configClosedloopRamp(0);
         CustomDashboard.setSpeedValid(isShooterReady());
+        Double hoodDistance = VisionModule.getHoodDistance();
+        CustomDashboard.setDistanceValid(hoodDistance != null && ALLOWED_SHOOTING_RANGE.containsDouble(hoodDistance));
     }
 }

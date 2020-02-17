@@ -27,6 +27,7 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -39,6 +40,7 @@ import org.techfire225.webapp.Webserver;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
+    private final VisionModule visionModule = new VisionModule();
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
     private final Shooter shooter = new Shooter();
