@@ -154,6 +154,7 @@ public class Constants {
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double VELOCITY_TOLERANCE = 0; // the acceptable velocity threshold error of the shooter
+        public final static double MINIMAL_VELOCITY = 0;//minimal velocity where the shooter knows it's actually moving
     }
 
     public static class ColorWheel{
