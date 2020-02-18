@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstantPIDTalon;
@@ -252,6 +253,8 @@ public class Drivetrain extends SubsystemBase {
         FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle()));
 
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
+
+        CustomDashboard.setShift(isShiftedHigh());
     }
 
     /**

@@ -11,6 +11,7 @@ import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.DeadbandProximity;
 import frc.robot.utilities.State;
 
@@ -89,6 +90,8 @@ public class Conveyor extends SubsystemBase {
             intakeProximity.resetToggle();
             shooterProximity.resetToggle();
         }
+        CustomDashboard.setBallCount(getBallsCount());
+        CustomDashboard.setGate(isGateOpen());
     }
 
     private void updateSensors() {

@@ -20,6 +20,7 @@ import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.TalonConfiguration;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.techfire225.webapp.FireLog;
@@ -216,6 +217,6 @@ public class Climber extends SubsystemBase {
         if (getLeftHeight() >= Constants.Climber.MAX_HEIGHT) {
             setLeftHeight(Constants.Climber.MAX_HEIGHT);
         }
-
+        CustomDashboard.setClimb(isStopperEngaged());
     }
 }

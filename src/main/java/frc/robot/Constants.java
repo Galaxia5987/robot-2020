@@ -106,8 +106,8 @@ public class Constants {
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
-        public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 2630;
+        public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
+        public static final int ZERO_POSITION = 1600; //Encoder absolute position when the turret is facing forward. This might change occasionally.
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 1;
@@ -148,13 +148,17 @@ public class Constants {
 
         public static final double KP = 1;
         public static final double KI = 0.0;
-        public static final double KD = 0;
+        public static final double KD = 1.5;
         public static final double KF = 0.014;
+
+        public static DoubleRange ALLOWED_SHOOTING_RANGE = new DoubleRange(1, 10);
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double VELOCITY_TOLERANCE = 0; // the acceptable velocity threshold error of the shooter
         public final static double MINIMAL_VELOCITY = 2;//minimal velocity where the shooter knows it's actually moving
+        public static final WebConstant VELOCITY_DAMP_RAMP = new WebConstant("damp_ramp", 1); // Damp ramp for that clamp on the accelerant
+        public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
     }
 
     public static class ColorWheel{
