@@ -147,10 +147,9 @@ public class Drivetrain extends SubsystemBase {
      * @return if the drivetrain can shift to high gear
      */
     private boolean canShiftHigh() {
-//        return !isShifting
-//                && !isShiftedHigh()
-//                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE;
-        return true;
+        return !isShifting
+                && !isShiftedHigh()
+                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE;
     }
 
     /**
@@ -159,10 +158,10 @@ public class Drivetrain extends SubsystemBase {
      * @return if the drivetrain can shift to low gear
      */
     private boolean canShiftLow() {
-//        return !isShifting
-//                && !isShiftedLow()
-//                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE;
-        return true;
+        return !isShifting
+                && !isShiftedLow()
+                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE;
+
     }
 
     public UnitModel getCurrentUnitModel() {
