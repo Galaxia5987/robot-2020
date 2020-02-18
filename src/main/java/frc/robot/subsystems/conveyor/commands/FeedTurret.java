@@ -38,12 +38,10 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.setGate(State.OPEN);
     }
 
     @Override
     public void execute() {
-        if (smartFeed) {
         if (smartFeed && isShooting.get()) {
             if (isShooterReady.get() && isTurretReady.get()) {
                 if (conveyor.isGateOpen()) {
