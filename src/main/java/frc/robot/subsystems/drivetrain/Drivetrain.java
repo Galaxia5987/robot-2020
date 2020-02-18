@@ -150,8 +150,7 @@ public class Drivetrain extends SubsystemBase {
      */
     private boolean canShiftHigh() {
         return !isShifting
-                && !isShiftedHigh()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE;
+                && !isShiftedHigh();
     }
 
     /**
@@ -162,7 +161,8 @@ public class Drivetrain extends SubsystemBase {
     private boolean canShiftLow() {
         return !isShifting
                 && !isShiftedLow()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE;
+                && Math.abs(getLeftVelocity()) < SHIFT_SPEED_TOLERANCE
+                && Math.abs(getRightVelocity()) < SHIFT_SPEED_TOLERANCE; //Shifting low at high speeds can cause damage to the motors.
 
     }
 
