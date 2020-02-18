@@ -25,7 +25,7 @@ public class Constants {
         public static final double LOW_TICKS_PER_METER = 2048. * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
         public static final double HIGH_TICKS_PER_METER = 2048. * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
 
-        public static final double[] VELOCITY_PID_SET = {0.0, 0, 0, 0}; // PID gains set for the velocity drive of the wheels.
+        public static final double[] VELOCITY_PID_SET = {0.4, 0.0001, 0.3, 0}; // PID gains set for the velocity drive of the wheels.
 
         //Shifter enabled constants
         public static final double SHIFTER_COOLDOWN = 0.5; // Time after shifting the shifter is not to be used.
@@ -39,12 +39,13 @@ public class Constants {
 
     public static class Autonomous {
         // Drivetrain characterization constants
-        public static final double leftkS = 0.367;
-        public static final double leftkV = 1.6;
-        public static final double leftkA = 0.0527;
-        public static final double rightkS = 0.361;
-        public static final double rightkV = 1.59;
-        public static final double rightkA = 0.0667;
+        public static final double leftkS = 0.284;
+        public static final double leftkV = 2.11;
+        public static final double leftkA = 0.418;
+
+        public static final double rightkS = 0.26;
+        public static final double rightkV = 2.13;
+        public static final double rightkA = 0.347;
 
         // Ramsete controller constants
         public static final double kBeta = 2;
