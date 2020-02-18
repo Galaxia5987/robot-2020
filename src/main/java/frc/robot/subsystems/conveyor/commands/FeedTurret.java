@@ -44,18 +44,11 @@ public class FeedTurret extends CommandBase {
     public void execute() {
         if (smartFeed && isShooting.get()) {
             if (isShooterReady.get() && isTurretReady.get()) {
-                if (conveyor.isGateOpen()) {
-                    conveyor.setConveyorPower(CONVEYOR_MOTOR_OPEN_FEED_POWER.get());
-                    conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
-                }
-                else
-                    conveyor.setGate(State.OPEN);
-
+                conveyor.feed();
             }
             else {
                 conveyor.setConveyorPower(0);
                 conveyor.setFunnelPower(0);
-                conveyor.setGate(State.CLOSE);
             }
         }
         else {
@@ -71,7 +64,7 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        conveyor.stop();
+        conveyor.stopAll();
         conveyor.setGate(State.CLOSE);
     }
 }

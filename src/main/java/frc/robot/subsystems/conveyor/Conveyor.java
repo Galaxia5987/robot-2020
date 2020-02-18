@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.subsystems.intake.Intake;
@@ -34,8 +33,6 @@ public class Conveyor extends SubsystemBase {
     private UnitModel unitConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
     private VictorSPX funnel = new VictorSPX(FUNNEL);
-    
-    
     private DeadbandProximity shooterProximity = new DeadbandProximity(new AnalogInput(SHOOTER_PROXIMITY)::getValue, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
     private DeadbandProximity intakeProximity;
     private DoubleSolenoid gateA = null; //mechanical stop
@@ -73,12 +70,11 @@ public class Conveyor extends SubsystemBase {
             gateA = new DoubleSolenoid(FORWARD_GATE, REVERSE_GATE);
         else
             gateB = new Solenoid(GATE);
-        gateTimer.reset();
     }
 
     @Override
     public void periodic() {
-        if (gateTimer.get() > GATE_OPEN_TIME){
+        if (gateTimer.get() > GATE_OPEN_TIME) {
             gateTimer.stop();
             gateTimer.reset();
         }
@@ -133,7 +129,7 @@ public class Conveyor extends SubsystemBase {
         motor.set(ControlMode.PercentOutput, power);
     }
 
-    public void setFunnelPower(double power){
+    public void setFunnelPower(double power) {
         funnel.set(ControlMode.PercentOutput, power);
     }
 
@@ -141,8 +137,9 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if (!isGateOpen()) return;
-        motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_POWER);
+        if (!isGateOpen()) setGate(State.OPEN);
+        setConveyorPower(CONVEYOR_MOTOR_FEED_POWER.get());
+        setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
     }
 
     /**
@@ -217,25 +214,28 @@ public class Conveyor extends SubsystemBase {
     }
 
     public boolean isGateOpen() {
-        if (Robot.isRobotA)
+        if (Robot.isRobotA) {
             return DoubleSolenoid.Value.kForward == gateA.get() && gateTimer.get() == 0;
-        return gateB.get() != IS_GATE_REVERSED;
+        }
+        return gateB.get() != IS_GATE_REVERSED  && gateTimer.get() == 0;
     }
 
     public void openGate(boolean open) {
         if (Robot.isRobotA) {
             if (open != IS_GATE_REVERSED) {
                 gateA.set(DoubleSolenoid.Value.kForward);
-                gateTimer.start();
-            }
-            else {
+            } else {
                 gateA.set(DoubleSolenoid.Value.kReverse);
-                gateTimer.start();
             }
         } else {
             gateB.set(open != IS_GATE_REVERSED);
-            gateTimer.start();
         }
+        startGateTimer();
+    }
+
+    public void startGateTimer() {
+        if (gateTimer.get() == 0)
+            gateTimer.start();
     }
 
     /**

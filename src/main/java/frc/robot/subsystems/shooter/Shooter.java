@@ -3,6 +3,7 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
@@ -109,6 +110,7 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putBoolean("shooterReady ", isShooterReady());
         if(getSpeed() < VELOCITY_DAMPENING_LIMIT.get())
             shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
         else
