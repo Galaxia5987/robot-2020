@@ -50,8 +50,6 @@ public class Constants {
         public static final double JOYSTICK_END_THRESHOLD = 0;
 
         public static final double JOYSTICK_MIN_THRESHOLD = 0.08;
-
-        public static final Pose2d INTIAL_POSE = new Pose2d(OUTER_POWER_PORT_LOCATION.getTranslation().getX() - 10, OUTER_POWER_PORT_LOCATION.getTranslation().getY(), new Rotation2d());
     }
 
     public static class Autonomous {
@@ -75,6 +73,7 @@ public class Constants {
 
     public static class FieldGeometry {
         public static final Pose2d OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 5.81, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+        public static final Pose2d INITIAL_POSE = new Pose2d(OUTER_POWER_PORT_LOCATION.getTranslation().getX() - 10, OUTER_POWER_PORT_LOCATION.getTranslation().getY(), new Rotation2d());
         public static final Pose2d INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 5.81, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
         public static final double PORT_HEIGHT = 2.4;
     }

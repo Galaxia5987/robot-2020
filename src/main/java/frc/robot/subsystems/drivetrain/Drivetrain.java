@@ -20,14 +20,15 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
-import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.ghrobotics.lib.debug.FalconDashboard;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.EFFECTIVE_TURN_WIDTH;
+import static frc.robot.Constants.FieldGeometry.INITIAL_POSE;
 import static frc.robot.Ports.Drivetrain.LEFT_MASTER_INVERTED;
 import static frc.robot.Ports.Drivetrain.LEFT_SLAVE_INVERTED;
 import static frc.robot.Ports.Drivetrain.RIGHT_MASTER_INVERTED;
@@ -87,15 +88,15 @@ public class Drivetrain extends SubsystemBase {
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setSupplyCurrentLimit(40);
-        Utils.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
+        UtilityFunctions.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
         if (Robot.isRobotA)
             gearShifterA = new DoubleSolenoid(SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
         else
             gearShifterB = new Solenoid(SHIFTER_PORT);
 
         navx.reset();
-        localization.resetPosition(INTIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())), Robot.robotTimer.get());
-        differentialDriveOdometry.resetPosition(INTIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())));
+        localization.resetPosition(INITIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())), Robot.robotTimer.get());
+        differentialDriveOdometry.resetPosition(INITIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())));
     }
 
     public void shiftGear(shiftModes mode) {
