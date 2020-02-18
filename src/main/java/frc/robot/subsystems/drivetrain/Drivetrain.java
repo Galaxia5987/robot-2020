@@ -21,10 +21,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.ghrobotics.lib.debug.FalconDashboard;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
@@ -35,7 +37,7 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getCCWHeading()));
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
@@ -148,8 +150,7 @@ public class Drivetrain extends SubsystemBase {
      */
     private boolean canShiftHigh() {
         return !isShifting
-                && !isShiftedHigh()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE;
+                && !isShiftedHigh();
     }
 
     /**
@@ -160,7 +161,8 @@ public class Drivetrain extends SubsystemBase {
     private boolean canShiftLow() {
         return !isShifting
                 && !isShiftedLow()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE;
+                && Math.abs(getLeftVelocity()) < SHIFT_SPEED_TOLERANCE
+                && Math.abs(getRightVelocity()) < SHIFT_SPEED_TOLERANCE; //Shifting low at high speeds can cause damage to the motors.
 
     }
 
@@ -214,6 +216,10 @@ public class Drivetrain extends SubsystemBase {
         return Math.IEEEremainder(navx.getAngle(), 360);
     }
 
+    public double getCCWHeading() {
+        return -getHeading();
+    }
+
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
@@ -240,18 +246,23 @@ public class Drivetrain extends SubsystemBase {
     public void periodic() { // This method will be called once per scheduler run
         UnitModel unitModel = getCurrentUnitModel();
         Pose2d current = odometry.update(
-                Rotation2d.fromDegrees(getHeading()),
+                Rotation2d.fromDegrees(getCCWHeading()),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition())
         );
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
 
-        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
-        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle()));
+        FalconDashboard.INSTANCE.setRobotX(Utils.toFeet(current.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setRobotY(Utils.toFeet(current.getTranslation().getY()));
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(-navx.getAngle()));
 
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
+
+        CustomDashboard.setShift(isShiftedHigh());
+
+        FireLog.log("driveRightVelocity", Math.abs(getRightVelocity()));
+        FireLog.log("driveLeftVelocity", Math.abs(getLeftVelocity()));
     }
 
     /**
