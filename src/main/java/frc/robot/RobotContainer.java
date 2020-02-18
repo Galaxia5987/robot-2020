@@ -58,6 +58,7 @@ public class RobotContainer {
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        navx.reset();
         configureDefaultCommands();
         configureButtonBindings();
         if (Robot.debug) {
