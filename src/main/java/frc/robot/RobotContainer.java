@@ -27,6 +27,7 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.utilities.State;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -72,13 +73,13 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whileHeld(new FeedTurret(conveyor));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.whenPressed(new SpeedUp(shooter));
-        OI.y.whileHeld(new PickupBalls(intake, conveyor));
-        OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.whenPressed(new RotationControl(colorWheel));
-        OI.lb.whenPressed(new PositionControl(colorWheel));
+        OI.a.whenPressed(new InstantCommand(() -> intake.setPosition(State.TOGGLE)));
+        OI.x.whenPressed(new InstantCommand(() -> conveyor.openGate(true)));
+        OI.b.whenPressed(new InstantCommand(() -> conveyor.openGate(false)));
+        OI.back.whenPressed(new InstantCommand(climber::releaseStopper));
+        OI.y.whenPressed(new InstantCommand(climber::engageStopper));
+        OI.rb.whenPressed(new InstantCommand(() -> drivetrain.shiftGear(Drivetrain.shiftModes.HIGH)));
+        OI.lb.whenPressed(new InstantCommand(() -> drivetrain.shiftGear(Drivetrain.shiftModes.LOW)));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
