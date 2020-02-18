@@ -207,17 +207,17 @@ public class Drivetrain extends SubsystemBase {
         return !isShiftedHigh();
     }
 
-    public double getCWHeading() {
-        return Math.IEEEremainder(navx.getAngle(), 360);
-    }
-
     /**
      * Returns the heading of the robot.
      *
      * @return the robot's heading in degrees, from -180 to 180
      */
+    public double getHeading() {
+        return Math.IEEEremainder(navx.getAngle(), 360);
+    }
+
     public double getCCWHeading() {
-        return -getCWHeading();
+        return -getHeading();
     }
 
     public Pose2d getPose() {
