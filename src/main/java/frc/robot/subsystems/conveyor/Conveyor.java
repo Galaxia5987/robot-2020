@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Ports;
 import frc.robot.Robot;
@@ -40,6 +41,7 @@ public class Conveyor extends SubsystemBase {
     private DoubleSolenoid gateA = null; //mechanical stop
     private Solenoid gateB = null; //mechanical stop
     private int ballsCount = STARTING_AMOUNT;
+    private Timer gateTimer = new Timer();
 
     public Conveyor(Intake intake) {
         intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
@@ -71,10 +73,15 @@ public class Conveyor extends SubsystemBase {
             gateA = new DoubleSolenoid(FORWARD_GATE, REVERSE_GATE);
         else
             gateB = new Solenoid(GATE);
+        gateTimer.reset();
     }
 
     @Override
     public void periodic() {
+        if (gateTimer.get() > GATE_OPEN_TIME){
+            gateTimer.stop();
+            gateTimer.reset();
+        }
         updateSensors();
         //If the intake senses an object, and it hasn't in the previous state, and the wheels are turning outwards, add a ball to the count
         if (intakeProximity.getToggle() && intakeSensedBall() && (getPower() >= 0)) {
@@ -211,18 +218,23 @@ public class Conveyor extends SubsystemBase {
 
     public boolean isGateOpen() {
         if (Robot.isRobotA)
-            return DoubleSolenoid.Value.kForward == gateA.get();
+            return DoubleSolenoid.Value.kForward == gateA.get() && gateTimer.get() == 0;
         return gateB.get() != IS_GATE_REVERSED;
     }
 
     public void openGate(boolean open) {
         if (Robot.isRobotA) {
-            if (open != IS_GATE_REVERSED)
+            if (open != IS_GATE_REVERSED) {
                 gateA.set(DoubleSolenoid.Value.kForward);
-            else
+                gateTimer.start();
+            }
+            else {
                 gateA.set(DoubleSolenoid.Value.kReverse);
+                gateTimer.start();
+            }
         } else {
             gateB.set(open != IS_GATE_REVERSED);
+            gateTimer.start();
         }
     }
 
