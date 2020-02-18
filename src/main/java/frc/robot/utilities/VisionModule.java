@@ -95,7 +95,7 @@ public class VisionModule extends SubsystemBase {
         return new Pose2d(
                 OUTER_POWER_PORT_LOCATION.getTranslation().getX() - visionPose.getRotation().getCos() * robotDistance,
                 OUTER_POWER_PORT_LOCATION.getTranslation().getY() - visionPose.getRotation().getSin() * robotDistance,
-                Rotation2d.fromDegrees(Math.IEEEremainder(visionPose.getRotation().getDegrees() - RobotContainer.turret.getAngle(), 360))
+                Rotation2d.fromDegrees(visionPose.getRotation().getDegrees() - RobotContainer.turret.getAngle())
         );
     }
 
