@@ -106,13 +106,6 @@ class BPorts{
     }
 
     public static class Drivetrain {
-        public static final boolean LEFT_MASTER_INVERTED = false;
-        public static final boolean LEFT_SLAVE_INVERTED = false;
-
-        public static final boolean RIGHT_MASTER_INVERTED = true;
-        public static final boolean RIGHT_SLAVE_INVERTED = true;
-
-        public static final boolean IS_SHIFTER_REVERSED = false;
     }
 
     public static class ColorWheel {
@@ -123,11 +116,6 @@ class BPorts{
     }
 
     public static class Climber {
-        public static final boolean LEFT_MOTOR_INVERTED = false;
-        public static final boolean RIGHT_MOTOR_INVERTED = true;
-        public static final boolean LEFT_ENCODER_INVERTED = true;
-        public static final boolean RIGHT_ENCODER_INVERTED = true;
-        public static final boolean IS_STOPPER_REVERSED = false;
     }
 }
 
