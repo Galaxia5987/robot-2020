@@ -136,7 +136,11 @@ public class Constants {
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
-        public static final int MAX_CURRENT = 35; // [A]
+        public static final int MAX_CURRENT = 20; // [A]
+        public static final int PEAK_CURRENT = 35;
+        public static final int PEAK_DURATION = 2000;
+
+
         public static final double ANGLE_THRESHOLD = 1;
 
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction

@@ -62,9 +62,9 @@ public class Turret extends SubsystemBase {
 
         motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
         motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
-        motor.configPeakCurrentLimit(0);
+        motor.configPeakCurrentLimit(PEAK_CURRENT);
         motor.configContinuousCurrentLimit(MAX_CURRENT);
-        motor.configPeakCurrentDuration(0);
+        motor.configPeakCurrentDuration(PEAK_DURATION);
         motor.enableCurrentLimit(true);
 
         // Configure soft limits for the subsystem.

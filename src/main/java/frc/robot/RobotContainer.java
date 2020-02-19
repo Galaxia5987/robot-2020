@@ -31,6 +31,8 @@ import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VisionModule;
+import frc.robot.subsystems.turret.commands.PoseVisionTurret;
+import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -84,8 +86,8 @@ public class RobotContainer {
         OI.b.whenPressed(new SpeedUp(shooter));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.whenPressed(new RotationControl(colorWheel));
-        OI.lb.whenPressed(new PositionControl(colorWheel));
+        OI.rb.toggleWhenPressed(new VisionTurret(turret));
+        OI.lb.toggleWhenPressed(new PoseVisionTurret(turret));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
