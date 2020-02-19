@@ -24,6 +24,7 @@ import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
@@ -73,7 +74,7 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whenPressed(new InstantCommand(() -> intake.setPosition(State.TOGGLE)));
+        OI.a.toggleWhenPressed(new ShootAtVelocity(shooter));
         OI.x.whenPressed(new InstantCommand(() -> conveyor.openGate(true)));
         OI.b.whenPressed(new InstantCommand(() -> conveyor.openGate(false)));
         OI.back.whenPressed(new InstantCommand(climber::releaseStopper));
