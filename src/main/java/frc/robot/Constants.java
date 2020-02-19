@@ -96,7 +96,7 @@ public class Constants {
         public static final int MAX_BALLS_AMOUNT = 5;
         public static final int STARTING_AMOUNT = 3;
 
-        public static final double GATE_OPEN_TIME = 0.5; //[sec]
+        public static final double GATE_OPEN_TIME = 0.5; // [sec] The amount of time from the opening of the gate until it is considered open
 
     }
 
