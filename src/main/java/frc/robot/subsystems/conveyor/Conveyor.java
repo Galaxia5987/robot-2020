@@ -6,11 +6,12 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.DeadbandProximity;
 import frc.robot.utilities.State;
 
@@ -32,13 +33,12 @@ public class Conveyor extends SubsystemBase {
     private UnitModel unitConverter = new UnitModel(TICK_PER_METERS);
     private TalonSRX motor = new TalonSRX(MOTOR);
     private VictorSPX funnel = new VictorSPX(FUNNEL);
-    
-    
     private DeadbandProximity shooterProximity = new DeadbandProximity(new AnalogInput(SHOOTER_PROXIMITY)::getValue, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
     private DeadbandProximity intakeProximity;
     private DoubleSolenoid gateA = null; //mechanical stop
     private Solenoid gateB = null; //mechanical stop
     private int ballsCount = STARTING_AMOUNT;
+    private Timer gateTimer = new Timer();
 
     public Conveyor(Intake intake) {
         intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
@@ -74,6 +74,10 @@ public class Conveyor extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (gateTimer.get() > GATE_OPEN_TIME) {
+            gateTimer.stop();
+            gateTimer.reset();
+        }
         updateSensors();
         //If the intake senses an object, and it hasn't in the previous state, and the wheels are turning outwards, add a ball to the count
         if (intakeProximity.getToggle() && intakeSensedBall() && (getPower() >= 0)) {
@@ -89,6 +93,8 @@ public class Conveyor extends SubsystemBase {
             intakeProximity.resetToggle();
             shooterProximity.resetToggle();
         }
+        CustomDashboard.setBallCount(getBallsCount());
+        CustomDashboard.setGate(isGateOpen());
     }
 
     private void updateSensors() {
@@ -123,7 +129,7 @@ public class Conveyor extends SubsystemBase {
         motor.set(ControlMode.PercentOutput, power);
     }
 
-    public void setFunnelPower(double power){
+    public void setFunnelPower(double power) {
         funnel.set(ControlMode.PercentOutput, power);
     }
 
@@ -131,8 +137,9 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if (!isGateOpen()) return;
-        motor.set(ControlMode.PercentOutput, CONVEYOR_MOTOR_FEED_POWER);
+        if (!isGateOpen()) setGate(State.OPEN);
+        setConveyorPower(CONVEYOR_MOTOR_FEED_POWER.get());
+        setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
     }
 
     /**
@@ -207,20 +214,33 @@ public class Conveyor extends SubsystemBase {
     }
 
     public boolean isGateOpen() {
-        if (Robot.isRobotA)
-            return DoubleSolenoid.Value.kForward == gateA.get();
-        return gateB.get() != IS_GATE_REVERSED;
+        if (Robot.isRobotA) {
+            return DoubleSolenoid.Value.kForward == gateA.get() && gateTimer.get() == 0;
+        }
+        return gateB.get() != IS_GATE_REVERSED  && gateTimer.get() == 0;
     }
 
+    /**
+     * kForward - opening the gate
+     * kReverse - closing the gate
+     * @param open
+     */
     public void openGate(boolean open) {
         if (Robot.isRobotA) {
-            if (open != IS_GATE_REVERSED)
+            if (open != IS_GATE_REVERSED) {
                 gateA.set(DoubleSolenoid.Value.kForward);
-            else
+            } else {
                 gateA.set(DoubleSolenoid.Value.kReverse);
+            }
         } else {
             gateB.set(open != IS_GATE_REVERSED);
         }
+        startGateTimer();
+    }
+
+    public void startGateTimer() {
+        if (gateTimer.get() == 0)
+            gateTimer.start();
     }
 
     /**

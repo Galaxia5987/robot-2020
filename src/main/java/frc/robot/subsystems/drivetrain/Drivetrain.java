@@ -21,10 +21,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.ghrobotics.lib.debug.FalconDashboard;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
@@ -35,11 +37,10 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
+    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getCCWHeading()));
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -104,10 +105,8 @@ public class Drivetrain extends SubsystemBase {
      * Start the cooldown of the shifter so it won't shift too open
      */
     public void startCooldown() {
-        if (getCooldown() == 0.05) {
-            shiftCooldown.start();
-            isShifting = true;
-        }
+        shiftCooldown.start();
+        isShifting = true;
     }
 
     /**
@@ -145,31 +144,26 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Checks if the drivetrain is  able to switch to highgear
+     * Checks if the drivetrain is  able to switch to high gear
      *
-     * @return
+     * @return if the drivetrain can shift to high gear
      */
     private boolean canShiftHigh() {
-        return shiftCooldown.get() > SHIFTER_COOLDOWN
-                && !isShifting
-                && (double) navx.getWorldLinearAccelX() * GRAVITY_ACCELERATION > HIGH_ACCELERATION_THRESHOLD
-                && !isShiftedHigh()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) < TURNING_TOLERANCE
-                && (getLeftVelocity() + getRightVelocity()) / 2 > HIGH_GEAR_MIN_VELOCITY;
+        return !isShifting
+                && !isShiftedHigh();
     }
 
     /**
-     * Checks if the drivetrain is  able to switch to lowgear
+     * Checks if the drivetrain is  able to switch to low gear
      *
-     * @return
+     * @return if the drivetrain can shift to low gear
      */
     private boolean canShiftLow() {
-        return shiftCooldown.get() > SHIFTER_COOLDOWN
-                && !isShifting
-                && (double) navx.getRawAccelX() < LOW_ACCELERATION_THRESHOLD
+        return !isShifting
                 && !isShiftedLow()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE
-                && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_VELOCITY;
+                && Math.abs(getLeftVelocity()) < SHIFT_SPEED_TOLERANCE
+                && Math.abs(getRightVelocity()) < SHIFT_SPEED_TOLERANCE; //Shifting low at high speeds can cause damage to the motors.
+
     }
 
     public UnitModel getCurrentUnitModel() {
@@ -192,6 +186,7 @@ public class Drivetrain extends SubsystemBase {
 
     /**
      * Indicates whether the shifter is on a high gear
+     *
      * @return
      */
     public boolean isShiftedHigh() {
@@ -205,6 +200,7 @@ public class Drivetrain extends SubsystemBase {
 
     /**
      * Indicates whether the shifter is on a low gear
+     *
      * @return
      */
     public boolean isShiftedLow() {
@@ -218,6 +214,10 @@ public class Drivetrain extends SubsystemBase {
      */
     public double getHeading() {
         return Math.IEEEremainder(navx.getAngle(), 360);
+    }
+
+    public double getCCWHeading() {
+        return -getHeading();
     }
 
     public Pose2d getPose() {
@@ -237,7 +237,7 @@ public class Drivetrain extends SubsystemBase {
         rightMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(rightVelocity), DemandType.ArbitraryFeedForward, rightFF);
     }
 
-    public void setPower(double leftPower, double rightPower){
+    public void setPower(double leftPower, double rightPower) {
         leftMaster.set(ControlMode.PercentOutput, leftPower);
         rightMaster.set(ControlMode.PercentOutput, rightPower);
     }
@@ -246,18 +246,23 @@ public class Drivetrain extends SubsystemBase {
     public void periodic() { // This method will be called once per scheduler run
         UnitModel unitModel = getCurrentUnitModel();
         Pose2d current = odometry.update(
-                Rotation2d.fromDegrees(getHeading()),
+                Rotation2d.fromDegrees(getCCWHeading()),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition())
         );
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
 
-        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
-        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle()));
+        FalconDashboard.INSTANCE.setRobotX(Utils.toFeet(current.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setRobotY(Utils.toFeet(current.getTranslation().getY()));
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(-navx.getAngle()));
 
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
+
+        CustomDashboard.setShift(isShiftedHigh());
+
+        FireLog.log("driveRightVelocity", Math.abs(getRightVelocity()));
+        FireLog.log("driveLeftVelocity", Math.abs(getLeftVelocity()));
     }
 
     /**

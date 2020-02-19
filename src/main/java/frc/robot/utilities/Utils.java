@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class Utils {
 
@@ -46,11 +47,7 @@ public class Utils {
     }
 
     public static double constrainedMap(double x, double in_min, double in_max, double out_min, double out_max) {
-        return constrain( map(x, in_min, in_max, out_min, out_max), out_min, out_max);
-    }
-
-    public static double constrain(double x, double min, double max){
-        return Math.max(min, Math.min(x, max));
+        return MathUtil.clamp(map(x, in_min, in_max, out_min, out_max), out_min, out_max);
     }
 
     public static void configAllFalcons(FalconConfiguration configurations, TalonFX... falcons) {
@@ -69,5 +66,9 @@ public class Utils {
             falcon.config_kF(0, configurations.getPidSet()[3]);
 
         }
+    }
+
+    public static double toFeet(double meters) {
+        return meters * 3.2808399;
     }
 }

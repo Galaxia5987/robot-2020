@@ -25,15 +25,11 @@ public class Constants {
         public static final double LOW_TICKS_PER_METER = 2048. * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
         public static final double HIGH_TICKS_PER_METER = 2048. * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
 
-        public static final double[] VELOCITY_PID_SET = {0.0, 0, 0, 0}; // PID gains set for the velocity drive of the wheels.
+        public static final double[] VELOCITY_PID_SET = {0.4, 0.0001, 0.3, 0}; // PID gains set for the velocity drive of the wheels.
 
         //Shifter enabled constants
         public static final double SHIFTER_COOLDOWN = 0.5; // Time after shifting the shifter is not to be used.
-        public static final double HIGH_ACCELERATION_THRESHOLD = 0; // Threshold for the acceleration required to go into high gear.
-        public static final double LOW_ACCELERATION_THRESHOLD = 0; // Threshold for the acceleration required to go into low gear.
-        public static final double HIGH_GEAR_MIN_VELOCITY = 0;
-        public static final double LOW_GEAR_MIN_VELOCITY = 0;
-        public static final double TURNING_TOLERANCE = 0; // Stops the robot from shifting while the robot is turning.
+        public static final double SHIFT_SPEED_TOLERANCE = 0.5; // Stops the robot from shifting while the robot is too fast
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
@@ -43,12 +39,13 @@ public class Constants {
 
     public static class Autonomous {
         // Drivetrain characterization constants
-        public static final double leftkS = 0.367;
-        public static final double leftkV = 1.6;
-        public static final double leftkA = 0.0527;
-        public static final double rightkS = 0.361;
-        public static final double rightkV = 1.59;
-        public static final double rightkA = 0.0667;
+        public static final double leftkS = 0.284;
+        public static final double leftkV = 2.11;
+        public static final double leftkA = 0.418;
+
+        public static final double rightkS = 0.26;
+        public static final double rightkV = 2.13;
+        public static final double rightkA = 0.347;
 
         // Ramsete controller constants
         public static final double kBeta = 2;
@@ -82,8 +79,8 @@ public class Constants {
         public static final double RAMP_RATE = 0;
 
         public static final WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
-        public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
-        public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.7);
+        public static final WebConstant CONVEYOR_MOTOR_FEED_POWER = new WebConstant("conveyorFeedPower", 0.5);
+        public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.5);
         public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
         public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.7);
         public static final WebConstant CONVEYOR_OUTTAKE_POWER = new WebConstant("conveyorOuttakePower", 0.5);
@@ -100,6 +97,8 @@ public class Constants {
         public static final int MAX_BALLS_AMOUNT = 5;
         public static final int STARTING_AMOUNT = 3;
 
+        public static final double GATE_OPEN_TIME = 0.5; // [sec] The amount of time from the opening of the gate until it is considered open
+
     }
 
     public static class Turret {
@@ -107,12 +106,11 @@ public class Constants {
 
         public static final double TICKS_PER_DEGREE = 4096/360.0;
 
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(0, 200);
-
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
-        public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 2680;
+        public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
+        public static final int ZERO_POSITION = 1600; //Encoder absolute position when the turret is facing forward. This might change occasionally.
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 1;
@@ -153,12 +151,17 @@ public class Constants {
 
         public static final double KP = 1;
         public static final double KI = 0.0;
-        public static final double KD = 0;
+        public static final double KD = 1.5;
         public static final double KF = 0.014;
+
+        public static DoubleRange ALLOWED_SHOOTING_RANGE = new DoubleRange(1, 10);
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
-        public static final double VELOCITY_TOLERANCE = 0; // the acceptable velocity threshold error of the shooter
+        public static final double VELOCITY_TOLERANCE = 2; // [RPS] the acceptable velocity threshold error of the shooter
+        public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
+        public static final WebConstant VELOCITY_DAMP_RAMP = new WebConstant("damp_ramp", 1); // Damp ramp for that clamp on the accelerant
+        public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
     }
 
     public static class ColorWheel{

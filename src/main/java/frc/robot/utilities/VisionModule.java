@@ -20,7 +20,6 @@ public class VisionModule extends SubsystemBase {
     private static NetworkTableEntry visionPose = visionTable.getEntry("targetPose");
     private static NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private static NetworkTableEntry leds = visionTable.getEntry("leds");
-    public static VisionModule INSTANCE = new VisionModule();
 
     /**
      * @return the angle to the target from the vision network table.
@@ -53,7 +52,7 @@ public class VisionModule extends SubsystemBase {
     public static Double getHoodDistance() {
         Pose2d pose = getPose();
         if (pose == null) return null;
-        return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) - VISION_MODULE_HOOD_DISTANCE;
+        return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2)) + VISION_MODULE_HOOD_DISTANCE;
     }
 
     @Override
@@ -62,5 +61,6 @@ public class VisionModule extends SubsystemBase {
         if (distance != null) {
             SmartDashboard.putNumber("visionHoodDistance", getHoodDistance());
         }
+        CustomDashboard.setHasVision(targetSeen());
     }
 }
