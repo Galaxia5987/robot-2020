@@ -113,6 +113,7 @@ public class Turret extends SubsystemBase {
      */
     public void setAngle(double angle) {
         targetAngle = normalizeSetpoint(angle);
+        //Use motion magic if target angle is big enough, else use tracking PID.
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);
             motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
@@ -177,6 +178,7 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         correctBacklash();
+        SmartDashboard.putNumber("talonTurretSetpoint", unitModel.toUnits(motor.getClosedLoopTarget()));
         SmartDashboard.putNumber("turretSetpoint", targetAngle);
         SmartDashboard.putNumber("turretCurrent", getAngle());
         SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
