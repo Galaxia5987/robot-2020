@@ -11,13 +11,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
-import frc.robot.subsystems.climb.commands.CalculatedClimbAndBalance;
-import frc.robot.subsystems.climb.commands.JoystickControl;
-import frc.robot.subsystems.climb.commands.ReleaseRods;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,16 +26,16 @@ import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.commands.GearShift;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.IntakeBalls;
-import frc.robot.subsystems.intake.commands.OuttakeBalls;
+import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
-import frc.robot.subsystems.turret.commands.TurretSwitching;
-import frc.robot.utilities.StickButton;
+import frc.robot.utilities.CustomDashboard;
+import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
@@ -51,35 +48,29 @@ import static frc.robot.Constants.LED.DEFAULT_COLOR;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    public static final Joystick rightJoystick = new Joystick(0);
-    public static final Joystick leftJoystick = new Joystick(1);
-    public static final int rightYStick = 5;
-    public static final double TURRET_JOYSTICK_SPEED = 1; //Coefficient of the joystick value per degree.
-    public static final int XboxLeftXStick = 0;
-    public static final int XboxLeftYStick = 1;
-    public static final Climber climber = new Climber();
-    private static final Intake intake = new Intake();
-    private static final Turret turret = new Turret();
-    private static final XboxController xbox = new XboxController(2);
+    // The robot's subsystems and commands are defined here...
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
-  // The robot's subsystems and commands are defined here...
+    private final VisionModule visionModule = new VisionModule();
+    private final CustomDashboard customDashboard = new CustomDashboard();
     private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
-    private final LED led = new LED();
-    private final JoystickButton rightJoystickButton3 = new JoystickButton(rightJoystick, 3);
     private final Shooter shooter = new Shooter();
-    private static Conveyor conveyor = new Conveyor();
-    private final JoystickButton a = new JoystickButton(xbox, 3);
-    private final JoystickButton b = new JoystickButton(xbox, 4);
-
+    private final Intake intake = new Intake();
+    private final Conveyor conveyor = new Conveyor(intake);
+    public static final Climber climber = new Climber();
+    public static final Turret turret = new Turret();
+    private final LED led = new LED();
+    private final Command m_autoCommand = null;
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        navx.reset();
         configureDefaultCommands();
         configureButtonBindings();
         if (Robot.debug) {
+            startValueTuner();
             startFireLog();
         }
     // Set default commands for subsystems.
@@ -98,18 +89,24 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whenPressed(new IntakeBalls(intake, 0.4));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake, 0.4));
+        OI.a.whileHeld(new FeedTurret(conveyor));
+        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
         OI.b.whenPressed(new SpeedUp(shooter));
-        OI.y.whenPressed(new FeedTurret(conveyor));
-        OI.select.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
+        OI.y.whileHeld(new PickupBalls(intake, conveyor));
+        OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
         OI.lb.whenPressed(new PositionControl(colorWheel));
-        OI.select_start.whenHeld(new SequentialCommandGroup(
+        OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
         )); //If both buttons are held without being released the manualMode will be enabled.
         OI.start.whenPressed(() -> Robot.shootingManualMode = false); //Pressing start disables the manual mode for shooting.
+        for (int i = 0; i < 10; i++) {
+            new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
+        }
+        for (int i = 0; i < 10; i++) {
+            new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
+        }
     }
 
     /**
@@ -138,5 +135,5 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return null;
     }
-      
+
 }

@@ -61,16 +61,21 @@ var app = new Vue({
     }
 });
 
-var sock = new WebSocket("ws://10.59.87.2:5801/state/socket");
-sock.onmessage = function(rawmsg) {
-  var msg = JSON.parse(rawmsg.data);
-  app.recvData(msg);
-};
+function connect() {
+    var sock = new WebSocket(`ws://${window.location.hostname}:5801/state/socket`);
+    sock.onmessage = function (rawmsg) {
+        var msg = JSON.parse(rawmsg.data);
+        app.recvData(msg);
+    };
+    sock.onerror = function () {
+        alert("WS Error");
+    };
 
-sock.onerror = function() {
-  alert("Lost websocket connection");
-};
-
-sock.onclose = function() {
-  alert("Lost websocket connection");
-};
+    sock.onclose = function () {
+        alert("Lost websocket connection, reconnecting....");
+        setTimeout(function () {
+            connect();
+        }, 500);
+    };
+}
+connect();

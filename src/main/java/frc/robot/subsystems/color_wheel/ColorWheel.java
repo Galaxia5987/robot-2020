@@ -38,26 +38,21 @@ public class ColorWheel extends SubsystemBase {
 
     private ColorMatchResult match;
 
-    private boolean manual = false;
-
     public ColorWheel() {
+        motor.configFactoryDefault();
+
         colorMatcher.addColorMatch(BlueTarget);
         colorMatcher.addColorMatch(GreenTarget);
         colorMatcher.addColorMatch(RedTarget);
         colorMatcher.addColorMatch(YellowTarget);
         motor.setNeutralMode(NeutralMode.Brake);
+
+        motor.enableVoltageCompensation(true);
+        motor.configVoltageCompSaturation(12.0);
     }
 
     public String getColorString() {
         return colorString;
-    }
-
-    public void setManual(boolean manual){
-        this.manual = manual;
-    }
-
-    public boolean isManual(){
-        return manual;
     }
 
     public int indexOfColor(String color) {

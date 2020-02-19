@@ -17,13 +17,16 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.ghrobotics.lib.debug.FalconDashboard;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Ports.Drivetrain.*;
@@ -34,12 +37,10 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
-    private FalconConfiguration configurations = new FalconConfiguration();
+    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getCCWHeading()));
     private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -52,38 +53,43 @@ public class Drivetrain extends SubsystemBase {
 
 
     public Drivetrain() {
+        FalconConfiguration motorConfigurations = new FalconConfiguration();
+
         new WebConstantPIDTalon("drivetrainLeft", pidSet[0], pidSet[1], pidSet[2], pidSet[3], leftMaster);
         new WebConstantPIDTalon("drivetrainRight", pidSet[0], pidSet[1], pidSet[2], pidSet[3], rightMaster);
+
+        rightMaster.configFactoryDefault();
+        rightSlave.configFactoryDefault();
+        leftMaster.configFactoryDefault();
+        leftSlave.configFactoryDefault();
+
         rightMaster.setSelectedSensorPosition(0);
         leftMaster.setSelectedSensorPosition(0);
-        rightMaster.setInverted(RIGHT_MASTER_INVERTED);
-        rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
         rightSlave.follow(rightMaster);
         leftSlave.follow(leftMaster);
-        configurations.setNeutralMode(NeutralMode.Brake);
-        configurations.setEnableVoltageCompensation(true);
-        configurations.configureVoltageCompensationSaturation(12.0);
-        configurations.setPidSet(pidSet[0], pidSet[1], pidSet[2], pidSet[3]);
-        configurations.setEnableCurrentLimit(true);
-        configurations.setEnableCurrentLimit(true);
-        configurations.setSupplyCurrentLimit(40);
-        Utils.configAllFalcons(configurations, rightMaster, rightSlave, leftMaster, leftSlave);
-        if(Robot.hasShifter) {
-            if (Robot.isRobotA)
-                gearShifterA = new DoubleSolenoid(1, SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
-            else
-                gearShifterB = new Solenoid(1, SHIFTER_PORT);
-        }
+
+        //Inversions
+        rightMaster.setInverted(RIGHT_MASTER_INVERTED);
+        rightSlave.setInverted(RIGHT_SLAVE_INVERTED);
+        leftMaster.setInverted(LEFT_MASTER_INVERTED);
+        leftSlave.setInverted(LEFT_SLAVE_INVERTED);
+
+        motorConfigurations.setNeutralMode(NeutralMode.Coast);
+        motorConfigurations.setEnableVoltageCompensation(true);
+        motorConfigurations.configureVoltageCompensationSaturation(12);
+        motorConfigurations.setPidSet(pidSet[0], pidSet[1], pidSet[2], pidSet[3]);
+        motorConfigurations.setEnableCurrentLimit(true);
+        motorConfigurations.setEnableCurrentLimit(true);
+        motorConfigurations.setSupplyCurrentLimit(40);
+        Utils.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
+        if (Robot.isRobotA)
+            gearShifterA = new DoubleSolenoid(SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
+        else
+            gearShifterB = new Solenoid(SHIFTER_PORT);
     }
 
     public void shiftGear(shiftModes mode) {
         switch (mode) {
-            case TOGGLE:
-                if (canShiftHigh())
-                    shiftHigh();
-                else if (canShiftLow())
-                    shiftLow();
-                break;
             case LOW:
                 if (canShiftLow())
                     shiftLow();
@@ -92,8 +98,6 @@ public class Drivetrain extends SubsystemBase {
                 if (canShiftHigh())
                     shiftHigh();
                 break;
-            default:
-                return;
         }
     }
 
@@ -101,10 +105,8 @@ public class Drivetrain extends SubsystemBase {
      * Start the cooldown of the shifter so it won't shift too open
      */
     public void startCooldown() {
-        if (getCooldown() == 0.05) {
-            shiftCooldown.start();
-            isShifting = true;
-        }
+        shiftCooldown.start();
+        isShifting = true;
     }
 
     /**
@@ -130,7 +132,7 @@ public class Drivetrain extends SubsystemBase {
         if (Robot.isRobotA)
             gearShifterA.set(DoubleSolenoid.Value.kForward);
         else
-            gearShifterB.set(true);
+            gearShifterB.set(!IS_SHIFTER_REVERSED);
     }
 
     private void shiftLow() {
@@ -138,59 +140,53 @@ public class Drivetrain extends SubsystemBase {
         if (Robot.isRobotA)
             gearShifterA.set(DoubleSolenoid.Value.kReverse);
         else
-            gearShifterB.set(false);
+            gearShifterB.set(IS_SHIFTER_REVERSED);
     }
 
     /**
-     * Checks if the drivetrain is  able to switch to highgear
+     * Checks if the drivetrain is  able to switch to high gear
      *
-     * @return
+     * @return if the drivetrain can shift to high gear
      */
     private boolean canShiftHigh() {
-        return shiftCooldown.get() > SHIFTER_COOLDOWN
-                && !isShifting
-                && (double) navx.getWorldLinearAccelX() * GRAVITY_ACCELERATION > HIGH_ACCELERATION_THRESHOLD
-                && !isShiftedHigh()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) < TURNING_TOLERANCE
-                && (getLeftVelocity() + getRightVelocity()) / 2 > HIGH_GEAR_MIN_VELOCITY;
+        return !isShifting
+                && !isShiftedHigh();
     }
 
     /**
-     * Checks if the drivetrain is  able to switch to lowgear
+     * Checks if the drivetrain is  able to switch to low gear
      *
-     * @return
+     * @return if the drivetrain can shift to low gear
      */
     private boolean canShiftLow() {
-        return shiftCooldown.get() > SHIFTER_COOLDOWN
-                && !isShifting
-                && (double) navx.getRawAccelX() < LOW_ACCELERATION_THRESHOLD
+        return !isShifting
                 && !isShiftedLow()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE
-                && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_OUTPUT;
+                && Math.abs(getLeftVelocity()) < SHIFT_SPEED_TOLERANCE
+                && Math.abs(getRightVelocity()) < SHIFT_SPEED_TOLERANCE; //Shifting low at high speeds can cause damage to the motors.
+
+    }
+
+    public UnitModel getCurrentUnitModel() {
+        return isShiftedHigh() ? highGearUnitModel : lowGearUnitModel;
     }
 
     /**
      * @return the velocity of the right motor
      */
     public double getRightVelocity() {
-        if (isShiftedLow())
-            return lowGearUnitModel.toVelocity(rightMaster.getSelectedSensorVelocity());
-        else
-            return highGearUnitModel.toUnits(rightMaster.getSelectedSensorVelocity());
+        return getCurrentUnitModel().toVelocity(rightMaster.getSelectedSensorVelocity());
     }
 
     /**
      * @return the velocity of the left motor
      */
     public double getLeftVelocity() {
-        if (isShiftedLow())
-            return lowGearUnitModel.toVelocity(leftMaster.getSelectedSensorVelocity());
-        else
-            return highGearUnitModel.toUnits(leftMaster.getSelectedSensorVelocity());
+        return getCurrentUnitModel().toVelocity(leftMaster.getSelectedSensorVelocity());
     }
 
     /**
      * Indicates whether the shifter is on a high gear
+     *
      * @return
      */
     public boolean isShiftedHigh() {
@@ -204,6 +200,7 @@ public class Drivetrain extends SubsystemBase {
 
     /**
      * Indicates whether the shifter is on a low gear
+     *
      * @return
      */
     public boolean isShiftedLow() {
@@ -216,7 +213,11 @@ public class Drivetrain extends SubsystemBase {
      * @return the robot's heading in degrees, from -180 to 180
      */
     public double getHeading() {
-        return Math.IEEEremainder(navx.getAngle(), 360) * (GYRO_INVERTED ? -1 : 1);
+        return Math.IEEEremainder(navx.getAngle(), 360);
+    }
+
+    public double getCCWHeading() {
+        return -getHeading();
     }
 
     public Pose2d getPose() {
@@ -231,35 +232,44 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
-        UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
+        UnitModel unitModel = getCurrentUnitModel();
         leftMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(leftVelocity), DemandType.ArbitraryFeedForward, leftFF);
         rightMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(rightVelocity), DemandType.ArbitraryFeedForward, rightFF);
     }
 
-    public void setPower(double leftPower, double rightPower){
+    public void setPower(double leftPower, double rightPower) {
         leftMaster.set(ControlMode.PercentOutput, leftPower);
         rightMaster.set(ControlMode.PercentOutput, rightPower);
     }
 
     @Override
     public void periodic() { // This method will be called once per scheduler run
-        UnitModel unitModel = isShiftedLow() ? lowGearUnitModel : highGearUnitModel;
-        unitModel = lowGearUnitModel;
+        UnitModel unitModel = getCurrentUnitModel();
         Pose2d current = odometry.update(
-                Rotation2d.fromDegrees(getHeading()),
+                Rotation2d.fromDegrees(getCCWHeading()),
                 unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
                 unitModel.toUnits(rightMaster.getSelectedSensorPosition())
         );
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
 
-        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
-        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
+        FalconDashboard.INSTANCE.setRobotX(Utils.toFeet(current.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setRobotY(Utils.toFeet(current.getTranslation().getY()));
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(-navx.getAngle()));
+
+        SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
+
+        CustomDashboard.setShift(isShiftedHigh());
+
+        FireLog.log("driveRightVelocity", Math.abs(getRightVelocity()));
+        FireLog.log("driveLeftVelocity", Math.abs(getLeftVelocity()));
     }
 
+    /**
+     * shiftModes.HIGH is the default on the robot, and means high speed.
+     * shiftModes.LOW is for low speed, but more power.
+     */
     public enum shiftModes {
-        TOGGLE,
         HIGH,
         LOW
     }

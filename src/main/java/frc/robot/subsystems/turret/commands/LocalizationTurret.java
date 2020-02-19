@@ -7,11 +7,12 @@ import frc.robot.subsystems.turret.Turret;
 
 import static frc.robot.Constants.FieldGeometry.OUTER_POWER_PORT_LOCATION;
 
-public class TurnLocalization extends CommandBase {
+public class LocalizationTurret extends CommandBase {
     private final Turret turret;
     private final Drivetrain drivetrain;
 
-    public TurnLocalization(Turret turret, Drivetrain drivetrain) {
+    public LocalizationTurret(Turret turret, Drivetrain drivetrain) {
+        addRequirements(turret);
         this.turret = turret;
         this.drivetrain = drivetrain;
     }

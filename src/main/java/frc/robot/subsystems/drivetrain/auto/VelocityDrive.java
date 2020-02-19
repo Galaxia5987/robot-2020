@@ -15,15 +15,18 @@ import org.techfire225.webapp.FireLog;
 public class VelocityDrive extends CommandBase {
     private final boolean usePid;
     private final boolean useFF;
+    private final boolean reverse;
     private Drivetrain drivetrain;
     private static final SimpleMotorFeedforward leftfeedforward = new SimpleMotorFeedforward(Constants.Autonomous.leftkS, Constants.Autonomous.leftkV, Constants.Autonomous.leftkA);
     private static final SimpleMotorFeedforward rightfeedforward = new SimpleMotorFeedforward(Constants.Autonomous.rightkS, Constants.Autonomous.rightkV, Constants.Autonomous.rightkA);
     private static final WebConstant desiredVelocity = new WebConstant("desiredVelocity", 1);
 
-    public VelocityDrive(Drivetrain drivetrain, boolean usePid, boolean useFF) {
+    public VelocityDrive(Drivetrain drivetrain, boolean usePid, boolean useFF, boolean reverse) {
+        addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.usePid = usePid;
         this.useFF = useFF;
+        this.reverse = reverse;
     }
 
     // Called just before this Command runs the first time
@@ -34,18 +37,19 @@ public class VelocityDrive extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        if (Robot.debug) {
-            FireLog.log("driveVelocitySetpoint", Math.abs(desiredVelocity.get()));
-            FireLog.log("rightVelocity", Math.abs(drivetrain.getRightVelocity()));
-            FireLog.log("leftVelocity", Math.abs(drivetrain.getLeftVelocity()));
+        double velocity = desiredVelocity.get();
+
+        if(reverse) {
+            velocity = -velocity;
         }
 
+        FireLog.log("driveVelocitySetpoint", Math.abs(velocity));
 
         double leftFeedforward =
-                leftfeedforward.calculate(desiredVelocity.get(), 0);
+                leftfeedforward.calculate(velocity, 0);
 
         double rightFeedforward =
-                rightfeedforward.calculate(desiredVelocity.get(), 0);
+                rightfeedforward.calculate(velocity, 0);
 
         System.out.println(leftFeedforward / 12);
 
@@ -55,7 +59,7 @@ public class VelocityDrive extends CommandBase {
         }
 
         if (usePid)
-            drivetrain.setVelocityAndFeedForward(desiredVelocity.get(), desiredVelocity.get(), leftFeedforward / 12, rightFeedforward / 12);
+            drivetrain.setVelocityAndFeedForward(velocity, velocity, leftFeedforward / 12, rightFeedforward / 12);
         else {
             drivetrain.setVelocityAndFeedForward(0, 0, leftFeedforward / 12, rightFeedforward / 12);
         }

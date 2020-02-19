@@ -14,10 +14,11 @@ import java.util.function.Supplier;
  */
 public class ManualControl extends CommandBase {
     private ColorWheel colorWheel;
-    private Supplier<Double> joystickInput =  OI::getRightXboxX;
+    private Supplier<Double> joystickInput =  OI::getXboxRX;
 
 
     public ManualControl(ColorWheel colorWheel) {
+        addRequirements(colorWheel);
         this.colorWheel = colorWheel;
     }
 

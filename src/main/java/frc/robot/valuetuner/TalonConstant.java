@@ -2,6 +2,10 @@ package frc.robot.valuetuner;
 
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 
+/**
+ * This class holds kP, kI, kD, kF to be configured on a Talon (SRX/FX) motor controller provided through the constructor.
+ * These values are held behind a key.
+ */
 public class TalonConstant {
     private final String key;
     private final double kP;

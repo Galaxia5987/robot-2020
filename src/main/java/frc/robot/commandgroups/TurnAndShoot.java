@@ -17,8 +17,7 @@ import frc.robot.subsystems.turret.commands.TurnTurret;
 public class TurnAndShoot extends ParallelDeadlineGroup {
     // for when there is no vision
     public TurnAndShoot(Turret turret, Shooter shooter, Conveyor conveyor, double distance, double angle) {
-        super(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady));
-        addRequirements(turret, shooter, conveyor);
+        super(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
         addCommands(
                 new TurnTurret(turret, angle),
                 new SpeedUp(shooter, distance)

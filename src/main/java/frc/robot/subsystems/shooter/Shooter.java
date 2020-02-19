@@ -1,15 +1,16 @@
 package frc.robot.subsystems.shooter;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
+import frc.robot.utilities.VictorConfiguration;
+import frc.robot.utilities.VisionModule;
+import frc.robot.valuetuner.WebConstantPIDTalon;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -21,29 +22,33 @@ public class Shooter extends SubsystemBase {
     private final VictorSPX shooterSlave1 = new VictorSPX(SLAVE_1);
     private final VictorSPX shooterSlave2 = new VictorSPX(SLAVE_2);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
-    private static final NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("shooter");
-    private static final NetworkTableEntry visionDistance = visionTable.getEntry("distance");
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
 
     public Shooter() {
-        // Basic motor configurations
-        // Master configurations
         shooterMaster.configFactoryDefault();
+        shooterSlave1.configFactoryDefault();
+        shooterSlave2.configFactoryDefault();
+
+        VictorConfiguration slaveConfigs = new VictorConfiguration();
+
         shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
         shooterMaster.setInverted(IS_MASTER_INVERTED);
         shooterMaster.setSensorPhase(IS_ENCODER_INVERTED);
 
         // Closed loop control
-        shooterMaster.configClosedloopRamp(MAX_ACCELERATION);
         shooterMaster.config_kP(TALON_PID_SLOT, KP, TALON_TIMEOUT);
         shooterMaster.config_kI(TALON_PID_SLOT, KI, TALON_TIMEOUT);
         shooterMaster.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
         shooterMaster.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
 
-        // Electrical (master)
-        shooterMaster.configVoltageCompSaturation(12);
-        shooterMaster.enableVoltageCompensation(true);
-        shooterMaster.configPeakCurrentLimit(MAX_CURRENT);
+        shooterMaster.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+        shooterMaster.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+
+        shooterMaster.configPeakCurrentLimit(0);
+
+        shooterMaster.configPeakCurrentDuration(0);
+        shooterMaster.configContinuousCurrentLimit(MAX_CURRENT);
+        shooterMaster.enableCurrentLimit(true);
 
         // Slave configuration
         shooterSlave1.follow(shooterMaster);
@@ -51,16 +56,8 @@ public class Shooter extends SubsystemBase {
         shooterSlave1.setInverted(IS_SLAVE_1_INVERTED);
         shooterSlave2.setInverted(IS_SLAVE_2_INVERTED);
 
-        // Electrical (slave)
-        shooterSlave1.configVoltageCompSaturation(12);
-        shooterSlave1.enableVoltageCompensation(true);
-
-        shooterSlave2.configVoltageCompSaturation(12);
-        shooterSlave2.enableVoltageCompensation(true);
-
-        shooterMaster.setNeutralMode(NeutralMode.Coast);
-        shooterSlave1.setNeutralMode(NeutralMode.Coast);
-        shooterSlave2.setNeutralMode(NeutralMode.Coast);
+        UtilityFunctions.configAllVictors(slaveConfigs, shooterSlave1, shooterSlave2);
+        new WebConstantPIDTalon("shooterTalon", KP, KI, KD, KF, shooterMaster);
     }
 
     /**
@@ -84,7 +81,7 @@ public class Shooter extends SubsystemBase {
      * @return the calculated velocity to get to the target in rps.
      */
     public double approximateVelocity(double distance) {
-        return (8.68 * Math.exp(0.1685 * distance));
+        return 0.1069*Math.pow(distance,4) - 2.4364*Math.pow(distance,3) + 19.814*Math.pow(distance,2) - 63.171*distance + 131.49; //The current reading as of 15.2.20
     }
 
     public double getTargetVelocity(){
@@ -92,14 +89,34 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isShooterReady(){
-        return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE;
+        return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE && isShooting();
+    }
+
+    public boolean isShooting(){
+        return getSpeed() > MINIMAL_VELOCITY;
+    }
+
+    public void setPower(double power) {
+        shooterMaster.set(ControlMode.PercentOutput, power);
     }
 
     public void stop() {
-        setSpeed(0);
+        setPower(0);
     }
 
-    public double getVisionDistance(){
-        return visionDistance.getDouble(0);
+    public double getMasterVoltage() {
+        return shooterMaster.getMotorOutputVoltage();
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putBoolean("shooterReady", isShooterReady());
+        if(getSpeed() < VELOCITY_DAMPENING_LIMIT.get())
+            shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
+        else
+            shooterMaster.configClosedloopRamp(0);
+        CustomDashboard.setSpeedValid(isShooterReady());
+        Double hoodDistance = VisionModule.getHoodDistance();
+        CustomDashboard.setDistanceValid(hoodDistance != null && ALLOWED_SHOOTING_RANGE.containsDouble(hoodDistance));
     }
 }
