@@ -34,7 +34,7 @@ public class TurnTurret extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return false;
+        return Math.abs(angle - turret.getAngle()) < ANGLE_THRESHOLD;
     }
 
 }

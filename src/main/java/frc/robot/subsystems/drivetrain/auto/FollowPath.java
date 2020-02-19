@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.autonomous.Path;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.utilities.Utils;
 import org.ghrobotics.lib.debug.FalconDashboard;
@@ -38,9 +39,9 @@ public class FollowPath extends CommandBase {
 
     private final Drivetrain drivetrain;
 
-    public FollowPath(Drivetrain drivetrain, Trajectory trajectory) {
+    public FollowPath(Drivetrain drivetrain, Path path) {
         addRequirements(drivetrain);
-        this.trajectory = trajectory;
+        this.trajectory = path.getTrajectory();
         this.drivetrain = drivetrain;
     }
 
