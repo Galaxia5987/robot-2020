@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.valuetuner.WebConstant;
 import org.apache.commons.lang.math.DoubleRange;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -48,9 +47,7 @@ public class Constants {
         // Blinking settings
         public static final int TOTAL_BLINKS = 5;
         public static final double BLINK_PAUSE = 0.125; // TODO: Tune blink values.
-
     }
-
 
     public static class Autonomous {
         // Drivetrain characterization constants
