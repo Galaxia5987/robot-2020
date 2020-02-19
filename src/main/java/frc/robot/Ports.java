@@ -11,7 +11,7 @@ public class Ports {
         public static final int MOTOR = 21;
         public static final boolean MOTOR_INVERTED = CONST(false);
         public static final boolean FUNNEL_INVERTED = CONST(true);
-        public static final int SHOOTER_PROXIMITY = 1;
+        public static final int SHOOTER_PROXIMITY = CONST(1);
         public static final int FORWARD_GATE = 5;
         public static final int REVERSE_GATE = 4;
         public static final int GATE = 0; // Port of the stopper solenoid.
@@ -110,6 +110,7 @@ class BPorts{
         public static final boolean FUNNEL_INVERTED = false;
         public static final boolean MOTOR_INVERTED = true;
         public static final boolean IS_GATE_REVERSED = true;
+        public static final int SHOOTER_PROXIMITY = 3;
 
     }
 
