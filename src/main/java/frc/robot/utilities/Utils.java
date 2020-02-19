@@ -72,6 +72,10 @@ public class Utils {
         }
     }
 
+    public static double toFeet(double meters) {
+        return meters * 3.2808399;
+    }
+
     /**
      * Calculates turret angle to inner or outer port.
      * @param currentPosition Current robot pose
