@@ -77,7 +77,7 @@ public class RobotContainer {
         OI.a.toggleWhenPressed(new ShootAtVelocity(shooter));
         OI.x.whenPressed(new InstantCommand(() -> conveyor.openGate(true)));
         OI.b.whenPressed(new InstantCommand(() -> conveyor.openGate(false)));
-        OI.back.whenPressed(new InstantCommand(climber::releaseStopper));
+        OI.back.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
         OI.y.whenPressed(new InstantCommand(climber::engageStopper));
         OI.rb.whenPressed(new InstantCommand(() -> drivetrain.shiftGear(Drivetrain.shiftModes.HIGH)));
         OI.lb.whenPressed(new InstantCommand(() -> drivetrain.shiftGear(Drivetrain.shiftModes.LOW)));
