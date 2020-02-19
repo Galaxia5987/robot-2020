@@ -108,6 +108,7 @@ class BPorts{
 
     public static class Conveyor {
         public static final boolean FUNNEL_INVERTED = false;
+        public static final boolean MOTOR_INVERTED = true;
     }
 
     public static class Climber {
