@@ -220,6 +220,11 @@ public class Conveyor extends SubsystemBase {
         return gateB.get() != IS_GATE_REVERSED  && gateTimer.get() == 0;
     }
 
+    /**
+     * kForward - opening the gate
+     * kReverse - closing the gate
+     * @param open
+     */
     public void openGate(boolean open) {
         if (Robot.isRobotA) {
             if (open != IS_GATE_REVERSED) {
