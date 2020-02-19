@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
         robotTimer.reset();
         robotTimer.start();
         m_robotContainer = new RobotContainer();
-        compressor.stop();
+//        compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
     }

@@ -49,16 +49,10 @@ public class Conveyor extends SubsystemBase {
         motor.setInverted(MOTOR_INVERTED);
         funnel.setInverted(FUNNEL_INVERTED);
 
-        motor.config_kP(0, KP, TALON_TIMEOUT);
-        motor.config_kI(0, KI, TALON_TIMEOUT);
-        motor.config_kD(0, KD, TALON_TIMEOUT);
 
-        motor.configMotionCruiseVelocity(unitConverter.toTicks100ms(CRUISE_VELOCITY));
-        motor.configMotionAcceleration(unitConverter.toTicks100ms(CRUISE_ACCELERATION));
         motor.configPeakCurrentLimit(0);
         motor.configContinuousCurrentLimit(30);
         motor.enableCurrentLimit(true);
-        motor.configClosedloopRamp(RAMP_RATE);
 
         motor.enableVoltageCompensation(true);
         motor.configVoltageCompSaturation(12.0);

@@ -37,12 +37,12 @@ public class Constants {
 
     public static class Autonomous {
         // Drivetrain characterization constants
-        public static final double leftkS = 0.367;
-        public static final double leftkV = 1.6;
-        public static final double leftkA = 0.0527;
-        public static final double rightkS = 0.361;
-        public static final double rightkV = 1.59;
-        public static final double rightkA = 0.0667;
+        public static final double leftkS = CONST(0.367);
+        public static final double leftkV = CONST(1.6);
+        public static final double leftkA = CONST(0.0527);
+        public static final double rightkS =CONST(0.361);
+        public static final double rightkV =CONST(1.59);
+        public static final double rightkA =CONST(0.0667);
 
         // Ramsete controller constants
         public static final double kBeta = 2;
@@ -67,13 +67,6 @@ public class Constants {
 
     public static class Conveyor {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
-
-        public static final double KP = 0.0;
-        public static final double KI = 0.0;
-        public static final double KD = 0.0;
-        public static final int CRUISE_VELOCITY = 0;
-        public static final int CRUISE_ACCELERATION = 0;
-        public static final double RAMP_RATE = 0;
 
         public static final WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
         public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
@@ -105,15 +98,15 @@ public class Constants {
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double STARTING_ANGLE = 90;
-        public static final int STARTING_POSITION = 2630;
+        public static final int STARTING_POSITION = CONST(2630);
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 1;
 
-        public static double KP = 3.5;
-        public static double KI = 0.01;
-        public static double KD = 180;
-        public static double KF = 0;
+        public static double KP = CONST(3.5);
+        public static double KI = CONST(0.01);
+        public static double KD = CONST(180);
+        public static double KF = CONST(0);
 
         public static double ALLOWABLE_ERROR = 0.3;
 
@@ -211,6 +204,7 @@ class BConstants {
 
     public static class Turret {
         public static final double KD = 70;
+        public static final int STARTING_POSITION = 3322;
     }
 
     public static class Conveyor {
