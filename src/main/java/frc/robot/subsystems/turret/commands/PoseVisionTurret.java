@@ -6,8 +6,6 @@ import frc.robot.subsystems.turret.Turret;
 import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
 
-import static frc.robot.Constants.FieldGeometry.OUTER_POWER_PORT_LOCATION;
-
 public class PoseVisionTurret extends CommandBase {
     private final Turret turret;
 

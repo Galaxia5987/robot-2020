@@ -24,6 +24,7 @@ import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
+import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.ghrobotics.lib.debug.FalconDashboard;
 import org.techfire225.webapp.FireLog;
@@ -252,11 +253,11 @@ public class Drivetrain extends SubsystemBase {
         );
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
-
-        FalconDashboard.INSTANCE.setRobotX(Utils.toFeet(current.getTranslation().getX()));
-        FalconDashboard.INSTANCE.setRobotY(Utils.toFeet(current.getTranslation().getY()));
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(-navx.getAngle()));
-
+        if(VisionModule.targetSeen()) {
+            FalconDashboard.INSTANCE.setRobotX(Utils.toFeet(VisionModule.getRobotPose().getTranslation().getX()));
+            FalconDashboard.INSTANCE.setRobotY(Utils.toFeet(VisionModule.getRobotPose().getTranslation().getY()));
+            FalconDashboard.INSTANCE.setRobotHeading(VisionModule.getRobotPose().getRotation().getRadians());
+        }
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
 
         CustomDashboard.setShift(isShiftedHigh());
