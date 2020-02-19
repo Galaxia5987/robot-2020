@@ -157,6 +157,10 @@ class BPorts{
     public static class ColorWheel {
     }
 
+    public static class Conveyor {
+        public static final boolean FUNNEL_INVERTED = false;
+    }
+
     public static class Climber {
         public static final boolean LEFT_MOTOR_INVERTED = false;
         public static final boolean RIGHT_MOTOR_INVERTED = true;
