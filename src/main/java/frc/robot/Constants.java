@@ -79,10 +79,10 @@ public class Constants {
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
-        public static final double INTAKE_PROXIMITY_MAX_VALUE = 2; //The minimum voltage for which the sensor would see a ball
-        public static final double INTAKE_PROXIMITY_MIN_VALUE = 1.2; //The minimum voltage which the sensor would see in between two balls
-        public static final double SHOOTER_PROXIMITY_MAX_VALUE = 0;
-        public static final double SHOOTER_PROXIMITY_MIN_VALUE = 0;
+        public static final double INTAKE_PROXIMITY_MAX_VALUE = 200; //The minimum value for which the sensor would see a ball
+        public static final double INTAKE_PROXIMITY_MIN_VALUE = 150; //The minimum voltage which the sensor would see in between two balls
+        public static final double SHOOTER_PROXIMITY_MAX_VALUE = 1500;
+        public static final double SHOOTER_PROXIMITY_MIN_VALUE = 900;
 
         public static final int MAX_BALLS_AMOUNT = 5;
         public static final int STARTING_AMOUNT = 3;
