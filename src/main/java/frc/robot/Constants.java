@@ -2,13 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstant;
 import org.apache.commons.lang.math.DoubleRange;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.Optional;
 
 import static org.apache.commons.lang3.ObjectUtils.CONST;
 
@@ -22,7 +17,7 @@ public class Constants {
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
-        public static final double WHEEL_DIAMETER = 6*0.0254;
+        public static final double WHEEL_DIAMETER = 6 * 0.0254;
         public static final double TRACK_WIDTH = 0.6649; // TODO: this is horizontal distance between the wheels, we might need a diagonal distance.
 
         public static final double LOW_TICKS_PER_METER = 2048. * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
@@ -104,7 +99,7 @@ public class Constants {
     public static class Turret {
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
-        public static final double TICKS_PER_DEGREE = 4096/360.0;
+        public static final double TICKS_PER_DEGREE = 4096 / 360.0;
 
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
@@ -114,7 +109,7 @@ public class Constants {
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 1;
-        
+
         public static double KP = 3.5;
         public static double KI = 0.01;
         public static double KD = 180;
@@ -161,7 +156,7 @@ public class Constants {
         public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
     }
 
-    public static class ColorWheel{
+    public static class ColorWheel {
         public static final double[] POLY_YELLOW_RGB = {0.297, 0.541, 0.161};
         public static final double[] POLY_GREEN_RGB = {0.195, 0.526, 0.281};
         public static final double[] POLY_RED_RGB = {0.398, 0.398, 0.202};
@@ -215,7 +210,7 @@ class BConstants {
     }
 
     public static class Turret {
-
+        public static final double KD = 70;
     }
 
     public static class Conveyor {
@@ -223,11 +218,6 @@ class BConstants {
     }
 
     public static class Shooter {
-        public static final double KP = CONST(1);
-        public static final double KI = CONST(0.0);
-        public static final double KD = CONST(1.5);
-        public static final double KF = CONST(0.014);
-
     }
 
 }

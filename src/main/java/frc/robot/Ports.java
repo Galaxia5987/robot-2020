@@ -1,13 +1,8 @@
 package frc.robot;
 
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.Optional;
-
 import static org.apache.commons.lang3.ObjectUtils.CONST;
 
+@SuppressWarnings("ConstantConditions")
 public class Ports {
     public static final int TALON_PID_SLOT = 0;
 
