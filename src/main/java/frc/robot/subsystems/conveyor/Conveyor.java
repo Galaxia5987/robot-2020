@@ -34,14 +34,14 @@ public class Conveyor extends SubsystemBase {
     private VictorSPX funnel = new VictorSPX(FUNNEL);
     
     
-    private DeadbandProximity shooterProximity = new DeadbandProximity(new AnalogInput(SHOOTER_PROXIMITY)::getValue, SHOOTER_PROXIMITY_MIN_VOLTAGE, SHOOTER_PROXIMITY_MAX_VOLTAGE);
+    private DeadbandProximity shooterProximity = new DeadbandProximity(new AnalogInput(SHOOTER_PROXIMITY)::getValue, SHOOTER_PROXIMITY_MIN_VALUE, SHOOTER_PROXIMITY_MAX_VALUE);
     private DeadbandProximity intakeProximity;
     private DoubleSolenoid gateA = null; //mechanical stop
     private Solenoid gateB = null; //mechanical stop
     private int ballsCount = STARTING_AMOUNT;
 
     public Conveyor(Intake intake) {
-        intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VOLTAGE, INTAKE_PROXIMITY_MAX_VOLTAGE);
+        intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VALUE, INTAKE_PROXIMITY_MAX_VALUE);
 
         motor.configFactoryDefault();
         funnel.configFactoryDefault();
