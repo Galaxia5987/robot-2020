@@ -33,6 +33,7 @@ public class Intake extends SubsystemBase {
         motor.configFactoryDefault();
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
+        motor.setSensorPhase(true);
 
         motor.enableVoltageCompensation(true);
         motor.configVoltageCompSaturation(12.0);
