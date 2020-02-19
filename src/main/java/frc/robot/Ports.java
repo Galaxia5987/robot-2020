@@ -19,7 +19,7 @@ public class Ports {
         public static final int SHOOTER_PROXIMITY = 1;
         public static final int FORWARD_GATE = 5;
         public static final int REVERSE_GATE = 4;
-        public static final int GATE = 1; // Port of the stopper solenoid.
+        public static final int GATE = 0; // Port of the stopper solenoid.
         public static final boolean IS_GATE_REVERSED = CONST(false);
     }
 
@@ -29,7 +29,7 @@ public class Ports {
         public static final boolean IS_FORWARD_OPEN = CONST(true); //if kForward of the solenoid opens the intake or reverse.
         public static final int FOLD_SOLENOID_REVERSE = 7;
         public static final int FOLD_SOLENOID_FORWARD = 6;
-        public static final int SOLENOID = 0;
+        public static final int SOLENOID = 2;
         public static final boolean IS_SOLENOID_REVERSED = CONST(false);
     }
 
@@ -66,7 +66,7 @@ public class Ports {
 
         public static final int SHIFTER_FORWARD_PORT = 1;
         public static final int SHIFTER_REVERSE_PORT = 0;
-        public static final int SHIFTER_PORT = 2;
+        public static final int SHIFTER_PORT = 1;
         public static final boolean IS_SHIFTER_REVERSED = CONST(false);
     }
 
