@@ -29,12 +29,14 @@ public class TrenchPickup extends SequentialCommandGroup {
     public static final double INTAKE_WAIT = 1;
     public static final double SHOOTER_WAIT = 1;
     public static Path toTrench = new Path(
+            true,
             new Pose2d(35.201, 2.199, Rotation2d.fromDegrees(0)),
             new Pose2d(26.219, 2.199, Rotation2d.fromDegrees(0))
     );
     private static final TrajectoryConfig toShootingConfig = new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION).setReversed(true);
     public static Path toShooting = new Path(
             toShootingConfig,
+            false,
             new Pose2d(35.201, 2.199, Rotation2d.fromDegrees(0)),
             new Pose2d(45.476, 5.923, Rotation2d.fromDegrees(0))
     );

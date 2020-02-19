@@ -26,13 +26,14 @@ public class Path {
         }
     }
 
-    Path(Pose2d... points) {
+    Path(boolean preload, Pose2d... points) {
         waypoints.addAll(Arrays.asList(points));
-        pathRegistry.add(this);
+        if(preload)
+            pathRegistry.add(this);
     }
 
-    Path(TrajectoryConfig config, Pose2d... points) {
-        this(points);
+    Path(TrajectoryConfig config, boolean preload, Pose2d... points) {
+        this(preload, points);
         this.config = config;
     }
 
@@ -40,12 +41,16 @@ public class Path {
         this.config = config;
     }
 
-    void generate(Pose2d currentRobotPose) {
+    public void generate(Pose2d currentRobotPose) {
         waypoints.add(0, currentRobotPose);
         this.trajectory = TrajectoryGenerator.generateTrajectory(
                 waypoints,
                 config
         );
+    }
+
+    public boolean hasTrajectory() {
+        return trajectory != null;
     }
 
     public Trajectory getTrajectory() {

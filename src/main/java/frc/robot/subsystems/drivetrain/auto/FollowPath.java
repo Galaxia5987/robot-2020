@@ -28,7 +28,7 @@ import org.techfire225.webapp.FireLog;
  */
 public class FollowPath extends CommandBase {
     private final Timer timer = new Timer();
-    private final Trajectory trajectory;
+    private final Path path;
     private DifferentialDriveWheelSpeeds prevSpeeds;
     private double prevTime;
 
@@ -38,15 +38,22 @@ public class FollowPath extends CommandBase {
     private static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH);
 
     private final Drivetrain drivetrain;
+    private Trajectory trajectory;
 
     public FollowPath(Drivetrain drivetrain, Path path) {
         addRequirements(drivetrain);
-        this.trajectory = path.getTrajectory();
+        this.path = path;
         this.drivetrain = drivetrain;
     }
 
     @Override
     public void initialize() {
+        if(!path.hasTrajectory()) {
+            path.generate(drivetrain.getPose());
+        }
+
+        this.trajectory = path.getTrajectory();
+
         FalconDashboard.INSTANCE.setFollowingPath(true);
         prevTime = 0;
         var initialState = trajectory.sample(0);
@@ -71,7 +78,6 @@ public class FollowPath extends CommandBase {
         var targetWheelSpeeds = kinematics.toWheelSpeeds(
                 follower.calculate(drivetrain.getPose(), state)
         );
-
 
         var leftSpeedSetpoint = targetWheelSpeeds.leftMetersPerSecond;
         var rightSpeedSetpoint = targetWheelSpeeds.rightMetersPerSecond;

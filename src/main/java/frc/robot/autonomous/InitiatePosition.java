@@ -19,6 +19,8 @@ public class InitiatePosition extends CommandBase {
     @Override
     public void initialize() {
         VisionModule.setLEDs(true);
+        timer.reset();
+        timer.start();
     }
 
     @Override
