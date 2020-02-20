@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.valuetuner.WebConstant;
 
 /**
  * An example command that uses an example subsystem.
@@ -25,6 +26,10 @@ public class PIDClimbAndBalance extends CommandBase {
     private double currentAngleError;
     private double leftSetpointHeight;
     private double rightSetpointHeight;
+
+    private WebConstant p = new WebConstant("delta p", 0);
+    private WebConstant i = new WebConstant("delta i", 0);
+    private WebConstant d = new WebConstant("delta d", 0);
 
     /**
      * Creates a new rise to height command.
@@ -74,6 +79,7 @@ public class PIDClimbAndBalance extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        updatePID();
         //Update the target height of each side
         leftSetpointHeight = setpointHeightFromGround;
         rightSetpointHeight = setpointHeightFromGround;
@@ -99,7 +105,9 @@ public class PIDClimbAndBalance extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         climber.engageStopper();
-    }
+        climber.setLeftHeight(climber.getLeftHeight());
+        climber.setRightHeight(climber.getRightHeight());
+        }
 
 
     /**
@@ -151,5 +159,12 @@ public class PIDClimbAndBalance extends CommandBase {
             }
         }
         return new double[]{firstHeight, secondHeight};
+    }
+
+    private void updatePID(){
+        deltaPID.setP(p.get());
+        deltaPID.setI(i.get());
+        deltaPID.setD(d.get());
+        deltaPID.setF(0);
     }
 }

@@ -14,6 +14,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.PIDClimbAndBalance;
+import frc.robot.subsystems.climb.commands.ReleaseRods;
+import frc.robot.subsystems.climb.commands.ResetClimber;
+import frc.robot.subsystems.climb.commands.SimpleClimb;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
@@ -72,32 +76,17 @@ public class RobotContainer {
      * Defines the default command of each mechanism on the robot.
      */
     private void configureDefaultCommands(){
-        colorWheel.setDefaultCommand(new ManualControl(colorWheel));
-        turret.setDefaultCommand(new JoystickTurret(turret));
-        drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
     }
     /**
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whileHeld(new FeedTurret(conveyor));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.whenPressed(new SpeedUp(shooter));
-        OI.y.whileHeld(new PickupBalls(intake, conveyor));
+        OI.lb.whileHeld(new JoystickDrive(drivetrain, ()-> OI.getXboxLY()*-0.3, ()-> OI.getXboxRY()*-0.3));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.whenPressed(new RotationControl(colorWheel));
-        OI.lb.whenPressed(new PositionControl(colorWheel));
-        OI.back_start.whenHeld(new SequentialCommandGroup(
-                new WaitCommand(2),
-                new RunCommand(() -> Robot.shootingManualMode = true)
-        )); //If both buttons are held without being released the manualMode will be enabled.
-        OI.start.whenPressed(() -> Robot.shootingManualMode = false); //Pressing start disables the manual mode for shooting.
-        for (int i = 0; i < 10; i++) {
-            new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
-        }
-        for (int i = 0; i < 10; i++) {
-            new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
-        }
+        OI.a.whenPressed(new ReleaseRods(climber));
+        OI.b.whenPressed(new ResetClimber(climber));
+        OI.x.whenPressed(new PIDClimbAndBalance(climber));
+        OI.y.whenPressed(new SimpleClimb(climber));
     }
 
     /**
