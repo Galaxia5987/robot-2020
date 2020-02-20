@@ -44,9 +44,9 @@ public class Constants {
         public static final double leftkS = CONST(0.367);
         public static final double leftkV = CONST(1.6);
         public static final double leftkA = CONST(0.0527);
-        public static final double rightkS =CONST(0.361);
-        public static final double rightkV =CONST(1.59);
-        public static final double rightkA =CONST(0.0667);
+        public static final double rightkS = CONST(0.361);
+        public static final double rightkV = CONST(1.59);
+        public static final double rightkA = CONST(0.0667);
 
         // Ramsete controller constants
         public static final double kBeta = 2;
