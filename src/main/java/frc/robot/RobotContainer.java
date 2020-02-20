@@ -87,6 +87,9 @@ public class RobotContainer {
         OI.b.whenPressed(new ResetClimber(climber));
         OI.x.whenPressed(new PIDClimbAndBalance(climber));
         OI.y.whenPressed(new SimpleClimb(climber));
+        OI.start.whenPressed(new RunCommand(climber::engageStopper));
+        OI.rs.whenPressed(new RunCommand(climber::releaseStopper));
+
     }
 
     /**
