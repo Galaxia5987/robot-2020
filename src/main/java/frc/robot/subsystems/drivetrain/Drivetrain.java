@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
@@ -37,8 +38,7 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getCCWHeading()));
-    private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
+    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
     /**
@@ -55,8 +55,8 @@ public class Drivetrain extends SubsystemBase {
     public Drivetrain() {
         FalconConfiguration motorConfigurations = new FalconConfiguration();
 
-        new WebConstantPIDTalon("drivetrainLeft", pidSet[0], pidSet[1], pidSet[2], pidSet[3], leftMaster);
-        new WebConstantPIDTalon("drivetrainRight", pidSet[0], pidSet[1], pidSet[2], pidSet[3], rightMaster);
+        new WebConstantPIDTalon("drivetrainLeft", KP, KI, KD, KF, leftMaster);
+        new WebConstantPIDTalon("drivetrainRight", KP, KI, KD, KF, rightMaster);
 
         rightMaster.configFactoryDefault();
         rightSlave.configFactoryDefault();
@@ -77,7 +77,7 @@ public class Drivetrain extends SubsystemBase {
         motorConfigurations.setNeutralMode(NeutralMode.Coast);
         motorConfigurations.setEnableVoltageCompensation(true);
         motorConfigurations.configureVoltageCompensationSaturation(12);
-        motorConfigurations.setPidSet(pidSet[0], pidSet[1], pidSet[2], pidSet[3]);
+        motorConfigurations.setPidSet(KP, KI, KD, KF);
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setSupplyCurrentLimit(40);
@@ -193,7 +193,7 @@ public class Drivetrain extends SubsystemBase {
         if (Robot.isRobotA && gearShifterA != null)
             return gearShifterA.get() == DoubleSolenoid.Value.kForward;
         else if (gearShifterB != null)
-            return gearShifterB.get();
+            return !gearShifterB.get();
         else
             return false;
     }
@@ -253,8 +253,8 @@ public class Drivetrain extends SubsystemBase {
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
 
-        FalconDashboard.INSTANCE.setRobotX(Utils.toFeet(current.getTranslation().getX()));
-        FalconDashboard.INSTANCE.setRobotY(Utils.toFeet(current.getTranslation().getY()));
+        FalconDashboard.INSTANCE.setRobotX(Units.metersToFeet(current.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setRobotY(Units.metersToFeet(current.getTranslation().getY()));
         FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(-navx.getAngle()));
 
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
