@@ -19,7 +19,7 @@ public class VisionTurret extends CommandBase {
 
     @Override
     public void execute() {
-        if(turret.inDeadZone()) return;
+        if(turret.inDeadZone() || !VisionModule.targetSeen()) return;
         turret.setAngle(turret.getAngle() + VisionModule.getVisionAngle());
     }
 

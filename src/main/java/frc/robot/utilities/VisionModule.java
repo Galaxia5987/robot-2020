@@ -26,7 +26,7 @@ public class VisionModule extends SubsystemBase {
      * @return the angle to the target from the vision network table.
      */
     public static double getVisionAngle() {
-        return visionAngle.getDouble(-100);
+        return visionAngle.getDouble(0);
     }
 
     /**
@@ -49,16 +49,22 @@ public class VisionModule extends SubsystemBase {
         return new Pose2d(pose[0], pose[1], Rotation2d.fromDegrees(pose[2]));
     }
 
+    /**
+     * @return The distance the camera sees, in meters.
+     */
     @Nullable
-    public static Double getTargetDistance() {
+    public static Double getTargetRawDistance() {
         Pose2d pose = getPose();
         if (pose == null) return null;
         return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) + Math.pow(pose.getTranslation().getY(), 2));
     }
 
+    /**
+     * @return The horizontal distance of the vision camera from the target.
+     */
     @Nullable
     public static Double getVisionDistance() {
-        Double targetDistance = getTargetDistance();
+        Double targetDistance = getTargetRawDistance();
         if (targetDistance == null) return null;
         return Math.sqrt(Math.pow(targetDistance, 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2));
     }
@@ -84,7 +90,7 @@ public class VisionModule extends SubsystemBase {
         Double distance = getHoodDistance();
         if (distance != null) {
             SmartDashboard.putNumber("visionHoodDistance", distance);
-            SmartDashboard.putNumber("visionTargetDistance", getTargetDistance());
+            SmartDashboard.putNumber("visionTargetDistance", getTargetRawDistance());
             SmartDashboard.putNumber("visionRobotDistance", getVisionDistance());
         }
         Pose2d robotPose = getRobotPose();
@@ -99,7 +105,7 @@ public class VisionModule extends SubsystemBase {
     @Nullable
     public static Pose2d getRobotPose() {
         Pose2d visionPose = getPose();
-        Double robotDistance = getVisionDistance();
+        Double robotDistance = getRobotDistance();
         if (visionPose == null || robotDistance == null) return null;
         return new Pose2d(
                 UtilityFunctions.getAlliancePort(false).getTranslation().getX() - visionPose.getRotation().getCos() * robotDistance,
