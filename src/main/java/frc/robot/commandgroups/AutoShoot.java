@@ -24,7 +24,7 @@ public class AutoShoot extends ParallelDeadlineGroup {
         addCommands(
                 // turn the turret to the setpoint angle
                 // ready the flywheel to shoot the balls to the target distance for the desired amount of time
-                new VisionTurret(turret),
+                new VisionTurret(turret, true),
                 new SpeedUp(shooter)
         );
     }
