@@ -14,6 +14,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 import org.techfire225.webapp.FireLog;
 
+import static frc.robot.Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
 import static frc.robot.Constants.Climber.CLIMB_HEIGHT;
 
 /**
