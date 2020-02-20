@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.autonomous.Path;
@@ -99,8 +100,8 @@ public class FollowPath extends CommandBase {
         FireLog.log("autoLeftVelocity", drivetrain.getLeftVelocity());
 
         FalconDashboard.INSTANCE.setPathHeading(state.poseMeters.getRotation().getRadians());
-        FalconDashboard.INSTANCE.setPathX(Utils.toFeet(state.poseMeters.getTranslation().getX()));
-        FalconDashboard.INSTANCE.setPathY(Utils.toFeet(state.poseMeters.getTranslation().getY()));
+        FalconDashboard.INSTANCE.setPathX(Units.feetToMeters(state.poseMeters.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setPathY(Units.feetToMeters(state.poseMeters.getTranslation().getY()));
 
         prevTime = curTime;
         prevSpeeds = targetWheelSpeeds;
