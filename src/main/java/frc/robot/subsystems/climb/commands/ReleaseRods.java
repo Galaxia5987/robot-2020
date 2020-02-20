@@ -67,8 +67,10 @@ public class ReleaseRods extends CommandBase {
      */
     @Override
     public final boolean isFinished() {
-        double currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
-        return Math.abs(setpointHeight - currentHeight) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        boolean isLeftOnSetpoint = climber.getLeftHeight() > setpointHeight - ALLOWED_HEIGHT_TOLERANCE;
+        boolean isRightOnSetpoint = climber.getRightHeight() > setpointHeight - ALLOWED_HEIGHT_TOLERANCE;
+
+        return isLeftOnSetpoint && isRightOnSetpoint;
     }
 
 
