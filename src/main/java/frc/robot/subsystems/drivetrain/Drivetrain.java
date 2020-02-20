@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
@@ -253,11 +254,11 @@ public class Drivetrain extends SubsystemBase {
         );
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
-        if(VisionModule.targetSeen()) {
-            FalconDashboard.INSTANCE.setRobotX(Utils.toFeet(VisionModule.getRobotPose().getTranslation().getX()));
-            FalconDashboard.INSTANCE.setRobotY(Utils.toFeet(VisionModule.getRobotPose().getTranslation().getY()));
-            FalconDashboard.INSTANCE.setRobotHeading(VisionModule.getRobotPose().getRotation().getRadians());
-        }
+
+        FalconDashboard.INSTANCE.setRobotX(Units.metersToFeet(current.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setRobotY(Units.metersToFeet(current.getTranslation().getY()));
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(-navx.getAngle()));
+
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
 
         CustomDashboard.setShift(isShiftedHigh());
