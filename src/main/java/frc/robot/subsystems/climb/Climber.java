@@ -86,8 +86,10 @@ public class Climber extends SubsystemBase {
         rightMotor.config_kD(1, CLIMB_RELEASE_PIDF[2]);
         rightMotor.config_kF(1, CLIMB_RELEASE_PIDF[3]);
 
-        new WebConstantPIDTalon("climbLeft", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], leftMotor);
-        new WebConstantPIDTalon("climbRight", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], rightMotor);
+        new WebConstantPIDTalon("climbLeftDown", CLIMB_PIDF[0],  CLIMB_PIDF[1],  CLIMB_PIDF[2],  CLIMB_PIDF[3], leftMotor, 0);
+        new WebConstantPIDTalon("climbRightDown", CLIMB_PIDF[0],  CLIMB_PIDF[1],  CLIMB_PIDF[2],  CLIMB_PIDF[3], rightMotor, 0);
+        new WebConstantPIDTalon("climbLeftUp", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], leftMotor, 1);
+        new WebConstantPIDTalon("climbRightUp", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], rightMotor, 1);
 
         if (Robot.isRobotA)
             stopperA = new DoubleSolenoid(Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
