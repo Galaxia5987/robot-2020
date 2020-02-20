@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import frc.robot.UtilityFunctions;
 
 import javax.annotation.Nullable;
 
@@ -59,7 +60,7 @@ public class VisionModule extends SubsystemBase {
     @Nullable
     public static Double getRobotDistance() {
         Double targetDistance = getTargetDistance();
-        if(targetDistance == null) return null;
+        if (targetDistance == null) return null;
         return Math.sqrt(Math.pow(targetDistance, 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2));
     }
 
@@ -79,7 +80,7 @@ public class VisionModule extends SubsystemBase {
             SmartDashboard.putNumber("visionRobotDistance", getRobotDistance());
         }
         Pose2d robotPose = getRobotPose();
-        if(robotPose != null) {
+        if (robotPose != null) {
             SmartDashboard.putNumber("visionRobotX", robotPose.getTranslation().getX());
             SmartDashboard.putNumber("visionRobotY", robotPose.getTranslation().getY());
             SmartDashboard.putNumber("visionRobotAngle", robotPose.getRotation().getDegrees());
@@ -91,11 +92,11 @@ public class VisionModule extends SubsystemBase {
     public static Pose2d getRobotPose() {
         Pose2d visionPose = getPose();
         Double robotDistance = getRobotDistance();
-        if(visionPose == null || robotDistance == null) return null;
+        if (visionPose == null || robotDistance == null) return null;
         return new Pose2d(
-                OUTER_POWER_PORT_LOCATION.getTranslation().getX() - visionPose.getRotation().getCos() * robotDistance,
-                OUTER_POWER_PORT_LOCATION.getTranslation().getY() - visionPose.getRotation().getSin() * robotDistance,
-                Rotation2d.fromDegrees(visionPose.getRotation().getDegrees() - RobotContainer.turret.getAngle())
+                UtilityFunctions.getAlliancePort(false).getTranslation().getX() - visionPose.getRotation().getCos() * robotDistance,
+                UtilityFunctions.getAlliancePort(false).getTranslation().getY() + visionPose.getRotation().getSin() * robotDistance,
+                Rotation2d.fromDegrees(RobotContainer.turret.getAngle() - visionPose.getRotation().getDegrees())
         );
     }
 
