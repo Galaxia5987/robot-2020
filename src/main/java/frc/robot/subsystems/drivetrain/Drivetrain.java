@@ -191,7 +191,7 @@ public class Drivetrain extends SubsystemBase {
         if (Robot.isRobotA && gearShifterA != null)
             return gearShifterA.get() == DoubleSolenoid.Value.kForward;
         else if (gearShifterB != null)
-            return gearShifterB.get();
+            return !gearShifterB.get();
         else
             return false;
     }

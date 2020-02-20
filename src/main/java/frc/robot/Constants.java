@@ -27,7 +27,7 @@ public class Constants {
 
         //Shifter enabled constants
         public static final double SHIFTER_COOLDOWN = 0.5; // Time after shifting the shifter is not to be used.
-        public static final double TURNING_TOLERANCE = 0; // Stops the robot from shifting while the robot is turning.
+        public static final double TURNING_TOLERANCE = 1; // Stops the robot from shifting while the robot is turning.
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
@@ -200,6 +200,16 @@ class BConstants {
 
     public static final class Intake {
 
+    }
+
+    public static class Autonomous {
+        // Drivetrain characterization constants
+        public static final double leftkS = 0.229;
+        public static final double leftkV = 2.12;
+        public static final double leftkA = 0.364;
+        public static final double rightkS = 0.234;
+        public static final double rightkV = 2.11;
+        public static final double rightkA = 0.38;
     }
 
     public static class Turret {
