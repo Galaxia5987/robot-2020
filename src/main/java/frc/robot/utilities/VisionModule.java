@@ -13,8 +13,7 @@ import frc.robot.UtilityFunctions;
 import javax.annotation.Nullable;
 
 import static frc.robot.Constants.FieldGeometry.*;
-import static frc.robot.Constants.Vision.VISION_MODULE_HOOD_DISTANCE;
-import static frc.robot.Constants.Vision.VISION_MODULE_HEIGHT;
+import static frc.robot.Constants.Vision.*;
 
 public class VisionModule extends SubsystemBase {
     private static NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("ps3");
@@ -58,7 +57,7 @@ public class VisionModule extends SubsystemBase {
     }
 
     @Nullable
-    public static Double getRobotDistance() {
+    public static Double getVisionDistance() {
         Double targetDistance = getTargetDistance();
         if (targetDistance == null) return null;
         return Math.sqrt(Math.pow(targetDistance, 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2));
@@ -66,9 +65,18 @@ public class VisionModule extends SubsystemBase {
 
     @Nullable
     public static Double getHoodDistance() {
-        Double robotDistance = getRobotDistance();
-        if (robotDistance == null) return null;
-        return robotDistance + VISION_MODULE_HOOD_DISTANCE;
+        Double visionDistance = getVisionDistance();
+        if (visionDistance == null) return null;
+        return visionDistance + VISION_MODULE_HOOD_DISTANCE;
+    }
+
+    @Nullable
+    public static Double getRobotDistance() {
+        Double visionDistance = getVisionDistance();
+        if (visionDistance == null) return null;
+        double a = VISION_ROTATION_RADIUS + visionDistance;
+        double b = ROBOT_TO_TURRET_CENTER;
+        return Math.sqrt(a*a + b*b - 2*a*b*Math.cos(Math.toRadians(RobotContainer.turret.getAngle()))); //Cosine law
     }
 
     @Override
@@ -77,7 +85,7 @@ public class VisionModule extends SubsystemBase {
         if (distance != null) {
             SmartDashboard.putNumber("visionHoodDistance", distance);
             SmartDashboard.putNumber("visionTargetDistance", getTargetDistance());
-            SmartDashboard.putNumber("visionRobotDistance", getRobotDistance());
+            SmartDashboard.putNumber("visionRobotDistance", getVisionDistance());
         }
         Pose2d robotPose = getRobotPose();
         if (robotPose != null) {
@@ -91,7 +99,7 @@ public class VisionModule extends SubsystemBase {
     @Nullable
     public static Pose2d getRobotPose() {
         Pose2d visionPose = getPose();
-        Double robotDistance = getRobotDistance();
+        Double robotDistance = getVisionDistance();
         if (visionPose == null || robotDistance == null) return null;
         return new Pose2d(
                 UtilityFunctions.getAlliancePort(false).getTranslation().getX() - visionPose.getRotation().getCos() * robotDistance,

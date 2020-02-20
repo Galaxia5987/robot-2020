@@ -55,6 +55,8 @@ public class Constants {
     public static class Vision {
         public static final double VISION_MODULE_HEIGHT = 0.98;
         public static final double VISION_MODULE_HOOD_DISTANCE = 0.28;
+        public static final double VISION_ROTATION_RADIUS = 0; //The horizontal distance from the vision camera to the turret rotation axis.
+        public static final double ROBOT_TO_TURRET_CENTER = 0; //The horizontal distance from the robot's center to the turret center.
     }
 
     public static class FieldGeometry {
