@@ -5,9 +5,15 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.hal.sim.mockdata.DriverStationDataJNI;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.utilities.TalonConfiguration;
+
+import static frc.robot.Constants.FieldGeometry.*;
 
 public class UtilityFunctions {
 
@@ -64,5 +70,11 @@ public class UtilityFunctions {
             falcon.config_kF(0, configurations.getPidSet()[3]);
 
         }
+    }
+
+    public static Pose2d getAlliancePort(boolean innerPort) {
+        DriverStation.Alliance alliance = DriverStation.getInstance().getAlliance();
+        if(alliance.equals(DriverStation.Alliance.Blue)) return innerPort ? BLUE_INNER_POWER_PORT_LOCATION : BLUE_OUTER_POWER_PORT_LOCATION;
+        else return innerPort ? RED_INNER_POWER_PORT_LOCATION : RED_OUTER_POWER_PORT_LOCATION;
     }
 }

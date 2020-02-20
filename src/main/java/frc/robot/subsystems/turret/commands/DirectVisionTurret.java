@@ -28,7 +28,8 @@ public class DirectVisionTurret extends CommandBase {
         anglePid.setI(DIRECT_VISION_KI.get());
         anglePid.setD(DIRECT_VISION_KD.get());
         double power = -anglePid.calculate(VisionModule.getVisionAngle(), 0);
-        turret.setPower(power);
+        if(VisionModule.targetSeen())
+            turret.setPower(power);
     }
 
     @Override

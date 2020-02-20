@@ -57,11 +57,16 @@ public class Constants {
     public static class Vision {
         public static final double VISION_MODULE_HEIGHT = 0.98;
         public static final double VISION_MODULE_HOOD_DISTANCE = 0.28;
+        public static final double VISION_ROTATION_RADIUS = 0.231; //The horizontal distance from the vision camera to the turret rotation axis.
+        public static final double ROBOT_TO_TURRET_CENTER = 0.138; //The horizontal distance from the robot's center to the turret center.
     }
 
     public static class FieldGeometry {
-        public static final Pose2d OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 5.81, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
-        public static final Pose2d INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 5.81, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+        public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+        public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+        public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+        public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+
         public static final double PORT_HEIGHT = 2.4;
     }
 
@@ -131,7 +136,11 @@ public class Constants {
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
-        public static final int MAX_CURRENT = 35; // [A]
+        public static final int MAX_CURRENT = 20; // [A]
+        public static final int PEAK_CURRENT = 35;
+        public static final int PEAK_DURATION = 2000;
+
+
         public static final double ANGLE_THRESHOLD = 1;
 
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
