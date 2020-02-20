@@ -23,7 +23,11 @@ public class Constants {
         public static final double LOW_TICKS_PER_METER = 2048. * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
         public static final double HIGH_TICKS_PER_METER = 2048. * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
 
-        public static final double[] VELOCITY_PID_SET = {0.0, 0, 0, 0}; // PID gains set for the velocity drive of the wheels.
+        // PID gains set for the velocity drive of the wheels.
+        public static final double KP = CONST(0);
+        public static final double KI = CONST(0);
+        public static final double KD = CONST(0);
+        public static final double KF = CONST(0);
 
         //Shifter enabled constants
         public static final double SHIFTER_COOLDOWN = 0.5; // Time after shifting the shifter is not to be used.
@@ -200,6 +204,13 @@ class BConstants {
 
     public static final class Intake {
 
+    }
+
+    public static class Drivetrain {
+        public static final double KP = 0.3;
+        public static final double KI = 0;
+        public static final double KD = 0;
+        public static final double KF = 0;
     }
 
     public static class Autonomous {
