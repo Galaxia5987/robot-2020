@@ -26,6 +26,7 @@ import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;

@@ -41,6 +41,9 @@ public class Shooter extends SubsystemBase {
         shooterMaster.config_kD(TALON_PID_SLOT, KD, TALON_TIMEOUT);
         shooterMaster.config_kF(TALON_PID_SLOT, KF, TALON_TIMEOUT);
 
+        shooterMaster.setNeutralMode(NeutralMode.Coast);
+        slaveConfigs.setNeutralMode(NeutralMode.Coast);
+
         shooterMaster.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         shooterMaster.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
 
