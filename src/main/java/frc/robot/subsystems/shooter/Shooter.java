@@ -3,10 +3,13 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VictorConfiguration;
+import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 
 import static frc.robot.Constants.Shooter.*;
@@ -89,7 +92,11 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isShooterReady(){
-        return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE;
+        return Math.abs(getSpeed() - getTargetVelocity()) <= VELOCITY_TOLERANCE && isShooting();
+    }
+
+    public boolean isShooting(){
+        return getSpeed() > MINIMAL_VELOCITY;
     }
 
     public void setPower(double power) {
@@ -106,9 +113,13 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putBoolean("shooterReady", isShooterReady());
         if(getSpeed() < VELOCITY_DAMPENING_LIMIT.get())
             shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
         else
             shooterMaster.configClosedloopRamp(0);
+        CustomDashboard.setSpeedValid(isShooterReady());
+        Double hoodDistance = VisionModule.getHoodDistance();
+        CustomDashboard.setDistanceValid(hoodDistance != null && ALLOWED_SHOOTING_RANGE.containsDouble(hoodDistance));
     }
 }

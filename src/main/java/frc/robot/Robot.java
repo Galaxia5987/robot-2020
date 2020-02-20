@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.Utils;
 
 
@@ -51,6 +52,7 @@ public class Robot extends TimedRobot {
         }
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
+        TrajectoryLoader.loadTrajectories();
         robotTimer.reset();
         robotTimer.start();
         m_robotContainer = new RobotContainer();

@@ -20,7 +20,6 @@ public class VisionModule extends SubsystemBase {
     private static NetworkTableEntry visionPose = visionTable.getEntry("targetPose");
     private static NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private static NetworkTableEntry leds = visionTable.getEntry("leds");
-    public static VisionModule INSTANCE = new VisionModule();
 
     /**
      * @return the angle to the target from the vision network table.
@@ -62,5 +61,6 @@ public class VisionModule extends SubsystemBase {
         if (distance != null) {
             SmartDashboard.putNumber("visionHoodDistance", getHoodDistance());
         }
+        CustomDashboard.setHasVision(targetSeen());
     }
 }

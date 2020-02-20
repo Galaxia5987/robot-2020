@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Ports;
 import frc.robot.Robot;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.State;
 
 import java.util.function.Supplier;
@@ -106,6 +107,12 @@ public class Intake extends SubsystemBase {
                 break;
         }
     }
+
+    @Override
+    public void periodic() {
+        CustomDashboard.setIntake(isOpen());
+    }
+
     /**
      * apply power on the wheel to spin them based on the power you insert.
      *

@@ -41,8 +41,8 @@ public class Ports {
 
     public static class Turret {
         public static final int MOTOR = 22;
-        public static final boolean IS_MOTOR_INVERTED = CONST(true);
         public static final boolean IS_ENCODER_INVERTED = CONST(true);
+        public static final boolean IS_MOTOR_INVERTED = CONST(true);
 
         public static final boolean ENABLE_SOFT_LIMITS = CONST(true);
         public static final boolean DISABLE_SOFT_LIMITS_ON_DISCONNECT = CONST(true);

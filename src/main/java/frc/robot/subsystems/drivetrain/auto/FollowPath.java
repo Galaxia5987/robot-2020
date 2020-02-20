@@ -14,9 +14,11 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.utilities.Utils;
 import org.ghrobotics.lib.debug.FalconDashboard;
 import org.techfire225.webapp.FireLog;
 
@@ -74,6 +76,9 @@ public class FollowPath extends CommandBase {
         var leftSpeedSetpoint = targetWheelSpeeds.leftMetersPerSecond;
         var rightSpeedSetpoint = targetWheelSpeeds.rightMetersPerSecond;
 
+        FireLog.log("autoLeftSetpoint", Math.abs(leftSpeedSetpoint));
+        FireLog.log("autoRightSetpoint", Math.abs(rightSpeedSetpoint));
+
         double leftFeedforward =
                 leftfeedforward.calculate(leftSpeedSetpoint,
                         (leftSpeedSetpoint - prevSpeeds.leftMetersPerSecond) / dt);
@@ -88,8 +93,8 @@ public class FollowPath extends CommandBase {
         FireLog.log("autoLeftVelocity", drivetrain.getLeftVelocity());
 
         FalconDashboard.INSTANCE.setPathHeading(state.poseMeters.getRotation().getRadians());
-        FalconDashboard.INSTANCE.setPathX(state.poseMeters.getTranslation().getX());
-        FalconDashboard.INSTANCE.setPathY(state.poseMeters.getTranslation().getY());
+        FalconDashboard.INSTANCE.setPathX(Units.feetToMeters(state.poseMeters.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setPathY(Units.feetToMeters(state.poseMeters.getTranslation().getY()));
 
         prevTime = curTime;
         prevSpeeds = targetWheelSpeeds;
