@@ -11,6 +11,7 @@ import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -121,5 +122,7 @@ public class Shooter extends SubsystemBase {
         CustomDashboard.setSpeedValid(isShooterReady());
         Double hoodDistance = VisionModule.getHoodDistance();
         CustomDashboard.setDistanceValid(hoodDistance != null && ALLOWED_SHOOTING_RANGE.containsDouble(hoodDistance));
+        FireLog.log("shooterSetpoint", targetVelocity);
+        FireLog.log("shooterSpeed", getSpeed());
     }
 }

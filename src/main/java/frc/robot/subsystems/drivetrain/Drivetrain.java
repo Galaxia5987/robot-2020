@@ -52,7 +52,6 @@ public class Drivetrain extends SubsystemBase {
     private Timer shiftCooldown = new Timer();
     private boolean isShifting = false;
 
-
     public Drivetrain() {
         FalconConfiguration motorConfigurations = new FalconConfiguration();
 
@@ -75,7 +74,7 @@ public class Drivetrain extends SubsystemBase {
         leftMaster.setInverted(LEFT_MASTER_INVERTED);
         leftSlave.setInverted(LEFT_SLAVE_INVERTED);
 
-        motorConfigurations.setNeutralMode(NeutralMode.Coast);
+        motorConfigurations.setNeutralMode(NeutralMode.Brake);
         motorConfigurations.setEnableVoltageCompensation(true);
         motorConfigurations.configureVoltageCompensationSaturation(12);
         motorConfigurations.setPidSet(KP, KI, KD, KF);
@@ -178,6 +177,14 @@ public class Drivetrain extends SubsystemBase {
         return getCurrentUnitModel().toVelocity(rightMaster.getSelectedSensorVelocity());
     }
 
+    public void setBrake(boolean brake) {
+        NeutralMode neutralMode = brake ? NeutralMode.Brake : NeutralMode.Coast;
+        leftMaster.setNeutralMode(neutralMode);
+        leftSlave.setNeutralMode(neutralMode);
+        rightMaster.setNeutralMode(neutralMode);
+        rightMaster.setNeutralMode(neutralMode);
+    }
+
     /**
      * @return the velocity of the left motor
      */
@@ -225,11 +232,10 @@ public class Drivetrain extends SubsystemBase {
         return odometry.getPoseMeters();
     }
 
-    public void setPose(Pose2d pose, Rotation2d rotation) {
+    public void setPose(Pose2d pose) {
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
-        navx.reset();
-        odometry.resetPosition(pose, rotation);
+        odometry.resetPosition(pose, Rotation2d.fromDegrees(navx.getAngle()));
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
@@ -256,7 +262,11 @@ public class Drivetrain extends SubsystemBase {
 
         FalconDashboard.INSTANCE.setRobotX(Units.metersToFeet(current.getTranslation().getX()));
         FalconDashboard.INSTANCE.setRobotY(Units.metersToFeet(current.getTranslation().getY()));
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(-navx.getAngle()));
+        FalconDashboard.INSTANCE.setRobotHeading(current.getRotation().getRadians());
+
+        SmartDashboard.putNumber("driveTranslationX", current.getTranslation().getX());
+        SmartDashboard.putNumber("driveTranslationY", current.getTranslation().getY());
+        SmartDashboard.putNumber("driveTranslationHeading", current.getRotation().getDegrees());
 
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
 

@@ -53,8 +53,8 @@ public class Constants {
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
 
-        public static final double MAX_SPEED = 4; // [m/s]
-        public static final double MAX_ACCELERATION = 2; // [m / s / s]
+        public static final double MAX_SPEED = 1; // [m/s]
+        public static final double MAX_ACCELERATION = 0.5; // [m / s / s]
     }
 
     public static class Vision {
@@ -107,13 +107,14 @@ public class Constants {
     public static class Turret {
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
-        public static final double TICKS_PER_DEGREE = 4096 / 360.0;
+        public static final int TICKS_PER_ROTATION = CONST(4096);
+        public static final double TICKS_PER_DEGREE = CONST(TICKS_PER_ROTATION / 360.0);
 
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
-        public static final int ZERO_POSITION = 1600; //Encoder absolute position when the turret is facing forward. This might change occasionally.
+        public static final int ZERO_POSITION = CONST(1600); //Encoder absolute position when the turret is facing forward. This might change occasionally.
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 1;
@@ -243,7 +244,9 @@ class BConstants {
 
     public static class Turret {
         public static final double KD = 70;
-        public static final int STARTING_POSITION = 3322;
+        public static final int ZERO_POSITION = 1328;
+        public static final int TICKS_PER_ROTATION = 3820;
+        public static final double TICKS_PER_DEGREE = TICKS_PER_ROTATION / 360.0;
     }
 
     public static class Conveyor {

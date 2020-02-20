@@ -2,6 +2,7 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.utilities.VisionModule;
@@ -37,8 +38,7 @@ public class InitiatePosition extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        drivetrain.setPose(pose, pose.getRotation());
-        VisionModule.setLEDs(false);
+        drivetrain.setPose(pose);
         Path.generateAll(drivetrain.getPose());
     }
 }

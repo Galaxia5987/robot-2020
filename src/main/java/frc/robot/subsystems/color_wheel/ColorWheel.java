@@ -101,10 +101,10 @@ public class ColorWheel extends SubsystemBase {
         match = colorMatcher.matchClosestColor(colorSensor.getColor());
         Color detectedColor = colorSensor.getColor();
         colorString = colorToString();
-        SmartDashboard.putNumber("Red", detectedColor.red);
-        SmartDashboard.putNumber("Green", detectedColor.green);
-        SmartDashboard.putNumber("Blue", detectedColor.blue);
-        SmartDashboard.putNumber("Confidence", match.confidence);
-        SmartDashboard.putString("Detected Color", colorString);
+//        SmartDashboard.putNumber("Red", detectedColor.red);
+//        SmartDashboard.putNumber("Green", detectedColor.green);
+//        SmartDashboard.putNumber("Blue", detectedColor.blue);
+//        SmartDashboard.putNumber("Confidence", match.confidence);
+//        SmartDashboard.putString("Detected Color", colorString);
     }
 }

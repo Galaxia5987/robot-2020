@@ -32,6 +32,7 @@ public class SpeedUp extends CommandBase {
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
+        VisionModule.setLEDs(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -41,8 +42,8 @@ public class SpeedUp extends CommandBase {
             distance = VisionModule.getHoodDistance();
         }
         shooter.setSpeed(shooter.approximateVelocity(distance));
-        SmartDashboard.putNumber("aproximateVelocity", shooter.approximateVelocity(distance));
-        SmartDashboard.putNumber("wallDistance", distance);
+//        SmartDashboard.putNumber("aproximateVelocity", shooter.approximateVelocity(distance));
+//        SmartDashboard.putNumber("wallDistance", distance);
 
         velocityEntry.setDouble(shooter.getSpeed());
     }
@@ -56,6 +57,7 @@ public class SpeedUp extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
+        VisionModule.setLEDs(false);
         shooter.stop();
     }
 

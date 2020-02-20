@@ -114,13 +114,13 @@ public class Turret extends SubsystemBase {
     public void setAngle(double angle) {
         targetAngle = normalizeSetpoint(angle);
         //Use motion magic if target angle is big enough, else use tracking PID.
-        if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
+//        if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);
             motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
-        } else {
-            setPidSlot(MOTION_MAGIC_PID_SLOT);
-            motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
-        }
+//        } else {
+//            setPidSlot(MOTION_MAGIC_PID_SLOT);
+//            motor.set(ControlMode.MotionMagic, unitModel.toTicks(targetAngle));
+//        }
 
     }
 
@@ -182,8 +182,10 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("turretSetpoint", targetAngle);
         SmartDashboard.putNumber("turretCurrent", getAngle());
         SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
+        SmartDashboard.putBoolean("turret ready", isTurretReady());
         FireLog.log("turretSetpoint", targetAngle);
         FireLog.log("turretCurrent", getAngle());
+
     }
 
     /**
@@ -213,10 +215,10 @@ public class Turret extends SubsystemBase {
      */
     public void resetEncoder() {
         double currentPosition = Math.IEEEremainder(
-                        Math.floorMod(motor.getSelectedSensorPosition(1), 4096) -
-                                ((ZERO_POSITION + unitModel.toTicks((180 + UNREACHABLE_ANGLE) % 360)) % 4096),
-                        4096
-                ) + unitModel.toTicks(180 + UNREACHABLE_ANGLE) % 4096;
+                        Math.floorMod(motor.getSelectedSensorPosition(1), TICKS_PER_ROTATION) -
+                                ((ZERO_POSITION + unitModel.toTicks((180 + UNREACHABLE_ANGLE) % 360)) % TICKS_PER_ROTATION),
+                TICKS_PER_ROTATION
+                ) + unitModel.toTicks(180 + UNREACHABLE_ANGLE) % TICKS_PER_ROTATION;
         motor.setSelectedSensorPosition((int) currentPosition);
     }
 
