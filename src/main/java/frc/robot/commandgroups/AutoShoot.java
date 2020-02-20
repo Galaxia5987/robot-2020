@@ -14,7 +14,7 @@ import frc.robot.subsystems.turret.commands.VisionTurret;
 public class AutoShoot extends ParallelDeadlineGroup {
 
     public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor) {
-        super(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady));
+        super(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
         addCommands(
                 // turn the turret to the setpoint angle
                 // ready the flywheel to shoot the balls to the target distance for the desired amount of time

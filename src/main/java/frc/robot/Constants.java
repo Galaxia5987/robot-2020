@@ -4,10 +4,8 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.valuetuner.WebConstant;
 import org.apache.commons.lang.math.DoubleRange;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.Optional;
+
+import static org.apache.commons.lang3.ObjectUtils.CONST;
 
 /**
  * A class holding all of the constants of every mechanism on the robot.
@@ -19,16 +17,21 @@ public class Constants {
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
-        public static final double WHEEL_DIAMETER = 6*0.0254;
+        public static final double WHEEL_DIAMETER = 6 * 0.0254;
         public static final double TRACK_WIDTH = 0.6649; // TODO: this is horizontal distance between the wheels, we might need a diagonal distance.
 
         public static final double LOW_TICKS_PER_METER = 2048. * (2500 / 126.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
         public static final double HIGH_TICKS_PER_METER = 2048. * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
 
-        public static final double[] VELOCITY_PID_SET = {0.4, 0.0001, 0.3, 0}; // PID gains set for the velocity drive of the wheels.
+        // PID gains set for the velocity drive of the wheels.
+        public static final double KP = CONST(0);
+        public static final double KI = CONST(0);
+        public static final double KD = CONST(0);
+        public static final double KF = CONST(0);
 
         //Shifter enabled constants
         public static final double SHIFTER_COOLDOWN = 0.5; // Time after shifting the shifter is not to be used.
+        public static final double TURNING_TOLERANCE = 1; // Stops the robot from shifting while the robot is turning.
         public static final double SHIFT_SPEED_TOLERANCE = 0.5; // Stops the robot from shifting while the robot is too fast
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
@@ -39,14 +42,13 @@ public class Constants {
 
     public static class Autonomous {
         // Drivetrain characterization constants
-        public static final double leftkS = 0.284;
-        public static final double leftkV = 2.11;
-        public static final double leftkA = 0.418;
 
-        public static final double rightkS = 0.26;
-        public static final double rightkV = 2.13;
-        public static final double rightkA = 0.347;
-
+        public static final double leftkS = CONST(0.367);
+        public static final double leftkV = CONST(1.6);
+        public static final double leftkA = CONST(0.0527);
+        public static final double rightkS = CONST(0.361);
+        public static final double rightkV = CONST(1.59);
+        public static final double rightkA = CONST(0.0667);
         // Ramsete controller constants
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
@@ -55,11 +57,16 @@ public class Constants {
     public static class Vision {
         public static final double VISION_MODULE_HEIGHT = 0.98;
         public static final double VISION_MODULE_HOOD_DISTANCE = 0.28;
+        public static final double VISION_ROTATION_RADIUS = 0.231; //The horizontal distance from the vision camera to the turret rotation axis.
+        public static final double ROBOT_TO_TURRET_CENTER = 0.138; //The horizontal distance from the robot's center to the turret center.
     }
 
     public static class FieldGeometry {
-        public static final Pose2d OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 5.81, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
-        public static final Pose2d INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 5.81, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+        public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+        public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+        public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+        public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+
         public static final double PORT_HEIGHT = 2.4;
     }
 
@@ -71,16 +78,9 @@ public class Constants {
     public static class Conveyor {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
 
-        public static final double KP = 0.0;
-        public static final double KI = 0.0;
-        public static final double KD = 0.0;
-        public static final int CRUISE_VELOCITY = 0;
-        public static final int CRUISE_ACCELERATION = 0;
-        public static final double RAMP_RATE = 0;
-
         public static final WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
-        public static final double CONVEYOR_MOTOR_FEED_POWER = 0;
-        public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.7);
+        public static final WebConstant CONVEYOR_MOTOR_FEED_POWER = new WebConstant("conveyorFeedPower", 0.5);
+        public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.5);
         public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
         public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.7);
         public static final WebConstant CONVEYOR_OUTTAKE_POWER = new WebConstant("conveyorOuttakePower", 0.5);
@@ -89,20 +89,22 @@ public class Constants {
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
-        public static final double INTAKE_PROXIMITY_MAX_VOLTAGE = 2; //The minimum voltage for which the sensor would see a ball
-        public static final double INTAKE_PROXIMITY_MIN_VOLTAGE = 1.2; //The minimum voltage which the sensor would see in between two balls
-        public static final double SHOOTER_PROXIMITY_MAX_VOLTAGE = 0;
-        public static final double SHOOTER_PROXIMITY_MIN_VOLTAGE = 0;
+        public static final double INTAKE_PROXIMITY_MAX_VALUE = 200; //The minimum value for which the sensor would see a ball
+        public static final double INTAKE_PROXIMITY_MIN_VALUE = 150; //The minimum voltage which the sensor would see in between two balls
+        public static final double SHOOTER_PROXIMITY_MAX_VALUE = 1500;
+        public static final double SHOOTER_PROXIMITY_MIN_VALUE = 900;
 
         public static final int MAX_BALLS_AMOUNT = 5;
         public static final int STARTING_AMOUNT = 3;
+
+        public static final double GATE_OPEN_TIME = 0.5; // [sec] The amount of time from the opening of the gate until it is considered open
 
     }
 
     public static class Turret {
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
-        public static final double TICKS_PER_DEGREE = 4096/360.0;
+        public static final double TICKS_PER_DEGREE = 4096 / 360.0;
 
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
@@ -112,11 +114,11 @@ public class Constants {
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 1;
-        
-        public static double KP = 3.5;
-        public static double KI = 0.01;
-        public static double KD = 180;
-        public static double KF = 0;
+
+        public static double KP = CONST(3.5);
+        public static double KI = CONST(0.01);
+        public static double KD = CONST(180);
+        public static double KF = CONST(0);
 
         public static double ALLOWABLE_ERROR = 0.3;
 
@@ -134,7 +136,11 @@ public class Constants {
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
-        public static final int MAX_CURRENT = 35; // [A]
+        public static final int MAX_CURRENT = 20; // [A]
+        public static final int PEAK_CURRENT = 35;
+        public static final int PEAK_DURATION = 2000;
+
+
         public static final double ANGLE_THRESHOLD = 1;
 
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
@@ -147,21 +153,22 @@ public class Constants {
     public static class Shooter {
         public static final double TICKS_PER_ROTATION = 4096;
 
-        public static final double KP = 1;
-        public static final double KI = 0.0;
-        public static final double KD = 1.5;
-        public static final double KF = 0.014;
+        public static final double KP = CONST(1);
+        public static final double KI = CONST(0.0);
+        public static final double KD = CONST(1.5);
+        public static final double KF = CONST(0.014);
 
         public static DoubleRange ALLOWED_SHOOTING_RANGE = new DoubleRange(1, 10);
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
-        public static final double VELOCITY_TOLERANCE = 0; // the acceptable velocity threshold error of the shooter
+        public static final double VELOCITY_TOLERANCE = 2; // [RPS] the acceptable velocity threshold error of the shooter
+        public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
         public static final WebConstant VELOCITY_DAMP_RAMP = new WebConstant("damp_ramp", 1); // Damp ramp for that clamp on the accelerant
         public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
     }
 
-    public static class ColorWheel{
+    public static class ColorWheel {
         public static final double[] POLY_YELLOW_RGB = {0.297, 0.541, 0.161};
         public static final double[] POLY_GREEN_RGB = {0.195, 0.526, 0.281};
         public static final double[] POLY_RED_RGB = {0.398, 0.398, 0.202};
@@ -203,46 +210,6 @@ public class Constants {
         public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber.
         public static final double DISTANCE_BETWEEN_RODS = 0; // The distance between both climbing rods.
     }
-
-    static { // Runs alongside main
-        if (!Robot.isRobotA) { // We want robot B constants
-            replaceFields(Constants.class, BConstants.class); // Replace outer constants
-            for (Class aClass : Constants.class.getDeclaredClasses()) { // Loop constants classes
-                // Find the class in B Constants
-                Optional<Class<?>> bClass = Arrays.stream(BConstants.class.getDeclaredClasses()).filter(c -> c.getSimpleName().equals(aClass.getSimpleName())).findAny();
-                if (bClass.isEmpty()) continue; // Class isn't present
-                replaceFields(aClass, bClass.get());
-            }
-        }
-    }
-
-    /**
-     * Replaces fields between constants classes.
-     *
-     * @param class1 Original constants class
-     */
-    public static void replaceFields(Class class1, Class class2) {
-        //Loop and replace all fields
-        for (Field f : class2.getDeclaredFields()) {
-            for (Field f2 : class1.getDeclaredFields()) {
-                //Loop and replace all fields
-                if (f2.getName().equals(f.getName())) { // If the name is equal perform replacement
-
-                    f2.setAccessible(true);
-                    f.setAccessible(true);
-                    try {
-                        Field modifiersField = Field.class.getDeclaredField("modifiers");
-                        modifiersField.setAccessible(true);
-                        modifiersField.setInt(f2, f2.getModifiers() & ~Modifier.FINAL);
-                        f2.set(null, f.get(null));
-                    } catch (IllegalAccessException | NoSuchFieldException e) { // Catch relevant exceptions
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-    }
 }
 
 
@@ -254,8 +221,26 @@ class BConstants {
 
     }
 
-    public static class Turret {
+    public static class Drivetrain {
+        public static final double KP = 0.3;
+        public static final double KI = 0;
+        public static final double KD = 0;
+        public static final double KF = 0;
+    }
 
+    public static class Autonomous {
+        // Drivetrain characterization constants
+        public static final double leftkS = 0.229;
+        public static final double leftkV = 2.12;
+        public static final double leftkA = 0.364;
+        public static final double rightkS = 0.234;
+        public static final double rightkV = 2.11;
+        public static final double rightkA = 0.38;
+    }
+
+    public static class Turret {
+        public static final double KD = 70;
+        public static final int STARTING_POSITION = 3322;
     }
 
     public static class Conveyor {
@@ -263,7 +248,6 @@ class BConstants {
     }
 
     public static class Shooter {
-
     }
 
 }
