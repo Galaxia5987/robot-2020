@@ -219,4 +219,9 @@ public class Climber extends SubsystemBase {
         }
         CustomDashboard.setClimb(isStopperEngaged());
     }
+
+    public void resetEncoders(){
+        rightMotor.setSelectedSensorPosition(0);
+        leftMotor.setSelectedSensorPosition(0);
+    }
 }

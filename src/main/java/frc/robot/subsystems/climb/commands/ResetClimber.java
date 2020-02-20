@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems.climb.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.climb.Climber;
@@ -16,7 +17,7 @@ import frc.robot.subsystems.climb.Climber;
  */
 public class ResetClimber extends CommandBase {
     private final Climber climber;
-
+    private final Timer timer = new Timer();
     /**
      * Creates a new reset climber command.
      *
@@ -32,14 +33,21 @@ public class ResetClimber extends CommandBase {
     public void initialize() {
         climber.releaseStopper();
         climber.changePIDFSlot(1);
-        climber.setLeftHeight(0);
-        climber.setRightHeight(0);
+        climber.setLeftPower(-0.3);
+        climber.setRightPower(-0.3);
+        timer.reset();
+        timer.start();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        climber.setLeftPower(0);
+        climber.setRightPower(0);
         climber.engageStopper();
+        if(!interrupted) {
+            climber.resetEncoders();
+        }
     }
 
 
@@ -51,9 +59,7 @@ public class ResetClimber extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        boolean leftSideInPosition = Math.abs(climber.getLeftHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
-        boolean rightSideInPosition = Math.abs(climber.getRightHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
-        return leftSideInPosition && rightSideInPosition;
+        return timer.get() > 4.; //TODO: find better isFinished when time is due.
     }
 
 
