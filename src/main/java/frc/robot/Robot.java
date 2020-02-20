@@ -77,6 +77,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("leftHeight", RobotContainer.climber.getLeftHeight());
         SmartDashboard.putNumber("rightHeight", RobotContainer.climber.getRightHeight());
+        SmartDashboard.putNumber("roll", RobotContainer.navx.getRoll());
     }
 
     /**
