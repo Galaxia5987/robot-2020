@@ -59,6 +59,8 @@ public class Robot extends TimedRobot {
 //        compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
+        edu.wpi.first.cameraserver.CameraServer.getInstance().startAutomaticCapture();
+        
     }
 
     /**
