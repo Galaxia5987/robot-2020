@@ -204,8 +204,8 @@ public class Constants {
         public static final WebConstant CLIMB_HEIGHT = new WebConstant("climbSetpointHeight", 0.3);
         public static final WebConstant SIMPLE_CLIMB_HEIGHT = new WebConstant("simpleClimbHeight", 0.4);
 
-        public static final double ALLOWED_HEIGHT_TOLERANCE = 0.1; // The allowed tolerance between the current height to the desired height.
-        public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle.
+        public static final double ALLOWED_HEIGHT_TOLERANCE = 0.05; // The allowed tolerance between the current height to the desired height.
+        public static final double ALLOWED_ANGLE_TOLERANCE = 0.5; // The allowed tolerance between the current angle to the desired angle.
         public static final WebConstant MODIFY_JOYSTICK_RATE = new WebConstant("climbJoystickRate", 0.7); // The factor which the value of the joystick is multiplied by to calculate the change rate.
         public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber.
         public static final double DISTANCE_BETWEEN_RODS = 0; // The distance between both climbing rods.
