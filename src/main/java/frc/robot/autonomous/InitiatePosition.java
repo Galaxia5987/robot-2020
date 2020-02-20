@@ -13,6 +13,7 @@ public class InitiatePosition extends CommandBase {
     private static final double POSE_TIMEOUT = 0.3;
 
     public InitiatePosition(Drivetrain drivetrain) {
+        addRequirements(drivetrain);
         this.drivetrain = drivetrain;
     }
 
@@ -26,6 +27,7 @@ public class InitiatePosition extends CommandBase {
     @Override
     public void execute() {
         this.pose = VisionModule.getRobotPose();
+        if(pose == null) timer.reset();
     }
 
     @Override

@@ -43,10 +43,7 @@ public class Path {
 
     public void generate(Pose2d currentRobotPose) {
         waypoints.add(0, currentRobotPose);
-        this.trajectory = TrajectoryGenerator.generateTrajectory(
-                waypoints,
-                config
-        );
+        this.trajectory = TrajectoryGenerator.generateTrajectory(waypoints, config);
     }
 
     public boolean hasTrajectory() {

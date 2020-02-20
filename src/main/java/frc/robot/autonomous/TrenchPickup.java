@@ -3,13 +3,8 @@ package frc.robot.autonomous;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.commandgroups.AutoShoot;
-import frc.robot.commandgroups.WaitForVision;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.auto.FollowPath;
@@ -19,8 +14,9 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
+import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.State;
-import frc.robot.utilities.TrajectoryLoader;
+import frc.robot.utilities.VisionModule;
 
 import static frc.robot.Constants.Autonomous.MAX_ACCELERATION;
 import static frc.robot.Constants.Autonomous.MAX_SPEED;
@@ -43,8 +39,12 @@ public class TrenchPickup extends SequentialCommandGroup {
 
     public TrenchPickup(Shooter shooter, Conveyor conveyor, Turret turret, Drivetrain drivetrain, Intake intake) {
         addCommands(new TurnTurret(turret, -180));
-        addCommands(new WaitForVision());
-        addCommands(new AutoShoot(turret, shooter, conveyor));
+        addCommands(new WaitUntilCommand(VisionModule::targetSeen));
+        addCommands(new VisionTurret(turret, true));
+        addCommands(new ParallelCommandGroup(
+                new InitiatePosition(drivetrain),
+                new AutoShoot(turret, shooter, conveyor)
+        ));
         addCommands(new ParallelCommandGroup(
                 new FollowPath(drivetrain, toTrench),
                 new SequentialCommandGroup(
