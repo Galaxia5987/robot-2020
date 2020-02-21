@@ -68,8 +68,8 @@ public class Ports {
     }
 
     public static final class LED {
-        public static final int STRIP = 0;
-        public static final int STRIP_LENGTH = 0;
+        public static final int STRIP = 0; //PWM port
+        public static final int STRIP_LENGTH = 0; //Amount of LED's in the strip.
     }
 
     public static class Climber {
