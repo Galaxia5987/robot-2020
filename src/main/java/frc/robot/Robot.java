@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.*;
@@ -31,8 +33,11 @@ public class Robot extends TimedRobot {
     public static Compressor compressor = new Compressor();
     public static PowerDistributionPanel pdp = new PowerDistributionPanel();
     private Command m_autonomousCommand;
+  
     public static Timer robotTimer = new Timer();
+
     private RobotContainer m_robotContainer;
+
 
     /**
      * @return Robot in debug mode
@@ -86,7 +91,9 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        NetworkTableInstance.getDefault().flush();
     }
+
 
     /**
      * This function is called once each time the robot enters Disabled mode.
@@ -105,30 +112,25 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-        // schedule the autonomous command (example)
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.schedule();
-        }
     }
 
-    /**
-     * This function is called periodically during autonomous.
-     */
-    @Override
-    public void autonomousPeriodic() {
-    }
+  /**
+   * This function is called periodically during autonomous.
+   */
+  @Override
+  public void autonomousPeriodic() {
+  }
 
-    @Override
-    public void teleopInit() {
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.cancel();
-        }
+  @Override
+  public void teleopInit() {
+    // This makes sure that the autonomous stops running when
+    // teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
     }
+  }
 
     /**
      * This function is called periodically during operator control.
