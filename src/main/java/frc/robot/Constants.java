@@ -196,7 +196,7 @@ public class Constants {
         public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
 
         public static final double MAX_HEIGHT = 0.75; // The allowed maximum height of the subsystem.
-        public static final double HEIGHT_TARGET = 0.3;
+        public static final double HEIGHT_TARGET = 0.2;
 
         public static final double MIN_DELTA = 0.001;
 
@@ -204,7 +204,7 @@ public class Constants {
 
         public static final double RAMP_RATE = 0;
 
-        public static final WebConstant CLIMB_HEIGHT = new WebConstant("climbSetpointHeight", 0.3);
+        public static final WebConstant CLIMB_HEIGHT = new WebConstant("climbSetpointHeight", 0.5);
         public static final WebConstant SIMPLE_CLIMB_HEIGHT = new WebConstant("simpleClimbHeight", 0.4);
 
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0.05; // The allowed tolerance between the current height to the desired height.
