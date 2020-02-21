@@ -33,8 +33,8 @@ public class Ports {
         public static final int MASTER = 23;
         public static final int SLAVE_1 = 24;
         public static final int SLAVE_2 = 25;
-        public static final boolean IS_MASTER_INVERTED = CONST(true);
-        public static final boolean IS_SLAVE_1_INVERTED = CONST(false);
+        public static final boolean IS_MASTER_INVERTED = CONST(false);
+        public static final boolean IS_SLAVE_1_INVERTED = CONST(true);
         public static final boolean IS_SLAVE_2_INVERTED = CONST(true);
         public static final boolean IS_ENCODER_INVERTED = CONST(true);
     }
