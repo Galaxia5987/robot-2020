@@ -11,7 +11,7 @@ import static frc.robot.Constants.ColorWheel.*;
  * The commands uses the date from the fms to rotate the control panel to the given color
  */
 public class PositionControl extends CommandBase {
-    private String targetColor;
+    private char targetColorChar;
     private int currentColor;
     private Timer endTimer = new Timer(); // Used to make sure we don't overshoot over the wanted color.
     private ColorWheel colorWheel;
@@ -22,27 +22,27 @@ public class PositionControl extends CommandBase {
         this.colorWheel = colorWheel;
     }
     
-    private String getColor() {
+    private char getColor() {
         String gameData = DriverStation.getInstance().getGameSpecificMessage();
         if (gameData.length() > 0) {
             gameData = gameData.toUpperCase();
             if ("RGBY".contains(gameData))
-                return gameData;
+                return gameData.charAt(0);
         }
         this.cancel();
-        return "";
+        return ' ';
     }
 
     @Override
     public void initialize() {
-        this.targetColor = getColor();
+        this.targetColorChar = getColor();
         endTimer.reset();
     }
 
     @Override
     public void execute() {
         currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
-        int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(targetColor) - TILES_BEFORE_SENSOR, 4);
+        int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(targetColorChar)) - TILES_BEFORE_SENSOR, 4);
         switch (distanceFromTarget){
             case(2):
                 colorWheel.setPower(kP.get());
@@ -64,7 +64,7 @@ public class PositionControl extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return (endTimer.get() > POSITION_CONTROL_TIMER && Math.floorMod(currentColor - colorWheel.indexOfColor(targetColor) - TILES_BEFORE_SENSOR, 4) == 0);
+        return (endTimer.get() > POSITION_CONTROL_TIMER && Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(targetColorChar)) - TILES_BEFORE_SENSOR, 4) == 0);
     }
 
     @Override
