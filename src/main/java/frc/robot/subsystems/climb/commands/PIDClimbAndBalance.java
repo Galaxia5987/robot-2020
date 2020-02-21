@@ -20,7 +20,7 @@ import frc.robot.valuetuner.WebConstant;
 public class PIDClimbAndBalance extends CommandBase {
     private final Climber climber;
     private MiniPID deltaPID = new MiniPID(Constants.Climber.DELTA_PID[0], Constants.Climber.DELTA_PID[1], Constants.Climber.DELTA_PID[2]);
-    private double setpointHeightFromGround;
+    private double setpointHeight;
     private double setpointAngle;
     private double delta = 0;
     private double currentAngleError;
@@ -38,7 +38,7 @@ public class PIDClimbAndBalance extends CommandBase {
      */
     public PIDClimbAndBalance(Climber climber) {
         this.climber = climber;
-        this.setpointHeightFromGround = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
+        this.setpointHeight = Constants.Climber.HEIGHT_TARGET;
         this.setpointAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(climber);
@@ -49,22 +49,22 @@ public class PIDClimbAndBalance extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public PIDClimbAndBalance(Climber climber, double setpointHeightFromGround) {
+    public PIDClimbAndBalance(Climber climber, double setpointHeight) {
         this.climber = climber;
-        this.setpointHeightFromGround = setpointHeightFromGround;
+        this.setpointHeight = setpointHeight;
         this.setpointAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(climber);
     }
 
     /**
-     * @param subsystem                the subsystem
-     * @param setpointHeightFromGround the desired height for the mechanism
-     * @param setpointAngle            the desired angle
+     * @param subsystem      the subsystem
+     * @param setpointHeight the desired height for the mechanism
+     * @param setpointAngle  the desired angle
      */
-    public PIDClimbAndBalance(Climber subsystem, double setpointHeightFromGround, double setpointAngle) {
+    public PIDClimbAndBalance(Climber subsystem, double setpointHeight, double setpointAngle) {
         this.climber = subsystem;
-        this.setpointHeightFromGround = setpointHeightFromGround;
+        this.setpointHeight = setpointHeight;
         this.setpointAngle = setpointAngle;
         addRequirements(subsystem);
     }
@@ -81,8 +81,8 @@ public class PIDClimbAndBalance extends CommandBase {
     public void execute() {
         updatePID();
         //Update the target height of each side
-        leftSetpointHeight = setpointHeightFromGround;
-        rightSetpointHeight = setpointHeightFromGround;
+        leftSetpointHeight = setpointHeight;
+        rightSetpointHeight = setpointHeight;
 
         //Calculate the error angle and the current height
         currentAngleError = setpointAngle - RobotContainer.navx.getRoll();
@@ -92,6 +92,7 @@ public class PIDClimbAndBalance extends CommandBase {
 
         leftSetpointHeight += delta * 0.5;
         rightSetpointHeight -= delta * 0.5;
+
 
         if (!climber.isStopperEngaged()) {
             climber.setLeftHeight(leftSetpointHeight);
