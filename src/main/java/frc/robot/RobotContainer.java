@@ -92,10 +92,10 @@ public class RobotContainer {
                 new RunCommand(() -> Robot.shootingManualMode = true)
         )); //If both buttons are held without being released the manualMode will be enabled.
         OI.start.whenPressed(() -> Robot.shootingManualMode = false); //Pressing start disables the manual mode for shooting.
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < 10; i++) {
             new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < 10; i++) {
             new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
         }
     }
