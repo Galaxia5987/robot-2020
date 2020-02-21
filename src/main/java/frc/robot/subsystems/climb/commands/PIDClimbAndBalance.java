@@ -8,6 +8,7 @@
 package frc.robot.subsystems.climb.commands;
 
 import com.stormbots.MiniPID;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -119,10 +120,7 @@ public class PIDClimbAndBalance extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        boolean isLeftOnSetpoint = Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
-        boolean isRightOnSetpoint = Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
-        boolean isAngleOnSetpoint = Math.abs(currentAngleError) < Constants.Climber.ALLOWED_ANGLE_TOLERANCE;
-        return isLeftOnSetpoint && isRightOnSetpoint && isAngleOnSetpoint;
+        return false;
     }
 
     /**
