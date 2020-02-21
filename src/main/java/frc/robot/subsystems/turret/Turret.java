@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.Utils;
+import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.techfire225.webapp.FireLog;
 
@@ -60,9 +62,9 @@ public class Turret extends SubsystemBase {
 
         motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
         motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
-        motor.configPeakCurrentLimit(0);
+        motor.configPeakCurrentLimit(PEAK_CURRENT);
         motor.configContinuousCurrentLimit(MAX_CURRENT);
-        motor.configPeakCurrentDuration(0);
+        motor.configPeakCurrentDuration(PEAK_DURATION);
         motor.enableCurrentLimit(true);
 
         // Configure soft limits for the subsystem.
@@ -111,6 +113,7 @@ public class Turret extends SubsystemBase {
      */
     public void setAngle(double angle) {
         targetAngle = normalizeSetpoint(angle);
+        //Use motion magic if target angle is big enough, else use tracking PID.
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);
             motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
@@ -175,6 +178,7 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         correctBacklash();
+        SmartDashboard.putNumber("talonTurretSetpoint", unitModel.toUnits(motor.getClosedLoopTarget()));
         SmartDashboard.putNumber("turretSetpoint", targetAngle);
         SmartDashboard.putNumber("turretCurrent", getAngle());
         SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
@@ -208,7 +212,11 @@ public class Turret extends SubsystemBase {
      * DESTROY ITSELF... be warned! do not use this midgame!
      */
     public void resetEncoder() {
-        double currentPosition = unitModel.toTicks(STARTING_ANGLE) + Math.IEEEremainder(Math.floorMod(motor.getSelectedSensorPosition(1), 4096) - Constants.Turret.STARTING_POSITION, unitModel.toTicks(360));
+        double currentPosition = Math.IEEEremainder(
+                        Math.floorMod(motor.getSelectedSensorPosition(1), 4096) -
+                                ((ZERO_POSITION + unitModel.toTicks((180 + UNREACHABLE_ANGLE) % 360)) % 4096),
+                        4096
+                ) + unitModel.toTicks(180 + UNREACHABLE_ANGLE) % 4096;
         motor.setSelectedSensorPosition((int) currentPosition);
     }
 

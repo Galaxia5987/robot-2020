@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Ports;
 import frc.robot.Robot;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.State;
 
 import java.util.function.Supplier;
@@ -33,6 +34,7 @@ public class Intake extends SubsystemBase {
         motor.configFactoryDefault();
         motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
+        motor.setSensorPhase(true);
 
         motor.enableVoltageCompensation(true);
         motor.configVoltageCompSaturation(12.0);
@@ -105,6 +107,12 @@ public class Intake extends SubsystemBase {
                 break;
         }
     }
+
+    @Override
+    public void periodic() {
+        CustomDashboard.setIntake(isOpen());
+    }
+
     /**
      * apply power on the wheel to spin them based on the power you insert.
      *

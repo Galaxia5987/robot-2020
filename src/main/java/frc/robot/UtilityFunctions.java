@@ -5,9 +5,15 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.hal.sim.mockdata.DriverStationDataJNI;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.utilities.TalonConfiguration;
+
+import static frc.robot.Constants.FieldGeometry.*;
 
 public class UtilityFunctions {
 
@@ -25,6 +31,10 @@ public class UtilityFunctions {
             talon.enableCurrentLimit(configs.isEnableCurrentLimit());
             talon.configContinuousCurrentLimit(configs.getContinuousCurrentLimit());
             talon.configPeakCurrentLimit(configs.getPeakCurrentLimit());
+            talon.config_kP(0, configs.getPidSet()[0]);
+            talon.config_kI(0, configs.getPidSet()[1]);
+            talon.config_kD(0, configs.getPidSet()[2]);
+            talon.config_kF(0, configs.getPidSet()[3]);
         }
 
     }
@@ -60,5 +70,11 @@ public class UtilityFunctions {
             falcon.config_kF(0, configurations.getPidSet()[3]);
 
         }
+    }
+
+    public static Pose2d getAlliancePort(boolean innerPort) {
+        DriverStation.Alliance alliance = DriverStation.getInstance().getAlliance();
+        if(alliance.equals(DriverStation.Alliance.Blue)) return innerPort ? BLUE_INNER_POWER_PORT_LOCATION : BLUE_OUTER_POWER_PORT_LOCATION;
+        else return innerPort ? RED_INNER_POWER_PORT_LOCATION : RED_OUTER_POWER_PORT_LOCATION;
     }
 }

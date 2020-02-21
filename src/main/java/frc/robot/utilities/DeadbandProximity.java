@@ -59,6 +59,9 @@ public class DeadbandProximity {
         return toggle;
     }
 
+    public int getValue(){
+        return value.get();
+    }
     /**
      * Return whether the proximity senses an object.
      * If you wish to check whether the proximity lost the object, use {@link #isObjectAway()} instead.

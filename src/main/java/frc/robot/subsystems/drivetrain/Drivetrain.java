@@ -18,13 +18,18 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.FalconConfiguration;
+import frc.robot.utilities.Utils;
+import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.ghrobotics.lib.debug.FalconDashboard;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.EFFECTIVE_TURN_WIDTH;
@@ -41,7 +46,7 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
-    private double[] pidSet = {VELOCITY_PID_SET[0], VELOCITY_PID_SET[1], VELOCITY_PID_SET[2], VELOCITY_PID_SET[3]};
+    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
     public static final FullLocalization localization = new FullLocalization(new Rotation2d(0), EFFECTIVE_TURN_WIDTH);
@@ -62,8 +67,8 @@ public class Drivetrain extends SubsystemBase {
     public Drivetrain() {
         FalconConfiguration motorConfigurations = new FalconConfiguration();
 
-        new WebConstantPIDTalon("drivetrainLeft", pidSet[0], pidSet[1], pidSet[2], pidSet[3], leftMaster);
-        new WebConstantPIDTalon("drivetrainRight", pidSet[0], pidSet[1], pidSet[2], pidSet[3], rightMaster);
+        new WebConstantPIDTalon("drivetrainLeft", KP, KI, KD, KF, leftMaster);
+        new WebConstantPIDTalon("drivetrainRight", KP, KI, KD, KF, rightMaster);
 
         rightMaster.configFactoryDefault();
         rightSlave.configFactoryDefault();
@@ -84,7 +89,7 @@ public class Drivetrain extends SubsystemBase {
         motorConfigurations.setNeutralMode(NeutralMode.Coast);
         motorConfigurations.setEnableVoltageCompensation(true);
         motorConfigurations.configureVoltageCompensationSaturation(12);
-        motorConfigurations.setPidSet(pidSet[0], pidSet[1], pidSet[2], pidSet[3]);
+        motorConfigurations.setPidSet(KP, KI, KD, KF);
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setSupplyCurrentLimit(40);
@@ -116,10 +121,8 @@ public class Drivetrain extends SubsystemBase {
      * Start the cooldown of the shifter so it won't shift too open
      */
     public void startCooldown() {
-        if (getCooldown() == 0.05) {
-            shiftCooldown.start();
-            isShifting = true;
-        }
+        shiftCooldown.start();
+        isShifting = true;
     }
 
     /**
@@ -158,31 +161,26 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Checks if the drivetrain is  able to switch to highgear
+     * Checks if the drivetrain is  able to switch to high gear
      *
-     * @return
+     * @return if the drivetrain can shift to high gear
      */
     private boolean canShiftHigh() {
-        return shiftCooldown.get() > SHIFTER_COOLDOWN
-                && !isShifting
-                && (double) navx.getWorldLinearAccelX() * GRAVITY_ACCELERATION > HIGH_ACCELERATION_THRESHOLD
-                && !isShiftedHigh()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) < TURNING_TOLERANCE
-                && (getLeftVelocity() + getRightVelocity()) / 2 > HIGH_GEAR_MIN_VELOCITY;
+        return !isShifting
+                && !isShiftedHigh();
     }
 
     /**
-     * Checks if the drivetrain is  able to switch to lowgear
+     * Checks if the drivetrain is  able to switch to low gear
      *
-     * @return
+     * @return if the drivetrain can shift to low gear
      */
     private boolean canShiftLow() {
-        return shiftCooldown.get() > SHIFTER_COOLDOWN
-                && !isShifting
-                && (double) navx.getWorldLinearAccelX() < LOW_ACCELERATION_THRESHOLD
+        return !isShifting
                 && !isShiftedLow()
-                && Math.abs(getLeftVelocity() - getRightVelocity()) / 2 < TURNING_TOLERANCE
-                && leftMaster.getMotorOutputPercent() + rightMaster.getMotorOutputPercent() > LOW_GEAR_MIN_VELOCITY;
+                && Math.abs(getLeftVelocity()) < SHIFT_SPEED_TOLERANCE
+                && Math.abs(getRightVelocity()) < SHIFT_SPEED_TOLERANCE; //Shifting low at high speeds can cause damage to the motors.
+
     }
 
     public UnitModel getCurrentUnitModel() {
@@ -220,13 +218,14 @@ public class Drivetrain extends SubsystemBase {
         if (Robot.isRobotA && gearShifterA != null)
             return gearShifterA.get() == DoubleSolenoid.Value.kForward || gearShifterA.get() == DoubleSolenoid.Value.kOff;
         else if (gearShifterB != null)
-            return gearShifterB.get();
+            return !gearShifterB.get();
         else
             return false;
     }
 
     /**
      * Indicates whether the shifter is on a low gear
+     *
      * @return
      */
     public boolean isShiftedLow() {
@@ -242,13 +241,28 @@ public class Drivetrain extends SubsystemBase {
         return Math.IEEEremainder(navx.getAngle(), 360);
     }
 
+    public double getCCWHeading() {
+        return -getHeading();
+    }
+
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
+    public void setPose(Pose2d pose, Rotation2d rotation) {
+        leftMaster.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
+        navx.reset();
+        odometry.resetPosition(pose, rotation);
+    }
+
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
         UnitModel unitModel = getCurrentUnitModel();
         leftMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(leftVelocity), DemandType.ArbitraryFeedForward, leftFF);
         rightMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(rightVelocity), DemandType.ArbitraryFeedForward, rightFF);
     }
 
-    public void setPower(double leftPower, double rightPower){
+    public void setPower(double leftPower, double rightPower) {
         leftMaster.set(ControlMode.PercentOutput, leftPower);
         rightMaster.set(ControlMode.PercentOutput, rightPower);
     }
