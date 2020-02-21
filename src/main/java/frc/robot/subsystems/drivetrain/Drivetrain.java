@@ -33,7 +33,6 @@ import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.EFFECTIVE_TURN_WIDTH;
-import static frc.robot.Constants.FieldGeometry.INITIAL_POSE;
 import static frc.robot.Ports.Drivetrain.LEFT_MASTER_INVERTED;
 import static frc.robot.Ports.Drivetrain.LEFT_SLAVE_INVERTED;
 import static frc.robot.Ports.Drivetrain.RIGHT_MASTER_INVERTED;
@@ -46,11 +45,10 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    private DifferentialDriveOdometry odometry;
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
     public static final FullLocalization localization = new FullLocalization(new Rotation2d(0), EFFECTIVE_TURN_WIDTH);
-    private DifferentialDriveOdometry differentialDriveOdometry = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(navx.getAngle())), new Pose2d(0, 0, new Rotation2d()));
 
     /**
      * The gear shifter will be programmed according to the following terms
@@ -100,8 +98,9 @@ public class Drivetrain extends SubsystemBase {
             gearShifterB = new Solenoid(SHIFTER_PORT);
 
         navx.reset();
+        Pose2d INITIAL_POSE = new Pose2d(UtilityFunctions.getAlliancePort(false).getTranslation().getX() - 10, UtilityFunctions.getAlliancePort(false).getTranslation().getY(), new Rotation2d());
         localization.resetPosition(INITIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())), Robot.robotTimer.get());
-        differentialDriveOdometry.resetPosition(INITIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())));
+        odometry.resetPosition(INITIAL_POSE, Rotation2d.fromDegrees(getHeading()));
     }
 
     public void shiftGear(shiftModes mode) {
@@ -246,7 +245,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return odometry.getPoseMeters();
+        return localization.getPoseMeters();
     }
 
     public void setPose(Pose2d pose, Rotation2d rotation) {
@@ -254,6 +253,7 @@ public class Drivetrain extends SubsystemBase {
         rightMaster.setSelectedSensorPosition(0);
         navx.reset();
         odometry.resetPosition(pose, rotation);
+        localization.resetPosition(pose, rotation, Robot.robotTimer.get());
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
@@ -288,13 +288,13 @@ public class Drivetrain extends SubsystemBase {
                 Robot.robotTimer.get()
         );
 
-        differentialDriveOdometry.update(new Rotation2d( Math.toRadians(navx.getAngle())),
+        odometry.update(new Rotation2d( Math.toRadians(navx.getAngle())),
                 getLeftPosition(),
                 getRightPosition());
 
-        SmartDashboard.putNumber(" simple x", differentialDriveOdometry.getPoseMeters().getTranslation().getX());
-        SmartDashboard.putNumber(" simple y", differentialDriveOdometry.getPoseMeters().getTranslation().getY());
-        SmartDashboard.putNumber(" simple angle", differentialDriveOdometry.getPoseMeters().getRotation().getRadians());
+        SmartDashboard.putNumber(" simple x", odometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber(" simple y", odometry.getPoseMeters().getTranslation().getY());
+        SmartDashboard.putNumber(" simple angle", odometry.getPoseMeters().getRotation().getRadians());
         SmartDashboard.putNumber("navx accel", navx.getWorldLinearAccelY() * GRAVITY_ACCELERATION);
 
         FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());

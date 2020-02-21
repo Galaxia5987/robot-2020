@@ -11,7 +11,7 @@ public class TurretSwitching extends CommandBase {
     private final VisionTurret visionTurret;
     private final Turret turret;
 
-    public TurretSwitching(Turret turret, FullLocalization localization) {
+    public TurretSwitching(Turret turret, FullLocalization localization, Drivetrain drivetrain) {
         this.turret = turret;
         this.localizationTurret = new LocalizationTurret(turret, drivetrain);
         this.visionTurret = new VisionTurret(turret);

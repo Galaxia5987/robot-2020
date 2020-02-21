@@ -26,6 +26,7 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.FullLocalization;
+import frc.robot.subsystems.drivetrain.commands.GearShift;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
@@ -55,7 +56,7 @@ public class RobotContainer {
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     private final VisionModule visionModule = new VisionModule();
     private final CustomDashboard customDashboard = new CustomDashboard();
-    private final Drivetrain drivetrain = new Drivetrain();
+    public static final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
@@ -94,7 +95,6 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
         OI.b.whenPressed(new SpeedUp(shooter));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
