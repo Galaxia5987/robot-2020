@@ -55,8 +55,6 @@ public class ReleaseRods extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        climber.setRightPower(0);
-        climber.setLeftPower(0);
     }
 
 
