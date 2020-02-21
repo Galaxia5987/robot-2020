@@ -67,6 +67,8 @@ public class JoystickControl extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         climber.engageStopper();
+        climber.setLeftPower(0);
+        climber.setRightPower(0);
     }
 
 
