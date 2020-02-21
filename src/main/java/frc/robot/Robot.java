@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -59,8 +60,16 @@ public class Robot extends TimedRobot {
 //        compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
-        edu.wpi.first.cameraserver.CameraServer.getInstance().startAutomaticCapture();
-        
+
+        startCameraCapture();
+    }
+
+    public void startCameraCapture() {
+        new Thread(() -> {
+            UsbCamera camera = edu.wpi.first.cameraserver.CameraServer.getInstance().startAutomaticCapture(0);
+            camera.setResolution(160, 120);
+            camera.setFPS(30);
+        }).start();
     }
 
     /**
