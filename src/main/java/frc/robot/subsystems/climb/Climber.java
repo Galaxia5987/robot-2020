@@ -23,7 +23,6 @@ import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.TalonConfiguration;
 import frc.robot.valuetuner.WebConstantPIDTalon;
-import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Climber.CLIMB_PIDF;
 import static frc.robot.Constants.Climber.CLIMB_RELEASE_PIDF;
@@ -53,7 +52,13 @@ public class Climber extends SubsystemBase {
 
         leftMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
         rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
-      
+
+        rightMotor.configForwardSoftLimitEnable(true);
+        leftMotor.configForwardSoftLimitEnable(true);
+
+        rightMotor.configForwardSoftLimitThreshold(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
+        leftMotor.configForwardSoftLimitThreshold(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
+
         talonConfigs.setPidSet(CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3]);
         talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.Deactivated);
         talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.Disabled);
