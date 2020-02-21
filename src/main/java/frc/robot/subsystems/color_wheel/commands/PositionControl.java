@@ -42,6 +42,9 @@ public class PositionControl extends CommandBase {
     @Override
     public void execute() {
         currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
+        if ((Integer)currentColor == null){
+            this.cancel();
+        }
         int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(targetColorChar)) - TILES_BEFORE_SENSOR, 4);
         switch (distanceFromTarget){
             case(2):

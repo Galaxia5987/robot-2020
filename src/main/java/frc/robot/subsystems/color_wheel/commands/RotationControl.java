@@ -57,6 +57,9 @@ public class RotationControl extends CommandBase {
 
     private void updateColorIndex() {
         sensorColorIndex = colorWheel.indexOfColor(colorWheel.getColorString());
+        if ((Integer)sensorColorIndex == null){
+            this.cancel();
+        }
     }
 
     @Override
