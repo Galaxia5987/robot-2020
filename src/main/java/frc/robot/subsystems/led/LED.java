@@ -11,7 +11,7 @@ package frc.robot.subsystems.led;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.LinkedHashMap;
 
@@ -91,9 +91,9 @@ public class LED extends SubsystemBase {
     }
 
     @SafeVarargs
-    public final void setColorRatios(Pair<Double, Color>... colors){
+    public final void setColorRatios(ImmutablePair<Double, Color>... colors){
         LinkedHashMap<Double, Color> colorMap = new LinkedHashMap<Double, Color>();
-        for(Pair<Double, Color> color : colors) {
+        for(ImmutablePair<Double, Color> color : colors) {
             colorMap.put(color.getKey(), color.getValue());
         }
         setColorRatios(colorMap);

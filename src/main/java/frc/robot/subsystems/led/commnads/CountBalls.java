@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.led.ColorsBuffer;
 import frc.robot.subsystems.led.LED;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.LinkedHashMap;
 import java.util.function.BooleanSupplier;
@@ -43,9 +43,9 @@ public class CountBalls extends CommandBase {
     public void execute() {
         if (true){
             led.setColorRatios(
-                    new Pair<Double, Color>(1 - (ballCount.get() / 10.), Color.kBlack),
-                    new Pair<Double, Color>((ballCount.get() / 5.), Color.kYellow),
-                    new Pair<Double, Color>(1 - (ballCount.get() / 10.), Color.kBlack)
+                    new ImmutablePair<Double, Color>(1 - (ballCount.get() / 10.), Color.kBlack),
+                    new ImmutablePair<Double, Color>((ballCount.get() / 5.), Color.kYellow),
+                    new ImmutablePair<Double, Color>(1 - (ballCount.get() / 10.), Color.kBlack)
             );
         }
     }
