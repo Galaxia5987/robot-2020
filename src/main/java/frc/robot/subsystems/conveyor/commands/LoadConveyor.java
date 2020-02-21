@@ -20,7 +20,8 @@ public class LoadConveyor extends CommandBase {
     @Override
     public void initialize() {
         conveyor.setGate(State.CLOSE);
-        conveyor.setPower(CONVEYOR_MOTOR_INTAKE_POWER.get());
+        conveyor.setConveyorPower(CONVEYOR_MOTOR_INTAKE_POWER.get());
+        conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
     }
 
     @Override
