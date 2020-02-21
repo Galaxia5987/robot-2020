@@ -136,9 +136,9 @@ public class Constants {
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
-        public static final int MAX_CURRENT = 20; // [A]
-        public static final int PEAK_CURRENT = 35;
-        public static final int PEAK_DURATION = 2000;
+        public static final int MAX_CURRENT = 30; // [A]
+        public static final int PEAK_CURRENT = 0;
+        public static final int PEAK_DURATION = 100;
 
 
         public static final double ANGLE_THRESHOLD = 1;
