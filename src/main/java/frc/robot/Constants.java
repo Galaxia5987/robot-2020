@@ -53,8 +53,8 @@ public class Constants {
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
 
-        public static final double MAX_SPEED = 1; // [m/s]
-        public static final double MAX_ACCELERATION = 0.5; // [m / s / s]
+        public static final double MAX_SPEED = 3; // [m/s]
+        public static final double MAX_ACCELERATION = 1; // [m / s / s]
     }
 
     public static class Vision {
@@ -227,8 +227,8 @@ class BConstants {
 
     public static class Drivetrain {
         public static final double KP = 0.3;
-        public static final double KI = 0;
-        public static final double KD = 0;
+        public static final double KI = 0.0003;
+        public static final double KD = 2;
         public static final double KF = 0;
     }
 

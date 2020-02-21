@@ -235,7 +235,7 @@ public class Drivetrain extends SubsystemBase {
     public void setPose(Pose2d pose) {
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
-        odometry.resetPosition(pose, Rotation2d.fromDegrees(navx.getAngle()));
+        odometry.resetPosition(pose, Rotation2d.fromDegrees(getCCWHeading()));
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
