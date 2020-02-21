@@ -27,7 +27,7 @@ public class PIDClimbAndBalance extends CommandBase {
     private double leftSetpointHeight;
     private double rightSetpointHeight;
 
-    private WebConstant p = new WebConstant("delta p", 0);
+    private WebConstant p = new WebConstant("delta p", 0.0005);
     private WebConstant i = new WebConstant("delta i", 0);
     private WebConstant d = new WebConstant("delta d", 0);
 
