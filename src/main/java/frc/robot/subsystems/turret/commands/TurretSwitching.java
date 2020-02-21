@@ -2,6 +2,7 @@ package frc.robot.subsystems.turret.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.FullLocalization;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.utilities.VisionModule;
 
@@ -10,8 +11,7 @@ public class TurretSwitching extends CommandBase {
     private final VisionTurret visionTurret;
     private final Turret turret;
 
-    public TurretSwitching(Turret turret, Drivetrain drivetrain) {
-        addRequirements(turret);
+    public TurretSwitching(Turret turret, FullLocalization localization, Drivetrain drivetrain) {
         this.turret = turret;
         this.localizationTurret = new LocalizationTurret(turret, drivetrain);
         this.visionTurret = new VisionTurret(turret);
