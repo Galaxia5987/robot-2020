@@ -27,6 +27,10 @@ public class RotationControl extends CommandBase {
 
     @Override
     public void initialize() {
+        clockwiseIndex = 0;
+        clockwiseSpins = 0;
+        counterClockwiseIndex = 0;
+        counterClockwiseSpins = 0;
         updateColorIndex();
         clockwiseIndex = sensorColorIndex;
         counterClockwiseIndex = sensorColorIndex;
@@ -52,11 +56,7 @@ public class RotationControl extends CommandBase {
     }
 
     private void updateColorIndex() {
-        try {
-            sensorColorIndex = colorWheel.indexOfColor(colorWheel.getColorString());
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+        sensorColorIndex = colorWheel.indexOfColor(colorWheel.getColorString());
     }
 
     @Override
