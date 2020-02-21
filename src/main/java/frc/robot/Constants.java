@@ -148,9 +148,9 @@ public class Constants {
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
-        public static final int MAX_CURRENT = 20; // [A]
-        public static final int PEAK_CURRENT = 35;
-        public static final int PEAK_DURATION = 2000;
+        public static final int MAX_CURRENT = 30; // [A]
+        public static final int PEAK_CURRENT = 0;
+        public static final int PEAK_DURATION = 100;
 
 
         public static final double ANGLE_THRESHOLD = 1;
@@ -194,9 +194,15 @@ public class Constants {
         public static final int TILES_BEFORE_SENSOR = 2; // The amount of color tiles between the robot sensor and the field sensor (for example at TBS = 2, the position would aim for RED when the FMS asks for BLUE).
 
         public static final double POSITION_CONTROL_TIMER = 1;
-        public static final double POSITION_CONTROL_POWER = 0.2;
-        public static final double ROTATION_CONTROL_POWER = 0.2;
-        public static double kP = 0.3;
+
+        /**
+         * This is not a real PID control
+         * Constants for a basic proportional control, when distance is 2 apply kP worth of percent output and apply kI when the distance is 1
+         * The names are a meme please do not take kp and ki seriously 
+         */
+        public static WebConstant kP = new WebConstant("colorWheel_Distance_2", 0.5); //Proportional constant for the control wheel Percent output when distance from the color is 2
+        public static WebConstant kI = new WebConstant("colorWheel_Distance_1", 0.3); //Proportional constant for the control panel Percent output when distance from the color is 1
+        public static final double ROTATION_CONTROL_POWER = 0.4;
     }
 
     public static class Climber {
