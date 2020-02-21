@@ -85,7 +85,7 @@ public class RobotContainer {
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.a.whenPressed(new ReleaseRods(climber));
         OI.b.whenPressed(new ResetClimber(climber));
-        OI.x.whenPressed(new PIDClimbAndBalance(climber));
+        OI.x.toggleWhenPressed(new PIDClimbAndBalance(climber));
         OI.y.whenPressed(new SimpleClimb(climber));
         OI.start.whenPressed(new RunCommand(climber::engageStopper));
         OI.rs.whenPressed(new RunCommand(climber::releaseStopper));
