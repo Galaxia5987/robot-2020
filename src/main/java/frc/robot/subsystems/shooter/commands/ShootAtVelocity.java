@@ -8,10 +8,19 @@ import org.techfire225.webapp.FireLog;
 
 public class ShootAtVelocity extends CommandBase {
     static WebConstant targetVelocity = new WebConstant("shooterTargetVelocity", 80);
+    double velocity;
+    boolean manual = false;
     private final Shooter shooter;
 
     public ShootAtVelocity(Shooter shooter) {
         this.shooter = shooter;
+        addRequirements(shooter);
+    }
+
+    public ShootAtVelocity(Shooter shooter, double targetVelocity) {
+        this.shooter = shooter;
+        this.velocity = targetVelocity;
+        manual =true;
         addRequirements(shooter);
     }
 
@@ -23,7 +32,11 @@ public class ShootAtVelocity extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        double setpoint = targetVelocity.get();
+        double setpoint;
+        if (manual){
+             setpoint = velocity;
+        }else { setpoint = targetVelocity.get();
+        }
         shooter.setSpeed(setpoint);
         SmartDashboard.putNumber("shooterVoltage", shooter.getMasterVoltage());
     }
