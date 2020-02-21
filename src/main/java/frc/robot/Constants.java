@@ -2,14 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Transform2d;
 import frc.robot.valuetuner.WebConstant;
 import org.apache.commons.lang.math.DoubleRange;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.Optional;
 
 import static org.apache.commons.lang3.ObjectUtils.CONST;
 
@@ -20,7 +14,6 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
-    public static final double EFFECTIVE_TURN_WIDTH = 0.73; // wheel center to wheel center [m]
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
@@ -42,12 +35,6 @@ public class Constants {
         public static final double SHIFT_SPEED_TOLERANCE = 0.5; // Stops the robot from shifting while the robot is too fast
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
-        public static final boolean RIGHT_MASTER_INVERTED = true;
-        public static final boolean RIGHT_SLAVE_INVERTED = true;
-        public static final boolean LEFT_MASTER_INVERTED = false;
-        public static final boolean LEFT_SLAVE_INVERTED = false;
-        public static final boolean GYRO_INVERTED = true;
-   
         public static final double JOYSTICK_END_THRESHOLD = 0;
 
         public static final double JOYSTICK_MIN_THRESHOLD = 0.08;
@@ -79,6 +66,7 @@ public class Constants {
         public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
         public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
         public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+
         public static final double PORT_HEIGHT = 2.4;
     }
 
