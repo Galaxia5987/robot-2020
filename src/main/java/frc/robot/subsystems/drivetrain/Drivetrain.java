@@ -74,7 +74,7 @@ public class Drivetrain extends SubsystemBase {
         leftMaster.setInverted(LEFT_MASTER_INVERTED);
         leftSlave.setInverted(LEFT_SLAVE_INVERTED);
 
-        motorConfigurations.setNeutralMode(NeutralMode.Brake);
+        motorConfigurations.setNeutralMode(NeutralMode.Coast);
         motorConfigurations.setEnableVoltageCompensation(true);
         motorConfigurations.configureVoltageCompensationSaturation(12);
         motorConfigurations.setPidSet(KP, KI, KD, KF);
