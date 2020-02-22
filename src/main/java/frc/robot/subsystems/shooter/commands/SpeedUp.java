@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.shuffleboard.SmartDash;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.utilities.VisionModule;
@@ -41,8 +42,8 @@ public class SpeedUp extends CommandBase {
             distance = VisionModule.getHoodDistance();
         }
         shooter.setSpeed(shooter.approximateVelocity(distance));
-        SmartDashboard.putNumber("aproximateVelocity", shooter.approximateVelocity(distance));
-        SmartDashboard.putNumber("wallDistance", distance);
+        SmartDash.putNumber("aproximateVelocity", shooter.approximateVelocity(distance));
+        SmartDash.putNumber("wallDistance", distance);
 
         velocityEntry.setDouble(shooter.getSpeed());
     }

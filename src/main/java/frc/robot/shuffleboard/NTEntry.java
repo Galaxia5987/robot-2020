@@ -1,14 +1,16 @@
 package frc.robot.shuffleboard;
 
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.NetworkTableType;
 
 public class NTEntry {
     private final NetworkTableEntry entry;
     private Object lastValue = null;
 
-    public NTEntry(String table, String entry) {
-        this.entry = NetworkTableInstance.getDefault().getTable(table).getEntry(entry);
+    public NTEntry(NetworkTable table, String entry) {
+        this.entry = table.getEntry(entry);
     }
 
     /**
@@ -26,7 +28,9 @@ public class NTEntry {
     /**
      * @return current value of the entry
      */
-    public Object getValue() {
-        return entry.getValue();
+    public Object getValue(Object defaultValue) {
+        Object value = entry.getValue();
+        if(value == NetworkTableType.kUnassigned) return defaultValue;
+        return value;
     }
 }

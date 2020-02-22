@@ -19,6 +19,7 @@ import frc.robot.Constants;
 import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
+import frc.robot.shuffleboard.SmartDash;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.TalonConfiguration;
@@ -207,8 +208,8 @@ public class Climber extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("climbLeftHeight", getLeftHeight());
-        SmartDashboard.putNumber("climbRightHeight", getRightHeight());
+        SmartDash.putNumber("climbLeftHeight", getLeftHeight());
+        SmartDash.putNumber("climbRightHeight", getRightHeight());
 
         if (getRightHeight() >= Constants.Climber.MAX_HEIGHT) {
             setRightHeight(Constants.Climber.MAX_HEIGHT);

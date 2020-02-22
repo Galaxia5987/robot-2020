@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
+import frc.robot.shuffleboard.SmartDash;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.Utils;
@@ -178,10 +179,10 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         correctBacklash();
-        SmartDashboard.putNumber("talonTurretSetpoint", unitModel.toUnits(motor.getClosedLoopTarget()));
-        SmartDashboard.putNumber("turretSetpoint", targetAngle);
-        SmartDashboard.putNumber("turretCurrent", getAngle());
-        SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
+        SmartDash.putNumber("talonTurretSetpoint", unitModel.toUnits(motor.getClosedLoopTarget()));
+        SmartDash.putNumber("turretSetpoint", targetAngle);
+        SmartDash.putNumber("turretCurrent", getAngle());
+        SmartDash.putNumber("turretOutput", motor.getMotorOutputVoltage());
         FireLog.log("turretSetpoint", targetAngle);
         FireLog.log("turretCurrent", getAngle());
     }

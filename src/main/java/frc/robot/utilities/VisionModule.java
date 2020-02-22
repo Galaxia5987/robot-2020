@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
+import frc.robot.shuffleboard.SmartDash;
 
 import javax.annotation.Nullable;
 
@@ -80,15 +81,15 @@ public class VisionModule extends SubsystemBase {
     public void periodic() {
         Double distance = getHoodDistance();
         if (distance != null) {
-            SmartDashboard.putNumber("visionHoodDistance", distance);
-            SmartDashboard.putNumber("visionTargetDistance", getTargetRawDistance());
-            SmartDashboard.putNumber("visionRobotDistance", getTargetRawDistance());
+            SmartDash.putNumber("visionHoodDistance", distance);
+            SmartDash.putNumber("visionTargetDistance", getTargetRawDistance());
+            SmartDash.putNumber("visionRobotDistance", getTargetRawDistance());
         }
         Pose2d robotPose = getRobotPose();
         if (robotPose != null) {
-            SmartDashboard.putNumber("visionRobotX", robotPose.getTranslation().getX());
-            SmartDashboard.putNumber("visionRobotY", robotPose.getTranslation().getY());
-            SmartDashboard.putNumber("visionRobotAngle", robotPose.getRotation().getDegrees());
+            SmartDash.putNumber("visionRobotX", robotPose.getTranslation().getX());
+            SmartDash.putNumber("visionRobotY", robotPose.getTranslation().getY());
+            SmartDash.putNumber("visionRobotAngle", robotPose.getRotation().getDegrees());
         }
         CustomDashboard.setHasVision(targetSeen());
     }

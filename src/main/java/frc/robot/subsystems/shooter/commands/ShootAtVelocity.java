@@ -2,6 +2,7 @@ package frc.robot.subsystems.shooter.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.shuffleboard.SmartDash;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.valuetuner.WebConstant;
 import org.techfire225.webapp.FireLog;
@@ -40,7 +41,7 @@ public class ShootAtVelocity extends CommandBase {
         shooter.setSpeed(setpoint);
         FireLog.log("shooterSpeed", shooter.getSpeed());
         FireLog.log("shooterSetpoint", setpoint);
-        SmartDashboard.putNumber("shooterVoltage", shooter.getMasterVoltage());
+        SmartDash.putNumber("shooterVoltage", shooter.getMasterVoltage());
     }
 
     // Make this return true when this Command no longer needs to run execute()
