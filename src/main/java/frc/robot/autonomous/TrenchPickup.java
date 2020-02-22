@@ -55,14 +55,14 @@ public class TrenchPickup extends SequentialCommandGroup {
     }
 
     public TrenchPickup(Shooter shooter, Conveyor conveyor, Turret turret, Drivetrain drivetrain, Intake intake) {
-        addCommands(new TurnTurret(turret, 180));
-        addCommands(new VisionTurret(turret, true));
-        addCommands(new ParallelCommandGroup(
+        addCommands(new TurnTurret(turret, 180)); // Turn so we can see vision target
+        addCommands(new VisionTurret(turret, true)); // Align to target
+        addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
                 new InitiatePosition(drivetrain, toGenerate),
                 new AutoShoot(turret, shooter, conveyor)
         ));
         addCommands(new WaitUntilCommand(toTrench::hasTrajectory));
-        addCommands(new ParallelDeadlineGroup(
+        addCommands(new ParallelDeadlineGroup( // Drive to trench area and pick up balls with intake
                 new SequentialCommandGroup(
                         new FollowPath(drivetrain, toTrench),
                         new FollowPath(drivetrain, pickupBalls)
@@ -72,13 +72,13 @@ public class TrenchPickup extends SequentialCommandGroup {
                         new PickupBalls(intake, conveyor)
                 )
         ));
-        addCommands(new ParallelDeadlineGroup(
+        addCommands(new ParallelDeadlineGroup( // Drive back to shooting while speeding up
                 new FollowPath(drivetrain, toShooting),
                 new VisionTurret(turret),
                 new SpeedUp(shooter, false),
                 new PickupBalls(intake, conveyor)
         ));
         addCommands(new InstantCommand(() -> VisionModule.setLEDs(true)));
-        addCommands(new AutoShoot(turret, shooter, conveyor));
+        addCommands(new AutoShoot(turret, shooter, conveyor)); // Shoot picked up balls out
     }
 }
