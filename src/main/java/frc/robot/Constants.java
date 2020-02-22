@@ -162,7 +162,7 @@ public class Constants {
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
-        public static final double VELOCITY_TOLERANCE = 2; // [RPS] the acceptable velocity threshold error of the shooter
+        public static final double VELOCITY_TOLERANCE = 1; // [RPS] the acceptable velocity threshold error of the shooter
         public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
         public static final WebConstant VELOCITY_DAMP_RAMP = new WebConstant("damp_ramp", 1); // Damp ramp for that clamp on the accelerant
         public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
@@ -251,7 +251,7 @@ class BConstants {
     }
 
     public static class Conveyor {
-
+        public static final WebConstant CONVEYOR_MOTOR_FEED_POWER = new WebConstant("conveyorFeedPower", 0.7);
     }
 
     public static class Shooter {

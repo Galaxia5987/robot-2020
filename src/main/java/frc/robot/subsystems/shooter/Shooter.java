@@ -11,6 +11,7 @@ import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -115,6 +116,9 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         boolean isShooterReady = isShooterReady();
         SmartDashboard.putBoolean("shooterReady", isShooterReady);
+
+        FireLog.log("shooterVelocity", getSpeed());
+        FireLog.log("shooterSetpoint", getTargetVelocity());
 
         if(getSpeed() < VELOCITY_DAMPENING_LIMIT.get())
             shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
