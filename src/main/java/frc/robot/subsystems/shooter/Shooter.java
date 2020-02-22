@@ -117,6 +117,9 @@ public class Shooter extends SubsystemBase {
         boolean isShooterReady = isShooterReady();
         SmartDashboard.putBoolean("shooterReady", isShooterReady);
 
+        FireLog.log("shooterVelocity", getSpeed());
+        FireLog.log("shooterSetpoint", getTargetVelocity());
+
         if(getSpeed() < VELOCITY_DAMPENING_LIMIT.get())
             shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
         else
