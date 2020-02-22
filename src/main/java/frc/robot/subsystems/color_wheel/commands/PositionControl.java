@@ -41,6 +41,7 @@ public class PositionControl extends CommandBase {
 
     @Override
     public void execute() {
+        colorWheel.updateSensor();
         currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
         if (currentColor == null){
             this.cancel();

@@ -97,15 +97,13 @@ public class ColorWheel extends SubsystemBase {
         motor.set(ControlMode.PercentOutput, percent);
     }
 
-    @Override
-    public void periodic() {
-        match = colorMatcher.matchClosestColor(colorSensor.getColor());
+    /**
+     * Updates the color string to the sensor value.
+     * As it turns out, this method is really inefficient, and SHOULDN'T BE CALLED UNLESS NECESSARY!
+     */
+    public void updateSensor(){
         Color detectedColor = colorSensor.getColor();
+        match = colorMatcher.matchClosestColor(detectedColor);
         colorString = colorToString();
-        SmartDashboard.putNumber("Red", detectedColor.red);
-        SmartDashboard.putNumber("Green", detectedColor.green);
-        SmartDashboard.putNumber("Blue", detectedColor.blue);
-        SmartDashboard.putNumber("Confidence", match.confidence);
-        SmartDashboard.putString("Detected Color", colorString);
     }
 }
