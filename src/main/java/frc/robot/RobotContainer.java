@@ -14,10 +14,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
-import frc.robot.subsystems.climb.commands.PIDClimbAndBalance;
-import frc.robot.subsystems.climb.commands.ReleaseRods;
-import frc.robot.subsystems.climb.commands.ResetClimber;
-import frc.robot.subsystems.climb.commands.SimpleClimb;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
@@ -76,6 +72,9 @@ public class RobotContainer {
      * Defines the default command of each mechanism on the robot.
      */
     private void configureDefaultCommands(){
+        colorWheel.setDefaultCommand(new ManualControl(colorWheel));
+        turret.setDefaultCommand(new JoystickTurret(turret));
+        drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
     }
     /**
      * Configures all of the button usages on the robot.

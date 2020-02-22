@@ -112,10 +112,6 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
       
-        SmartDashboard.putNumber("leftHeight", RobotContainer.climber.getLeftHeight());
-        SmartDashboard.putNumber("rightHeight", RobotContainer.climber.getRightHeight());
-        SmartDashboard.putNumber("roll", RobotContainer.navx.getRoll());
-      
         rainbow();
         m_led.setData(m_ledBuffer);
     }
