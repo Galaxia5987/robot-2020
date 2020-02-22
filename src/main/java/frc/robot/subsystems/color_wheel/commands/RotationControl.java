@@ -43,6 +43,7 @@ public class RotationControl extends CommandBase {
 
     @Override
     public void execute() {
+        colorWheel.updateSensor();
         updateColorIndex();
         if(sensorColorIndex == null) {
             this.cancel();
