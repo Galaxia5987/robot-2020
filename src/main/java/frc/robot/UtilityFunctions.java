@@ -72,9 +72,7 @@ public class UtilityFunctions {
         }
     }
 
-    public static Pose2d getAlliancePort(boolean innerPort) {
-        DriverStation.Alliance alliance = DriverStation.getInstance().getAlliance();
-        if(alliance.equals(DriverStation.Alliance.Blue)) return innerPort ? BLUE_INNER_POWER_PORT_LOCATION : BLUE_OUTER_POWER_PORT_LOCATION;
-        else return innerPort ? RED_INNER_POWER_PORT_LOCATION : RED_OUTER_POWER_PORT_LOCATION;
+    public static Pose2d getPortLocation(boolean innerPort) {
+        return innerPort ? RED_INNER_POWER_PORT_LOCATION : RED_OUTER_POWER_PORT_LOCATION;
     }
 }

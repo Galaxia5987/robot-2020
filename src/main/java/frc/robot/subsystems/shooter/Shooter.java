@@ -128,5 +128,7 @@ public class Shooter extends SubsystemBase {
         CustomDashboard.setSpeedValid(isShooterReady);
         Double hoodDistance = VisionModule.getHoodDistance();
         CustomDashboard.setDistanceValid(hoodDistance != null && ALLOWED_SHOOTING_RANGE.containsDouble(hoodDistance));
+        FireLog.log("shooterSetpoint", targetVelocity);
+        FireLog.log("shooterSpeed", getSpeed());
     }
 }
