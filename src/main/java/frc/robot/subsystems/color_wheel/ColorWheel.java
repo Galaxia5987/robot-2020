@@ -19,9 +19,6 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
-import frc.robot.RobotContainer;
-import frc.robot.shuffleboard.SmartDash;
-import frc.robot.subsystems.color_wheel.commands.ManualControl;
 
 public class ColorWheel extends SubsystemBase {
 
@@ -102,10 +99,10 @@ public class ColorWheel extends SubsystemBase {
         match = colorMatcher.matchClosestColor(colorSensor.getColor());
         Color detectedColor = colorSensor.getColor();
         colorString = colorToString();
-        SmartDash.putNumber("Red", detectedColor.red);
-        SmartDash.putNumber("Green", detectedColor.green);
-        SmartDash.putNumber("Blue", detectedColor.blue);
-        SmartDash.putNumber("Confidence", match.confidence);
+        SmartDashboard.putNumber("Red", detectedColor.red);
+        SmartDashboard.putNumber("Green", detectedColor.green);
+        SmartDashboard.putNumber("Blue", detectedColor.blue);
+        SmartDashboard.putNumber("Confidence", match.confidence);
         SmartDashboard.putString("Detected Color", colorString);
     }
 }

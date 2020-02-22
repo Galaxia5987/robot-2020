@@ -5,67 +5,66 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.shuffleboard.NTEntry;
 
 public class CustomDashboard extends SubsystemBase {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("dashboard");
     public static NetworkTable booleans = table.getSubTable("booleans");
-    public static NTEntry hasVision = new NTEntry(table, "hasVision");
-    public static NTEntry speedValid = new NTEntry(table, "speedValid");
-    public static NTEntry distanceValid = new NTEntry(table, "distanceValid");
-    public static NTEntry ballCount = new NTEntry(table, "ballsCount");
-    public static NTEntry time = new NTEntry(table, "time");
+    public static NetworkTableEntry hasVision = table.getEntry("hasVision");
+    public static NetworkTableEntry speedValid = table.getEntry("speedValid");
+    public static NetworkTableEntry distanceValid = table.getEntry("distanceValid");
+    public static NetworkTableEntry ballCount = table.getEntry("ballsCount");
+    public static NetworkTableEntry time = table.getEntry("time");
     //Booleans
-    public static NTEntry intake = new NTEntry(booleans, "intake");
-    public static NTEntry gate = new NTEntry(booleans, "gate");
-    public static NTEntry climb = new NTEntry(booleans, "climb");
-    public static NTEntry shift = new NTEntry(booleans, "shift");
+    public static NetworkTableEntry intake = booleans.getEntry("intake");
+    public static NetworkTableEntry gate = booleans.getEntry("gate");
+    public static NetworkTableEntry climb = booleans.getEntry("climb");
+    public static NetworkTableEntry shift = booleans.getEntry("shift");
     //Autonomous
-    public static NTEntry autonomousModes = new NTEntry(table, "autonomousModes");
-    public static NTEntry selectedMode = new NTEntry(table, "selectedMode");
+    public static NetworkTableEntry autonomousModes = table.getEntry("autonomousModes");
+    public static NetworkTableEntry selectedMode = table.getEntry("selectedMode");
 
     public static void setHasVision(boolean toggle) {
-        hasVision.setValue(toggle);
+        hasVision.setBoolean(toggle);
     }
 
     public static void setSpeedValid(boolean toggle) {
-        speedValid.setValue(toggle);
+        speedValid.setBoolean(toggle);
     }
 
     public static void setDistanceValid(boolean toggle) {
-        distanceValid.setValue(toggle);
+        distanceValid.setBoolean(toggle);
     }
 
     public static void setBallCount(int count) {
-        ballCount.setValue(count);
+        ballCount.setNumber(count);
     }
 
     public static void setIntake(boolean toggle) {
-        intake.setValue(toggle);
+        intake.setBoolean(toggle);
     }
 
     public static void setGate(boolean toggle) {
-        gate.setValue(toggle);
+        gate.setBoolean(toggle);
     }
 
     public static void setClimb(boolean toggle) {
-        climb.setValue(toggle);
+        climb.setBoolean(toggle);
     }
 
     public static void setShift(boolean toggle) {
-        shift.setValue(toggle);
+        shift.setBoolean(toggle);
     }
 
     public static void setTime(int seconds) {
-        time.setValue(seconds);
+        time.setNumber(seconds);
     }
 
     public static void setAutonomousModes(String[] modes) {
-        autonomousModes.setValue(modes);
+        autonomousModes.setStringArray(modes);
     }
 
     public static String getSelectedMode() {
-        return (String) selectedMode.getValue("");
+        return selectedMode.getString("");
     }
 
     static {

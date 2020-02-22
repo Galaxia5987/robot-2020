@@ -8,12 +8,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
-import frc.robot.Constants;
-import frc.robot.shuffleboard.SmartDash;
 import frc.robot.subsystems.UnitModel;
-import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.Utils;
-import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.techfire225.webapp.FireLog;
 
@@ -178,11 +174,11 @@ public class Turret extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        correctBacklash();
-        SmartDash.putNumber("talonTurretSetpoint", unitModel.toUnits(motor.getClosedLoopTarget()));
-        SmartDash.putNumber("turretSetpoint", targetAngle);
-        SmartDash.putNumber("turretCurrent", getAngle());
-        SmartDash.putNumber("turretOutput", motor.getMotorOutputVoltage());
+        if(BACKLASH_ANGLE != 0)
+            correctBacklash();
+        SmartDashboard.putNumber("turretSetpoint", targetAngle);
+        SmartDashboard.putNumber("turretCurrent", getAngle());
+        SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
         FireLog.log("turretSetpoint", targetAngle);
         FireLog.log("turretCurrent", getAngle());
     }

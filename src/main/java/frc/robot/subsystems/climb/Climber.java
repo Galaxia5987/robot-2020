@@ -19,12 +19,10 @@ import frc.robot.Constants;
 import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
-import frc.robot.shuffleboard.SmartDash;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.TalonConfiguration;
 import frc.robot.valuetuner.WebConstantPIDTalon;
-import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Climber.CLIMB_PIDF;
 import static frc.robot.Constants.Climber.CLIMB_RELEASE_PIDF;
@@ -208,14 +206,17 @@ public class Climber extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDash.putNumber("climbLeftHeight", getLeftHeight());
-        SmartDash.putNumber("climbRightHeight", getRightHeight());
+        double leftHeight = getLeftHeight();
+        double rightHeight = getRightHeight();
 
-        if (getRightHeight() >= Constants.Climber.MAX_HEIGHT) {
+        SmartDashboard.putNumber("climbLeftHeight", leftHeight);
+        SmartDashboard.putNumber("climbRightHeight", rightHeight);
+
+        if (rightHeight >= Constants.Climber.MAX_HEIGHT) {
             setRightHeight(Constants.Climber.MAX_HEIGHT);
         }
 
-        if (getLeftHeight() >= Constants.Climber.MAX_HEIGHT) {
+        if (leftHeight >= Constants.Climber.MAX_HEIGHT) {
             setLeftHeight(Constants.Climber.MAX_HEIGHT);
         }
         CustomDashboard.setClimb(isStopperEngaged());
