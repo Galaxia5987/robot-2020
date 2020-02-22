@@ -247,10 +247,12 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return localization.getPoseMeters();
+        return flipCoordSystem( localization.getPoseMeters());
     }
 
-    public void setPose(Pose2d pose, Rotation2d rotation) {
+    public void setPose(Pose2d pose) {
+        pose = flipCoordSystem(pose);
+        Rotation2d rotation =  new Rotation2d(Math.toRadians(navx.getAngle()));
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
         navx.reset();
@@ -299,9 +301,10 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putNumber(" simple angle", odometry.getPoseMeters().getRotation().getRadians());
         SmartDashboard.putNumber("navx accel", navx.getWorldLinearAccelY() * GRAVITY_ACCELERATION);
 
-        FalconDashboard.INSTANCE.setRobotX(current.getTranslation().getX());
-        FalconDashboard.INSTANCE.setRobotY(current.getTranslation().getY());
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(navx.getAngle() * (GYRO_INVERTED ? -1 : 1)));
+        Pose2d falcon_pose = getPose();
+        FalconDashboard.INSTANCE.setRobotX(Units.metersToFeet(falcon_pose.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setRobotY(Units.metersToFeet(falcon_pose.getTranslation().getY()));
+        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(falcon_pose.getRotation().getRadians()));
     }
 
     /**

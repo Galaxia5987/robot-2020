@@ -29,7 +29,7 @@ public class PoseVisionTurret extends CommandBase {
         Pose2d robotPose = VisionModule.getRobotPose();
         if(robotPose == null || turret.inDeadZone()) return;
         turret.setAngle(Utils.calculateTurretAngle(robotPose, true));
-        drivetrain.setPose(robotPose, new Rotation2d(Math.toRadians(navx.getAngle())));
+        drivetrain.setPose(robotPose);
     }
 
     @Override
