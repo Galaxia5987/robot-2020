@@ -17,32 +17,14 @@ import static frc.robot.Constants.LED.DIMNESS_INCREASE;
 public class ColorsBuffer extends AddressableLEDBuffer {
     byte[] m_buffer;
 
-    private double minDimness;
-    private double currentDimness;
-    private boolean dimnessActivated;
-
     /**
      * Constructs a new LED buffer with the specified length.
      *
      * @param length     The length of the buffer in pixels
-     * @param minDimness The minimal dimness of the LEDs strip
      */
-    public ColorsBuffer(int length, double minDimness) {
+    public ColorsBuffer(int length) {
         super(length);
         this.m_buffer = new byte[length * 4];
-        this.minDimness = minDimness;
-        this.currentDimness = minDimness;
-        dimnessActivated = true;
-
-    }
-
-    /**
-     * Sets the minimal dimness of the strip.
-     *
-     * @param minDimness minimal dimness to set the strip to
-     */
-    public void setMinDimness(double minDimness) {
-        this.minDimness = minDimness;
     }
 
     /**
@@ -55,26 +37,9 @@ public class ColorsBuffer extends AddressableLEDBuffer {
      */
     @SuppressWarnings("ParameterName")
     public void setRGB(int index, int r, int g, int b) {
-        if (dimnessActivated) {
-            currentDimness += DIMNESS_INCREASE;
-            if (currentDimness > 1) {
-                currentDimness = minDimness;
-            }
-        } else {
-            currentDimness = 1;
-        }
-        m_buffer[index * 4] = (byte) (b * currentDimness);
-        m_buffer[(index * 4) + 1] = (byte) (g * currentDimness);
-        m_buffer[(index * 4) + 2] = (byte) (r * currentDimness);
+        m_buffer[index * 4] = (byte) b;
+        m_buffer[(index * 4) + 1] = (byte) g;
+        m_buffer[(index * 4) + 2] = (byte) r;
         m_buffer[(index * 4) + 3] = 0;
-    }
-
-    /**
-     * Activates the LEDs dimness effect.
-     *
-     * @param activate whether to activate the dimness effect
-     */
-    public void activateDimness(boolean activate) {
-        dimnessActivated = activate;
     }
 }

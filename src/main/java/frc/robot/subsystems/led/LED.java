@@ -34,7 +34,7 @@ public class LED extends SubsystemBase {
     public LED() {
         strip = new AddressableLED(STRIP);
 
-        colorsBuffer = new ColorsBuffer(STRIP_LENGTH, MINIMAL_DIMNESS);
+        colorsBuffer = new ColorsBuffer(STRIP_LENGTH);
         // Set the color of the LEDs to Galaxia blue at startup.
         setWholeStrip(DEFAULT_COLOR);
         strip.setLength(STRIP_LENGTH);
@@ -129,9 +129,5 @@ public class LED extends SubsystemBase {
      */
     public void setColorBuffer(ColorsBuffer colorBuffer) {
         colorsBuffer = colorBuffer;
-    }
-
-    public void activateDimness(boolean activate) {
-        colorsBuffer.activateDimness(activate);
     }
 }

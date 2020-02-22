@@ -7,6 +7,7 @@ import frc.robot.subsystems.led.LED;
 /**
  * Command that sets a dimming color.
  */
+@Deprecated
 public class DimmingColor extends CommandBase {
     private final LED led;
     private final Color color;
@@ -24,7 +25,6 @@ public class DimmingColor extends CommandBase {
 
     @Override
     public void initialize() {
-        led.activateDimness(true); // TODO: Test whether initialize is actually called in a default command
     }
 
     @Override
@@ -34,6 +34,5 @@ public class DimmingColor extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        led.activateDimness(false);
     }
 }
