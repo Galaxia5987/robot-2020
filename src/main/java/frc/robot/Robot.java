@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.Utils;
 
+import static frc.robot.RobotContainer.navx;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -60,6 +62,9 @@ public class Robot extends TimedRobot {
 //        compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
+
+        SmartDashboard.putData(pdp);
+        SmartDashboard.putData(navx);
 
         //Disable live window for more loop time
         LiveWindow.setEnabled(false);
