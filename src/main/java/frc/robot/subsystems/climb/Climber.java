@@ -214,14 +214,17 @@ public class Climber extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("climbLeftHeight", getLeftHeight());
-        SmartDashboard.putNumber("climbRightHeight", getRightHeight());
+        double leftHeight = getLeftHeight();
+        double rightHeight = getRightHeight();
 
-        if (getRightHeight() >= Constants.Climber.MAX_HEIGHT) {
+        SmartDashboard.putNumber("climbLeftHeight", leftHeight);
+        SmartDashboard.putNumber("climbRightHeight", rightHeight);
+
+        if (rightHeight >= Constants.Climber.MAX_HEIGHT) {
             setRightHeight(Constants.Climber.MAX_HEIGHT);
         }
 
-        if (getLeftHeight() >= Constants.Climber.MAX_HEIGHT) {
+        if (leftHeight >= Constants.Climber.MAX_HEIGHT) {
             setLeftHeight(Constants.Climber.MAX_HEIGHT);
         }
         CustomDashboard.setClimb(isStopperEngaged());

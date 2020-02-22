@@ -2,7 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.utilities.ButtonCombination;
 
 /**
@@ -25,6 +27,11 @@ public class OI {
     public final static JoystickButton start = new JoystickButton(xbox, XboxController.Button.kStart.value);
     public final static JoystickButton rs = new JoystickButton(xbox, XboxController.Button.kStickRight.value);
     public final static ButtonCombination back_start = new ButtonCombination(xbox, XboxController.Button.kBack.value, XboxController.Button.kStart.value);
+    public final static Button povd = new POVButton(xbox, 180);
+    public final static Button povr = new POVButton(xbox, 90);
+    public final static Button povl = new POVButton(xbox, 270);
+    public final static Button povu = new POVButton(xbox, 0);
+
 
     public static double getXboxLX() {
         return xbox.getRawAxis(XboxController.Axis.kLeftX.value);

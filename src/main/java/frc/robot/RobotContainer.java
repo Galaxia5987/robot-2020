@@ -81,15 +81,24 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.lb.whileHeld(new JoystickDrive(drivetrain, ()-> OI.getXboxLY()*-0.3, ()-> OI.getXboxRY()*-0.3));
+        OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
+        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
+        OI.b.toggleWhenPressed(new SpeedUp(shooter));
+        OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.a.whenPressed(new ReleaseRods(climber));
-        OI.b.whenPressed(new ResetClimber(climber));
-        OI.x.toggleWhenPressed(new PIDClimbAndBalance(climber));
-        OI.y.whenPressed(new SimpleClimb(climber));
-        OI.start.whenPressed(new RunCommand(climber::engageStopper));
-        OI.rs.whenPressed(new RunCommand(climber::releaseStopper));
-
+        OI.rb.whenPressed(new RotationControl(colorWheel));
+        OI.lb.whenPressed(new PositionControl(colorWheel));
+        OI.back_start.whenHeld(new SequentialCommandGroup(
+                new WaitCommand(2),
+                new RunCommand(() -> Robot.shootingManualMode = true)
+        )); //If both buttons are held without being released the manualMode will be enabled.
+        OI.start.whenPressed(() -> Robot.shootingManualMode = false); //Pressing start disables the manual mode for shooting.
+        for (int i = 1; i < 10; i++) {
+            new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
+        }
+        for (int i = 1; i < 10; i++) {
+            new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
+        }
     }
 
     /**
