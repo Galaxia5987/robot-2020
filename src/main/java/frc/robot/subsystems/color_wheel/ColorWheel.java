@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
 
+import javax.annotation.Nullable;
+
 public class ColorWheel extends SubsystemBase {
 
     //Color sensor definitions
@@ -53,7 +55,8 @@ public class ColorWheel extends SubsystemBase {
         return colorString;
     }
 
-    public int indexOfColor(String color) {
+    @Nullable
+    public Integer indexOfColor(String color) {
 
         switch (color.charAt(0)) {
             case ('Y'):
@@ -65,7 +68,7 @@ public class ColorWheel extends SubsystemBase {
             case ('B'):
                 return 3;
             default:
-                throw new IllegalArgumentException(String.format("Color %s does not have an index", color));
+                return null;
 
         }
     }

@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * stops at 4 spins
  */
 public class RotationControl extends CommandBase {
-    private int sensorColorIndex;
+    private Integer sensorColorIndex;
     private int clockwiseIndex = 0;//Marks the index of the current color when looking for a clockwise pov
     private int counterClockwiseIndex = 0;//Marks the index of the current color when looking for a counterclockwise pov
     private double clockwiseSpins = 0;//Counts the clockwise spins of the control panel
@@ -32,6 +32,10 @@ public class RotationControl extends CommandBase {
         counterClockwiseIndex = 0;
         counterClockwiseSpins = 0;
         updateColorIndex();
+        if (sensorColorIndex == null){
+            this.cancel();
+            return;
+        }
         clockwiseIndex = sensorColorIndex;
         counterClockwiseIndex = sensorColorIndex;
         colorWheel.setPower(Constants.ColorWheel.ROTATION_CONTROL_POWER);
@@ -40,6 +44,10 @@ public class RotationControl extends CommandBase {
     @Override
     public void execute() {
         updateColorIndex();
+        if(sensorColorIndex == null) {
+            this.cancel();
+            return;
+        }
         /*
         this block of code looks at the order of the colors and checks whether the wheel is moving clockwise or counterclockwise
         and counts the amount of spins to each direction accordingly
