@@ -114,12 +114,15 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("shooterReady", isShooterReady());
+        boolean isShooterReady = isShooterReady();
+        SmartDashboard.putBoolean("shooterReady", isShooterReady);
+
         if(getSpeed() < VELOCITY_DAMPENING_LIMIT.get())
             shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
         else
             shooterMaster.configClosedloopRamp(0);
-        CustomDashboard.setSpeedValid(isShooterReady());
+
+        CustomDashboard.setSpeedValid(isShooterReady);
         Double hoodDistance = VisionModule.getHoodDistance();
         CustomDashboard.setDistanceValid(hoodDistance != null && ALLOWED_SHOOTING_RANGE.containsDouble(hoodDistance));
         FireLog.log("shooterSetpoint", targetVelocity);

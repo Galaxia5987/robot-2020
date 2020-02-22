@@ -7,13 +7,11 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
 
 import javax.annotation.Nullable;
 
-import static frc.robot.Constants.FieldGeometry.*;
 import static frc.robot.Constants.Vision.*;
 
 public class VisionModule extends SubsystemBase {
@@ -73,7 +71,7 @@ public class VisionModule extends SubsystemBase {
         if (visionDistance == null) return null;
         double a = VISION_ROTATION_RADIUS + visionDistance;
         double b = ROBOT_TO_TURRET_CENTER;
-        return Math.sqrt(a*a + b*b - 2*a*b*Math.cos(Math.toRadians(RobotContainer.turret.getAngle()))); //Cosine law
+        return Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(Math.toRadians(RobotContainer.turret.getAngle()))); //Cosine law
     }
 
     @Override
