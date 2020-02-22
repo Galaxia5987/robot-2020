@@ -37,9 +37,6 @@ public class Path {
 
     public void generate(Pose2d currentRobotPose) {
         waypoints.add(0, currentRobotPose);
-        for(Pose2d waypoint: waypoints) {
-            System.out.println(String.format("W: %s, %s, %s", waypoint.getTranslation().getX(), waypoint.getTranslation().getY(), waypoint.getRotation().getDegrees()));
-        }
         this.trajectory = TrajectoryGenerator.generateTrajectory(waypoints, config);
     }
 
