@@ -102,6 +102,9 @@ public class PIDClimbAndBalance extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         climber.engageStopper();
+        climber.setLeftHeight(climber.getLeftHeight());
+        climber.setRightHeight(climber.getRightHeight());
+
     }
 
 
