@@ -7,13 +7,16 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.utilities.TrajectoryLoader;
-import frc.robot.valuetuner.WebConstant;
+import frc.robot.utilities.Utils;
+
+import static frc.robot.RobotContainer.navx;
 
 
 /**
@@ -47,15 +50,36 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        if(!Robot.isRobotA) {
+            Utils.swapConstants(Constants.class, BConstants.class);
+            Utils.swapConstants(Ports.class, BPorts.class);
+        }
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         TrajectoryLoader.loadTrajectories();
         robotTimer.reset();
         robotTimer.start();
         m_robotContainer = new RobotContainer();
-        compressor.stop();
+//        compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
+
+        SmartDashboard.putData(pdp);
+        SmartDashboard.putData(navx);
+
+        //Disable live window for more loop time
+        LiveWindow.setEnabled(false);
+        LiveWindow.disableAllTelemetry();
+
+        startCameraCapture();
+    }
+
+    public void startCameraCapture() {
+        new Thread(() -> {
+            UsbCamera camera = edu.wpi.first.cameraserver.CameraServer.getInstance().startAutomaticCapture(0);
+            camera.setResolution(160, 120);
+            camera.setFPS(30);
+        }).start();
     }
 
     /**

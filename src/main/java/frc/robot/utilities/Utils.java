@@ -4,21 +4,30 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.UtilityFunctions;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.Optional;
 
 public class Utils {
 
     /**
      * set the value of an entry in the network table
+     *
      * @param entry the network table entry's name
      * @param value the value of the entry
      */
-    public static void setValue(String table, String entry, Object value){
+    public static void setValue(String table, String entry, Object value) {
         NetworkTableInstance.getDefault().getTable(table).getEntry(entry).setValue(value);
     }
 
     /**
      * set the value of an entry in a known network table
+     *
      * @param entry the network table entry's name
      * @param value the value of the entry
      */
@@ -32,7 +41,7 @@ public class Utils {
      * The result is the unsigned remainder of the mod method.
      *
      * @param value the numerator
-     * @param mod the denominator
+     * @param mod   the denominator
      * @return the remainder of the division
      */
     public static double floorMod(double value, double mod) {
@@ -59,7 +68,7 @@ public class Utils {
             falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
                     , configurations.getSupplyCurrentLimit()
                     , configurations.getThreshHoldCurrent()
-                        , configurations.getThreshHoldTime()));
+                    , configurations.getThreshHoldTime()));
             falcon.config_kP(0, configurations.getPidSet()[0]);
             falcon.config_kI(0, configurations.getPidSet()[1]);
             falcon.config_kD(0, configurations.getPidSet()[2]);
@@ -67,8 +76,54 @@ public class Utils {
 
         }
     }
+    
+    /**
+     * Calculates turret angle to inner or outer port.
+     * @param currentPosition Current robot pose
+     * @param innerPort Aim to inner port
+     * @return Turret angle
+     */
+    public static double calculateTurretAngle(Pose2d currentPosition, boolean innerPort) {
+        Pose2d targetLocation = UtilityFunctions.getAlliancePort(innerPort);
+        double deltaY = targetLocation.getTranslation().getY() - currentPosition.getTranslation().getY();
+        double deltaX = targetLocation.getTranslation().getX() - currentPosition.getTranslation().getX();
+        return Math.toDegrees(Math.atan2(deltaY, deltaX) - currentPosition.getRotation().getRadians());
+    }
 
-    public static double toFeet(double meters) {
-        return meters * 3.2808399;
+    /**
+     * Replaces fields between constants classes.
+     *
+     * @param class1 Original constants class
+     */
+    public static void replaceFields(Class class1, Class class2) {
+        //Loop and replace all fields
+        for (Field f : class2.getDeclaredFields()) {
+            for (Field f2 : class1.getDeclaredFields()) {
+                //Loop and replace all fields
+                if (f2.getName().equals(f.getName())) { // If the name is equal perform replacement
+
+                    f2.setAccessible(true);
+                    f.setAccessible(true);
+                    try {
+                        Field modifiersField = Field.class.getDeclaredField("modifiers");
+                        modifiersField.setAccessible(true);
+                        modifiersField.setInt(f2, f2.getModifiers() & ~Modifier.FINAL);
+                        f2.set(null, f.get(null));
+                    } catch (IllegalAccessException | NoSuchFieldException e) { // Catch relevant exceptions
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public static void swapConstants(Class<?> original, Class<?> B) {
+        Utils.replaceFields(original, B); // Replace outer constants
+        for (Class aClass : original.getDeclaredClasses()) { // Loop constants classes
+            // Find the class in B Constants
+            Optional<Class<?>> bClass = Arrays.stream(B.getDeclaredClasses()).filter(c -> c.getSimpleName().equals(aClass.getSimpleName())).findAny();
+            if (bClass.isEmpty()) continue; // Class isn't present
+            Utils.replaceFields(aClass, bClass.get());
+        }
     }
 }

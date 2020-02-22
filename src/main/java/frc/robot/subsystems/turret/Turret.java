@@ -8,11 +8,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
-import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
-import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.Utils;
-import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.techfire225.webapp.FireLog;
 
@@ -62,9 +59,9 @@ public class Turret extends SubsystemBase {
 
         motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
         motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
-        motor.configPeakCurrentLimit(0);
+        motor.configPeakCurrentLimit(PEAK_CURRENT);
         motor.configContinuousCurrentLimit(MAX_CURRENT);
-        motor.configPeakCurrentDuration(0);
+        motor.configPeakCurrentDuration(PEAK_DURATION);
         motor.enableCurrentLimit(true);
 
         // Configure soft limits for the subsystem.
@@ -113,6 +110,7 @@ public class Turret extends SubsystemBase {
      */
     public void setAngle(double angle) {
         targetAngle = normalizeSetpoint(angle);
+        //Use motion magic if target angle is big enough, else use tracking PID.
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);
             motor.set(ControlMode.Position, unitModel.toTicks(targetAngle)); // Set the position to the target angle plus the backlash the turret creates.
@@ -176,7 +174,8 @@ public class Turret extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        correctBacklash();
+        if(BACKLASH_ANGLE != 0)
+            correctBacklash();
         SmartDashboard.putNumber("turretSetpoint", targetAngle);
         SmartDashboard.putNumber("turretCurrent", getAngle());
         SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
