@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
+import org.eclipse.jetty.util.thread.Scheduler;
 
 import static frc.robot.RobotContainer.navx;
 
@@ -63,6 +64,8 @@ public class Robot extends TimedRobot {
 //        compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
+        SmartDashboard.putData("running command", CommandScheduler.getInstance());
+
 
         SmartDashboard.putData(pdp);
         SmartDashboard.putData(navx);

@@ -94,11 +94,11 @@ public class Constants {
 
         public static final double INTAKE_PROXIMITY_MAX_VALUE = 200; //The minimum value for which the sensor would see a ball
         public static final double INTAKE_PROXIMITY_MIN_VALUE = 150; //The minimum voltage which the sensor would see in between two balls
-        public static final double SHOOTER_PROXIMITY_MAX_VALUE = 1500;
-        public static final double SHOOTER_PROXIMITY_MIN_VALUE = 900;
+        public static final double SHOOTER_PROXIMITY_MAX_VALUE = 2000;
+        public static final double SHOOTER_PROXIMITY_MIN_VALUE = 800;
 
         public static final int MAX_BALLS_AMOUNT = 5;
-        public static final int STARTING_AMOUNT = 3;
+        public static final int STARTING_AMOUNT = 0;
 
         public static final double GATE_OPEN_TIME = 0.5; // [sec] The amount of time from the opening of the gate until it is considered open
 

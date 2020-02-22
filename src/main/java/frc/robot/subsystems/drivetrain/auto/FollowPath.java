@@ -67,7 +67,7 @@ public class FollowPath extends CommandBase {
 
         if(resetDrivetrain)
             drivetrain.setPose(trajectory.getInitialPose());
-
+        System.out.println(String.format("Initial pose: %s, %s, %s", trajectory.getInitialPose().getTranslation().getX(), trajectory.getInitialPose().getTranslation().getY(), trajectory.getInitialPose().getRotation().getDegrees()));
         FalconDashboard.INSTANCE.setFollowingPath(true);
         prevTime = 0;
         var initialState = trajectory.sample(0);

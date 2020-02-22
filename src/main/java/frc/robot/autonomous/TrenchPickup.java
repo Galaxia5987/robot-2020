@@ -17,7 +17,10 @@ import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
 import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.State;
-import frc.robot.utilities.VisionModule;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static frc.robot.Constants.Autonomous.MAX_ACCELERATION;
 import static frc.robot.Constants.Autonomous.MAX_SPEED;
@@ -25,32 +28,31 @@ import static frc.robot.Constants.Autonomous.MAX_SPEED;
 public class TrenchPickup extends SequentialCommandGroup {
     public static final double INTAKE_WAIT = 1;
     public static final double SHOOTER_WAIT = 1;
-    public static Path toTrench = new Path(
-            true,
+    public Path toTrench = new Path(
             new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180)),
             new Pose2d(Units.feetToMeters(26.219), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
     private static final TrajectoryConfig toShootingConfig = new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION).setReversed(true);
-    public static Path toShooting = new Path(
+    public Path toShooting = new Path(
             toShootingConfig,
-            false,
             new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180)),
             new Pose2d(Units.feetToMeters(45.476), Units.feetToMeters(5.923), Rotation2d.fromDegrees(180))
     );
+    private final List<Path> toGenerate = new ArrayList<>(Collections.singletonList(toTrench));
 
     public TrenchPickup(Shooter shooter, Conveyor conveyor, Turret turret, Drivetrain drivetrain, Intake intake) {
         addCommands(new TurnTurret(turret, 180));
         addCommands(new VisionTurret(turret, true));
         addCommands(new ParallelCommandGroup(
-                new InitiatePosition(drivetrain)
-//                new AutoShoot(turret, shooter, conveyor)
+                new InitiatePosition(drivetrain, toGenerate),
+                new AutoShoot(turret, shooter, conveyor)
         ));
         addCommands(new WaitUntilCommand(toTrench::hasTrajectory));
         addCommands(new ParallelCommandGroup(
                 new FollowPath(drivetrain, toTrench),
                 new SequentialCommandGroup(
-                        new WaitCommand(INTAKE_WAIT)
-//                        new IntakeBalls(intake, conveyor)
+                        new WaitCommand(INTAKE_WAIT),
+                        new IntakeBalls(intake, conveyor)
                 )
         ));
         addCommands(new InstantCommand(() -> intake.setPosition(State.CLOSE)));

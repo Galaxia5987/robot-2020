@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
@@ -81,7 +82,7 @@ public class Conveyor extends SubsystemBase {
         }
         //If the conveyor proximity loses an object, and it hasn't been off before and the conveyor is spinning outwards, remove a ball from the count
         //Additionally, if the conveyor outtakes a ball and the sensor sees the ball pass it, decrement the count aswell.
-        if ((!shooterProximity.getState() && shooterProximity.getToggle() && (getPower() > 0)) ||
+        if ((!shooterProximity.getState() && shooterProximity.getToggle() && (getPower() >= 0)) ||
                 (intakeProximity.getToggle() && !intakeSensedBall() && (getPower() < 0))) {
             decrementBallsCount(1);
             intakeProximity.resetToggle();
@@ -89,6 +90,8 @@ public class Conveyor extends SubsystemBase {
         }
         CustomDashboard.setBallCount(getBallsCount());
         CustomDashboard.setGate(isGateOpen());
+
+        SmartDashboard.putNumber("shooter proximity", shooterProximity.getValue());
     }
 
     private void updateSensors() {

@@ -25,6 +25,7 @@ import frc.robot.subsystems.conveyor.commands.LoadConveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.auto.FollowPath;
 import frc.robot.subsystems.drivetrain.auto.VelocityDrive;
+import frc.robot.subsystems.drivetrain.auto.sergeyVelocityDrive;
 import frc.robot.subsystems.drivetrain.commands.GearShift;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
@@ -91,8 +92,8 @@ public class RobotContainer {
         OI.b.toggleWhenPressed(new SpeedUp(shooter));
         OI.y.toggleWhenPressed(new VisionTurret(turret));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.toggleWhenPressed(new VelocityDrive(drivetrain, true, true, false));
-        OI.lb.toggleWhenPressed(new VelocityDrive(drivetrain, true, true, true));
+        OI.rb.toggleWhenPressed(new sergeyVelocityDrive(drivetrain, true, true, false));
+        OI.lb.toggleWhenPressed(new sergeyVelocityDrive(drivetrain, true, true, true));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)

@@ -14,26 +14,16 @@ import static frc.robot.Constants.Autonomous.MAX_SPEED;
 
 public class Path {
     private static final TrajectoryConfig DEFAULT_CONFIG = new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION);
-    private static final List<Path> pathRegistry = new ArrayList<>();
-
     private TrajectoryConfig config = DEFAULT_CONFIG;
-    private final List<Pose2d> waypoints = new ArrayList<>();
+    private List<Pose2d> waypoints;
     private Trajectory trajectory;
 
-    public static void generateAll(Pose2d robotPose) {
-        for (Path path : pathRegistry) {
-            path.generate(robotPose);
-        }
+    Path(Pose2d... points) {
+        waypoints = new ArrayList<>(Arrays.asList(points));
     }
 
-    Path(boolean preload, Pose2d... points) {
-        waypoints.addAll(Arrays.asList(points));
-        if(preload)
-            pathRegistry.add(this);
-    }
-
-    Path(TrajectoryConfig config, boolean preload, Pose2d... points) {
-        this(preload, points);
+    Path(TrajectoryConfig config, Pose2d... points) {
+        this(points);
         this.config = config;
     }
 
@@ -43,6 +33,9 @@ public class Path {
 
     public void generate(Pose2d currentRobotPose) {
         waypoints.add(0, currentRobotPose);
+        for(Pose2d waypoint: waypoints) {
+            System.out.println(String.format("W: %s, %s, %s", waypoint.getTranslation().getX(), waypoint.getTranslation().getY(), waypoint.getRotation().getDegrees()));
+        }
         this.trajectory = TrajectoryGenerator.generateTrajectory(waypoints, config);
     }
 
