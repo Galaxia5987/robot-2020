@@ -1,22 +1,16 @@
 package frc.robot.subsystems.led.commnads;
 
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.led.ColorsBuffer;
 import frc.robot.subsystems.led.LED;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import java.util.LinkedHashMap;
-import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
-
-import static frc.robot.Constants.LED.BLINK_PAUSE;
-import static frc.robot.Constants.LED.TOTAL_BLINKS;
 
 public class CountBalls extends CommandBase {
     private final LED led;
-    private final ColorsBuffer initialColorsBuffer;
     private final Timer timer;
     private final Supplier<Integer> ballCount;
 
@@ -29,7 +23,6 @@ public class CountBalls extends CommandBase {
         addRequirements(led);
 
         this.led = led;
-        initialColorsBuffer = led.getCurrentBuffer();
         this.ballCount = ballCount;
         timer = new Timer();
     }
@@ -57,7 +50,5 @@ public class CountBalls extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        // Make the LED strip show the color(s) it showed before this command started.
-        led.setColorBuffer(initialColorsBuffer);
     }
 }

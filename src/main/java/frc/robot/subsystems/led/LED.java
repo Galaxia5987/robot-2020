@@ -9,6 +9,7 @@
 package frc.robot.subsystems.led;
 
 import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -26,7 +27,7 @@ import static frc.robot.Ports.LED.STRIP_LENGTH;
 public class LED extends SubsystemBase {
 
     private final AddressableLED strip;
-    private ColorsBuffer colorsBuffer;
+    private AddressableLEDBuffer colorsBuffer;
 
     /**
      * Creates a new LED subsystem.
@@ -34,7 +35,7 @@ public class LED extends SubsystemBase {
     public LED() {
         strip = new AddressableLED(STRIP);
 
-        colorsBuffer = new ColorsBuffer(STRIP_LENGTH);
+        colorsBuffer = new AddressableLEDBuffer(STRIP_LENGTH);
         // Set the color of the LEDs to Galaxia blue at startup.
         setWholeStrip(DEFAULT_COLOR);
         strip.setLength(STRIP_LENGTH);
@@ -110,24 +111,7 @@ public class LED extends SubsystemBase {
         setColorLengths(colorMap);
     }
 
-    @Override
-    public void periodic() {
-        strip.setData(colorsBuffer);
-    }
-
-    /**
-     * @return the current colors buffer.
-     */
-    public ColorsBuffer getCurrentBuffer() {
+    public AddressableLEDBuffer getColorsBuffer(){
         return colorsBuffer;
-    }
-
-    /**
-     * Sets the colors buffer.
-     *
-     * @param colorBuffer colors buffer to set to
-     */
-    public void setColorBuffer(ColorsBuffer colorBuffer) {
-        colorsBuffer = colorBuffer;
     }
 }

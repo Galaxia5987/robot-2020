@@ -1,9 +1,9 @@
 package frc.robot.subsystems.led.commnads;
 
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.led.ColorsBuffer;
 import frc.robot.subsystems.led.LED;
 
 import static frc.robot.Constants.LED.BLINK_PAUSE;
@@ -15,7 +15,6 @@ public class BlinkColor extends CommandBase {
     private final int blinks;
     private final double period;
     private final Timer timer;
-    private final ColorsBuffer initialColorsBuffer;
     private Color currentColor;
     private int blinksDone;
 
@@ -47,7 +46,6 @@ public class BlinkColor extends CommandBase {
         blinksDone = 0;
         currentColor = color;
         timer = new Timer();
-        initialColorsBuffer = led.getCurrentBuffer();
         addRequirements(led);
     }
 
@@ -74,7 +72,5 @@ public class BlinkColor extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        // Make the LED strip show the color(s) it showed before this command started.
-        led.setColorBuffer(initialColorsBuffer);
     }
 }
