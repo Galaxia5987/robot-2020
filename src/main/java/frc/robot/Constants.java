@@ -118,7 +118,7 @@ public class Constants {
         public static final int ZERO_POSITION = CONST(1600); //Encoder absolute position when the turret is facing forward. This might change occasionally.
 
         public static final int POSITION_PID_SLOT = 0;
-        public static final int MOTION_MAGIC_PID_SLOT = 1;
+        public static final int MOTION_MAGIC_PID_SLOT = 2;
 
         public static double KP = CONST(3.5);
         public static double KI = CONST(0.01);
@@ -130,10 +130,10 @@ public class Constants {
         public static double MOTION_MAGIC_KP = 4.07;
         public static double MOTION_MAGIC_KI = 0.0005;
         public static double MOTION_MAGIC_KD = 2.3;
-        public static double MOTION_MAGIC_KF = 0.00912;
+        public static double MOTION_MAGIC_KF = 0;
 
-        public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
-        public static final int MOTION_MAGIC_ACCELERATION = 16;
+        public static final int MOTION_MAGIC_CRUISE_VELOCITY = 3000;
+        public static final int MOTION_MAGIC_ACCELERATION = 2000;
 
         public static final WebConstant DIRECT_VISION_KP = new WebConstant("visionKp", 0.01);
         public static final WebConstant DIRECT_VISION_KI = new WebConstant("visionKi", 0.001);
