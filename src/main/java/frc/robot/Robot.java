@@ -7,9 +7,9 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -60,6 +60,10 @@ public class Robot extends TimedRobot {
 //        compressor.stop();
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
+
+        //Disable live window for more loop time
+        LiveWindow.setEnabled(false);
+        LiveWindow.disableAllTelemetry();
 
         startCameraCapture();
     }
