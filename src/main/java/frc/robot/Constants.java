@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.valuetuner.WebConstant;
@@ -38,6 +39,17 @@ public class Constants {
         public static final double JOYSTICK_END_THRESHOLD = 0;
 
         public static final double JOYSTICK_MIN_THRESHOLD = 0.08;
+    }
+    public static final class LED {
+        public static final Color DEFAULT_COLOR = Color.kDeepSkyBlue;
+
+        // Dimness settings
+        public static final double MINIMAL_DIMNESS = 0;
+        public static final double DIMNESS_INCREASE = 0;
+
+        // Blinking settings
+        public static final int TOTAL_BLINKS = 5;
+        public static final double BLINK_PAUSE = 0.125; // TODO: Tune blink values.
     }
 
     public static class Autonomous {

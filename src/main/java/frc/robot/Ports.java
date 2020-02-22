@@ -70,6 +70,11 @@ public class Ports {
         public static final int MOTOR = 30;
     }
 
+    public static final class LED {
+        public static final int STRIP = 0; //PWM port
+        public static final int STRIP_LENGTH = 22; //Amount of LED's in the strip.
+    }
+
     public static class Climber {
         public static final int LEFT_MOTOR = 40;
         public static final int RIGHT_MOTOR = 41;

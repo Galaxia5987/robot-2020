@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +16,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
+import frc.robot.subsystems.color_wheel.commands.RotationControl;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.led.LED;
+import frc.robot.subsystems.led.commnads.DimmingColor;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
 import frc.robot.subsystems.color_wheel.commands.RotationControl;
@@ -35,6 +40,8 @@ import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
+import static frc.robot.Constants.LED.DEFAULT_COLOR;
+
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -53,6 +60,7 @@ public class RobotContainer {
     private final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
     public static final Turret turret = new Turret();
+    private final LED led = new LED();
     private final Command m_autoCommand = null;
 
     /**
@@ -75,6 +83,7 @@ public class RobotContainer {
         colorWheel.setDefaultCommand(new ManualControl(colorWheel));
         turret.setDefaultCommand(new JoystickTurret(turret));
         drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
+        led.setDefaultCommand(new DimmingColor(led, DEFAULT_COLOR));
     }
     /**
      * Configures all of the button usages on the robot.
