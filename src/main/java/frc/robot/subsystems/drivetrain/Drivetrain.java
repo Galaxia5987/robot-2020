@@ -312,4 +312,14 @@ public class Drivetrain extends SubsystemBase {
         HIGH,
         LOW
     }
+
+    /**
+     *  Flips coordinate definition from Falcon (0,0) bottom left to Galaxia (0,0) top left and the reverse
+     * @param pose
+     * @return
+     */
+    public Pose2d flipCoordSystem(Pose2d pose )
+    {
+        return new Pose2d(pose.getTranslation().getX(),FIELD_WIDTH -  pose.getTranslation().getY(), new Rotation2d(- pose.getRotation().getRadians()) );
+    }
 }
