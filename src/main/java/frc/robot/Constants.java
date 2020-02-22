@@ -53,8 +53,9 @@ public class Constants {
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
 
-        public static final double MAX_SPEED = 3; // [m/s]
+        public static final double MAX_SPEED = 2; // [m/s]
         public static final double MAX_ACCELERATION = 1; // [m / s / s]
+        public static final double MAX_CENTRIPETAL_ACCELERATION = 0.7; // [m / s / s]
     }
 
     public static class Vision {
@@ -98,7 +99,7 @@ public class Constants {
         public static final double SHOOTER_PROXIMITY_MIN_VALUE = 800;
 
         public static final int MAX_BALLS_AMOUNT = 5;
-        public static final int STARTING_AMOUNT = 0;
+        public static final int STARTING_AMOUNT = 3;
 
         public static final double GATE_OPEN_TIME = 0.5; // [sec] The amount of time from the opening of the gate until it is considered open
 
@@ -166,7 +167,7 @@ public class Constants {
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
-        public static final double VELOCITY_TOLERANCE = 1; // [RPS] the acceptable velocity threshold error of the shooter
+        public static final double VELOCITY_TOLERANCE = 2; // [RPS] the acceptable velocity threshold error of the shooter
         public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
         public static final WebConstant VELOCITY_DAMP_RAMP = new WebConstant("damp_ramp", 1); // Damp ramp for that clamp on the accelerant
         public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
