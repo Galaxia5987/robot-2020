@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
@@ -21,11 +20,7 @@ import frc.robot.subsystems.color_wheel.commands.PositionControl;
 import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
-import frc.robot.subsystems.conveyor.commands.LoadConveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.auto.FollowPath;
-import frc.robot.subsystems.drivetrain.auto.VelocityDrive;
-import frc.robot.subsystems.drivetrain.auto.sergeyVelocityDrive;
 import frc.robot.subsystems.drivetrain.commands.GearShift;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
@@ -35,9 +30,7 @@ import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
-import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.CustomDashboard;
-import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
@@ -53,7 +46,7 @@ public class RobotContainer {
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     private final VisionModule visionModule = new VisionModule();
     private final CustomDashboard customDashboard = new CustomDashboard();
-    public final Drivetrain drivetrain = new Drivetrain();
+    private final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
@@ -88,12 +81,12 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
-        OI.x.toggleWhenPressed(new FollowPath(drivetrain, TrajectoryLoader.getTrajectory("tester"), true));
+        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
         OI.b.toggleWhenPressed(new SpeedUp(shooter));
-        OI.y.toggleWhenPressed(new VisionTurret(turret));
+        OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.toggleWhenPressed(new sergeyVelocityDrive(drivetrain, true, true, false));
-        OI.lb.toggleWhenPressed(new sergeyVelocityDrive(drivetrain, true, true, true));
+        OI.rb.whenPressed(new RotationControl(colorWheel));
+        OI.lb.whenPressed(new PositionControl(colorWheel));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
@@ -131,7 +124,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
+        return null;
     }
 
 }
