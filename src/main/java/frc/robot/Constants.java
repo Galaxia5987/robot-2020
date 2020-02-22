@@ -232,9 +232,9 @@ class BConstants {
     }
 
     public static class Drivetrain {
-        public static final double KP = 0.3;
-        public static final double KI = 0.0003;
-        public static final double KD = 2;
+        public static final double KP = 0.1;
+        public static final double KI = 0;
+        public static final double KD = 0.1;
         public static final double KF = 0;
     }
 
