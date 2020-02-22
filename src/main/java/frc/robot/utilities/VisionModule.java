@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
 
@@ -59,26 +60,16 @@ public class VisionModule extends SubsystemBase {
         return Math.sqrt(Math.pow(pose.getTranslation().getX(), 2) + Math.pow(pose.getTranslation().getY(), 2));
     }
 
-    /**
-     * @return The horizontal distance of the vision camera from the target.
-     */
-    @Nullable
-    public static Double getVisionDistance() {
-        Double targetDistance = getTargetRawDistance();
-        if (targetDistance == null) return null;
-        return Math.sqrt(Math.pow(targetDistance, 2) - Math.pow(PORT_HEIGHT - VISION_MODULE_HEIGHT, 2));
-    }
-
     @Nullable
     public static Double getHoodDistance() {
-        Double visionDistance = getVisionDistance();
+        Double visionDistance = getTargetRawDistance();
         if (visionDistance == null) return null;
         return visionDistance + VISION_MODULE_HOOD_DISTANCE;
     }
 
     @Nullable
     public static Double getRobotDistance() {
-        Double visionDistance = getVisionDistance();
+        Double visionDistance = getTargetRawDistance();
         if (visionDistance == null) return null;
         double a = VISION_ROTATION_RADIUS + visionDistance;
         double b = ROBOT_TO_TURRET_CENTER;
@@ -91,7 +82,7 @@ public class VisionModule extends SubsystemBase {
         if (distance != null) {
             SmartDashboard.putNumber("visionHoodDistance", distance);
             SmartDashboard.putNumber("visionTargetDistance", getTargetRawDistance());
-            SmartDashboard.putNumber("visionRobotDistance", getVisionDistance());
+            SmartDashboard.putNumber("visionRobotDistance", getTargetRawDistance());
         }
         Pose2d robotPose = getRobotPose();
         if (robotPose != null) {

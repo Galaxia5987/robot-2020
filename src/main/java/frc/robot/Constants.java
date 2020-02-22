@@ -2,14 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Transform2d;
 import frc.robot.valuetuner.WebConstant;
 import org.apache.commons.lang.math.DoubleRange;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.Optional;
 
 import static org.apache.commons.lang3.ObjectUtils.CONST;
 
@@ -20,7 +14,6 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
-    public static final double EFFECTIVE_TURN_WIDTH = 0.73; // wheel center to wheel center [m]
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
@@ -42,12 +35,6 @@ public class Constants {
         public static final double SHIFT_SPEED_TOLERANCE = 0.5; // Stops the robot from shifting while the robot is too fast
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
-        public static final boolean RIGHT_MASTER_INVERTED = true;
-        public static final boolean RIGHT_SLAVE_INVERTED = true;
-        public static final boolean LEFT_MASTER_INVERTED = false;
-        public static final boolean LEFT_SLAVE_INVERTED = false;
-        public static final boolean GYRO_INVERTED = true;
-   
         public static final double JOYSTICK_END_THRESHOLD = 0;
 
         public static final double JOYSTICK_MIN_THRESHOLD = 0.08;
@@ -79,6 +66,7 @@ public class Constants {
         public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
         public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
         public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+
         public static final double PORT_HEIGHT = 2.4;
     }
 
@@ -118,11 +106,11 @@ public class Constants {
 
         public static final double TICKS_PER_DEGREE = 4096 / 360.0;
 
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-42, 264);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
-        public static final int ZERO_POSITION = 1600; //Encoder absolute position when the turret is facing forward. This might change occasionally.
+        public static final int ZERO_POSITION = CONST(2667); //Encoder absolute position when the turret is facing forward. This might change occasionally.
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 1;
@@ -258,7 +246,8 @@ class BConstants {
 
     public static class Turret {
         public static final double KD = 70;
-        public static final int STARTING_POSITION = 3322;
+        public static final int ZERO_POSITION = 902;
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
     }
 
     public static class Conveyor {
