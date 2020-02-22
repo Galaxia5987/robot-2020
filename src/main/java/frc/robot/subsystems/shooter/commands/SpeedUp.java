@@ -23,7 +23,7 @@ public class SpeedUp extends CommandBase {
     }
 
     public SpeedUp(Shooter shooter) {
-        this(shooter, false);
+        this(shooter, true);
     }
 
     public SpeedUp(Shooter shooter, boolean end) {
