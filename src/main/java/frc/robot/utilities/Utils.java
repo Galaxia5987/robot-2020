@@ -87,7 +87,7 @@ public class Utils {
         Pose2d targetLocation = UtilityFunctions.getAlliancePort(innerPort);
         double deltaY = targetLocation.getTranslation().getY() - currentPosition.getTranslation().getY();
         double deltaX = targetLocation.getTranslation().getX() - currentPosition.getTranslation().getX();
-        return Math.toDegrees(Math.atan2(deltaY, deltaX) - currentPosition.getRotation().getRadians());
+        return Math.toDegrees(currentPosition.getRotation().getRadians() - Math.atan2(deltaY, deltaX));
     }
 
     /**
