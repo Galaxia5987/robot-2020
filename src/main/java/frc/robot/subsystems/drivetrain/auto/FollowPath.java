@@ -19,9 +19,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.autonomous.Path;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.FullLocalization;
 import frc.robot.utilities.Utils;
 import org.ghrobotics.lib.debug.FalconDashboard;
 import org.techfire225.webapp.FireLog;
+
+import static frc.robot.subsystems.drivetrain.Drivetrain.localization;
+
 
 /**
  * This command handles trajectory-following.
@@ -66,12 +70,11 @@ public class FollowPath extends CommandBase {
         }
 
         if(resetDrivetrain)
-            drivetrain.setPose(trajectory.getInitialPose());
+            localization.setPose(trajectory.getInitialPose(), trajectory.getInitialPose().getRotation());
         System.out.println(String.format("Initial pose: %s, %s, %s", trajectory.getInitialPose().getTranslation().getX(), trajectory.getInitialPose().getTranslation().getY(), trajectory.getInitialPose().getRotation().getDegrees()));
         FalconDashboard.INSTANCE.setFollowingPath(true);
         prevTime = 0;
         var initialState = trajectory.sample(0);
-
         prevSpeeds = kinematics.toWheelSpeeds(
                 new ChassisSpeeds(initialState.velocityMetersPerSecond,
                         0,
@@ -90,7 +93,7 @@ public class FollowPath extends CommandBase {
         Trajectory.State state = trajectory.sample(curTime);
 
         var targetWheelSpeeds = kinematics.toWheelSpeeds(
-                follower.calculate(drivetrain.getPose(), state)
+                follower.calculate(localization.getPose(), state)
         );
 
         var leftSpeedSetpoint = targetWheelSpeeds.leftMetersPerSecond;

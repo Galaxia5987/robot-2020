@@ -35,8 +35,11 @@ public class Robot extends TimedRobot {
     public static Compressor compressor = new Compressor();
     public static PowerDistributionPanel pdp = new PowerDistributionPanel();
     private Command m_autonomousCommand;
+  
     public static Timer robotTimer = new Timer();
+
     private RobotContainer m_robotContainer;
+
 
     /**
      * @return Robot in debug mode
@@ -101,6 +104,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
     }
 
+
     /**
      * This function is called once each time the robot enters Disabled mode.
      */
@@ -118,21 +122,18 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_robotContainer.drivetrain.setBrake(true);
+        RobotContainer.drivetrain.setBrake(true);
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-        // schedule the autonomous command (example)
-        if (m_autonomousCommand != null) {
+        if(m_autonomousCommand != null)
             m_autonomousCommand.schedule();
-        }
     }
 
-    /**
-     * This function is called periodically during autonomous.
-     */
-    @Override
-    public void autonomousPeriodic() {
-    }
+  /**
+   * This function is called periodically during autonomous.
+   */
+  @Override
+  public void autonomousPeriodic() {
+  }
 
     @Override
     public void teleopInit() {

@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.FalconConfiguration;
@@ -31,6 +32,12 @@ import org.ghrobotics.lib.debug.FalconDashboard;
 import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Drivetrain.*;
+import static frc.robot.Constants.EFFECTIVE_TURN_WIDTH;
+import static frc.robot.Constants.FieldGeometry.FIELD_WIDTH;
+import static frc.robot.Ports.Drivetrain.LEFT_MASTER_INVERTED;
+import static frc.robot.Ports.Drivetrain.LEFT_SLAVE_INVERTED;
+import static frc.robot.Ports.Drivetrain.RIGHT_MASTER_INVERTED;
+import static frc.robot.Ports.Drivetrain.RIGHT_SLAVE_INVERTED;
 import static frc.robot.Ports.Drivetrain.*;
 import static frc.robot.RobotContainer.navx;
 
@@ -39,9 +46,11 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(0));
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
+    public static final FullLocalization localization = new FullLocalization(new Rotation2d(0), EFFECTIVE_TURN_WIDTH);
+
     /**
      * The gear shifter will be programmed according to the following terms
      * High gear - low torque High speed
@@ -50,6 +59,7 @@ public class Drivetrain extends SubsystemBase {
     private DoubleSolenoid gearShifterA = null;
     private Solenoid gearShifterB = null;
     private Timer shiftCooldown = new Timer();
+    private Timer localizationTimer = new Timer();
     private boolean isShifting = false;
 
     public Drivetrain() {
@@ -81,11 +91,17 @@ public class Drivetrain extends SubsystemBase {
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setSupplyCurrentLimit(40);
-        Utils.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
+        UtilityFunctions.configAllFalcons(motorConfigurations, rightMaster, rightSlave, leftMaster, leftSlave);
         if (Robot.isRobotA)
             gearShifterA = new DoubleSolenoid(SHIFTER_FORWARD_PORT, SHIFTER_REVERSE_PORT);
         else
             gearShifterB = new Solenoid(SHIFTER_PORT);
+
+        navx.reset();
+ //       Pose2d INITIAL_POSE = new Pose2d(UtilityFunctions.getAlliancePort(false).getTranslation().getX() - 10, UtilityFunctions.getAlliancePort(false).getTranslation().getY(), new Rotation2d());
+        Pose2d INITIAL_POSE = new Pose2d(15.98 - 3.2, 8.23 - 2.42, new Rotation2d());
+        localization.resetPosition(INITIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())), Robot.robotTimer.get());
+        odometry.resetPosition(INITIAL_POSE, Rotation2d.fromDegrees(getHeading()));
     }
 
     public void shiftGear(shiftModes mode) {
@@ -126,6 +142,7 @@ public class Drivetrain extends SubsystemBase {
     public double getCooldown() {
         return shiftCooldown.get();
     }
+
 
     private void shiftHigh() {
         startCooldown();
@@ -192,6 +209,14 @@ public class Drivetrain extends SubsystemBase {
         return getCurrentUnitModel().toVelocity(leftMaster.getSelectedSensorVelocity());
     }
 
+    public double getLeftPosition() {
+        return getCurrentUnitModel().toUnits(leftMaster.getSelectedSensorPosition());
+    }
+
+    public double getRightPosition() {
+        return getCurrentUnitModel().toUnits(rightMaster.getSelectedSensorPosition());
+    }
+
     /**
      * Indicates whether the shifter is on a high gear
      *
@@ -199,7 +224,7 @@ public class Drivetrain extends SubsystemBase {
      */
     public boolean isShiftedHigh() {
         if (Robot.isRobotA && gearShifterA != null)
-            return gearShifterA.get() == DoubleSolenoid.Value.kForward;
+            return gearShifterA.get() == DoubleSolenoid.Value.kForward || gearShifterA.get() == DoubleSolenoid.Value.kOff;
         else if (gearShifterB != null)
             return !gearShifterB.get();
         else
@@ -229,19 +254,22 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return odometry.getPoseMeters();
+        return flipCoordSystem(localization.getPoseMeters());
     }
 
     public void setPose(Pose2d pose) {
+        pose = flipCoordSystem(pose);
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
-        odometry.resetPosition(pose, Rotation2d.fromDegrees(getCCWHeading()));
+        Rotation2d gyroAngle = Rotation2d.fromDegrees(navx.getAngle());
+        odometry.resetPosition(pose, gyroAngle);
+        localization.resetPosition(pose, gyroAngle, Robot.robotTimer.get());
     }
 
     public void setVelocityAndFeedForward(double leftVelocity, double rightVelocity, double leftFF, double rightFF) {
         UnitModel unitModel = getCurrentUnitModel();
-        leftMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(leftVelocity), DemandType.ArbitraryFeedForward, leftFF);
-        rightMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(rightVelocity), DemandType.ArbitraryFeedForward, rightFF);
+//        leftMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(leftVelocity), DemandType.ArbitraryFeedForward, leftFF);
+//        rightMaster.set(ControlMode.Velocity, unitModel.toTicks100ms(rightVelocity), DemandType.ArbitraryFeedForward, rightFF);
     }
 
     public void setPower(double leftPower, double rightPower) {
@@ -249,31 +277,40 @@ public class Drivetrain extends SubsystemBase {
         rightMaster.set(ControlMode.PercentOutput, rightPower);
     }
 
+    public void resetEncoders() {
+        leftMaster.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
+    }
+
     @Override
     public void periodic() { // This method will be called once per scheduler run
-        UnitModel unitModel = getCurrentUnitModel();
-        Pose2d current = odometry.update(
-                Rotation2d.fromDegrees(getCCWHeading()),
-                unitModel.toUnits(leftMaster.getSelectedSensorPosition()),
-                unitModel.toUnits(rightMaster.getSelectedSensorPosition())
-        );
         if (getCooldown() > SHIFTER_COOLDOWN)
             resetCooldown();
 
-        FalconDashboard.INSTANCE.setRobotX(Units.metersToFeet(current.getTranslation().getX()));
-        FalconDashboard.INSTANCE.setRobotY(Units.metersToFeet(current.getTranslation().getY()));
-        FalconDashboard.INSTANCE.setRobotHeading(current.getRotation().getRadians());
-
-        SmartDashboard.putNumber("driveTranslationX", current.getTranslation().getX());
-        SmartDashboard.putNumber("driveTranslationY", current.getTranslation().getY());
-        SmartDashboard.putNumber("driveTranslationHeading", current.getRotation().getDegrees());
-
         SmartDashboard.putBoolean("shiftedHigh", isShiftedHigh());
+        SmartDashboard.putNumber("leftPosition", getLeftPosition());
+        SmartDashboard.putNumber("rightPosition", getRightPosition());
 
-        CustomDashboard.setShift(isShiftedHigh());
+        Pose2d current = localization.update( new Rotation2d( Math.toRadians(navx.getAngle())),
+                getLeftPosition(),
+                getRightPosition(),
+                navx.getWorldLinearAccelY()*GRAVITY_ACCELERATION,
+                Robot.robotTimer.get()
+        );
 
-        FireLog.log("driveRightVelocity", Math.abs(getRightVelocity()));
-        FireLog.log("driveLeftVelocity", Math.abs(getLeftVelocity()));
+        odometry.update(new Rotation2d( Math.toRadians(navx.getAngle())),
+                getLeftPosition(),
+                getRightPosition());
+
+        SmartDashboard.putNumber(" simple x", odometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber(" simple y", odometry.getPoseMeters().getTranslation().getY());
+        SmartDashboard.putNumber(" simple angle", odometry.getPoseMeters().getRotation().getRadians());
+        SmartDashboard.putNumber("navx accel", navx.getWorldLinearAccelY() * GRAVITY_ACCELERATION);
+
+        Pose2d falcon_pose = getPose();
+        FalconDashboard.INSTANCE.setRobotX(Units.metersToFeet(falcon_pose.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setRobotY(Units.metersToFeet(falcon_pose.getTranslation().getY()));
+        FalconDashboard.INSTANCE.setRobotHeading(falcon_pose.getRotation().getRadians());
     }
 
     /**
@@ -283,5 +320,15 @@ public class Drivetrain extends SubsystemBase {
     public enum shiftModes {
         HIGH,
         LOW
+    }
+
+    /**
+     *  Flips coordinate definition from Falcon (0,0) bottom left to Galaxia (0,0) top left and the reverse
+     * @param pose
+     * @return
+     */
+    public Pose2d flipCoordSystem(Pose2d pose )
+    {
+        return new Pose2d(pose.getTranslation().getX(),FIELD_WIDTH -  pose.getTranslation().getY(), new Rotation2d(- pose.getRotation().getRadians()) );
     }
 }
