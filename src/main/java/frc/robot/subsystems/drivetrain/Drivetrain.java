@@ -33,6 +33,7 @@ import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.EFFECTIVE_TURN_WIDTH;
+import static frc.robot.Constants.FieldGeometry.FIELD_WIDTH;
 import static frc.robot.Ports.Drivetrain.LEFT_MASTER_INVERTED;
 import static frc.robot.Ports.Drivetrain.LEFT_SLAVE_INVERTED;
 import static frc.robot.Ports.Drivetrain.RIGHT_MASTER_INVERTED;
@@ -45,7 +46,7 @@ public class Drivetrain extends SubsystemBase {
     private final TalonFX leftSlave = new TalonFX(LEFT_SLAVE);
     private final TalonFX rightMaster = new TalonFX(RIGHT_MASTER);
     private final TalonFX rightSlave = new TalonFX(RIGHT_SLAVE);
-    private DifferentialDriveOdometry odometry;
+    private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(0));
     private UnitModel lowGearUnitModel = new UnitModel(LOW_TICKS_PER_METER);
     private UnitModel highGearUnitModel = new UnitModel(HIGH_TICKS_PER_METER);
     public static final FullLocalization localization = new FullLocalization(new Rotation2d(0), EFFECTIVE_TURN_WIDTH);
@@ -98,7 +99,8 @@ public class Drivetrain extends SubsystemBase {
             gearShifterB = new Solenoid(SHIFTER_PORT);
 
         navx.reset();
-        Pose2d INITIAL_POSE = new Pose2d(UtilityFunctions.getAlliancePort(false).getTranslation().getX() - 10, UtilityFunctions.getAlliancePort(false).getTranslation().getY(), new Rotation2d());
+ //       Pose2d INITIAL_POSE = new Pose2d(UtilityFunctions.getAlliancePort(false).getTranslation().getX() - 10, UtilityFunctions.getAlliancePort(false).getTranslation().getY(), new Rotation2d());
+        Pose2d INITIAL_POSE = new Pose2d(15.98 - 3.2, 8.23 - 2.42, new Rotation2d());
         localization.resetPosition(INITIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())), Robot.robotTimer.get());
         odometry.resetPosition(INITIAL_POSE, Rotation2d.fromDegrees(getHeading()));
     }
