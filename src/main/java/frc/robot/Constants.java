@@ -83,7 +83,7 @@ public class Constants {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
 
         public static final WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
-        public static final WebConstant CONVEYOR_MOTOR_FEED_POWER = new WebConstant("conveyorFeedPower", 0.5);
+        public static final double CONVEYOR_MOTOR_FEED_POWER = CONST(0.5);
         public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.5);
         public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
         public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.7);
@@ -256,7 +256,7 @@ class BConstants {
     }
 
     public static class Conveyor {
-        public static final WebConstant CONVEYOR_MOTOR_FEED_POWER = new WebConstant("conveyorFeedPower", 0.7);
+        public static final double CONVEYOR_MOTOR_FEED_POWER = 1;
     }
 
     public static class Shooter {

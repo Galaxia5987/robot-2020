@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
@@ -124,7 +125,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return null;
+        return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
     }
 
 }
