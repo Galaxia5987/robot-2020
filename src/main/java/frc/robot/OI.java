@@ -25,7 +25,6 @@ public class OI {
     public final static JoystickButton rb = new JoystickButton(xbox, XboxController.Button.kBumperRight.value);
     public final static JoystickButton back = new JoystickButton(xbox, XboxController.Button.kBack.value);
     public final static JoystickButton start = new JoystickButton(xbox, XboxController.Button.kStart.value);
-    public final static JoystickButton rs = new JoystickButton(xbox, XboxController.Button.kStickRight.value);
     public final static ButtonCombination back_start = new ButtonCombination(xbox, XboxController.Button.kBack.value, XboxController.Button.kStart.value);
     public final static Button povd = new POVButton(xbox, 180);
     public final static Button povr = new POVButton(xbox, 90);
