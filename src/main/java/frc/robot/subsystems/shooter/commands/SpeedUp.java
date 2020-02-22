@@ -46,8 +46,8 @@ public class SpeedUp extends CommandBase {
             distance = VisionModule.getHoodDistance();
         }
         shooter.setSpeed(shooter.approximateVelocity(distance));
-//        SmartDashboard.putNumber("aproximateVelocity", shooter.approximateVelocity(distance));
-//        SmartDashboard.putNumber("wallDistance", distance);
+        SmartDashboard.putNumber("aproximateVelocity", shooter.approximateVelocity(distance));
+        SmartDashboard.putNumber("wallDistance", distance);
 
         velocityEntry.setDouble(shooter.getSpeed());
     }
