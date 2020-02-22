@@ -62,6 +62,7 @@ public class LED extends SubsystemBase {
             }
             runningIndex = innerIndex;
         }
+        strip.setData(colorsBuffer);
     }
 
     /**
@@ -72,31 +73,25 @@ public class LED extends SubsystemBase {
      * cells to red, and the subsequent 4 (20 * 0.2) cells to green.
      * Missing cells will stay in the color they were before, and excessive cells will be ignored.
      *
-     * @param colorMap map that maps between ratio of the strip length to each color
+     * @param colors map that maps between ratio of the strip length to each color
      */
-    public void setColorRatios(LinkedHashMap<Double, Color> colorMap) {
-        int runningIndex = 0;
-        for (Double key : colorMap.keySet()) {
-            int innerIndex;
-            for (innerIndex = runningIndex + 1; innerIndex <= runningIndex + key * colorsBuffer.getLength(); innerIndex++) {
-                colorsBuffer.setLED(innerIndex, colorMap.get(key));
-                if (innerIndex > colorsBuffer.getLength()) { // Exit the method if the given buffer is too long.
-                    return;
-                }
-            }
-            runningIndex = innerIndex;
-        }
-    }
-
     @SafeVarargs
     public final void setColorRatios(ImmutablePair<Double, Color>... colors){
-        LinkedHashMap<Double, Color> colorMap = new LinkedHashMap<Double, Color>();
-        for(ImmutablePair<Double, Color> color : colors) {
-            colorMap.put(color.getKey(), color.getValue());
+        double total = 0;
+        for(ImmutablePair<Double, Color> color : colors){
+            total += color.left;
         }
-        setColorRatios(colorMap);
+        int weightIndex = 0;
+        double prevWeights = 0;
+        for(int i = 0; i < colorsBuffer.getLength(); i++){
+            if(i / (double)colorsBuffer.getLength() >= (colors[weightIndex].left + prevWeights) / total) {
+                prevWeights += colors[weightIndex].left;
+                weightIndex += 1;
+            }
+            colorsBuffer.setLED(i, colors[weightIndex].right);
+        }
+        strip.setData(colorsBuffer);
     }
-
     /**
      * Sets the whole strip to a given color.
      *
