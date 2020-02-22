@@ -14,6 +14,7 @@ public class SpeedUp extends CommandBase {
     private final Shooter shooter;
     private double distance;
     private boolean isVisionActive = false;
+    private boolean end = true;
 
     public SpeedUp(Shooter shooter, double distance) {
         addRequirements(shooter);
@@ -21,11 +22,15 @@ public class SpeedUp extends CommandBase {
         this.shooter = shooter;
     }
 
-
     public SpeedUp(Shooter shooter) {
+        this(shooter, false);
+    }
+
+    public SpeedUp(Shooter shooter, boolean end) {
         addRequirements(shooter);
         isVisionActive = true;
         this.shooter = shooter;
+        this.end = end;
     }
 
     // Called just before this Command runs the first time
@@ -57,7 +62,8 @@ public class SpeedUp extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         VisionModule.setLEDs(false);
-        shooter.stop();
+        if(this.end)
+            shooter.stop();
     }
 
 }
