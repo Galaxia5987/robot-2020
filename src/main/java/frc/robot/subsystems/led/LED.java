@@ -108,6 +108,12 @@ public class LED extends SubsystemBase {
         setColorLengths(colorMap);
     }
 
+    public void setAnimation(int frameSpeed, boolean loopAtEnd, AddressableLEDBuffer... frames){
+    }
+
+    public void clear(){
+
+    }
     public AddressableLEDBuffer getColorsBuffer(){
         return colorsBuffer;
     }
