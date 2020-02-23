@@ -33,7 +33,7 @@ public class IntakeBalls extends CommandBase {
     @Override
     public void initialize() {
         intake.setPosition(State.OPEN);
-        intake.powerWheels(INTAKE_POWER.get());
+        intake.powerWheels(INTAKE_POWER);
     }
 
     @Override

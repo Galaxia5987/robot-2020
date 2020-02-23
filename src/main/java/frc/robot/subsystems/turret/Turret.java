@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.techfire225.webapp.FireLog;
@@ -181,7 +182,7 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("turretSetpoint", targetAngle);
         SmartDashboard.putNumber("turretCurrent", getAngle());
         SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
-        SmartDashboard.putBoolean("turret ready", isTurretReady());
+        CustomDashboard.setTurretReady(isTurretReady());
         FireLog.log("turretSetpoint", targetAngle);
         FireLog.log("turretCurrent", getAngle());
 

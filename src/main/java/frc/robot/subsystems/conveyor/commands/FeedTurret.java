@@ -11,7 +11,6 @@ import frc.robot.valuetuner.WebConstant;
 import java.util.function.Supplier;
 
 import static frc.robot.Constants.Conveyor.*;
-import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
 
 /**
  * Open the mechanical stopper and feed Power Cells into the shooter.
@@ -62,8 +61,8 @@ public class FeedTurret extends CommandBase {
         }
         else if(!smartFeed) {
             conveyor.setGate(State.OPEN);
-            conveyor.setConveyorPower(CONVEYOR_MOTOR_OPEN_FEED_POWER.get());
-            conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
+            conveyor.setConveyorPower(CONVEYOR_FEED_POWER);
+            conveyor.setFunnelPower(FUNNEL_INTAKE_POWER);
         }
     }
 
