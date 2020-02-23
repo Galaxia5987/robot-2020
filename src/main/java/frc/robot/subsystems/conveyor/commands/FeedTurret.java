@@ -1,10 +1,12 @@
 package frc.robot.subsystems.conveyor.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.utilities.State;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
+import frc.robot.valuetuner.WebConstant;
 
 import java.util.function.Supplier;
 
@@ -20,6 +22,8 @@ public class FeedTurret extends CommandBase {
     private Supplier<Boolean> isTurretReady;
     private Supplier<Boolean> isShooting;
     private boolean smartFeed = false; //In cases where we want to feed at a constant rate. TODO: Deprecate this once we are confident with constant velocity checking.
+    private Timer timer = new Timer();
+    public static final WebConstant OUTTAKE_TIME = new WebConstant("outtakeTime", 0.1);
 
     public FeedTurret(Conveyor conveyor) {
         this(conveyor, () -> true, () -> true, () -> true);
@@ -38,10 +42,15 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void initialize() {
+        conveyor.setConveyorPower(-FEED_OUTTAKE_POWER.get());
+        timer.reset();
+        timer.start();
     }
 
     @Override
     public void execute() {
+        if(timer.get() < OUTTAKE_TIME.get()) return;
+
         if (smartFeed && isShooting.get()) {
             if (isShooterReady.get() && isTurretReady.get()) {
                 conveyor.feed();
@@ -52,6 +61,7 @@ public class FeedTurret extends CommandBase {
             }
         }
         else if(!smartFeed) {
+            conveyor.setGate(State.OPEN);
             conveyor.setConveyorPower(CONVEYOR_MOTOR_OPEN_FEED_POWER.get());
             conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
         }
@@ -59,7 +69,7 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override

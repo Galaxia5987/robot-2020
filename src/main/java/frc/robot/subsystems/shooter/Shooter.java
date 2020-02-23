@@ -77,7 +77,7 @@ public class Shooter extends SubsystemBase {
      */
     public void setSpeed(double speed) {
         targetVelocity = speed;
-//        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(targetVelocity));
+        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(targetVelocity));
     }
 
     /**
@@ -85,7 +85,7 @@ public class Shooter extends SubsystemBase {
      * @return the calculated velocity to get to the target in rps.
      */
     public double approximateVelocity(double distance) {
-        return 0.0126*Math.pow(distance, 6) - 0.4254*Math.pow(distance, 5) + 5.8314*Math.pow(distance, 4) - 41.255*Math.pow(distance, 3) + 158.28*Math.pow(distance, 2) - 307.09*distance + 296.16;
+        return 0.0126*Math.pow(distance, 6) - 0.4254*Math.pow(distance, 5) + 5.8314*Math.pow(distance, 4) - 41.255*Math.pow(distance, 3) + 158.28*Math.pow(distance, 2) - 307.09*distance + 296.86;
 }
 
     public double getTargetVelocity(){

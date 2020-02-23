@@ -31,6 +31,7 @@ import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.ValueTuner;
@@ -81,13 +82,13 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
+        OI.a.whileHeld(new FeedTurret(conveyor));
+        OI.x.toggleWhenPressed(new ShootAtVelocity(shooter));
         OI.b.toggleWhenPressed(new SpeedUp(shooter));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
-        OI.lb.whenPressed(new PositionControl(colorWheel));
+        OI.lb.toggleWhenPressed(new VisionTurret(turret));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
