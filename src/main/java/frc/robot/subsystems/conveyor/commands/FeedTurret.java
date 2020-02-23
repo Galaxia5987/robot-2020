@@ -22,7 +22,6 @@ public class FeedTurret extends CommandBase {
     private Supplier<Boolean> isShooting;
     private boolean smartFeed = false; //In cases where we want to feed at a constant rate. TODO: Deprecate this once we are confident with constant velocity checking.
     private Timer timer = new Timer();
-    public static final WebConstant OUTTAKE_TIME = new WebConstant("outtakeTime", 0.1);
 
     public FeedTurret(Conveyor conveyor) {
         this(conveyor, () -> true, () -> true, () -> true);
@@ -48,7 +47,7 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void execute() {
-        if(timer.get() < OUTTAKE_TIME.get()) return;
+        if(timer.get() < OUTTAKE_TIME) return;
 
         if (smartFeed && isShooting.get()) {
             if (isShooterReady.get() && isTurretReady.get()) {

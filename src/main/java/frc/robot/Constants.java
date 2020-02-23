@@ -93,6 +93,7 @@ public class Constants {
         public static final double CONVEYOR_INTAKE_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
         public static final double FUNNEL_OUTTAKE_POWER = 0.6;
+        public static final double OUTTAKE_TIME = 0.1;
 
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
