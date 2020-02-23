@@ -108,11 +108,6 @@ public class Intake extends SubsystemBase {
         }
     }
 
-    @Override
-    public void periodic() {
-        CustomDashboard.setIntake(isOpen());
-    }
-
     /**
      * apply power on the wheel to spin them based on the power you insert.
      *

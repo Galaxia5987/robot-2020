@@ -3,25 +3,41 @@ package frc.robot.utilities;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
+
+import java.text.DecimalFormat;
 
 public class CustomDashboard extends SubsystemBase {
-    public static NetworkTable table = NetworkTableInstance.getDefault().getTable("dashboard");
-    public static NetworkTable booleans = table.getSubTable("booleans");
-    public static NetworkTableEntry hasVision = table.getEntry("hasVision");
-    public static NetworkTableEntry speedValid = table.getEntry("speedValid");
-    public static NetworkTableEntry distanceValid = table.getEntry("distanceValid");
-    public static NetworkTableEntry ballCount = table.getEntry("ballsCount");
-    public static NetworkTableEntry time = table.getEntry("time");
+    private static NetworkTable table = NetworkTableInstance.getDefault().getTable("dashboard");
+    private static NetworkTable booleans = table.getSubTable("booleans");
+    private static NetworkTable values = table.getSubTable("values");
+
+    private static NetworkTableEntry hasVision = table.getEntry("hasVision");
+    private static NetworkTableEntry speedValid = table.getEntry("speedValid");
+    private static NetworkTableEntry turretReady = table.getEntry("turretReady");
+    private static NetworkTableEntry ballCount = table.getEntry("ballsCount");
+    private static NetworkTableEntry time = table.getEntry("time");
+
     //Booleans
-    public static NetworkTableEntry intake = booleans.getEntry("intake");
-    public static NetworkTableEntry gate = booleans.getEntry("gate");
-    public static NetworkTableEntry climb = booleans.getEntry("climb");
-    public static NetworkTableEntry shift = booleans.getEntry("shift");
+    private static NetworkTableEntry climb = booleans.getEntry("climb");
+    private static NetworkTableEntry shift = booleans.getEntry("shift");
+    private static NetworkTableEntry CWColor = table.getEntry("CWColor");
+
     //Autonomous
-    public static NetworkTableEntry autonomousModes = table.getEntry("autonomousModes");
-    public static NetworkTableEntry selectedMode = table.getEntry("selectedMode");
+    private static NetworkTableEntry autonomousModes = table.getEntry("autonomousModes");
+    private static NetworkTableEntry selectedMode = table.getEntry("selectedMode");
+
+    //Values
+    private static NetworkTableEntry gyroRoll = values.getEntry("gyroRoll");
+    private static NetworkTableEntry climbLeftHeight = values.getEntry("climbLeftHeight");
+    private static NetworkTableEntry climbRightHeight = values.getEntry("climbRightHeight");
+
+    private static DecimalFormat decimalFormat = new DecimalFormat("##.##");
+
 
     public static void setHasVision(boolean toggle) {
         hasVision.setBoolean(toggle);
@@ -31,20 +47,12 @@ public class CustomDashboard extends SubsystemBase {
         speedValid.setBoolean(toggle);
     }
 
-    public static void setDistanceValid(boolean toggle) {
-        distanceValid.setBoolean(toggle);
+    public static void setTurretReady(boolean toggle) {
+        turretReady.setBoolean(toggle);
     }
 
     public static void setBallCount(int count) {
         ballCount.setNumber(count);
-    }
-
-    public static void setIntake(boolean toggle) {
-        intake.setBoolean(toggle);
-    }
-
-    public static void setGate(boolean toggle) {
-        gate.setBoolean(toggle);
     }
 
     public static void setClimb(boolean toggle) {
@@ -63,8 +71,29 @@ public class CustomDashboard extends SubsystemBase {
         autonomousModes.setStringArray(modes);
     }
 
+    public static void setGyroRoll(float roll) {
+        gyroRoll.setDouble(truncateDecimal(roll));
+    }
+
+    public static void setClimbLeftHeight(double height) {
+        climbLeftHeight.setDouble(truncateDecimal(height));
+    }
+
+    public static void setClimbRightHeight(double height) {
+        climbRightHeight.setDouble(truncateDecimal(height));
+    }
+
     public static String getSelectedMode() {
         return selectedMode.getString("");
+    }
+
+    public static void setCWColor() {
+        String gameMessage = DriverStation.getInstance().getGameSpecificMessage();
+        if (gameMessage.isEmpty()) return;
+        if (gameMessage.charAt(0) == 'Y') CWColor.setString("yellow");
+        if (gameMessage.charAt(0) == 'R') CWColor.setString("red");
+        if (gameMessage.charAt(0) == 'G') CWColor.setString("green");
+        if (gameMessage.charAt(0) == 'B') CWColor.setString("blue");
     }
 
     static {
@@ -73,6 +102,12 @@ public class CustomDashboard extends SubsystemBase {
 
     @Override
     public void periodic() {
-        CustomDashboard.setTime((int) Timer.getMatchTime());
+        setTime((int) Timer.getMatchTime());
+        setCWColor();
+        setGyroRoll(RobotContainer.navx.getRoll());
+    }
+
+    public static double truncateDecimal(double number) {
+        return Math.floor(number * 100) / 100;
     }
 }

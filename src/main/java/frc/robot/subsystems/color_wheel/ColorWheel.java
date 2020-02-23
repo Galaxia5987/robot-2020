@@ -57,7 +57,7 @@ public class ColorWheel extends SubsystemBase {
 
     @Nullable
     public Integer indexOfColor(String color) {
-
+        if(color.isEmpty()) return null;
         switch (color.charAt(0)) {
             case ('Y'):
                 return 0;
@@ -91,7 +91,6 @@ public class ColorWheel extends SubsystemBase {
         }
         return colorInString;
     }
-
 
     public void setPower(double percent) {
         motor.set(ControlMode.PercentOutput, percent);
