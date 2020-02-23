@@ -52,8 +52,8 @@ public class FeedTurret extends CommandBase {
             }
         }
         else if(!smartFeed) {
-            conveyor.setConveyorPower(CONVEYOR_MOTOR_OPEN_FEED_POWER.get());
-            conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
+            conveyor.setConveyorPower(CONVEYOR_MOTOR_OPEN_FEED_POWER);
+            conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER);
         }
     }
 

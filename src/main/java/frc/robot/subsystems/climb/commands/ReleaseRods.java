@@ -38,7 +38,7 @@ public class ReleaseRods extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        this.setpointHeight = CLIMB_HEIGHT.get();
+        this.setpointHeight = CLIMB_HEIGHT;
         climber.releaseStopper();
         climber.changePIDFSlot(1);
         climber.setLeftHeight(setpointHeight);

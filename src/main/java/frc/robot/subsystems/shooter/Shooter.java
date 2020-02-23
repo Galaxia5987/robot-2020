@@ -123,8 +123,8 @@ public class Shooter extends SubsystemBase {
         FireLog.log("shooterVelocity", getSpeed());
         FireLog.log("shooterSetpoint", getTargetVelocity());
 
-        if(getSpeed() < VELOCITY_DAMPENING_LIMIT.get())
-            shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
+        if(getSpeed() < VELOCITY_DAMPENING_LIMIT)
+            shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP);
         else
             shooterMaster.configClosedloopRamp(0);
 
