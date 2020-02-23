@@ -51,7 +51,7 @@ public class FeedTurret extends CommandBase {
                 conveyor.setFunnelPower(0);
             }
         }
-        else {
+        else if(!smartFeed) {
             conveyor.setConveyorPower(CONVEYOR_MOTOR_OPEN_FEED_POWER.get());
             conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
         }
@@ -65,6 +65,5 @@ public class FeedTurret extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         conveyor.stopAll();
-        conveyor.setGate(State.CLOSE);
     }
 }
