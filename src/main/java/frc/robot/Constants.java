@@ -91,7 +91,7 @@ public class Constants {
         public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.7);
         public static final WebConstant CONVEYOR_OUTTAKE_POWER = new WebConstant("conveyorOuttakePower", 0.5);
         public static final WebConstant FUNNEL_OUTTAKE_POWER = new WebConstant("funnelOuttakePower", 0.5);
-        public static final WebConstant FEED_OUTTAKE_POWER = new WebConstant("feed outtake power", 0.6);
+        public static final WebConstant FEED_OUTTAKE_POWER = new WebConstant("feedOuttakePower", 0.6);
 
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
