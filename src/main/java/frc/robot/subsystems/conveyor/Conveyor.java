@@ -51,6 +51,7 @@ public class Conveyor extends SubsystemBase {
 
 
         motor.configPeakCurrentLimit(0);
+        motor.configPeakCurrentDuration(0);
         motor.configContinuousCurrentLimit(30);
         motor.enableCurrentLimit(true);
 
