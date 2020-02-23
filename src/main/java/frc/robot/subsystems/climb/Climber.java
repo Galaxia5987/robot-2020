@@ -188,7 +188,7 @@ public class Climber extends SubsystemBase {
      * @return whether the robot should not climb
      */
     private boolean safeToClimb() {
-        return Robot.debug || DriverStation.getInstance().getMatchTime() > 120;
+        return Robot.debug || DriverStation.getInstance().getMatchTime() <= 30;
     }
 
     public void changePIDFSlot(int slot) {
