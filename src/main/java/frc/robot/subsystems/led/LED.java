@@ -48,20 +48,27 @@ public class LED extends SubsystemBase {
      * and the subsequent 2 to green.
      * Missing cells will stay in the color they were before, and excessive cells will be ignored.
      *
-     * @param colorMap map that maps between length to each color
+     * @param colors list of pairs that maps between length to each color
      */
-    public void setColorLengths(LinkedHashMap<Integer, Color> colorMap) {
-        int runningIndex = 0;
-        for (Integer key : colorMap.keySet()) {
-            int innerIndex;
-            for (innerIndex = runningIndex + 1; innerIndex <= runningIndex + key; innerIndex++) {
-                colorsBuffer.setLED(innerIndex, colorMap.get(key));
-                if (innerIndex > colorsBuffer.getLength()) { // Exit the method if the given buffer is too long.
-                    return;
+    public final void setColorLengths(ImmutablePair<Integer, Color>... colors) {
+        int colorIndex = 0;
+        int colorSum = 0;
+        for(int i = 0; i < colorsBuffer.getLength(); i++){
+            Color color;
+            if(colors[colorIndex].left + colorSum < i + 1){
+                if (colorIndex + 1 >= colors.length)
+                    color = Color.kBlack;
+                else{
+                    colorSum += colors[colorIndex].left;
+                    colorIndex ++;
+                    color = colors[colorIndex].right;
                 }
             }
-            runningIndex = innerIndex;
+            else
+                color = colors[colorIndex].right;
+            colorsBuffer.setLED(i, color);
         }
+
         strip.setData(colorsBuffer);
     }
 
@@ -98,9 +105,9 @@ public class LED extends SubsystemBase {
      * @param color color to set the whole strip to
      */
     public void setWholeStrip(Color color) {
-        final LinkedHashMap<Integer, Color> colorMap = new LinkedHashMap<>();
-        colorMap.put(colorsBuffer.getLength(), color);
-        setColorLengths(colorMap);
+        //setColorLengths(new ImmutablePair<>(colorsBuffer.getLength(), color));
+        for(int i = 0; i < colorsBuffer.getLength(); i++)
+            colorsBuffer.setLED(i,color);
     }
 
     public void setAnimation(int frameSpeed, boolean loopAtEnd, AddressableLEDBuffer... frames){
