@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
@@ -22,7 +23,7 @@ public class VisionModule extends SubsystemBase {
     private static NetworkTableEntry leds = visionTable.getEntry("leds");
 
     private static LinearFilter filter = LinearFilter.movingAverage(10);
-    private static Double filteredDistance;
+    private static Double filteredDistance = null;
 
     /**
      * @return the angle to the target from the vision network table.
@@ -80,10 +81,13 @@ public class VisionModule extends SubsystemBase {
         Double distance = getTargetRawDistance();
         if(distance == null) {
             filteredDistance = null;
-            filter.reset();
         }
         else {
-            filteredDistance = calculateMovingAverage(distance);
+            if (distance >= 0.1) {
+                filteredDistance = calculateMovingAverage(distance);
+                SmartDashboard.putNumber("FilteredDistance", filteredDistance);
+            }
+            SmartDashboard.putNumber("VisionDistance", getTargetRawDistance());
         }
         CustomDashboard.setHasVision(targetSeen());
     }
