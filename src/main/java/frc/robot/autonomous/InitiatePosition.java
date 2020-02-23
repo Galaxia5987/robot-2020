@@ -42,9 +42,11 @@ public class InitiatePosition extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        drivetrain.setPose(pose);
-        for(Path path: toGenerate) {
-            path.generate(drivetrain.getPose());
+        if(pose != null) {
+            drivetrain.setPose(pose);
+            for (Path path : toGenerate) {
+                path.generate(drivetrain.getPose());
+            }
         }
     }
 }

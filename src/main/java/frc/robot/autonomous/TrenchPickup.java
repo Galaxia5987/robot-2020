@@ -28,8 +28,15 @@ import java.util.List;
 import static frc.robot.Constants.Autonomous.*;
 
 public class TrenchPickup extends SequentialCommandGroup {
-    public static final double INTAKE_WAIT = 0.2;
+    public static final double INTAKE_WAIT = 0.6;
+
+    private static final TrajectoryConfig toTrenchConfig =
+            new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION)
+                    .addConstraint(new CentripetalAccelerationConstraint(MAX_CENTRIPETAL_ACCELERATION))
+                    .setEndVelocity(0.7);
+
     public Path toTrench = new Path(
+            toTrenchConfig,
             new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
@@ -40,26 +47,24 @@ public class TrenchPickup extends SequentialCommandGroup {
             new Pose2d(Units.feetToMeters(26.219), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
-    private static final TrajectoryConfig toShootingConfig = new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION).setReversed(true);
+    private static final TrajectoryConfig toShootingConfig =
+            new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION).setReversed(true)
+                    .addConstraint(new CentripetalAccelerationConstraint(MAX_CENTRIPETAL_ACCELERATION));
 
     public Path toShooting = new Path(
             toShootingConfig,
-            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180)),
-            new Pose2d(Units.feetToMeters(42.84), Units.feetToMeters(4.959), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
     private final List<Path> toGenerate = new ArrayList<>(Collections.singletonList(toTrench));
 
-    static {
-        toShootingConfig.addConstraint(new CentripetalAccelerationConstraint(MAX_CENTRIPETAL_ACCELERATION));
-    }
-
     public TrenchPickup(Shooter shooter, Conveyor conveyor, Turret turret, Drivetrain drivetrain, Intake intake) {
-        addCommands(new VisionTurret(turret, true));
-        addCommands(new WaitCommand(0.3));
-        addCommands(new InitiatePosition(drivetrain, toGenerate));
         addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
-                new AutoShoot(turret, shooter, conveyor)
+                new AutoShoot(turret, shooter, conveyor),
+                new SequentialCommandGroup(
+                        new WaitCommand(0.7),
+                        new InitiatePosition(drivetrain, toGenerate)
+                )
         ));
         addCommands(new WaitUntilCommand(toTrench::hasTrajectory));
         addCommands(new ParallelDeadlineGroup( // Drive to trench area and pick up balls with intake
