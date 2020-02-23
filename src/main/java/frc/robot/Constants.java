@@ -14,6 +14,7 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
+    public static double BACK_BUMPER_TO_CENTER = 0.42; //TODO: Tune for real world
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
@@ -53,9 +54,9 @@ public class Constants {
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
 
-        public static final double MAX_SPEED = 2; // [m/s]
-        public static final double MAX_ACCELERATION = 1; // [m / s / s]
-        public static final double MAX_CENTRIPETAL_ACCELERATION = 0.7; // [m / s / s]
+        public static final double MAX_SPEED = 3; // [m/s]
+        public static final double MAX_ACCELERATION = 2; // [m / s / s]
+        public static final double MAX_CENTRIPETAL_ACCELERATION = 1.2; // [m / s / s]
     }
 
     public static class Vision {
@@ -68,6 +69,7 @@ public class Constants {
     public static class FieldGeometry {
         public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d());
         public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d());
+        public static final double OUTER_PORT_TO_LINE = 1.92; //TODO: Tune for real world
 //        public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
 //        public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
 
@@ -82,13 +84,16 @@ public class Constants {
     public static class Conveyor {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
 
+
+        public static final WebConstant FEED_OUTTAKE_POWER = new WebConstant("feedOuttakePower", 0.6);
         public static final double PULSE_INTERVAL = 0.1;
         public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.5);
         public static final double CONVEYOR_FEED_POWER = 0.5;
         public static final double FUNNEL_INTAKE_POWER = 0.3;
         public static final double CONVEYOR_INTAKE_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
-        public static final double FUNNEL_OUTTAKE_POWER = 0.5;
+        public static final double FUNNEL_OUTTAKE_POWER = 0.6;
+        public static final double OUTTAKE_TIME = 0.1;
 
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
@@ -259,10 +264,11 @@ class BConstants {
     }
 
     public static class Conveyor {
-        public static final double CONVEYOR_MOTOR_FEED_POWER = 1;
+        public static final double CONVEYOR_FEED_POWER = 0.6;
     }
 
     public static class Shooter {
+        public static final double KD = 10;
     }
 
 }

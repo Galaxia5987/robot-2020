@@ -51,6 +51,7 @@ public class Conveyor extends SubsystemBase {
 
 
         motor.configPeakCurrentLimit(0);
+        motor.configPeakCurrentDuration(0);
         motor.configContinuousCurrentLimit(30);
         motor.enableCurrentLimit(true);
 
@@ -88,7 +89,6 @@ public class Conveyor extends SubsystemBase {
             shooterProximity.resetToggle();
         }
         CustomDashboard.setBallCount(getBallsCount());
-        CustomDashboard.setGate(isGateOpen());
 
         SmartDashboard.putNumber("shooter proximity", shooterProximity.getValue());
     }

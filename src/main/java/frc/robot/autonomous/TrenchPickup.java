@@ -17,6 +17,7 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.TurnTurret;
+import frc.robot.subsystems.turret.commands.TurretSwitching;
 import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.State;
 import frc.robot.utilities.VisionModule;
@@ -28,38 +29,49 @@ import java.util.List;
 import static frc.robot.Constants.Autonomous.*;
 
 public class TrenchPickup extends SequentialCommandGroup {
-    public static final double INTAKE_WAIT = 0.2;
+    private static final double INTAKE_WAIT = 0.6;
+    private static final double SHOOT_TIME = 4;
+    private static final double PICKUP_SPEED = 0.6;
+
+    private static final TrajectoryConfig toTrenchConfig =
+            new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION)
+                    .addConstraint(new CentripetalAccelerationConstraint(MAX_CENTRIPETAL_ACCELERATION))
+                    .setEndVelocity(PICKUP_SPEED);
+
     public Path toTrench = new Path(
+            toTrenchConfig,
             new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
-    private static final TrajectoryConfig pickupBallsConfig = new TrajectoryConfig(1, MAX_ACCELERATION);
+    private static final TrajectoryConfig pickupBallsConfig = new TrajectoryConfig(PICKUP_SPEED, MAX_ACCELERATION)
+            .setStartVelocity(PICKUP_SPEED);
 
     public Path pickupBalls = new Path(
             pickupBallsConfig,
-            new Pose2d(Units.feetToMeters(26.219), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(27.669), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
-    private static final TrajectoryConfig toShootingConfig = new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION).setReversed(true);
+    private static final TrajectoryConfig toShootingConfig =
+            new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION).setReversed(true)
+                    .addConstraint(new CentripetalAccelerationConstraint(MAX_CENTRIPETAL_ACCELERATION));
 
     public Path toShooting = new Path(
             toShootingConfig,
-            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180)),
-            new Pose2d(Units.feetToMeters(42.84), Units.feetToMeters(4.959), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
     private final List<Path> toGenerate = new ArrayList<>(Collections.singletonList(toTrench));
 
-    static {
-        toShootingConfig.addConstraint(new CentripetalAccelerationConstraint(MAX_CENTRIPETAL_ACCELERATION));
-    }
-
     public TrenchPickup(Shooter shooter, Conveyor conveyor, Turret turret, Drivetrain drivetrain, Intake intake) {
-        addCommands(new TurnTurret(turret, 180)); // Turn so we can see vision target
-        addCommands(new VisionTurret(turret, true)); // Align to target
         addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
-                new InitiatePosition(drivetrain, toGenerate),
-                new AutoShoot(turret, shooter, conveyor)
+                new ParallelDeadlineGroup(
+                        new WaitCommand(SHOOT_TIME),
+                        new AutoShoot(turret, shooter, conveyor)
+                ),
+                new SequentialCommandGroup(
+                        new WaitCommand(0.4),
+                        new InitiatePosition(drivetrain, toGenerate)
+                )
         ));
         addCommands(new WaitUntilCommand(toTrench::hasTrajectory));
         addCommands(new ParallelDeadlineGroup( // Drive to trench area and pick up balls with intake
@@ -74,11 +86,11 @@ public class TrenchPickup extends SequentialCommandGroup {
         ));
         addCommands(new ParallelDeadlineGroup( // Drive back to shooting while speeding up
                 new FollowPath(drivetrain, toShooting),
-                new VisionTurret(turret),
+                new TurretSwitching(turret, drivetrain),
                 new SpeedUp(shooter, false),
                 new PickupBalls(intake, conveyor)
         ));
         addCommands(new InstantCommand(() -> VisionModule.setLEDs(true)));
-        addCommands(new AutoShoot(turret, shooter, conveyor)); // Shoot picked up balls out
+        addCommands(new AutoShoot(turret, shooter, conveyor));
     }
 }
