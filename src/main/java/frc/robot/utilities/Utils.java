@@ -5,7 +5,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
 
 import java.lang.reflect.Field;
@@ -128,4 +130,24 @@ public class Utils {
             Utils.replaceFields(aClass, bClass.get());
         }
     }
+
+    public static Pose2d getRobotPoseFromX(double x, double rotationDegrees) {
+        if(!VisionModule.targetSeen()) return null;
+        double relativeTurretAngle = (-RobotContainer.turret.getAngle() - rotationDegrees - VisionModule.getVisionAngle()); //Turret angle and vision angle should be positive, but because the auto works counter clockwize, we flip the value.
+        return new Pose2d(
+                UtilityFunctions.getPortLocation(false).getTranslation().getX() - x,
+                UtilityFunctions.getPortLocation(false).getTranslation().getY() - Math.tan(Math.toRadians(relativeTurretAngle)) * x,
+                Rotation2d.fromDegrees(rotationDegrees)
+        );
+    }
+
+    public static Pose2d getSimplePoseFromDistance(double rotationDegrees, double rawDistance) {
+        double relativeTurretAngle = rotationDegrees - RobotContainer.turret.getAngle();
+        return new Pose2d(
+                UtilityFunctions.getPortLocation(false).getTranslation().getX() - Math.cos(Math.toRadians(relativeTurretAngle)) * rawDistance,
+                UtilityFunctions.getPortLocation(false).getTranslation().getY() - Math.sin(Math.toRadians(relativeTurretAngle)) * rawDistance,
+                Rotation2d.fromDegrees(rotationDegrees)
+        );
+    }
+
 }

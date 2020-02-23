@@ -55,7 +55,8 @@ public class TrenchPickup extends SequentialCommandGroup {
     }
 
     public TrenchPickup(Shooter shooter, Conveyor conveyor, Turret turret, Drivetrain drivetrain, Intake intake) {
-        addCommands(new VisionTurret(turret, true)); // Align to target
+        addCommands(new VisionTurret(turret, true));
+        addCommands(new WaitCommand(0.3));
         addCommands(new InitiatePosition(drivetrain, toGenerate));
         addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
                 new AutoShoot(turret, shooter, conveyor)

@@ -103,20 +103,4 @@ public class VisionModule extends SubsystemBase {
         );
     }
 
-    @Nullable
-    public static Pose2d getRobotPoseSimple(double rotationDegrees) {
-        Double rawDistance = getTargetRawDistance();
-        if (rawDistance == null) return null;
-        return getSimplePoseFromDistance(rotationDegrees, rawDistance);
-    }
-
-    public static Pose2d getSimplePoseFromDistance(double rotationDegrees, double rawDistance) {
-        double relativeTurretAngle = rotationDegrees - RobotContainer.turret.getAngle();
-        return new Pose2d(
-                UtilityFunctions.getPortLocation(false).getTranslation().getX() - Math.cos(Math.toRadians(relativeTurretAngle)) * rawDistance,
-                UtilityFunctions.getPortLocation(false).getTranslation().getY() - Math.sin(Math.toRadians(relativeTurretAngle)) * rawDistance,
-                Rotation2d.fromDegrees(rotationDegrees)
-        );
-    }
-
 }
