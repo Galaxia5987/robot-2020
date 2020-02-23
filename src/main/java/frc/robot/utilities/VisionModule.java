@@ -6,7 +6,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
@@ -21,7 +20,9 @@ public class VisionModule extends SubsystemBase {
     private static NetworkTableEntry visionPose = visionTable.getEntry("targetPose");
     private static NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private static NetworkTableEntry leds = visionTable.getEntry("leds");
+
     private static LinearFilter filter = LinearFilter.movingAverage(10);
+    private static Double filteredDistance;
 
     /**
      * @return the angle to the target from the vision network table.
@@ -62,33 +63,27 @@ public class VisionModule extends SubsystemBase {
 
     @Nullable
     public static Double getHoodDistance() {
-        Double visionDistance = movingAverage();
-        if (visionDistance == null) return null;
-        return visionDistance + VISION_MODULE_HOOD_DISTANCE;
+        if (filteredDistance == null) return null;
+        return filteredDistance + VISION_MODULE_HOOD_DISTANCE;
     }
 
     @Nullable
     public static Double getRobotDistance() {
-        Double visionDistance = movingAverage();
-        if (visionDistance == null) return null;
-        double a = VISION_ROTATION_RADIUS + visionDistance;
+        if (filteredDistance == null) return null;
+        double a = VISION_ROTATION_RADIUS + filteredDistance;
         double b = ROBOT_TO_TURRET_CENTER;
         return Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(Math.toRadians(RobotContainer.turret.getAngle()))); //Cosine law
     }
 
     @Override
     public void periodic() {
-        Double distance = getHoodDistance();
-        if (distance != null) {
-            SmartDashboard.putNumber("visionHoodDistance", distance);
-            SmartDashboard.putNumber("visionTargetDistance", movingAverage());
-            SmartDashboard.putNumber("visionRobotDistance", movingAverage());
+        Double distance = getTargetRawDistance();
+        if(distance == null) {
+            filteredDistance = null;
+            filter.reset();
         }
-        Pose2d robotPose = getRobotPose();
-        if (robotPose != null) {
-            SmartDashboard.putNumber("visionRobotX", robotPose.getTranslation().getX());
-            SmartDashboard.putNumber("visionRobotY", robotPose.getTranslation().getY());
-            SmartDashboard.putNumber("visionRobotAngle", robotPose.getRotation().getDegrees());
+        else {
+            filteredDistance = calculateMovingAverage(distance);
         }
         CustomDashboard.setHasVision(targetSeen());
     }
@@ -105,7 +100,7 @@ public class VisionModule extends SubsystemBase {
         );
     }
 
-    private static double movingAverage() {
-        return filter.calculate(getTargetRawDistance());
+    private static double calculateMovingAverage(double distance) {
+        return filter.calculate(distance);
     }
 }
