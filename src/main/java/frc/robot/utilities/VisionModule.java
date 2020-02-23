@@ -62,14 +62,14 @@ public class VisionModule extends SubsystemBase {
 
     @Nullable
     public static Double getHoodDistance() {
-        Double visionDistance = getTargetRawDistance();
+        Double visionDistance = movingAverage();
         if (visionDistance == null) return null;
         return visionDistance + VISION_MODULE_HOOD_DISTANCE;
     }
 
     @Nullable
     public static Double getRobotDistance() {
-        Double visionDistance = getTargetRawDistance();
+        Double visionDistance = movingAverage();
         if (visionDistance == null) return null;
         double a = VISION_ROTATION_RADIUS + visionDistance;
         double b = ROBOT_TO_TURRET_CENTER;
@@ -81,8 +81,8 @@ public class VisionModule extends SubsystemBase {
         Double distance = getHoodDistance();
         if (distance != null) {
             SmartDashboard.putNumber("visionHoodDistance", distance);
-            SmartDashboard.putNumber("visionTargetDistance", getTargetRawDistance());
-            SmartDashboard.putNumber("visionRobotDistance", getTargetRawDistance());
+            SmartDashboard.putNumber("visionTargetDistance", movingAverage());
+            SmartDashboard.putNumber("visionRobotDistance", movingAverage());
         }
         Pose2d robotPose = getRobotPose();
         if (robotPose != null) {
