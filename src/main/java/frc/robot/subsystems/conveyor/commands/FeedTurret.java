@@ -59,7 +59,7 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return conveyor.getBallsCount() <= 0;
+        return true;
     }
 
     @Override

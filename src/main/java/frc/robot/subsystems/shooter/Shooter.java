@@ -77,7 +77,7 @@ public class Shooter extends SubsystemBase {
      */
     public void setSpeed(double speed) {
         targetVelocity = speed;
-        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(targetVelocity));
+//        shooterMaster.set(ControlMode.Velocity, rpsUnitModel.toTicks100ms(targetVelocity));
     }
 
     /**

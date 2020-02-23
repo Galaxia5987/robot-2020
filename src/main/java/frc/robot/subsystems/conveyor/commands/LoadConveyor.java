@@ -30,7 +30,7 @@ public class LoadConveyor extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return conveyor.getBallsCount() >= 5;
+        return false;
     }
 
     @Override

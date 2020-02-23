@@ -103,4 +103,16 @@ public class VisionModule extends SubsystemBase {
         );
     }
 
+    @Nullable
+    public static Pose2d getRobotPoseSimple(double rotationDegrees) {
+        Pose2d visionPose = getPose();
+        Double robotDistance = getRobotDistance();
+        if (visionPose == null || robotDistance == null) return null;
+        return new Pose2d(
+                UtilityFunctions.getPortLocation(false).getTranslation().getX() - visionPose.getTranslation().getX(),
+                UtilityFunctions.getPortLocation(false).getTranslation().getY() - visionPose.getTranslation().getY(),
+                Rotation2d.fromDegrees(rotationDegrees)
+        );
+    }
+
 }
