@@ -21,7 +21,7 @@ public class VisionModule extends SubsystemBase {
     private static NetworkTableEntry visionPose = visionTable.getEntry("targetPose");
     private static NetworkTableEntry visionValid = visionTable.getEntry("isValid");
     private static NetworkTableEntry leds = visionTable.getEntry("leds");
-    private static LinearFilter filter = LinearFilter.movingAverage(5);
+    private static LinearFilter filter = LinearFilter.movingAverage(10);
 
     /**
      * @return the angle to the target from the vision network table.
