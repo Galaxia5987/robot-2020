@@ -97,8 +97,8 @@ public class VisionModule extends SubsystemBase {
         Double robotDistance = getRobotDistance();
         if (visionPose == null || robotDistance == null) return null;
         return new Pose2d(
-                UtilityFunctions.getAlliancePort(false).getTranslation().getX() - visionPose.getRotation().getCos() * robotDistance,
-                UtilityFunctions.getAlliancePort(false).getTranslation().getY() + visionPose.getRotation().getSin() * robotDistance,
+                UtilityFunctions.getPortLocation(false).getTranslation().getX() - visionPose.getRotation().getCos() * robotDistance,
+                UtilityFunctions.getPortLocation(false).getTranslation().getY() + visionPose.getRotation().getSin() * robotDistance,
                 Rotation2d.fromDegrees(RobotContainer.turret.getAngle() - visionPose.getRotation().getDegrees())
         );
     }

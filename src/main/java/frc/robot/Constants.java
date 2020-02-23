@@ -52,6 +52,10 @@ public class Constants {
         // Ramsete controller constants
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
+
+        public static final double MAX_SPEED = 2; // [m/s]
+        public static final double MAX_ACCELERATION = 1; // [m / s / s]
+        public static final double MAX_CENTRIPETAL_ACCELERATION = 0.7; // [m / s / s]
     }
 
     public static class Vision {
@@ -62,10 +66,10 @@ public class Constants {
     }
 
     public static class FieldGeometry {
-        public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
-        public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
-        public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
-        public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
+        public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d());
+        public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d());
+//        public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+//        public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
 
         public static final double PORT_HEIGHT = 2.4;
     }
@@ -79,7 +83,7 @@ public class Constants {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
 
         public static final WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
-        public static final WebConstant CONVEYOR_MOTOR_FEED_POWER = new WebConstant("conveyorFeedPower", 0.5);
+        public static final double CONVEYOR_MOTOR_FEED_POWER = CONST(0.5);
         public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.5);
         public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
         public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.7);
@@ -91,8 +95,8 @@ public class Constants {
 
         public static final double INTAKE_PROXIMITY_MAX_VALUE = 200; //The minimum value for which the sensor would see a ball
         public static final double INTAKE_PROXIMITY_MIN_VALUE = 150; //The minimum voltage which the sensor would see in between two balls
-        public static final double SHOOTER_PROXIMITY_MAX_VALUE = 1500;
-        public static final double SHOOTER_PROXIMITY_MIN_VALUE = 900;
+        public static final double SHOOTER_PROXIMITY_MAX_VALUE = 2000;
+        public static final double SHOOTER_PROXIMITY_MIN_VALUE = 800;
 
         public static final int MAX_BALLS_AMOUNT = 5;
         public static final int STARTING_AMOUNT = 3;
@@ -104,16 +108,17 @@ public class Constants {
     public static class Turret {
         public static final double VISION_TIMEOUT_SECONDS = 1;
 
-        public static final double TICKS_PER_DEGREE = 4096 / 360.0;
+        public static final int TICKS_PER_ROTATION = CONST(4096);
+        public static final double TICKS_PER_DEGREE = CONST(TICKS_PER_ROTATION / 360.0);
 
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-42, 264);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
-        public static final int ZERO_POSITION = CONST(2667); //Encoder absolute position when the turret is facing forward. This might change occasionally.
+        public static final int ZERO_POSITION = CONST(1600); //Encoder absolute position when the turret is facing forward. This might change occasionally.
 
         public static final int POSITION_PID_SLOT = 0;
-        public static final int MOTION_MAGIC_PID_SLOT = 1;
+        public static final int MOTION_MAGIC_PID_SLOT = 2;
 
         public static double KP = CONST(3.5);
         public static double KI = CONST(0.01);
@@ -125,10 +130,10 @@ public class Constants {
         public static double MOTION_MAGIC_KP = 4.07;
         public static double MOTION_MAGIC_KI = 0.0005;
         public static double MOTION_MAGIC_KD = 2.3;
-        public static double MOTION_MAGIC_KF = 0.00912;
+        public static double MOTION_MAGIC_KF = 0;
 
-        public static final int MOTION_MAGIC_CRUISE_VELOCITY = 20;
-        public static final int MOTION_MAGIC_ACCELERATION = 16;
+        public static final int MOTION_MAGIC_CRUISE_VELOCITY = 3000;
+        public static final int MOTION_MAGIC_ACCELERATION = 2000;
 
         public static final WebConstant DIRECT_VISION_KP = new WebConstant("visionKp", 0.01);
         public static final WebConstant DIRECT_VISION_KI = new WebConstant("visionKi", 0.001);
@@ -162,7 +167,7 @@ public class Constants {
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
-        public static final double VELOCITY_TOLERANCE = 1; // [RPS] the acceptable velocity threshold error of the shooter
+        public static final double VELOCITY_TOLERANCE = 2; // [RPS] the acceptable velocity threshold error of the shooter
         public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
         public static final WebConstant VELOCITY_DAMP_RAMP = new WebConstant("damp_ramp", 1); // Damp ramp for that clamp on the accelerant
         public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
@@ -199,19 +204,22 @@ public class Constants {
         public static final double[] CLIMB_PIDF = {0.4, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
         public static final double[] CLIMB_RELEASE_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
 
-        public static final double[] DELTA_PID = {0, 0, 0}; // Proportional, Integral, Derivative
+        public static final double[] DELTA_PID = {0.0004, 0, 0}; // Proportional, Integral, Derivative
 
         public static final double MAX_HEIGHT = 0.75; // The allowed maximum height of the subsystem.
+        public static final double HEIGHT_TARGET = 0.2;
+
+        public static final double MIN_DELTA = 0.001;
 
         public static final double ARBITRARY_FEEDFORWARD = 0;
 
         public static final double RAMP_RATE = 0;
 
-        public static final WebConstant CLIMB_HEIGHT = new WebConstant("climbSetpointHeight", 0.3);
+        public static final WebConstant CLIMB_HEIGHT = new WebConstant("climbSetpointHeight", 0.5);
         public static final WebConstant SIMPLE_CLIMB_HEIGHT = new WebConstant("simpleClimbHeight", 0.4);
 
-        public static final double ALLOWED_HEIGHT_TOLERANCE = 0.1; // The allowed tolerance between the current height to the desired height.
-        public static final double ALLOWED_ANGLE_TOLERANCE = 0; // The allowed tolerance between the current angle to the desired angle.
+        public static final double ALLOWED_HEIGHT_TOLERANCE = 0.05; // The allowed tolerance between the current height to the desired height.
+        public static final double ALLOWED_ANGLE_TOLERANCE = 0.5; // The allowed tolerance between the current angle to the desired angle.
         public static final WebConstant MODIFY_JOYSTICK_RATE = new WebConstant("climbJoystickRate", 0.7); // The factor which the value of the joystick is multiplied by to calculate the change rate.
         public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber.
         public static final double DISTANCE_BETWEEN_RODS = 0; // The distance between both climbing rods.
@@ -228,9 +236,9 @@ class BConstants {
     }
 
     public static class Drivetrain {
-        public static final double KP = 0.3;
+        public static final double KP = 0.1;
         public static final double KI = 0;
-        public static final double KD = 0;
+        public static final double KD = 0.1;
         public static final double KF = 0;
     }
 
@@ -251,7 +259,7 @@ class BConstants {
     }
 
     public static class Conveyor {
-        public static final WebConstant CONVEYOR_MOTOR_FEED_POWER = new WebConstant("conveyorFeedPower", 0.7);
+        public static final double CONVEYOR_MOTOR_FEED_POWER = 1;
     }
 
     public static class Shooter {

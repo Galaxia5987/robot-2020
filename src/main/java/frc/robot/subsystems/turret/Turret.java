@@ -39,8 +39,9 @@ public class Turret extends SubsystemBase {
     public Turret() {
         motor.configFactoryDefault();
 
-        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 1, TALON_TIMEOUT); // Todo: check if this experimental idea works.
+        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 1, TALON_TIMEOUT);
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
+        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 2, TALON_TIMEOUT);
         resetEncoder();
 
         motor.setInverted(IS_MOTOR_INVERTED);
@@ -59,6 +60,7 @@ public class Turret extends SubsystemBase {
 
         motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
         motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
+
         motor.configPeakCurrentLimit(PEAK_CURRENT);
         motor.configContinuousCurrentLimit(MAX_CURRENT);
         motor.configPeakCurrentDuration(PEAK_DURATION);
@@ -179,8 +181,10 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("turretSetpoint", targetAngle);
         SmartDashboard.putNumber("turretCurrent", getAngle());
         SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
+        SmartDashboard.putBoolean("turret ready", isTurretReady());
         FireLog.log("turretSetpoint", targetAngle);
         FireLog.log("turretCurrent", getAngle());
+
     }
 
     /**
@@ -210,10 +214,10 @@ public class Turret extends SubsystemBase {
      */
     public void resetEncoder() {
         double currentPosition = Math.IEEEremainder(
-                        Math.floorMod(motor.getSelectedSensorPosition(1), 4096) -
-                                ((ZERO_POSITION + unitModel.toTicks((180 + UNREACHABLE_ANGLE) % 360)) % 4096),
-                        4096
-                ) + unitModel.toTicks(180 + UNREACHABLE_ANGLE) % 4096;
+                        Math.floorMod(motor.getSelectedSensorPosition(1), TICKS_PER_ROTATION) -
+                                ((ZERO_POSITION + unitModel.toTicks((180 + UNREACHABLE_ANGLE) % 360)) % TICKS_PER_ROTATION),
+                TICKS_PER_ROTATION
+                ) + unitModel.toTicks(180 + UNREACHABLE_ANGLE) % TICKS_PER_ROTATION;
         motor.setSelectedSensorPosition((int) currentPosition);
     }
 

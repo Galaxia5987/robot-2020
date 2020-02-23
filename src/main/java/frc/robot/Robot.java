@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.Utils;
+import frc.robot.utilities.VisionModule;
 
 import static frc.robot.RobotContainer.navx;
 
@@ -67,6 +68,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
 
+        SmartDashboard.putData(CommandScheduler.getInstance());
         SmartDashboard.putData(pdp);
         SmartDashboard.putData(navx);
 
@@ -111,8 +113,8 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+      
         rainbow();
-        // Set the LEDs
         m_led.setData(m_ledBuffer);
     }
 
@@ -136,6 +138,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
+        VisionModule.setLEDs(false);
     }
 
     @Override
@@ -147,6 +150,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
+        m_robotContainer.drivetrain.setBrake(true);
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
@@ -171,6 +175,7 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+        m_robotContainer.drivetrain.setBrake(false);
     }
 
     /**

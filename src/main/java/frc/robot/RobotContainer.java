@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
@@ -46,7 +47,7 @@ public class RobotContainer {
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     private final VisionModule visionModule = new VisionModule();
     private final CustomDashboard customDashboard = new CustomDashboard();
-    private final Drivetrain drivetrain = new Drivetrain();
+    public final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
@@ -124,7 +125,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return null;
+        return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
     }
 
 }

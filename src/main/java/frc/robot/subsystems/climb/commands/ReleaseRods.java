@@ -14,6 +14,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.climb.Climber;
 import org.techfire225.webapp.FireLog;
 
+import static frc.robot.Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
 import static frc.robot.Constants.Climber.CLIMB_HEIGHT;
 
 /**
@@ -54,8 +55,6 @@ public class ReleaseRods extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        climber.setRightPower(0);
-        climber.setLeftPower(0);
     }
 
 
@@ -67,8 +66,10 @@ public class ReleaseRods extends CommandBase {
      */
     @Override
     public final boolean isFinished() {
-        double currentHeight = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
-        return Math.abs(setpointHeight - currentHeight) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        boolean isLeftOnSetpoint = climber.getLeftHeight() > setpointHeight - ALLOWED_HEIGHT_TOLERANCE;
+        boolean isRightOnSetpoint = climber.getRightHeight() > setpointHeight - ALLOWED_HEIGHT_TOLERANCE;
+
+        return isLeftOnSetpoint && isRightOnSetpoint;
     }
 
 

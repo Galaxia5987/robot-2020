@@ -84,10 +84,12 @@ public class Utils {
      * @return Turret angle
      */
     public static double calculateTurretAngle(Pose2d currentPosition, boolean innerPort) {
-        Pose2d targetLocation = UtilityFunctions.getAlliancePort(innerPort);
+        Pose2d targetLocation = UtilityFunctions.getPortLocation(innerPort);
         double deltaY = targetLocation.getTranslation().getY() - currentPosition.getTranslation().getY();
         double deltaX = targetLocation.getTranslation().getX() - currentPosition.getTranslation().getX();
-        return Math.toDegrees(Math.atan2(deltaY, deltaX) - currentPosition.getRotation().getRadians());
+        double angle = Math.toDegrees(currentPosition.getRotation().getRadians() - Math.atan2(deltaY, deltaX));
+        if(angle < 0) angle += 360;
+        return angle;
     }
 
     /**
