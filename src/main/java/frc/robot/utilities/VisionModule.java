@@ -3,6 +3,7 @@ package frc.robot.utilities;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -103,4 +104,8 @@ public class VisionModule extends SubsystemBase {
         );
     }
 
+    public static double movingAverage(double sampleInput){
+        LinearFilter filter = LinearFilter.movingAverage(5);
+        return filter.calculate(sampleInput);
+    }
 }
