@@ -199,7 +199,7 @@ public class Constants {
         public static final double[] CLIMB_PIDF = {0.4, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
         public static final double[] CLIMB_RELEASE_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
 
-        public static final double[] DELTA_PID = {0, 0, 0.0004}; // Proportional, Integral, Derivative
+        public static final double[] DELTA_PID = {0.0004, 0, 0}; // Proportional, Integral, Derivative
 
         public static final double MAX_HEIGHT = 0.75; // The allowed maximum height of the subsystem.
         public static final double HEIGHT_TARGET = 0.2;
