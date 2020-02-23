@@ -36,9 +36,6 @@ public class CustomDashboard extends SubsystemBase {
     private static NetworkTableEntry climbLeftHeight = values.getEntry("climbLeftHeight");
     private static NetworkTableEntry climbRightHeight = values.getEntry("climbRightHeight");
 
-    private static DecimalFormat decimalFormat = new DecimalFormat("##.##");
-
-
     public static void setHasVision(boolean toggle) {
         hasVision.setBoolean(toggle);
     }
