@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.PIDClimbAndBalance;
+import frc.robot.subsystems.climb.commands.ReleaseRods;
+import frc.robot.subsystems.climb.commands.ResetClimber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
@@ -31,6 +34,8 @@ import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.TurretSwitching;
+import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.ValueTuner;
@@ -86,17 +91,21 @@ public class RobotContainer {
         OI.b.toggleWhenPressed(new SpeedUp(shooter));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.whenPressed(new RotationControl(colorWheel));
-        OI.lb.whenPressed(new PositionControl(colorWheel));
+        OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
+        OI.start.toggleWhenPressed(new PositionControl(colorWheel));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
         )); //If both buttons are held without being released the manualMode will be enabled.
-        OI.start.whenPressed(() -> Robot.shootingManualMode = false); //Pressing start disables the manual mode for shooting.
-        for (int i = 1; i < 10; i++) {
+        OI.povu.whenPressed(new ReleaseRods(climber));
+        OI.povd.toggleWhenPressed(new PIDClimbAndBalance(climber));
+        OI.povr.toggleWhenPressed(new ResetClimber(climber));
+        OI.lb.toggleWhenPressed(new TurretSwitching(turret, drivetrain));
+        OI.rb.whileHeld(new FeedTurret(conveyor));
+        for (int i = 1; i <= 11; i++) {
             new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
         }
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i <= 11; i++) {
             new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
         }
     }
