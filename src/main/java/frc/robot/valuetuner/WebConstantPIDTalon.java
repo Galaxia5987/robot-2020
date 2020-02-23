@@ -14,7 +14,11 @@ public class WebConstantPIDTalon {
     private static Map<String, TalonConstant> constantMap = new ConcurrentHashMap<>();
 
     public WebConstantPIDTalon(String key, double kP, double kI, double kD, double kF, BaseTalon talon) {
-        constantMap.put(key, new TalonConstant(key, kP, kI, kD, kF, talon));
+        constantMap.put(key, new TalonConstant(key, kP, kI, kD, kF, talon, 0));
+    }
+
+    public WebConstantPIDTalon(String key, double kP, double kI, double kD, double kF, BaseTalon talon, int slot) {
+        constantMap.put(key, new TalonConstant(key, kP, kI, kD, kF, talon, slot));
     }
 
     public static Map<String, TalonConstant> getConstantMap() {
