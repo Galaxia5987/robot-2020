@@ -33,18 +33,19 @@ public class TrenchPickup extends SequentialCommandGroup {
     private static final TrajectoryConfig toTrenchConfig =
             new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION)
                     .addConstraint(new CentripetalAccelerationConstraint(MAX_CENTRIPETAL_ACCELERATION))
-                    .setEndVelocity(0.7);
+                    .setEndVelocity(1);
 
     public Path toTrench = new Path(
             toTrenchConfig,
             new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
-    private static final TrajectoryConfig pickupBallsConfig = new TrajectoryConfig(1, MAX_ACCELERATION);
+    private static final TrajectoryConfig pickupBallsConfig = new TrajectoryConfig(1, MAX_ACCELERATION)
+            .setStartVelocity(1);
 
     public Path pickupBalls = new Path(
             pickupBallsConfig,
-            new Pose2d(Units.feetToMeters(26.219), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(27.669), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
     private static final TrajectoryConfig toShootingConfig =
