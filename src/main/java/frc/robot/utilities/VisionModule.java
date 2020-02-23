@@ -105,7 +105,7 @@ public class VisionModule extends SubsystemBase {
         );
     }
 
-    public static double movingAverage() {
+    private static double movingAverage() {
         return filter.calculate(getTargetRawDistance());
     }
 }
