@@ -9,7 +9,7 @@ import static frc.robot.Constants.Turret.*;
 
 public class DirectVisionTurret extends CommandBase {
     private Turret turret;
-    private PIDController anglePid = new PIDController(DIRECT_VISION_KP.get(), DIRECT_VISION_KI.get(), DIRECT_VISION_KD.get());
+    private PIDController anglePid = new PIDController(DIRECT_VISION_KP, DIRECT_VISION_KI, DIRECT_VISION_KD);
 
     public DirectVisionTurret(Turret turret) {
         addRequirements(turret);
@@ -24,9 +24,9 @@ public class DirectVisionTurret extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        anglePid.setP(DIRECT_VISION_KP.get());
-        anglePid.setI(DIRECT_VISION_KI.get());
-        anglePid.setD(DIRECT_VISION_KD.get());
+        anglePid.setP(DIRECT_VISION_KP);
+        anglePid.setI(DIRECT_VISION_KI);
+        anglePid.setD(DIRECT_VISION_KD);
         double power = -anglePid.calculate(VisionModule.getVisionAngle(), 0);
         if(VisionModule.targetSeen())
             turret.setPower(power);

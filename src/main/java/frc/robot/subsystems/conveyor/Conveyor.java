@@ -18,7 +18,6 @@ import frc.robot.utilities.State;
 
 
 import static frc.robot.Constants.Conveyor.*;
-import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Conveyor.*;
 
 /**
@@ -135,8 +134,8 @@ public class Conveyor extends SubsystemBase {
      */
     public void feed() {
         if (!isGateOpen()) setGate(State.OPEN);
-        setConveyorPower(CONVEYOR_MOTOR_FEED_POWER);
-        setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
+        setConveyorPower(CONVEYOR_SMART_FEED_POWER);
+        setFunnelPower(FUNNEL_INTAKE_POWER);
     }
 
     /**

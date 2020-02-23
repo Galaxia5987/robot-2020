@@ -26,8 +26,8 @@ public class SimpleClimb extends CommandBase {
     public void initialize() {
         climber.releaseStopper();
         climber.changePIDFSlot(0);
-        climber.setLeftHeight(SIMPLE_CLIMB_HEIGHT.get());
-        climber.setRightHeight(SIMPLE_CLIMB_HEIGHT.get());
+        climber.setLeftHeight(SIMPLE_CLIMB_HEIGHT);
+        climber.setRightHeight(SIMPLE_CLIMB_HEIGHT);
     }
 
     // Called once the command ends or is interrupted.
@@ -45,8 +45,8 @@ public class SimpleClimb extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        boolean leftSideInPosition = Math.abs(SIMPLE_CLIMB_HEIGHT.get() - climber.getLeftHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
-        boolean rightSideInPosition = Math.abs(SIMPLE_CLIMB_HEIGHT.get() - climber.getRightHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        boolean leftSideInPosition = Math.abs(SIMPLE_CLIMB_HEIGHT - climber.getLeftHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
+        boolean rightSideInPosition = Math.abs(SIMPLE_CLIMB_HEIGHT - climber.getRightHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
         return leftSideInPosition && rightSideInPosition;
     }
 

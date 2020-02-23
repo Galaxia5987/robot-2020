@@ -75,20 +75,20 @@ public class Constants {
     }
 
     public static final class Intake {
-        public static final WebConstant INTAKE_POWER = new WebConstant("intakePower", 0.4);
-        public static final WebConstant OUTTAKE_POWER = new WebConstant("intakeOutPower", 0.2);
+        public static final double INTAKE_POWER = 0.4;
+        public static final double OUTTAKE_POWER = 0.2;
     }
 
     public static class Conveyor {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
 
-        public static final WebConstant PULSE_INTERVAL = new WebConstant("pulseInterval", 0.1);
-        public static final double CONVEYOR_MOTOR_FEED_POWER = CONST(0.5);
-        public static final WebConstant CONVEYOR_MOTOR_OPEN_FEED_POWER = new WebConstant("conveyorOpenFeedPower", 0.5);
-        public static final WebConstant FUNNEL_MOTOR_FEED_POWER = new WebConstant("funnelFeedPower", 0.3);
-        public static final WebConstant CONVEYOR_MOTOR_INTAKE_POWER = new WebConstant("conveyorIntakePower", 0.7);
-        public static final WebConstant CONVEYOR_OUTTAKE_POWER = new WebConstant("conveyorOuttakePower", 0.5);
-        public static final WebConstant FUNNEL_OUTTAKE_POWER = new WebConstant("funnelOuttakePower", 0.5);
+        public static final double PULSE_INTERVAL = 0.1;
+        public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.5);
+        public static final double CONVEYOR_FEED_POWER = 0.5;
+        public static final double FUNNEL_INTAKE_POWER = 0.3;
+        public static final double CONVEYOR_INTAKE_POWER = 0.7;
+        public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
+        public static final double FUNNEL_OUTTAKE_POWER = 0.5;
 
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
@@ -135,9 +135,9 @@ public class Constants {
         public static final int MOTION_MAGIC_CRUISE_VELOCITY = 3000;
         public static final int MOTION_MAGIC_ACCELERATION = 2000;
 
-        public static final WebConstant DIRECT_VISION_KP = new WebConstant("visionKp", 0.01);
-        public static final WebConstant DIRECT_VISION_KI = new WebConstant("visionKi", 0.001);
-        public static final WebConstant DIRECT_VISION_KD = new WebConstant("visionKd", 0);
+        public static final double DIRECT_VISION_KP = 0.01;
+        public static final double DIRECT_VISION_KI = 0.001;
+        public static final double DIRECT_VISION_KD = 0;
 
         public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
 
@@ -169,8 +169,8 @@ public class Constants {
         public static final double SHOOTING_TIME = 3.5; // [s]
         public static final double VELOCITY_TOLERANCE = 2; // [RPS] the acceptable velocity threshold error of the shooter
         public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
-        public static final WebConstant VELOCITY_DAMP_RAMP = new WebConstant("damp_ramp", 1); // Damp ramp for that clamp on the accelerant
-        public static final WebConstant VELOCITY_DAMPENING_LIMIT = new WebConstant("velocity_dampening_limit", 35); // Instead of trying to reach the target velocity, reach the current velocity + a constant.
+        public static final double VELOCITY_DAMP_RAMP =  1; // Damp ramp for that clamp on the accelerant
+        public static final double VELOCITY_DAMPENING_LIMIT = 35; // Instead of trying to reach the target velocity, reach the current velocity + a constant.
     }
 
     public static class ColorWheel {
@@ -193,8 +193,8 @@ public class Constants {
          * Constants for a basic proportional control, when distance is 2 apply kP worth of percent output and apply kI when the distance is 1
          * The names are a meme please do not take kp and ki seriously 
          */
-        public static WebConstant kP = new WebConstant("colorWheel_Distance_2", 0.5); //Proportional constant for the control wheel Percent output when distance from the color is 2
-        public static WebConstant kI = new WebConstant("colorWheel_Distance_1", 0.3); //Proportional constant for the control panel Percent output when distance from the color is 1
+        public static double kP = 0.5; //Proportional constant for the control wheel Percent output when distance from the color is 2
+        public static double kI = 0.3; //Proportional constant for the control panel Percent output when distance from the color is 1
         public static final double ROTATION_CONTROL_POWER = 0.4;
     }
 
@@ -215,12 +215,12 @@ public class Constants {
 
         public static final double RAMP_RATE = 0;
 
-        public static final WebConstant CLIMB_HEIGHT = new WebConstant("climbSetpointHeight", 0.5);
-        public static final WebConstant SIMPLE_CLIMB_HEIGHT = new WebConstant("simpleClimbHeight", 0.4);
+        public static final double CLIMB_HEIGHT = 0.5;
+        public static final double SIMPLE_CLIMB_HEIGHT = 0.4;
 
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0.05; // The allowed tolerance between the current height to the desired height.
         public static final double ALLOWED_ANGLE_TOLERANCE = 0.5; // The allowed tolerance between the current angle to the desired angle.
-        public static final WebConstant MODIFY_JOYSTICK_RATE = new WebConstant("climbJoystickRate", 0.7); // The factor which the value of the joystick is multiplied by to calculate the change rate.
+        public static final double MODIFY_JOYSTICK_RATE = 0.7; // The factor which the value of the joystick is multiplied by to calculate the change rate.
         public static final double MAX_DIFFERENCE = 2; // The maximal difference between the two sides of the climber.
         public static final double DISTANCE_BETWEEN_RODS = 0; // The distance between both climbing rods.
     }
