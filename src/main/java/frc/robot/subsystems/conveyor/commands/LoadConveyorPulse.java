@@ -22,7 +22,7 @@ public class LoadConveyorPulse extends CommandBase {
     @Override
     public void initialize() {
         conveyor.setGate(State.CLOSE);
-        conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER);
+        conveyor.setFunnelPower(FUNNEL_INTAKE_POWER);
         timer.reset();
         timer.start();
     }
@@ -30,7 +30,7 @@ public class LoadConveyorPulse extends CommandBase {
     @Override
     public void execute() {
         if(timer.get() % (2 * PULSE_INTERVAL) <= PULSE_INTERVAL){
-            conveyor.setConveyorPower(CONVEYOR_MOTOR_INTAKE_POWER);
+            conveyor.setConveyorPower(CONVEYOR_INTAKE_POWER);
         }
         else {
             conveyor.stopConveyor();

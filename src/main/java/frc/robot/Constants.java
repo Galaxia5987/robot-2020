@@ -83,10 +83,10 @@ public class Constants {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
 
         public static final double PULSE_INTERVAL = 0.1;
-        public static final double CONVEYOR_MOTOR_FEED_POWER = CONST(0.5);
-        public static final double CONVEYOR_MOTOR_OPEN_FEED_POWER = 0.5;
-        public static final double FUNNEL_MOTOR_FEED_POWER = 0.3;
-        public static final double CONVEYOR_MOTOR_INTAKE_POWER = 0.7;
+        public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.5);
+        public static final double CONVEYOR_FEED_POWER = 0.5;
+        public static final double FUNNEL_INTAKE_POWER = 0.3;
+        public static final double CONVEYOR_INTAKE_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
         public static final double FUNNEL_OUTTAKE_POWER = 0.5;
 
