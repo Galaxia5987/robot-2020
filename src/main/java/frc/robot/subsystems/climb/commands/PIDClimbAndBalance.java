@@ -70,6 +70,7 @@ public class PIDClimbAndBalance extends CommandBase {
     public void initialize() {
         climber.releaseStopper();
         climber.changePIDFSlot(0);
+        delta = 0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -91,8 +92,8 @@ public class PIDClimbAndBalance extends CommandBase {
 
 
         if (!climber.isStopperEngaged()) {
-            climber.setLeftHeight(leftSetpointHeight);
-            climber.setRightHeight(rightSetpointHeight);
+            climber.setLeftHeight(leftSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD);
+            climber.setRightHeight(rightSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD);
         } else {
             climber.releaseStopper();
         }
