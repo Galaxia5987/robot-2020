@@ -15,6 +15,8 @@ import frc.robot.subsystems.drivetrain.auto.FollowPath;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
+import frc.robot.subsystems.turret.commands.PoseVisionTurret;
+import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.VisionModule;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import static frc.robot.Constants.Autonomous.*;
 public class TrenchPickup extends SequentialCommandGroup {
     private static final double INTAKE_WAIT = 1.2;
     private static final double SHOOT_TIME = 4;
-    private static final double PICKUP_SPEED = 0.6;
+    private static final double PICKUP_SPEED = 1.2;
 
     private static final TrajectoryConfig toTrenchConfig =
             new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION)
@@ -61,7 +63,7 @@ public class TrenchPickup extends SequentialCommandGroup {
         addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
                 new ParallelDeadlineGroup(
                         new WaitCommand(SHOOT_TIME),
-                        new AutoShoot(turret, shooter, conveyor, drivetrain)
+                        new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))
                 ),
                 new SequentialCommandGroup(
                         new WaitCommand(0.4),
@@ -88,6 +90,6 @@ public class TrenchPickup extends SequentialCommandGroup {
                 new PickupBalls(intake, conveyor)
         ));
         addCommands(new InstantCommand(() -> VisionModule.setLEDs(true)));
-        addCommands(new AutoShoot(turret, shooter, conveyor, drivetrain));
+        addCommands(new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret)));
     }
 }

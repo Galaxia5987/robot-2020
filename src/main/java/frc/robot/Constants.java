@@ -77,7 +77,7 @@ public class Constants {
     }
 
     public static final class Intake {
-        public static final double INTAKE_POWER = 0.4;
+        public static final double INTAKE_POWER = 0.65;
         public static final double OUTTAKE_POWER = 0.2;
     }
 
@@ -88,7 +88,7 @@ public class Constants {
         public static final WebConstant FEED_OUTTAKE_POWER = new WebConstant("feedOuttakePower", 0.6);
         public static final double PULSE_INTERVAL = 0.1;
         public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.5);
-        public static final double CONVEYOR_FEED_POWER = 0.5;
+        public static final double CONVEYOR_FEED_POWER = 0.7;
         public static final double FUNNEL_INTAKE_POWER = 0.3;
         public static final double CONVEYOR_INTAKE_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
