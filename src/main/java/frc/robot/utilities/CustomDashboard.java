@@ -98,10 +98,6 @@ public class CustomDashboard extends SubsystemBase {
         if (gameMessage.charAt(0) == 'B') CWColor.setString("blue");
     }
 
-    static {
-        setAutonomousModes(new String[]{"left", "middle", "right"});
-    }
-
     @Override
     public void periodic() {
         setTime((int) Timer.getMatchTime());
