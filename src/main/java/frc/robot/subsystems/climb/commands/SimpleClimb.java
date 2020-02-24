@@ -26,8 +26,8 @@ public class SimpleClimb extends CommandBase {
     public void initialize() {
         climber.releaseStopper();
         climber.changePIDFSlot(0);
-        climber.setLeftHeight(SIMPLE_CLIMB_HEIGHT);
-        climber.setRightHeight(SIMPLE_CLIMB_HEIGHT);
+        climber.setLeftHeight(SIMPLE_CLIMB_HEIGHT, Constants.Climber.ARBITRARY_FEEDFORWARD.get());
+        climber.setRightHeight(SIMPLE_CLIMB_HEIGHT, Constants.Climber.ARBITRARY_FEEDFORWARD.get());
     }
 
     // Called once the command ends or is interrupted.

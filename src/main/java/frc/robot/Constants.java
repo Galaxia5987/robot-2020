@@ -216,7 +216,7 @@ public class Constants {
 
         public static final double MIN_DELTA = 0.001;
 
-        public static final double ARBITRARY_FEEDFORWARD = 0;
+        public static final WebConstant ARBITRARY_FEEDFORWARD = new WebConstant("climb_arbitrary_ff", -0.1);
 
         public static final double RAMP_RATE = 0;
 

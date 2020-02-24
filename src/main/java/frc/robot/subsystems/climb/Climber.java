@@ -144,17 +144,6 @@ public class Climber extends SubsystemBase {
         return unitModel.toUnits(leftMotor.getSelectedSensorPosition());
     }
 
-    /**
-     * Move the left side of the climber to a given height.
-     *
-     * @param height the height setpoint of the left elevator in meters
-     */
-    public void setLeftHeight(double height) {
-        if (safeToClimb()) {
-            leftMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
-        }
-    }
-
     public void setLeftPower(double power) {
         leftMotor.set(ControlMode.PercentOutput, power);
     }
@@ -177,10 +166,42 @@ public class Climber extends SubsystemBase {
      */
     public void setRightHeight(double height) {
         if (safeToClimb()) {
-            rightMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
+            rightMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)));
         }
     }
 
+    /**
+     * Move the left side of the climber to a given height.
+     *
+     * @param height the height setpoint of the left elevator in meters
+     */
+    public void setLeftHeight(double height) {
+        if (safeToClimb()) {
+            leftMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)));
+        }
+    }
+
+    /**
+     * Move the right side of the climber to a given height.
+     *
+     * @param height the height setpoint of the right elevator in meters
+     */
+    public void setRightHeight(double height, double arbitraryFeedForward) {
+        if (safeToClimb()) {
+            rightMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, arbitraryFeedForward);
+        }
+    }
+
+    /**
+     * Move the right side of the climber to a given height.
+     *
+     * @param height the height setpoint of the right elevator in meters
+     */
+    public void setLeftHeight(double height, double arbitraryFeedForward) {
+        if (safeToClimb()) {
+            leftMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, arbitraryFeedForward);
+        }
+    }
     /**
      * All cases where we want to prevent the drivers from climbing should return true here. whether it's by game time.
      * It won't allow climbing before the endgame
@@ -220,13 +241,6 @@ public class Climber extends SubsystemBase {
         SmartDashboard.putNumber("climbLeftHeight", leftHeight);
         SmartDashboard.putNumber("climbRightHeight", rightHeight);
 
-        if (rightHeight >= Constants.Climber.MAX_HEIGHT) {
-            setRightHeight(Constants.Climber.MAX_HEIGHT);
-        }
-
-        if (leftHeight >= Constants.Climber.MAX_HEIGHT) {
-            setLeftHeight(Constants.Climber.MAX_HEIGHT);
-        }
         CustomDashboard.setClimb(isStopperEngaged());
 
         CustomDashboard.setClimbLeftHeight(leftHeight);
