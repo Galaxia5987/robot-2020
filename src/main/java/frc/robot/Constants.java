@@ -258,7 +258,7 @@ class BConstants {
     }
 
     public static class Turret {
-        public static final double KD = 70;
+        public static final double KD = 150;
         public static final int ZERO_POSITION = 902;
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
     }
@@ -268,7 +268,7 @@ class BConstants {
     }
 
     public static class Shooter {
-        public static final double KD = 10;
+//        public static final double KD = 10;
     }
 
 }

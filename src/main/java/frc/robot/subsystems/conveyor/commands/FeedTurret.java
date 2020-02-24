@@ -40,6 +40,7 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void initialize() {
+        conveyor.setGate(State.OPEN);
         conveyor.setConveyorPower(-FEED_OUTTAKE_POWER.get());
         timer.reset();
         timer.start();
