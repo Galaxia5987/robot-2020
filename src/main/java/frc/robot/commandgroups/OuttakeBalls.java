@@ -24,6 +24,7 @@ public class OuttakeBalls extends CommandBase {
 
     @Override
     public void initialize() {
+        conveyor.openGate(true);
         intake.setPosition(State.CLOSE);
         intake.powerWheels(-Constants.Intake.OUTTAKE_POWER);
         conveyor.setFunnelPower(-Constants.Conveyor.FUNNEL_OUTTAKE_POWER);
