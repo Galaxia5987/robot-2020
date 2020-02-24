@@ -5,17 +5,16 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
 
 public class SpeedUp extends CommandBase {
-    private NetworkTable velocityTable = NetworkTableInstance.getDefault().getTable("velocityTable");
-    private final NetworkTableEntry velocityEntry = velocityTable.getEntry("velocity");
     private final Shooter shooter;
     private final Drivetrain drivetrain;
+    private NetworkTable velocityTable = NetworkTableInstance.getDefault().getTable("velocityTable");
+    private final NetworkTableEntry velocityEntry = velocityTable.getEntry("velocity");
     private double distance;
     private boolean isVisionActive = false;
     private boolean end = true;
@@ -50,8 +49,7 @@ public class SpeedUp extends CommandBase {
     public void execute() {
         if (isVisionActive && VisionModule.getHoodDistance() != null) {
             distance = VisionModule.getHoodDistance();
-        }
-        else if(isVisionActive) {
+        } else if (isVisionActive) {
             if (!VisionModule.targetSeen())
                 distance = Utils.localizationDistanceToPort(drivetrain.getPose());
         }
@@ -72,7 +70,7 @@ public class SpeedUp extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         VisionModule.setLEDs(false);
-        if(this.end)
+        if (this.end)
             shooter.stop();
     }
 
