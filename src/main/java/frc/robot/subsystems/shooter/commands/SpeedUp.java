@@ -68,7 +68,6 @@ public class SpeedUp extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-        VisionModule.setLEDs(false);
         if (this.end)
             shooter.stop();
     }
