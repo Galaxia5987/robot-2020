@@ -23,7 +23,6 @@ public class SpeedUp extends CommandBase {
         addRequirements(shooter);
         this.distance = distance;
         this.shooter = shooter;
-        this.drivetrain = null;
     }
 
     public SpeedUp(Shooter shooter, Drivetrain drivetrain) {
@@ -47,10 +46,10 @@ public class SpeedUp extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        if (isVisionActive && VisionModule.getHoodDistance() != null) {
-            distance = VisionModule.getHoodDistance();
-        } else if (isVisionActive) {
-            if (!VisionModule.targetSeen())
+        if (isVisionActive) {
+            if(VisionModule.getHoodDistance() != null)
+                distance = VisionModule.getHoodDistance();
+            else
                 distance = Utils.localizationDistanceToPort(drivetrain.getPose());
         }
         shooter.setSpeed(shooter.approximateVelocity(distance));
