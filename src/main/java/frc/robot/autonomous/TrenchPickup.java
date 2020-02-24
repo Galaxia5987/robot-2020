@@ -28,7 +28,7 @@ import static frc.robot.Constants.Autonomous.*;
 public class TrenchPickup extends SequentialCommandGroup {
     private static final double INTAKE_WAIT = 1.2;
     private static final double SHOOT_TIME = 4;
-    private static final double PICKUP_SPEED = 1.2;
+    private static final double PICKUP_SPEED = 1.5;
 
     private static final TrajectoryConfig toTrenchConfig =
             new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION)
