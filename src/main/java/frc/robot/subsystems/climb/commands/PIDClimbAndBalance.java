@@ -92,8 +92,8 @@ public class PIDClimbAndBalance extends CommandBase {
 
 
         if (!climber.isStopperEngaged()) {
-            climber.setLeftHeight(leftSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD.get());
-            climber.setRightHeight(rightSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD.get());
+            climber.setLeftHeight(leftSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD);
+            climber.setRightHeight(rightSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD);
         } else {
             climber.releaseStopper();
         }
