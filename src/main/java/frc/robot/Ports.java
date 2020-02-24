@@ -80,7 +80,7 @@ public class Ports {
         public static final boolean RIGHT_MOTOR_INVERTED = CONST(true);
         public static final boolean LEFT_ENCODER_INVERTED = CONST(true);
         public static final boolean RIGHT_ENCODER_INVERTED = CONST(true);
-        public static final boolean IS_STOPPER_REVERSED = CONST(false);
+        public static final boolean IS_STOPPER_REVERSED = CONST(true);
     }
 }
 
