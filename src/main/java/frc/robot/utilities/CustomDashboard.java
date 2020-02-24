@@ -33,6 +33,7 @@ public class CustomDashboard extends SubsystemBase {
 
     //Values
     private static NetworkTableEntry gyroRoll = values.getEntry("gyroRoll");
+    private static NetworkTableEntry turretAngle = values.getEntry("turretAngle");
     private static NetworkTableEntry climbLeftHeight = values.getEntry("climbLeftHeight");
     private static NetworkTableEntry climbRightHeight = values.getEntry("climbRightHeight");
 
@@ -78,6 +79,10 @@ public class CustomDashboard extends SubsystemBase {
 
     public static void setClimbRightHeight(double height) {
         climbRightHeight.setDouble(truncateDecimal(height));
+    }
+
+    public static void setTurretAngle(double angle) {
+        turretAngle.setDouble(angle);
     }
 
     public static String getSelectedMode() {
