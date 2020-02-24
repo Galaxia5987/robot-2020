@@ -10,7 +10,11 @@ import frc.robot.subsystems.turret.commands.TurretSwitching;
 public class ShootWarmup extends ParallelCommandGroup {
 
     public ShootWarmup(Turret turret, Shooter shooter, Drivetrain drivetrain) {
+        this(turret, shooter, drivetrain, false);
+    }
+
+    public ShootWarmup(Turret turret, Shooter shooter, Drivetrain drivetrain, boolean stopShooter) {
         addCommands(new TurretSwitching(turret, drivetrain));
-        addCommands(new SpeedUp(shooter, drivetrain));
+        addCommands(new SpeedUp(shooter, stopShooter, drivetrain));
     }
 }

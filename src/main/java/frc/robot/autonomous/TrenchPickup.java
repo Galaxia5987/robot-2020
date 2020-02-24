@@ -24,7 +24,7 @@ import java.util.List;
 import static frc.robot.Constants.Autonomous.*;
 
 public class TrenchPickup extends SequentialCommandGroup {
-    private static final double INTAKE_WAIT = 0.6;
+    private static final double INTAKE_WAIT = 1.2;
     private static final double SHOOT_TIME = 4;
     private static final double PICKUP_SPEED = 0.6;
 
@@ -72,7 +72,10 @@ public class TrenchPickup extends SequentialCommandGroup {
         addCommands(new ParallelDeadlineGroup( // Drive to trench area and pick up balls with intake
                 new SequentialCommandGroup(
                         new FollowPath(drivetrain, toTrench),
-                        new FollowPath(drivetrain, pickupBalls)
+                        new ParallelDeadlineGroup(
+                                new FollowPath(drivetrain, pickupBalls),
+                                new ShootWarmup(turret, shooter, drivetrain, false)
+                        )
                 ),
                 new SequentialCommandGroup(
                         new WaitCommand(INTAKE_WAIT),
