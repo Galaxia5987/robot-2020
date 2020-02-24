@@ -11,8 +11,8 @@ import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
 
 public class SpeedUp extends CommandBase {
-    private final Shooter shooter;
-    private final Drivetrain drivetrain;
+    private Shooter shooter;
+    private Drivetrain drivetrain;
     private NetworkTable velocityTable = NetworkTableInstance.getDefault().getTable("velocityTable");
     private final NetworkTableEntry velocityEntry = velocityTable.getEntry("velocity");
     private double distance;
