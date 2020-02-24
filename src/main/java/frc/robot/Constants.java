@@ -116,7 +116,7 @@ public class Constants {
         public static final int TICKS_PER_ROTATION = CONST(4096);
         public static final double TICKS_PER_DEGREE = CONST(TICKS_PER_ROTATION / 360.0);
 
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-42, 264);
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-35, 245);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
