@@ -179,13 +179,15 @@ public class Turret extends SubsystemBase {
     public void periodic() {
         if(BACKLASH_ANGLE != 0)
             correctBacklash();
+        double currentAngle = getAngle();
         SmartDashboard.putNumber("turretSetpoint", targetAngle);
-        SmartDashboard.putNumber("turretCurrent", getAngle());
+        SmartDashboard.putNumber("turretCurrent", currentAngle);
         SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
         CustomDashboard.setTurretReady(isTurretReady());
-        FireLog.log("turretSetpoint", targetAngle);
-        FireLog.log("turretCurrent", getAngle());
+        CustomDashboard.setTurretAngle(currentAngle);
 
+        FireLog.log("turretSetpoint", targetAngle);
+        FireLog.log("turretCurrent", currentAngle);
     }
 
     /**
