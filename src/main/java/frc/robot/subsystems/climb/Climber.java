@@ -244,7 +244,7 @@ public class Climber extends SubsystemBase {
         CustomDashboard.setClimb(isStopperEngaged());
 
         CustomDashboard.setClimbLeftHeight(leftHeight);
-        CustomDashboard.setClimbRightHeight(leftHeight);
+        CustomDashboard.setClimbRightHeight(rightHeight);
     }
 
     public void resetEncoders(){
