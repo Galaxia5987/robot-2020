@@ -100,7 +100,7 @@ public class RobotContainer {
         OI.povu.whenPressed(new ReleaseRods(climber));
         OI.povd.toggleWhenPressed(new PIDClimbAndBalance(climber));
         OI.povr.toggleWhenPressed(new ResetClimber(climber));
-        OI.lb.toggleWhenPressed(new VisionTurret(turret));
+        OI.lb.toggleWhenPressed(new TurretSwitching(turret));
         OI.rb.whileHeld(new FeedTurret(conveyor));
         for (int i = 1; i <= 11; i++) {
             new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
