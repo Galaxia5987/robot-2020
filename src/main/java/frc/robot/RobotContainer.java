@@ -41,6 +41,7 @@ import frc.robot.valuetuner.ValueTuner;
 import org.techfire225.webapp.Webserver;
 
 import static frc.robot.Constants.LED.DEFAULT_COLOR;
+import static frc.robot.Ports.LED.STRIP_LENGTH;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -60,7 +61,7 @@ public class RobotContainer {
     private final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
     public static final Turret turret = new Turret();
-    private final LED led = new LED();
+    private final LED led = new LED(STRIP_LENGTH);
     private final Command m_autoCommand = null;
 
     /**
