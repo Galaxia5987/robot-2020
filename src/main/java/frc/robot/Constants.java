@@ -268,7 +268,6 @@ class BConstants {
     }
 
     public static class Shooter {
-//        public static final double KD = 10;
     }
 
 }
