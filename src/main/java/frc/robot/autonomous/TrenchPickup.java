@@ -8,18 +8,13 @@ import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.commandgroups.AutoShoot;
 import frc.robot.commandgroups.PickupBalls;
+import frc.robot.commandgroups.ShootWarmup;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.auto.FollowPath;
 import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.commands.IntakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
-import frc.robot.subsystems.turret.commands.TurnTurret;
-import frc.robot.subsystems.turret.commands.TurretSwitching;
-import frc.robot.subsystems.turret.commands.VisionTurret;
-import frc.robot.utilities.State;
 import frc.robot.utilities.VisionModule;
 
 import java.util.ArrayList;
@@ -66,7 +61,7 @@ public class TrenchPickup extends SequentialCommandGroup {
         addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
                 new ParallelDeadlineGroup(
                         new WaitCommand(SHOOT_TIME),
-                        new AutoShoot(turret, shooter, conveyor)
+                        new AutoShoot(turret, shooter, conveyor, drivetrain)
                 ),
                 new SequentialCommandGroup(
                         new WaitCommand(0.4),
@@ -86,11 +81,10 @@ public class TrenchPickup extends SequentialCommandGroup {
         ));
         addCommands(new ParallelDeadlineGroup( // Drive back to shooting while speeding up
                 new FollowPath(drivetrain, toShooting),
-                new TurretSwitching(turret, drivetrain),
-                new SpeedUp(shooter, false),
+                new ShootWarmup(turret, shooter, drivetrain),
                 new PickupBalls(intake, conveyor)
         ));
         addCommands(new InstantCommand(() -> VisionModule.setLEDs(true)));
-        addCommands(new AutoShoot(turret, shooter, conveyor));
+        addCommands(new AutoShoot(turret, shooter, conveyor, drivetrain));
     }
 }

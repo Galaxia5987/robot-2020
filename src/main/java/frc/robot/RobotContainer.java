@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.commandgroups.PickupBalls;
-import frc.robot.commandgroups.WarmupShooter;
+import frc.robot.commandgroups.ShootWarmup;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
@@ -82,7 +82,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.toggleWhenPressed(new WarmupShooter(turret, shooter, drivetrain));
+        OI.b.toggleWhenPressed(new ShootWarmup(turret, shooter, drivetrain));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rb.whenPressed(new RotationControl(colorWheel));
