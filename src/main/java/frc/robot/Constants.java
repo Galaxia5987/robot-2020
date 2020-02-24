@@ -206,17 +206,17 @@ public class Constants {
     public static class Climber {
         public static final double TICKS_PER_METER = 4096 * 0.03 * Math.PI * 100; // TICKS * diameter * pi
 
-        public static final double[] CLIMB_PIDF = {0.4, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double[] CLIMB_PIDF = {0.2, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
         public static final double[] CLIMB_RELEASE_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
 
         public static final double[] DELTA_PID = {0.0004, 0, 0}; // Proportional, Integral, Derivative
 
         public static final double MAX_HEIGHT = 0.75; // The allowed maximum height of the subsystem.
-        public static final double HEIGHT_TARGET = 0.2;
+        public static final double HEIGHT_TARGET = 0.1;
 
         public static final double MIN_DELTA = 0.001;
 
-        public static final double ARBITRARY_FEEDFORWARD = 0;
+        public static final double ARBITRARY_FEEDFORWARD = -0.35;
 
         public static final double RAMP_RATE = 0;
 

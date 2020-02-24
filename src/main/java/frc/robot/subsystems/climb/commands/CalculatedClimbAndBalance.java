@@ -16,6 +16,7 @@ import frc.robot.subsystems.climb.Climber;
 /**
  * An example command that uses an example subsystem.
  */
+@Deprecated
 public class CalculatedClimbAndBalance extends CommandBase {
     private final Climber climber;
     private MiniPID deltaPID = new MiniPID(Constants.Climber.DELTA_PID[0], Constants.Climber.DELTA_PID[1], Constants.Climber.DELTA_PID[2]);
