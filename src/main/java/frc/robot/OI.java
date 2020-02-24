@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
@@ -50,6 +51,8 @@ public class OI {
     public static double getXboxRY() {
         return xbox.getRawAxis(XboxController.Axis.kRightY.value);
     }
+
+    public static double getXboxRT() { return xbox.getTriggerAxis(GenericHID.Hand.kRight);}
 
     public static double getLeftStickForward(){
         return -leftStick.getY();
