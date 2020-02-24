@@ -88,7 +88,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.toggleWhenPressed(new SpeedUp(shooter));
+        OI.b.toggleWhenPressed(new SpeedUp(shooter, drivetrain));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
@@ -100,7 +100,7 @@ public class RobotContainer {
         OI.povu.whenPressed(new ReleaseRods(climber));
         OI.povd.toggleWhenPressed(new PIDClimbAndBalance(climber));
         OI.povr.toggleWhenPressed(new ResetClimber(climber));
-        OI.lb.toggleWhenPressed(new TurretSwitching(turret));
+        OI.lb.toggleWhenPressed(new TurretSwitching(turret, drivetrain));
         OI.rb.whileHeld(new FeedTurret(conveyor));
         for (int i = 1; i <= 11; i++) {
             new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
