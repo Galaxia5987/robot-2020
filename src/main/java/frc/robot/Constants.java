@@ -209,6 +209,7 @@ public class Constants {
 
         public static final double[] CLIMB_PIDF = {0.2, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
         public static final double[] CLIMB_RELEASE_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double ARBITRARY_FEEDFORWARD = -0.35;
 
         public static final double[] DELTA_PID = {0.0004, 0, 0}; // Proportional, Integral, Derivative
 
@@ -217,7 +218,6 @@ public class Constants {
 
         public static final double MIN_DELTA = 0.001;
 
-        public static final double ARBITRARY_FEEDFORWARD = -0.35;
 
         public static final double RAMP_RATE = 0;
 
@@ -242,18 +242,32 @@ class AConstants {
     }
 
     public static class Drivetrain {
+
+        public static final double KP = CONST(0.4);
+        public static final double KI = CONST(0.0001);
+        public static final double KD = CONST(0.3);
+        public static final double KF = CONST(0);
     }
 
     public static class Autonomous {
     }
 
     public static class Turret {
+        public static double KD = 180;
+        public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
+        public static final int ZERO_POSITION = 1600;
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
     }
 
     public static class Conveyor {
+        public static double kP = 0.3;
+        public static double kI = 0.3;
+
     }
 
     public static class Shooter {
+        public static final double ALLOWED_HEIGHT_TOLERANCE = 0.05; // The allowed tolerance between the current height to the desired height.
+        public static final double ALLOWED_ANGLE_TOLERANCE = 0.5;
     }
 
 }
