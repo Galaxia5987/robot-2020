@@ -19,7 +19,7 @@ import java.util.Collections;
 
 public class ShootAndDriveToPickup extends SequentialCommandGroup {
     public static final double SHOOT_TIME = 10;
-    public Path driveBack = new Path(new Pose2d(Units.feetToMeters(36.864), Units.feetToMeters(17.398), Rotation2d.fromDegrees(180)));
+    public Path driveBack = new Path(new Pose2d(Units.feetToMeters(38.321), Units.feetToMeters(15.01), Rotation2d.fromDegrees(180)));
 
     public ShootAndDriveToPickup(Turret turret, Shooter shooter, Drivetrain drivetrain, Conveyor conveyor) {
         addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
