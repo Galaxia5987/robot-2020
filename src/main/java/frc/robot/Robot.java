@@ -19,7 +19,6 @@ import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
 
 import static frc.robot.RobotContainer.navx;
-import static frc.robot.RobotContainer.turret;
 
 
 /**
@@ -57,9 +56,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        if (!Robot.isRobotA) {
-            Utils.swapConstants(Constants.class, BConstants.class);
-            Utils.swapConstants(Ports.class, BPorts.class);
+        if (Robot.isRobotA) {
+            Utils.swapConstants(Constants.class, AConstants.class);
+            Utils.swapConstants(Ports.class, APorts.class);
         }
         CustomDashboard.setAutonomousModes(new String[]{"trenchPickup", "shootAndDriveBack"});
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our

@@ -234,7 +234,7 @@ public class Constants {
 
 
 //Anything in this class will replace the original constants when boolean is true
-class BConstants {
+class AConstants {
     //General constants to be replaced
 
     public static final class Intake {
