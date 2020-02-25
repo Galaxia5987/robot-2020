@@ -111,12 +111,14 @@ public class LEDUtilities {
 
 
     public static String colorToString(Color color) {
-        return String.format("r: %s, g: %s, b: %s", color.red, color.green, color.blue);
+        return String.format("(%s, %s, %s),", color.red, color.green, color.blue);
     }
 
     public static void printBuffer(AddressableLEDBuffer buffer){
+        System.out.print("[[");
         for(int i = 0; i < buffer.getLength(); i++)
             System.out.println(colorToString(buffer.getLED(i)));
+        System.out.print("]]");
     }
 
 }
