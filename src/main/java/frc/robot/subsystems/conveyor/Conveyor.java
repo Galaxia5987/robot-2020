@@ -133,9 +133,15 @@ public class Conveyor extends SubsystemBase {
      * feed the conveyor in one Power Cell per run.
      */
     public void feed() {
-        if (!isGateOpen()) setGate(State.OPEN);
-        setConveyorPower(CONVEYOR_SMART_FEED_POWER);
-        setFunnelPower(FUNNEL_INTAKE_POWER);
+        if (!isGateOpen()) {
+            setGate(State.OPEN);
+            setConveyorPower(0);
+            setFunnelPower(0);
+        }
+        else {
+            setConveyorPower(CONVEYOR_SMART_FEED_POWER);
+            setFunnelPower(FUNNEL_INTAKE_POWER);
+        }
     }
 
     /**

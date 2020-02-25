@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
@@ -60,6 +61,7 @@ public class Robot extends TimedRobot {
             Utils.swapConstants(Constants.class, BConstants.class);
             Utils.swapConstants(Ports.class, BPorts.class);
         }
+        CustomDashboard.setAutonomousModes(new String[]{"trenchPickup", "shootAndDriveBack"});
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         TrajectoryLoader.loadTrajectories();

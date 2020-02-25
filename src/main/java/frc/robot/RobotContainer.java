@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.autonomous.ShootAndDriveBack;
 import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
@@ -88,7 +89,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.toggleWhenPressed(new SpeedUp(shooter));
+        OI.b.toggleWhenPressed(new SpeedUp(shooter, drivetrain));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
@@ -134,7 +135,10 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
+        String autoMode = CustomDashboard.getSelectedMode();
+        if(autoMode.equals("trenchPickup")) new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
+        else if(autoMode.equals("shootAndDriveBack")) new ShootAndDriveBack(turret, shooter, drivetrain, conveyor);
+        return null;
     }
 
 }

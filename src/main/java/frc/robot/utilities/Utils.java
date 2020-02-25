@@ -7,6 +7,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
 
@@ -14,6 +15,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
+
+import static frc.robot.Constants.FieldGeometry.RED_OUTER_POWER_PORT_LOCATION;
 
 public class Utils {
 
@@ -148,6 +151,15 @@ public class Utils {
                 UtilityFunctions.getPortLocation(false).getTranslation().getY() - Math.sin(Math.toRadians(relativeTurretAngle)) * rawDistance,
                 Rotation2d.fromDegrees(rotationDegrees)
         );
+    }
+
+    /**
+     * returns the distance from the robot to the outer port
+     * @param robotPose
+     * @return
+     */
+    public static double localizationDistanceToPort(Pose2d robotPose) {
+        return robotPose.getTranslation().getDistance(RED_OUTER_POWER_PORT_LOCATION.getTranslation());
     }
 
 }
