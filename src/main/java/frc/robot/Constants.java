@@ -38,7 +38,7 @@ public class Constants {
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
 
-        public static final double JOYSTICK_MIN_THRESHOLD = 0.08;
+        public static final double JOYSTICK_MIN_THRESHOLD = 0.04;
     }
 
     public static class Autonomous {
