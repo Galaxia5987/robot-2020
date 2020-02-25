@@ -89,7 +89,7 @@ class BPorts{
         public static final boolean IS_MASTER_INVERTED = false;
         public static final boolean IS_SLAVE_1_INVERTED = true;
         public static final boolean IS_SLAVE_2_INVERTED = true;
-        public static final boolean IS_ENCODER_INVERTED = false;
+        public static final boolean IS_ENCODER_INVERTED = true;
     }
 
 
