@@ -17,12 +17,14 @@ import static frc.robot.Constants.FieldGeometry.OUTER_PORT_TO_LINE;
 public class InitiatePosition extends CommandBase {
     private final Drivetrain drivetrain;
     private final List<Path> toGenerate;
+    private final double rotationDegrees;
     private Pose2d pose;
 
-    public InitiatePosition(Drivetrain drivetrain, List<Path> toGenerate) {
+    public InitiatePosition(Drivetrain drivetrain, List<Path> toGenerate, double rotationDegrees) {
         addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.toGenerate = toGenerate;
+        this.rotationDegrees = rotationDegrees;
     }
 
     @Override
@@ -32,7 +34,7 @@ public class InitiatePosition extends CommandBase {
 
     @Override
     public void execute() {
-        pose = Utils.getRobotPoseFromX(OUTER_PORT_TO_LINE + BACK_BUMPER_TO_CENTER, 180);
+        pose = Utils.getRobotPoseFromX(OUTER_PORT_TO_LINE + BACK_BUMPER_TO_CENTER, rotationDegrees);
     }
 
     @Override

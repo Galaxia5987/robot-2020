@@ -67,7 +67,7 @@ public class TrenchPickup extends SequentialCommandGroup {
                 ),
                 new SequentialCommandGroup(
                         new WaitCommand(0.4),
-                        new InitiatePosition(drivetrain, toGenerate)
+                        new InitiatePosition(drivetrain, toGenerate, 180)
                 )
         ));
         addCommands(new WaitUntilCommand(toTrench::hasTrajectory));

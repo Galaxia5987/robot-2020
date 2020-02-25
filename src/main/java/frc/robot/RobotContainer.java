@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autonomous.ShootAndDriveBack;
+import frc.robot.autonomous.ShootAndDriveForward;
+import frc.robot.autonomous.ShootAndDriveToPickup;
 import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
@@ -31,12 +32,10 @@ import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurretSwitching;
-import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.ValueTuner;
@@ -137,7 +136,8 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         String autoMode = CustomDashboard.getSelectedMode();
         if(autoMode.equals("trenchPickup")) return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
-        else if(autoMode.equals("shootAndDriveBack")) return new ShootAndDriveBack(turret, shooter, drivetrain, conveyor);
+        else if(autoMode.equals("shootAndDriveToPickup")) return new ShootAndDriveToPickup(turret, shooter, drivetrain, conveyor);
+        else if(autoMode.equals("shootAndDriveForward")) return new ShootAndDriveForward(turret, shooter, drivetrain, conveyor);
         return null;
     }
 

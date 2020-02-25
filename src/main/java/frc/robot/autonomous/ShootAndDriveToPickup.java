@@ -17,11 +17,11 @@ import frc.robot.subsystems.turret.commands.VisionTurret;
 
 import java.util.Collections;
 
-public class ShootAndDriveBack extends SequentialCommandGroup {
+public class ShootAndDriveToPickup extends SequentialCommandGroup {
     public static final double SHOOT_TIME = 10;
-    public Path driveBack = new Path(new Pose2d(Units.feetToMeters(38.402), Units.feetToMeters(9.27), Rotation2d.fromDegrees(180)));
+    public Path driveBack = new Path(new Pose2d(Units.feetToMeters(36.864), Units.feetToMeters(17.398), Rotation2d.fromDegrees(180)));
 
-    public ShootAndDriveBack(Turret turret, Shooter shooter, Drivetrain drivetrain, Conveyor conveyor) {
+    public ShootAndDriveToPickup(Turret turret, Shooter shooter, Drivetrain drivetrain, Conveyor conveyor) {
         addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
                 new ParallelDeadlineGroup(
                         new WaitCommand(SHOOT_TIME),
@@ -29,7 +29,7 @@ public class ShootAndDriveBack extends SequentialCommandGroup {
                 ),
                 new SequentialCommandGroup(
                         new WaitCommand(0.4),
-                        new InitiatePosition(drivetrain, Collections.singletonList(driveBack))
+                        new InitiatePosition(drivetrain, Collections.singletonList(driveBack), 180)
                 )
         ));
         addCommands(new FollowPath(drivetrain, driveBack));
