@@ -10,12 +10,12 @@ public class Ports {
         public static final int FUNNEL = 19;
         public static final int MOTOR = 21;
         public static final boolean MOTOR_INVERTED = CONST(false);
-        public static final boolean FUNNEL_INVERTED = CONST(true);
-        public static final int SHOOTER_PROXIMITY = CONST(1);
+        public static final boolean FUNNEL_INVERTED = CONST(false);
+        public static final int SHOOTER_PROXIMITY = CONST(3);
         public static final int FORWARD_GATE = 5;
         public static final int REVERSE_GATE = 4;
         public static final int GATE = 0; // Port of the stopper solenoid.
-        public static final boolean IS_GATE_REVERSED = CONST(false);
+        public static final boolean IS_GATE_REVERSED = CONST(true);
     }
 
     public static final class Intake {
@@ -33,16 +33,16 @@ public class Ports {
         public static final int MASTER = 23;
         public static final int SLAVE_1 = 24;
         public static final int SLAVE_2 = 25;
-        public static final boolean IS_MASTER_INVERTED = CONST(false);
+        public static final boolean IS_MASTER_INVERTED = CONST(true);
         public static final boolean IS_SLAVE_1_INVERTED = CONST(true);
-        public static final boolean IS_SLAVE_2_INVERTED = CONST(true);
-        public static final boolean IS_ENCODER_INVERTED = CONST(true);
+        public static final boolean IS_SLAVE_2_INVERTED = CONST(false);
+        public static final boolean IS_ENCODER_INVERTED = CONST(false);
     }
 
     public static class Turret {
         public static final int MOTOR = 22;
-        public static final boolean IS_ENCODER_INVERTED = CONST(false);
-        public static final boolean IS_MOTOR_INVERTED = CONST(false);
+        public static final boolean IS_ENCODER_INVERTED = CONST(true);
+        public static final boolean IS_MOTOR_INVERTED = CONST(true);
 
         public static final boolean ENABLE_SOFT_LIMITS = CONST(true);
         public static final boolean DISABLE_SOFT_LIMITS_ON_DISCONNECT = CONST(true);
@@ -86,19 +86,10 @@ public class Ports {
 
 class BPorts{
     public static class Shooter {
-        public static final boolean IS_MASTER_INVERTED = true;
-        public static final boolean IS_SLAVE_1_INVERTED = true;
-        public static final boolean IS_SLAVE_2_INVERTED = false;
-        public static final boolean IS_ENCODER_INVERTED = false;
+
     }
-
-
+    
     public static class Turret {
-        public static final boolean IS_MOTOR_INVERTED = true;
-        public static final boolean IS_ENCODER_INVERTED = true;
-
-        public static final boolean ENABLE_SOFT_LIMITS = true;
-        public static final boolean DISABLE_SOFT_LIMITS_ON_DISCONNECT = true;
     }
 
     public static class Drivetrain {
@@ -108,9 +99,6 @@ class BPorts{
     }
 
     public static class Conveyor {
-        public static final boolean FUNNEL_INVERTED = false;
-        public static final boolean IS_GATE_REVERSED = true;
-        public static final int SHOOTER_PROXIMITY = 3;
 
     }
 

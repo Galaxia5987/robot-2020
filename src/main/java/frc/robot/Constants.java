@@ -25,9 +25,9 @@ public class Constants {
         public static final double HIGH_TICKS_PER_METER = 2048. * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
 
         // PID gains set for the velocity drive of the wheels.
-        public static final double KP = CONST(0);
+        public static final double KP = CONST(0.1);
         public static final double KI = CONST(0);
-        public static final double KD = CONST(0);
+        public static final double KD = CONST(0.1);
         public static final double KF = CONST(0);
 
         //Shifter enabled constants
@@ -44,12 +44,13 @@ public class Constants {
     public static class Autonomous {
         // Drivetrain characterization constants
 
-        public static final double leftkS = CONST(0.367);
-        public static final double leftkV = CONST(1.6);
-        public static final double leftkA = CONST(0.0527);
-        public static final double rightkS = CONST(0.361);
-        public static final double rightkV = CONST(1.59);
-        public static final double rightkA = CONST(0.0667);
+        public static final double leftkS = CONST(0.229);
+        public static final double leftkV = CONST(2.12);
+        public static final double leftkA = CONST(0.364);
+        public static final double rightkS = CONST( 0.234);
+        public static final double rightkV = CONST( 2.11);
+        public static final double rightkA = CONST(0.38);
+
         // Ramsete controller constants
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
@@ -88,7 +89,7 @@ public class Constants {
         public static final WebConstant FEED_OUTTAKE_POWER = new WebConstant("feedOuttakePower", 0.6);
         public static final double PULSE_INTERVAL = 0.1;
         public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.5);
-        public static final double CONVEYOR_FEED_POWER = 0.7;
+        public static final double CONVEYOR_FEED_POWER = 0.6;
         public static final double FUNNEL_INTAKE_POWER = 0.3;
         public static final double CONVEYOR_INTAKE_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
@@ -116,18 +117,18 @@ public class Constants {
         public static final int TICKS_PER_ROTATION = CONST(4096);
         public static final double TICKS_PER_DEGREE = CONST(TICKS_PER_ROTATION / 360.0);
 
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-42, 264);
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
 
         public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
-        public static final int ZERO_POSITION = CONST(1600); //Encoder absolute position when the turret is facing forward. This might change occasionally.
+        public static final int ZERO_POSITION = CONST(902); //Encoder absolute position when the turret is facing forward. This might change occasionally.
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 2;
 
         public static double KP = CONST(3.5);
         public static double KI = CONST(0.01);
-        public static double KD = CONST(180);
+        public static double KD = CONST(150);
         public static double KF = CONST(0);
 
         public static double ALLOWABLE_ERROR = 0.3;
@@ -241,30 +242,15 @@ class BConstants {
     }
 
     public static class Drivetrain {
-        public static final double KP = 0.1;
-        public static final double KI = 0;
-        public static final double KD = 0.1;
-        public static final double KF = 0;
     }
 
     public static class Autonomous {
-        // Drivetrain characterization constants
-        public static final double leftkS = 0.229;
-        public static final double leftkV = 2.12;
-        public static final double leftkA = 0.364;
-        public static final double rightkS = 0.234;
-        public static final double rightkV = 2.11;
-        public static final double rightkA = 0.38;
     }
 
     public static class Turret {
-        public static final double KD = 150;
-        public static final int ZERO_POSITION = 902;
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
     }
 
     public static class Conveyor {
-        public static final double CONVEYOR_FEED_POWER = 0.6;
     }
 
     public static class Shooter {
