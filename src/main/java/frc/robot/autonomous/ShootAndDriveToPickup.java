@@ -20,17 +20,7 @@ public class ShootAndDriveToPickup extends SequentialCommandGroup {
     public Path driveBack = new Path(new Pose2d(Units.feetToMeters(38.321), Units.feetToMeters(15.01), Rotation2d.fromDegrees(180)));
 
     public ShootAndDriveToPickup(Turret turret, Shooter shooter, Drivetrain drivetrain, Conveyor conveyor) {
-        addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
-                new ParallelDeadlineGroup(
-                        new WaitCommand(SHOOT_TIME),
-                        new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))
-                ),
-                new SequentialCommandGroup(
-                        new InstantCommand(() -> VisionModule.setLEDs(true)),
-                        new WaitCommand(1),
-                        new InitiatePosition(drivetrain, Collections.singletonList(driveBack), 180)
-                )
-        ));
+        addCommands(new ShootAndReset(turret, shooter, conveyor, drivetrain, Collections.emptyList(), SHOOT_TIME));
         addCommands(new FollowPath(drivetrain, driveBack));
     }
 
