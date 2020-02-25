@@ -136,8 +136,8 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         String autoMode = CustomDashboard.getSelectedMode();
-        if(autoMode.equals("trenchPickup")) new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
-        else if(autoMode.equals("shootAndDriveBack")) new ShootAndDriveBack(turret, shooter, drivetrain, conveyor);
+        if(autoMode.equals("trenchPickup")) return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
+        else if(autoMode.equals("shootAndDriveBack")) return new ShootAndDriveBack(turret, shooter, drivetrain, conveyor);
         return null;
     }
 
