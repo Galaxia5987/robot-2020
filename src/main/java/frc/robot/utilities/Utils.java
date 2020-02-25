@@ -137,7 +137,7 @@ public class Utils {
 
     public static Pose2d getRobotPoseFromX(double x, double rotationDegrees) {
         if (!VisionModule.targetSeen()) return null;
-        double relativeTurretAngle = (-RobotContainer.turret.getAngle() - VisionModule.getVisionAngle()) - rotationDegrees; //Turret angle and vision angle should be positive, but because the auto works counter clockwize, we flip the value.
+        double relativeTurretAngle = -(RobotContainer.turret.getAngle() + VisionModule.getVisionAngle()) - rotationDegrees; //Turret angle and vision angle should be positive, but because the auto works counter clockwize, we flip the value.
         Pose2d newPose = new Pose2d(
                 UtilityFunctions.getPortLocation(false).getTranslation().getX() - x,
                 UtilityFunctions.getPortLocation(false).getTranslation().getY() - Math.tan(Math.toRadians(relativeTurretAngle)) * x,

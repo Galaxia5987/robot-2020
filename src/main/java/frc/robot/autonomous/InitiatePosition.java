@@ -36,7 +36,6 @@ public class InitiatePosition extends CommandBase {
     public void execute() {
         pose = Utils.getRobotPoseFromX(OUTER_PORT_TO_LINE + BACK_BUMPER_TO_CENTER, rotationDegrees);
     }
-
     @Override
     public boolean isFinished() {
         return pose != null;
