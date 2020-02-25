@@ -25,17 +25,7 @@ public class ShootAndDriveForward extends SequentialCommandGroup {
     public Path driveBack = new Path(driveBackConfig, new Pose2d(Units.feetToMeters(47.937), Units.feetToMeters(2.933), Rotation2d.fromDegrees(180)));
 
     public ShootAndDriveForward(Turret turret, Shooter shooter, Drivetrain drivetrain, Conveyor conveyor) {
-        addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
-                new ParallelDeadlineGroup(
-                        new WaitCommand(SHOOT_TIME),
-                        new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))
-                ),
-                new SequentialCommandGroup(
-                        new InstantCommand(() -> VisionModule.setLEDs(true)),
-                        new WaitCommand(1),
-                        new InitiatePosition(drivetrain, Collections.singletonList(driveBack), 180)
-                )
-        ));
+        addCommands(new ShootAndReset(turret, shooter, conveyor, drivetrain, Collections.singletonList(driveBack), SHOOT_TIME));
         addCommands(new FollowPath(drivetrain, driveBack));
     }
 
