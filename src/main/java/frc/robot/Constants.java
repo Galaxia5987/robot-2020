@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
-    public static double BACK_BUMPER_TO_CENTER = 0.47; //TODO: Tune for real world
+    public static double BACK_BUMPER_TO_CENTER = 0.4895; //TODO: Tune for real world
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
