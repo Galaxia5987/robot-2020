@@ -2,6 +2,7 @@ package frc.robot.subsystems.led;
 
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 public class LEDUtilities {
@@ -15,7 +16,7 @@ public class LEDUtilities {
      *
      * @param colors list of pairs that maps between length to each color
      */
-    public static AddressableLEDBuffer setColorLengths(int strip_length, ImmutablePair<Integer, Color>... colors) {
+    public static AddressableLEDBuffer colorLengths(int strip_length, ImmutablePair<Integer, Color>... colors) {
         AddressableLEDBuffer colorsBuffer = new AddressableLEDBuffer(strip_length);
         int colorIndex = 0;
         int colorSum = 0;
@@ -69,10 +70,53 @@ public class LEDUtilities {
      *
      * @param color color to set the whole strip to
      */
-    public AddressableLEDBuffer singleColor(int strip_length, Color color) {
+    public static AddressableLEDBuffer singleColor(int strip_length, Color color) {
         AddressableLEDBuffer colorsBuffer = new AddressableLEDBuffer(strip_length);
         for(int i = 0; i < strip_length; i++)
             colorsBuffer.setLED(i,color);
         return colorsBuffer;
     }
+
+    public static AddressableLEDBuffer blendColors(int strip_length, boolean loop_hue, ImmutablePair<Integer, Color>... colors){
+        AddressableLEDBuffer colorsBuffer = new AddressableLEDBuffer(strip_length);
+        int b = 0;
+        for(int i = 0; i < strip_length; i++){
+            if(b >= colors.length) b = colors.length-1;
+            if(i >= colors[b].left)
+                b+=1;
+            if(loop_hue){
+                Color lastColor = colors[Math.floorMod(b - 1, colors.length)].right;
+                Color nextColor = colors[Math.floorMod(b, colors.length)].right;
+                int dist = Math.floorMod(colors[Math.floorMod(b, colors.length)].left - colors[Math.floorMod(b - 1, colors.length)].left, colors.length);
+                colorsBuffer.setLED(i, blend(lastColor, nextColor, dist, Math.floorMod(i + 1 - colors[Math.floorMod(b - 1, colors.length)].left, colors.length)));
+            }
+            else {
+                Color lastColor = colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].right;
+                Color nextColor = colors[MathUtil.clamp(b, 0, colors.length - 1)].right;
+                int dist = colors[MathUtil.clamp(b, 0, colors.length - 1)].left - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left;
+                colorsBuffer.setLED(i, blend(lastColor, nextColor, dist, i + 1 - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left));
+            }
+        }
+        return colorsBuffer;
+    }
+
+    private static Color blend(Color colorA, Color colorB, int dist, int current){
+        double p = current / ((double)dist - 1);
+        double r = colorA.red * (1 - p) + colorB.red * p;
+        double g = colorA.green * (1 - p) + colorB.green * p;
+        double b = colorA.blue * (1 - p) + colorB.blue * p;
+        return new Color(r,g,b);
+
+    }
+
+
+    public static String colorToString(Color color) {
+        return String.format("r: %s, g: %s, b: %s", color.red, color.green, color.blue);
+    }
+
+    public static void printBuffer(AddressableLEDBuffer buffer){
+        for(int i = 0; i < buffer.getLength(); i++)
+            System.out.println(colorToString(buffer.getLED(i)));
+    }
+
 }
