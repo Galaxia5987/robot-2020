@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.autonomous.ResetOnly;
 import frc.robot.autonomous.ShootAndDriveForward;
 import frc.robot.autonomous.ShootAndDriveToPickup;
 import frc.robot.autonomous.TrenchPickup;
@@ -128,6 +129,10 @@ public class RobotContainer {
         }
     }
 
+    public String[] getAutonomousModes() {
+        return new String[]{"trenchPickup", "shootAndDriveToPickup", "shootAndDriveForward", "resetOnly"};
+    }
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
@@ -135,9 +140,16 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         String autoMode = CustomDashboard.getSelectedMode();
-        if(autoMode.equals("trenchPickup")) return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
-        else if(autoMode.equals("shootAndDriveToPickup")) return new ShootAndDriveToPickup(turret, shooter, drivetrain, conveyor);
-        else if(autoMode.equals("shootAndDriveForward")) return new ShootAndDriveForward(turret, shooter, drivetrain, conveyor);
+        switch (autoMode) {
+            case "trenchPickup":
+                return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
+            case "shootAndDriveToPickup":
+                return new ShootAndDriveToPickup(turret, shooter, drivetrain, conveyor);
+            case "shootAndDriveForward":
+                return new ShootAndDriveForward(turret, shooter, drivetrain, conveyor);
+            case "resetOnly":
+                return new ResetOnly(drivetrain, turret);
+        }
         return null;
     }
 

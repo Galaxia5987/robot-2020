@@ -61,14 +61,17 @@ public class Robot extends TimedRobot {
             Utils.swapConstants(Constants.class, BConstants.class);
             Utils.swapConstants(Ports.class, BPorts.class);
         }
-        CustomDashboard.setAutonomousModes(new String[]{"trenchPickup", "shootAndDriveToPickup", "shootAndDriveForward"});
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        TrajectoryLoader.loadTrajectories();
         robotTimer.reset();
         robotTimer.start();
+
         m_robotContainer = new RobotContainer();
+        TrajectoryLoader.loadTrajectories();
+        CustomDashboard.setAutonomousModes(m_robotContainer.getAutonomousModes());
+
 //        compressor.stop();
+
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
 
