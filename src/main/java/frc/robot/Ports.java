@@ -84,6 +84,7 @@ public class Ports {
     }
 }
 
+//These are the constants for the practice robot, which is not used for competitions.
 class APorts {
     public static class Shooter {
 

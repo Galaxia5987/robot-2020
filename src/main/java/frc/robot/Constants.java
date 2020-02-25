@@ -233,7 +233,7 @@ public class Constants {
 }
 
 
-//Anything in this class will replace the original constants when boolean is true
+//These are the constants for the practice robot, which is not used for competitions.
 class AConstants {
     //General constants to be replaced
 
