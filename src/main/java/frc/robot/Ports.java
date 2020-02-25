@@ -87,8 +87,8 @@ public class Ports {
 class BPorts{
     public static class Shooter {
         public static final boolean IS_MASTER_INVERTED = true;
-        public static final boolean IS_SLAVE_1_INVERTED = false;
-        public static final boolean IS_SLAVE_2_INVERTED = true;
+        public static final boolean IS_SLAVE_1_INVERTED = true;
+        public static final boolean IS_SLAVE_2_INVERTED = false;
         public static final boolean IS_ENCODER_INVERTED = false;
     }
 
