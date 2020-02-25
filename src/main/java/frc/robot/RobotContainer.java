@@ -61,7 +61,7 @@ public class RobotContainer {
     private final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
     public static final Turret turret = new Turret();
-    private final LED led = new LED(STRIP_LENGTH);
+    private static final LED led = new LED(STRIP_LENGTH);
     private final Command m_autoCommand = null;
 
     /**
