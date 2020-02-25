@@ -97,7 +97,7 @@ public class RobotContainer {
         OI.start.toggleWhenPressed(new PositionControl(colorWheel));
         OI.ls.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(0.7),
-                new ResetLocalization(drivetrain, turret)
+                new ResetLocalization(drivetrain)
         ));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
