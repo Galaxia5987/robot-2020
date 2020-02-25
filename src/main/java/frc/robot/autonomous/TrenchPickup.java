@@ -66,7 +66,8 @@ public class TrenchPickup extends SequentialCommandGroup {
                         new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))
                 ),
                 new SequentialCommandGroup(
-                        new WaitCommand(0.4),
+                        new InstantCommand(() -> VisionModule.setLEDs(true)),
+                        new WaitCommand(1),
                         new InitiatePosition(drivetrain, toGenerate, 180)
                 )
         ));

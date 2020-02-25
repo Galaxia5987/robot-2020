@@ -66,8 +66,9 @@ public class Robot extends TimedRobot {
         robotTimer.reset();
         robotTimer.start();
 
-        m_robotContainer = new RobotContainer();
         TrajectoryLoader.loadTrajectories();
+
+        m_robotContainer = new RobotContainer();
         CustomDashboard.setAutonomousModes(m_robotContainer.getAutonomousModes());
 
 //        compressor.stop();
