@@ -86,11 +86,32 @@ public class Ports {
 
 //These are the constants for the practice robot, which is not used for competitions.
 class APorts {
-    public static class Shooter {
 
+    public static class Conveyor {
+        public static final boolean MOTOR_INVERTED = true;
+        public static final boolean FUNNEL_INVERTED = false;
+        public static final boolean IS_GATE_REVERSED = false;
     }
 
     public static class Turret {
+
+        public static final boolean IS_MOTOR_INVERTED = false;
+        public static final boolean IS_ENCODER_INVERTED = false;
+
+        public static final boolean ENABLE_SOFT_LIMITS = true;
+        public static final boolean DISABLE_SOFT_LIMITS_ON_DISCONNECT = true;
+    }
+
+    public static class Intake {
+        public static final boolean MOTOR_INVERTED = false;
+        public static final boolean IS_FORWARD_OPEN = true;
+    }
+
+    public static class Shooter {
+        public static final boolean IS_MASTER_INVERTED = false;
+        public static final boolean IS_SLAVE_1_INVERTED = true;
+        public static final boolean IS_SLAVE_2_INVERTED = true;
+        public static final boolean IS_ENCODER_INVERTED = true;
     }
 
     public static class Drivetrain {
@@ -99,11 +120,13 @@ class APorts {
     public static class ColorWheel {
     }
 
-    public static class Conveyor {
-
-    }
 
     public static class Climber {
+        public static final boolean LEFT_MOTOR_INVERTED = false;
+        public static final boolean RIGHT_MOTOR_INVERTED = true;
+        public static final boolean LEFT_ENCODER_INVERTED = true;
+        public static final boolean RIGHT_ENCODER_INVERTED = true;
+        public static final boolean IS_STOPPER_REVERSED = false;
     }
 }
 
