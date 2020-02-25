@@ -87,7 +87,7 @@ public class Shooter extends SubsystemBase {
      */
     public double approximateVelocity(double distance) {
         distance = MathUtil.clamp(distance, 1.4, 11); //The camera can't really see beyond these distances, which means they are most likely erroneous.
-        return MathUtil.clamp( .0126*Math.pow(distance, 6) - 0.4254*Math.pow(distance, 5) + 5.8314*Math.pow(distance, 4) - 41.255*Math.pow(distance, 3) + 158.28*Math.pow(distance, 2) - 307.09*distance + 296.76
+        return MathUtil.clamp( .0755*Math.pow(distance, 4) - 1.38254*Math.pow(distance, 3) + 8.6493*Math.pow(distance, 2) - 16.905*distance + 71.998
                 ,50,120); //Prevent the shooter from speeding up too much, and from not activating.
 }
 

@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
-    public static double BACK_BUMPER_TO_CENTER = 0.42; //TODO: Tune for real world
+    public static double BACK_BUMPER_TO_CENTER = 0.47; //TODO: Tune for real world
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
@@ -38,7 +38,7 @@ public class Constants {
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
 
-        public static final double JOYSTICK_MIN_THRESHOLD = 0.08;
+        public static final double JOYSTICK_MIN_THRESHOLD = 0.04;
     }
 
     public static class Autonomous {
@@ -69,7 +69,7 @@ public class Constants {
     public static class FieldGeometry {
         public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d());
         public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d());
-        public static final double OUTER_PORT_TO_LINE = 1.92; //TODO: Tune for real world
+        public static final double OUTER_PORT_TO_LINE = 2.28; //TODO: Tune for real world
 //        public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
 //        public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
 
@@ -117,7 +117,7 @@ public class Constants {
         public static final double TICKS_PER_DEGREE = CONST(TICKS_PER_ROTATION / 360.0);
 
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-42, 264);
-        public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
+        public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(38, 86);
 
         public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
         public static final int ZERO_POSITION = CONST(1600); //Encoder absolute position when the turret is facing forward. This might change occasionally.
@@ -151,7 +151,7 @@ public class Constants {
         public static final int PEAK_DURATION = 100;
 
 
-        public static final double ANGLE_THRESHOLD = 1;
+        public static final double ANGLE_THRESHOLD = 0.5;
 
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
         public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
@@ -268,10 +268,6 @@ class BConstants {
     }
 
     public static class Shooter {
-        public static final double KP = 2;
-        public static final double KI = 0.0;
-        public static final double KD = 20;
-        public static final double KF = 0.014;
     }
 
 }

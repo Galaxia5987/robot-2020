@@ -33,7 +33,7 @@ public class VisionTurret extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return end && turret.isTurretReady();
+        return end && Math.abs(VisionModule.getVisionAngle()) < ANGLE_THRESHOLD;
     }
 
     @Override

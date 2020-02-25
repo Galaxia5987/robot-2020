@@ -17,6 +17,7 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.PoseVisionTurret;
 import frc.robot.subsystems.turret.commands.VisionTurret;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VisionModule;
 
 import java.util.ArrayList;
@@ -60,16 +61,7 @@ public class TrenchPickup extends SequentialCommandGroup {
     private final List<Path> toGenerate = new ArrayList<>(Collections.singletonList(toTrench));
 
     public TrenchPickup(Shooter shooter, Conveyor conveyor, Turret turret, Drivetrain drivetrain, Intake intake) {
-        addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
-                new ParallelDeadlineGroup(
-                        new WaitCommand(SHOOT_TIME),
-                        new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))
-                ),
-                new SequentialCommandGroup(
-                        new WaitCommand(0.4),
-                        new InitiatePosition(drivetrain, toGenerate)
-                )
-        ));
+        addCommands(new ShootAndReset(turret, shooter, conveyor, drivetrain, toGenerate, SHOOT_TIME));
         addCommands(new WaitUntilCommand(toTrench::hasTrajectory));
         addCommands(new ParallelDeadlineGroup( // Drive to trench area and pick up balls with intake
                 new SequentialCommandGroup(

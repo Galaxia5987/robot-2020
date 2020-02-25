@@ -21,6 +21,7 @@ public class CustomDashboard extends SubsystemBase {
     private static NetworkTableEntry turretReady = table.getEntry("turretReady");
     private static NetworkTableEntry ballCount = table.getEntry("ballsCount");
     private static NetworkTableEntry time = table.getEntry("time");
+    private static NetworkTableEntry autoDelay = table.getEntry("autoDelay");
 
     //Booleans
     private static NetworkTableEntry climb = booleans.getEntry("climb");
@@ -83,6 +84,10 @@ public class CustomDashboard extends SubsystemBase {
 
     public static void setTurretAngle(double angle) {
         turretAngle.setDouble(angle);
+    }
+
+    public static double getAutoDelay() {
+        return autoDelay.getDouble(0);
     }
 
     public static String getSelectedMode() {

@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autonomous.ShootAndDriveBack;
+import frc.robot.autonomous.ResetOnly;
+import frc.robot.autonomous.ShootAndDriveForward;
+import frc.robot.autonomous.ShootAndDriveToPickup;
 import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
@@ -28,15 +30,14 @@ import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.GearShift;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
+import frc.robot.subsystems.drivetrain.commands.ResetLocalization;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurretSwitching;
-import frc.robot.subsystems.turret.commands.VisionTurret;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.ValueTuner;
@@ -94,6 +95,10 @@ public class RobotContainer {
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
         OI.start.toggleWhenPressed(new PositionControl(colorWheel));
+        OI.ls.whenHeld(new SequentialCommandGroup(
+                new WaitCommand(0.7),
+                new ResetLocalization(drivetrain)
+        ));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
@@ -129,6 +134,10 @@ public class RobotContainer {
         }
     }
 
+    public String[] getAutonomousModes() {
+        return new String[]{"trenchPickup", "shootAndDriveToPickup", "shootAndDriveForward", "resetOnly"};
+    }
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
@@ -136,8 +145,16 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         String autoMode = CustomDashboard.getSelectedMode();
-        if(autoMode.equals("trenchPickup")) return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
-        else if(autoMode.equals("shootAndDriveBack")) return new ShootAndDriveBack(turret, shooter, drivetrain, conveyor);
+        switch (autoMode) {
+            case "trenchPickup":
+                return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
+            case "shootAndDriveToPickup":
+                return new ShootAndDriveToPickup(turret, shooter, drivetrain, conveyor);
+            case "shootAndDriveForward":
+                return new ShootAndDriveForward(turret, shooter, drivetrain, conveyor);
+            case "resetOnly":
+                return new ResetOnly(drivetrain, turret);
+        }
         return null;
     }
 
