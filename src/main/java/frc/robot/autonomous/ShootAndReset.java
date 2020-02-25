@@ -16,9 +16,9 @@ import java.util.List;
 public class ShootAndReset extends ParallelCommandGroup {
 
     public ShootAndReset(Turret turret, Shooter shooter, Conveyor conveyor, Drivetrain drivetrain, List<Path> toGenerate, double shootTime) {
+        addCommands(new AutoDelay());
         addCommands(new ParallelCommandGroup( // Initiate position while shooting balls
                 new SequentialCommandGroup(
-                        new AutoDelay(),
                         new ParallelDeadlineGroup(
                                 new WaitCommand(shootTime),
                                 new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))
@@ -26,7 +26,6 @@ public class ShootAndReset extends ParallelCommandGroup {
                 ),
                 new SequentialCommandGroup(
                         new InstantCommand(() -> VisionModule.setLEDs(true)),
-                        new ConditionalCommand(null, new VisionTurret(turret, true), () -> CustomDashboard.getAutoDelay() > 0),
                         new WaitCommand(1),
                         new InitiatePosition(drivetrain, toGenerate, 180)
                 )
