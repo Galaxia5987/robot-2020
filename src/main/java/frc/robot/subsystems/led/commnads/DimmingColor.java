@@ -29,7 +29,6 @@ public class DimmingColor extends CommandBase {
 
     @Override
     public void execute() {
-        led.setWholeStrip(color);
     }
 
     @Override

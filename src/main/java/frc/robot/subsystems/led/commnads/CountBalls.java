@@ -35,11 +35,6 @@ public class CountBalls extends CommandBase {
     @Override
     public void execute() {
         if (true){
-            led.setColorRatios(
-                    new ImmutablePair<Double, Color>(1 - (ballCount.get() / 10.), Color.kBlack),
-                    new ImmutablePair<Double, Color>((ballCount.get() / 5.), Color.kYellow),
-                    new ImmutablePair<Double, Color>(1 - (ballCount.get() / 10.), Color.kBlack)
-            );
         }
     }
 

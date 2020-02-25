@@ -51,8 +51,6 @@ public class BlinkColor extends CommandBase {
 
     @Override
     public void initialize() {
-        timer.start();
-        led.setWholeStrip(color);
     }
 
     @Override
@@ -60,7 +58,6 @@ public class BlinkColor extends CommandBase {
         if (timer.hasPeriodPassed(period)) {
             // Switch between showing the color or turning the LED strip off, to make a blink effect.
             currentColor = currentColor == Color.kBlack ? color : Color.kBlack;
-            led.setWholeStrip(currentColor);
             blinksDone++;
         }
     }
