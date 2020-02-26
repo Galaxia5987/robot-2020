@@ -178,12 +178,14 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
+
+        m_rainbowFirstPixelHue += 3;
+        m_rainbowFirstPixelHue %= 180;
+
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setHSV(i, (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180, 255, 128);
         }
 
-        m_rainbowFirstPixelHue += 3;
-        m_rainbowFirstPixelHue %= 180;
         m_led.setData(m_ledBuffer);
     }
 
@@ -204,6 +206,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        m_rainbowFirstPixelHue += 3;
+        m_rainbowFirstPixelHue %= 30;
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             int hue = (m_rainbowFirstPixelHue + (i * 60 / m_ledBuffer.getLength())) % 30;
             int a;
@@ -225,8 +229,6 @@ public class Robot extends TimedRobot {
 
         }
 
-        m_rainbowFirstPixelHue += 3;
-        m_rainbowFirstPixelHue %= 30;
         m_led.setData(m_ledBuffer);
     }
 
