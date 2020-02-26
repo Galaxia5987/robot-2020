@@ -123,49 +123,7 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
 
-        rainbow();
-        m_led.setData(m_ledBuffer);
-    }
 
-    private void rainbow() {
-        // For every pixel
-        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            // Calculate the hue - hue is easier for rainbows because the color
-            // shape is a circle so only one value needs to precess
-            int hue;
-            int a;
-            hue = (m_rainbowFirstPixelHue + (i * 60 / m_ledBuffer.getLength())) % 30;
-
-            if (m_robotContainer.shooter.isShooterReady() && m_robotContainer.shooter.getSpeed() > 5) {
-                a = 100;
-            } else if (m_robotContainer.turret.isTurretReady() && VisionModule.leds.getBoolean(true)) {
-                a = 20;
-            } else if (VisionModule.leds.getBoolean(true)){
-                a = 50;
-            }
-            else{
-                a=-1;
-            }
-
-
-            if(DriverStation.getInstance().isAutonomous())
-            {
-                a=0;
-                hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
-            }
-            if(a == -1 || DriverStation.getInstance().isDisabled())
-                m_ledBuffer.setHSV(i, 0,0,0);
-            else
-                m_ledBuffer.setHSV(i, hue + a, 255, 128);
-
-        }
-        // Increase by to make the rainbow "move"
-        m_rainbowFirstPixelHue += 3;
-        // Check bounds
-        if(DriverStation.getInstance().isAutonomous())
-            m_rainbowFirstPixelHue %= 180;
-        else
-            m_rainbowFirstPixelHue %= 30;
     }
 
     /**
@@ -199,6 +157,13 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            m_ledBuffer.setHSV(i, (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180, 255, 128);
+        }
+
+        m_rainbowFirstPixelHue += 3;
+        m_rainbowFirstPixelHue %= 180;
+        m_led.setData(m_ledBuffer);
     }
 
     @Override
@@ -218,6 +183,30 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            int hue = (m_rainbowFirstPixelHue + (i * 60 / m_ledBuffer.getLength())) % 30;
+            int a;
+
+            if (m_robotContainer.shooter.isShooterReady() && m_robotContainer.shooter.getSpeed() > 5) {
+                a = 100;
+            } else if (m_robotContainer.turret.isTurretReady() && VisionModule.leds.getBoolean(true)) {
+                a = 20;
+            } else if (VisionModule.leds.getBoolean(true)){
+                a = 50;
+            }
+            else{
+                a = -1;
+            }
+            if(a != -1)
+                m_ledBuffer.setHSV(i, hue + a, 255, 128);
+            else
+                m_ledBuffer.setHSV(i, 0, 0, 0);
+
+        }
+
+        m_rainbowFirstPixelHue += 3;
+        m_rainbowFirstPixelHue %= 30;
+        m_led.setData(m_ledBuffer);
     }
 
     @Override
