@@ -185,7 +185,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        turret.setAngle(turret.getAngle());
+        turret.setPower(0);
         m_robotContainer.drivetrain.setBrake(true);
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
         // schedule the autonomous command (example)
