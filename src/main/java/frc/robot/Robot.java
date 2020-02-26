@@ -209,6 +209,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
 
+        //Toggle on the left arrow to start and reset the timer
         if(OI.povl.get() && !povl_last){
             if(climb_leds.get() == 0){ //hasn't started already
                 climb_leds.reset();
@@ -220,12 +221,14 @@ public class Robot extends TimedRobot {
             }
         }
 
+        //This is a value which allows the colors to race around the robot.
         m_rainbowFirstPixelHue += 3;
         m_rainbowFirstPixelHue %= 30;
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             int hue = (m_rainbowFirstPixelHue + (i * 60 / m_ledBuffer.getLength())) % 30;
             int a;
 
+            //The order goes like this: Are we climbing? Is the shooter ready? Is the turret ready? are the LED's on?
             if (m_robotContainer.shooter.isShooterReady() && m_robotContainer.shooter.getSpeed() > 5) {
                 a = 100;
             } else if (m_robotContainer.turret.isTurretReady() && VisionModule.leds.getBoolean(true)) {
