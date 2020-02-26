@@ -16,7 +16,7 @@ import frc.robot.utilities.VisionModule;
 import java.util.Collections;
 
 public class ShootAndDriveToPickup extends SequentialCommandGroup {
-    public static final double SHOOT_TIME = 10;
+    public static final double SHOOT_TIME = 8;
     public Path driveBack = new Path(new Pose2d(Units.feetToMeters(38.321), Units.feetToMeters(15.01), Rotation2d.fromDegrees(180)));
 
     public ShootAndDriveToPickup(Turret turret, Shooter shooter, Drivetrain drivetrain, Conveyor conveyor) {
