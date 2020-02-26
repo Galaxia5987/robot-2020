@@ -242,7 +242,7 @@ public class Robot extends TimedRobot {
 
             if(climb_leds.get() != 0){ //climbing code
                 if(climb_leds.get()>=3)
-                    m_ledBuffer.setHSV(i, m_rainbowFirstPixelHue, 255, 255); //in the hue i put something random, thats when climb is done
+                    m_ledBuffer.setHSV(i, 60*m_rainbowFirstPixelHue, 255, 255); //TODO: the hue is rainbows, find something cool or leave it
                 else {
                     int climb_hue = (int) (100 - 45 * Math.floor(climb_leds.get()));
                     m_ledBuffer.setHSV(i, climb_hue, 255, (int) (55 + 200 * (1 - climb_leds.get() % 1))); //fade the color along with the timer
@@ -251,7 +251,7 @@ public class Robot extends TimedRobot {
             else if(a != -1)
                 m_ledBuffer.setHSV(i, hue + a, 255, 128);
             else
-                m_ledBuffer.setHSV(i, 0, 0, 0);
+                m_ledBuffer.setHSV(i, 0, 0, 0); //TODO: have something idle run when nothing is happening if youd like.
 
         }
         povl_last = OI.povl.get();
