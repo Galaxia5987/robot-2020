@@ -19,7 +19,6 @@ import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
 
-import static frc.robot.RobotContainer.navx;
 import static frc.robot.RobotContainer.turret;
 
 
@@ -41,7 +40,8 @@ public class Robot extends TimedRobot {
     private RobotContainer m_robotContainer;
 
     private boolean povl_last = false;
-    private Timer climb_leds = new Timer();
+    private Timer climb_leds_timer = new Timer();
+    private Timer shift_leds_timer = new Timer();
     private AddressableLED m_led;
     private AddressableLEDBuffer m_ledBuffer;
     // Store what the last hue of the first pixel is
@@ -211,13 +211,13 @@ public class Robot extends TimedRobot {
 
         //Toggle on the left arrow to start and reset the timer
         if(OI.povl.get() && !povl_last){
-            if(climb_leds.get() == 0){ //hasn't started already
-                climb_leds.reset();
-                climb_leds.start();
+            if(climb_leds_timer.get() == 0){ //hasn't started already
+                climb_leds_timer.reset();
+                climb_leds_timer.start();
             }
             else{//already on
-                climb_leds.stop();
-                climb_leds.reset();
+                climb_leds_timer.stop();
+                climb_leds_timer.reset();
             }
         }
 
@@ -240,12 +240,12 @@ public class Robot extends TimedRobot {
                 a = -1;
             }
 
-            if(climb_leds.get() != 0){ //climbing code
-                if(climb_leds.get()>=3)
+            if(climb_leds_timer.get() != 0){ //climbing code
+                if(climb_leds_timer.get()>=3)
                     m_ledBuffer.setHSV(i, 60*m_rainbowFirstPixelHue, 255, 255); //TODO: the hue is rainbows, find something cool or leave it
                 else {
-                    int climb_hue = (int) (100 - 45 * Math.floor(climb_leds.get()));
-                    m_ledBuffer.setHSV(i, climb_hue, 255, (int) (55 + 200 * (1 - climb_leds.get() % 1))); //fade the color along with the timer
+                    int climb_hue = (int) (100 - 45 * Math.floor(climb_leds_timer.get()));
+                    m_ledBuffer.setHSV(i, climb_hue, 255, (int) (55 + 200 * (1 - climb_leds_timer.get() % 1))); //fade the color along with the timer
                 }
             }
             else if(a != -1)
@@ -256,6 +256,8 @@ public class Robot extends TimedRobot {
         }
         povl_last = OI.povl.get();
         m_led.setData(m_ledBuffer);
+
+        if()
     }
 
     @Override
