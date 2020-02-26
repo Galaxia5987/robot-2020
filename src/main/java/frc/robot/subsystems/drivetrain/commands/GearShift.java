@@ -9,6 +9,7 @@ package frc.robot.subsystems.drivetrain.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -36,6 +37,7 @@ public class GearShift extends InstantCommand {
     @Override
     public void initialize() {
         drivetrain.shiftGear(shiftmode);
+      Robot.shift_leds_timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.

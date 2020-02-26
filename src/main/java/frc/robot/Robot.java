@@ -41,6 +41,8 @@ public class Robot extends TimedRobot {
 
     private boolean povl_last = false;
     private Timer climb_leds_timer = new Timer();
+    public static Timer shift_leds_timer = new Timer();
+
     private AddressableLED m_led;
     private AddressableLEDBuffer m_ledBuffer;
     // Store what the last hue of the first pixel is
@@ -247,14 +249,36 @@ public class Robot extends TimedRobot {
                     m_ledBuffer.setHSV(i, climb_hue, 255, (int) (55 + 200 * (1 - climb_leds_timer.get() % 1))); //fade the color along with the timer
                 }
             }
-            else if(a != -1)
+            else if(a != -1) {
+                if(shift_leds_timer.get() != 0 && i%6 < 2) //6 and 2 are the amount of stripes and their width when shifting
+                {
+                    if(m_robotContainer.drivetrain.isShiftedHigh())
+                        m_ledBuffer.setHSV(i, 100, 255, 80); //the high color
+                    else
+                        m_ledBuffer.setHSV(i, 0, 255, 80); //the high color
+                }
+                else
                 m_ledBuffer.setHSV(i, hue + a, 255, 128);
-            else
+            }
+            else {
+                if(shift_leds_timer.get() != 0 && i%6 < 2) //6 and 2 are the amount of stripes and their width when shifting
+                {
+                    if(m_robotContainer.drivetrain.isShiftedHigh())
+                        m_ledBuffer.setHSV(i, 100, 255, 80); //the high color
+                    else
+                        m_ledBuffer.setHSV(i, 0, 255, 80); //the high color
+                }
+                else
                 m_ledBuffer.setHSV(i, 0, 0, 0); //TODO: have something idle run when nothing is happening if youd like.
-
+            }
         }
         povl_last = OI.povl.get();
         m_led.setData(m_ledBuffer);
+
+        if(shift_leds_timer.get() >= 1){
+            shift_leds_timer.stop();
+            shift_leds_timer.reset();
+        }
     }
 
     @Override
