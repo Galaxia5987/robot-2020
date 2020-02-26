@@ -136,6 +136,27 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+
+        m_rainbowFirstPixelHue += 10;
+        m_rainbowFirstPixelHue %= 360;
+        int hue;
+        switch(DriverStation.getInstance().getAlliance()){
+            case Red:
+                hue = 0;
+                break;
+            case Blue:
+                hue = 122;
+                break;
+            default:
+                hue = 95;
+
+        }
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            m_ledBuffer.setHSV(i, hue, 255, 30 + (int)(60*(Math.sin(Math.toRadians(m_rainbowFirstPixelHue))+1)/2));
+        }
+
+        m_led.setData(m_ledBuffer);
+
     }
 
     /**
