@@ -46,7 +46,7 @@ public class TrenchPickup extends SequentialCommandGroup {
 
     public Path pickupBalls = new Path(
             pickupBallsConfig,
-            new Pose2d(Units.feetToMeters(27), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(26.5), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
     private static final TrajectoryConfig toShootingConfig =
