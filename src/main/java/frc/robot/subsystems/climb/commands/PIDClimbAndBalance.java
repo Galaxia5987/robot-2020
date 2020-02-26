@@ -8,6 +8,7 @@
 package frc.robot.subsystems.climb.commands;
 
 import com.stormbots.MiniPID;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -94,7 +95,11 @@ public class PIDClimbAndBalance extends CommandBase {
         if (!climber.isStopperEngaged()) {
             climber.setLeftHeight(leftSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD);
             climber.setRightHeight(rightSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD);
-        } else {
+        }
+        else if(DriverStation.getInstance().getMatchTime() <= 1) {
+            climber.engageStopper();
+        }
+        else {
             climber.releaseStopper();
         }
     }
