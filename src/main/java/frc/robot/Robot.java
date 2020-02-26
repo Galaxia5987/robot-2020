@@ -77,7 +77,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
 
-        PortForwarder.add(8888, "10.59.87.7", 8000);
+        PortForwarder.add(1181, "10.59.87.7", 1181);
+        PortForwarder.add(8888, "10.59.87.7", 5800);
+        PortForwarder.add(8887, "10.59.87.7", 22);
 
         //Disable live window for more loop time
         LiveWindow.setEnabled(false);
