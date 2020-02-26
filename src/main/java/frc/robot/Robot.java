@@ -41,7 +41,6 @@ public class Robot extends TimedRobot {
 
     private boolean povl_last = false;
     private Timer climb_leds_timer = new Timer();
-    private Timer shift_leds_timer = new Timer();
     private AddressableLED m_led;
     private AddressableLEDBuffer m_ledBuffer;
     // Store what the last hue of the first pixel is
@@ -256,8 +255,6 @@ public class Robot extends TimedRobot {
         }
         povl_last = OI.povl.get();
         m_led.setData(m_ledBuffer);
-
-        if()
     }
 
     @Override
