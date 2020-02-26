@@ -40,6 +40,8 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
 
+    private boolean povl_last = false;
+    private Timer climb_leds = new Timer();
     private AddressableLED m_led;
     private AddressableLEDBuffer m_ledBuffer;
     // Store what the last hue of the first pixel is
@@ -206,6 +208,18 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+
+        if(OI.povl.get() && !povl_last){
+            if(climb_leds.get() == 0){ //hasn't started already
+                climb_leds.reset();
+                climb_leds.start();
+            }
+            else{//already on
+                climb_leds.stop();
+                climb_leds.reset();
+            }
+        }
+
         m_rainbowFirstPixelHue += 3;
         m_rainbowFirstPixelHue %= 30;
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
@@ -222,13 +236,22 @@ public class Robot extends TimedRobot {
             else{
                 a = -1;
             }
-            if(a != -1)
+
+            if(climb_leds.get() != 0){ //climbing code
+                if(climb_leds.get()>=3)
+                    m_ledBuffer.setHSV(i, m_rainbowFirstPixelHue, 255, 255); //in the hue i put something random, thats when climb is done
+                else {
+                    int climb_hue = (int) (100 - 45 * Math.floor(climb_leds.get()));
+                    m_ledBuffer.setHSV(i, climb_hue, 255, (int) (55 + 200 * (1 - climb_leds.get() % 1))); //fade the color along with the timer
+                }
+            }
+            else if(a != -1)
                 m_ledBuffer.setHSV(i, hue + a, 255, 128);
             else
                 m_ledBuffer.setHSV(i, 0, 0, 0);
 
         }
-
+        povl_last = OI.povl.get();
         m_led.setData(m_ledBuffer);
     }
 
