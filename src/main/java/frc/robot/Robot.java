@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpiutil.net.PortForwarder;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.Utils;
@@ -76,9 +77,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
 
-        SmartDashboard.putData(CommandScheduler.getInstance());
-        SmartDashboard.putData(pdp);
-        SmartDashboard.putData(navx);
+        PortForwarder.add(8888, "10.59.87.7", 8000);
 
         //Disable live window for more loop time
         LiveWindow.setEnabled(false);
