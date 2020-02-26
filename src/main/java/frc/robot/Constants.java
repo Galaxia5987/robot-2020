@@ -220,7 +220,7 @@ public class Constants {
 
         public static final double RAMP_RATE = 0;
 
-        public static final double CLIMB_HEIGHT = 0.5;
+        public static final double CLIMB_HEIGHT = 0.65;
         public static final double SIMPLE_CLIMB_HEIGHT = 0.4;
 
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0.05; // The allowed tolerance between the current height to the desired height.
