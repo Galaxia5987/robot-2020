@@ -17,6 +17,7 @@ import frc.robot.autonomous.ShootAndDriveForward;
 import frc.robot.autonomous.ShootAndDriveToPickup;
 import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
+import frc.robot.commandgroups.ProportionalPickup;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.commands.PIDClimbAndBalance;
 import frc.robot.subsystems.climb.commands.ReleaseRods;
@@ -92,6 +93,7 @@ public class RobotContainer {
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
         OI.b.toggleWhenPressed(new SpeedUp(shooter, drivetrain));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
+        OI.rt.whileHeld(new ProportionalPickup(intake, conveyor, drivetrain));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
         OI.start.toggleWhenPressed(new PositionControl(colorWheel));
