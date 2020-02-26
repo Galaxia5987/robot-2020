@@ -79,8 +79,8 @@ public class Constants {
     public static final class Intake {
         public static final double INTAKE_POWER = 0.65;
         public static final double OUTTAKE_POWER = 0.2;
-        public static final WebConstant PROPORTIONAL_INTAKE_VALUE = new WebConstant("intakeP", 0.43333);
-
+        public static final WebConstant PROPORTIONAL_INTAKE_VALUE = new WebConstant("intakeProportional", 0.165);
+        public static final WebConstant INTAKE_CONSTANT_VALUE = new WebConstant("intakeConstant", 0.4)
     }
 
     public static class Conveyor {
