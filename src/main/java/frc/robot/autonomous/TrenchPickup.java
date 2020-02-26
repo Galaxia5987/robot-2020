@@ -28,8 +28,8 @@ import static frc.robot.Constants.Autonomous.*;
 
 public class TrenchPickup extends SequentialCommandGroup {
     private static final double INTAKE_WAIT = 1.2;
-    private static final double SHOOT_TIME = 4;
-    private static final double PICKUP_SPEED = 1.5;
+    private static final double SHOOT_TIME = 4.5;
+    private static final double PICKUP_SPEED = 1;
 
     private static final TrajectoryConfig toTrenchConfig =
             new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION)
@@ -46,12 +46,11 @@ public class TrenchPickup extends SequentialCommandGroup {
 
     public Path pickupBalls = new Path(
             pickupBallsConfig,
-            new Pose2d(Units.feetToMeters(27.669), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(27), Units.feetToMeters(2.199), Rotation2d.fromDegrees(180))
     );
 
     private static final TrajectoryConfig toShootingConfig =
-            new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION).setReversed(true)
-                    .addConstraint(new CentripetalAccelerationConstraint(MAX_CENTRIPETAL_ACCELERATION));
+            new TrajectoryConfig(3.5, 2.5).setReversed(true);
 
     public Path toShooting = new Path(
             toShootingConfig,
