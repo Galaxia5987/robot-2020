@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
      * @return Robot in debug mode
      */
     private static boolean isDebug() {
-        return true;
+        return false;
     }
 
     /**
