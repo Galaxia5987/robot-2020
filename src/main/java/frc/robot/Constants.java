@@ -146,7 +146,7 @@ public class Constants {
         public static final double DIRECT_VISION_KI = 0.001;
         public static final double DIRECT_VISION_KD = 0;
 
-        public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
+        public static final double TURRET_JOYSTICK_SPEED = 15; //Coefficient of the joystick value per degree.
 
         public static final int MAX_CURRENT = 30; // [A]
         public static final int PEAK_CURRENT = 0;
@@ -261,7 +261,7 @@ class BConstants {
 
     public static class Turret {
         public static final double KD = 150;
-        public static final int ZERO_POSITION = 711;
+        public static final int ZERO_POSITION = 677;
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
     }
 
