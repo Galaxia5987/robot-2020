@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
-    public static double BACK_BUMPER_TO_CENTER = 0.4895; //TODO: Tune for real world
+    public static double BACK_BUMPER_TO_CENTER = 0.4895;
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
@@ -69,7 +69,7 @@ public class Constants {
     public static class FieldGeometry {
         public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d());
         public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d());
-        public static final double OUTER_PORT_TO_LINE = 2.28; //TODO: Tune for real world
+        public static final double OUTER_PORT_TO_LINE = 3.04;
 //        public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
 //        public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
 
