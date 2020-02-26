@@ -212,7 +212,7 @@ public class Constants {
         public static final double[] DELTA_PID = {0.0004, 0, 0}; // Proportional, Integral, Derivative
 
         public static final double MAX_HEIGHT = 0.75; // The allowed maximum height of the subsystem.
-        public static final double HEIGHT_TARGET = 0.1;
+        public static final double HEIGHT_TARGET = 0.05;
 
         public static final double MIN_DELTA = 0.001;
 
