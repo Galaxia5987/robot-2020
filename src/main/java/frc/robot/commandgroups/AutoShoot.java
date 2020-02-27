@@ -20,8 +20,12 @@ public class AutoShoot extends ParallelDeadlineGroup {
     private static double SHOOTER_WAIT = 0.5;
 
     public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor, Drivetrain drivetrain, CommandBase turretCommand) {
+        this(turret, shooter, conveyor, drivetrain, turretCommand, true);
+    }
+
+    public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor, Drivetrain drivetrain, CommandBase turretCommand, boolean outtake) {
         super(new SequentialCommandGroup(
-                new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting),
+                new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting, outtake),
                 new WaitCommand(SHOOTER_WAIT)
         ));
         addCommands(

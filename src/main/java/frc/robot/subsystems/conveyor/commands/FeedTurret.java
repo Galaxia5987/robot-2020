@@ -16,6 +16,7 @@ import static frc.robot.Constants.Conveyor.*;
  * Open the mechanical stopper and feed Power Cells into the shooter.
  */
 public class FeedTurret extends CommandBase {
+    private final boolean outtake;
     private Conveyor conveyor;
     private Supplier<Boolean> isShooterReady;
     private Supplier<Boolean> isTurretReady;
@@ -28,27 +29,32 @@ public class FeedTurret extends CommandBase {
         smartFeed = false;
     }
 
-    public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting){
+    public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting) {
+        this(conveyor, isShooterReady, isTurretReady, isShooting, true);
+    }
+
+    public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting, boolean outtake) {
         addRequirements(conveyor);
         this.conveyor = conveyor;
         this.isShooterReady = isShooterReady;
         this.isTurretReady = isTurretReady;
         this.isShooting = isShooting;
         smartFeed = true;
+        this.outtake = outtake;
     }
-
 
     @Override
     public void initialize() {
         conveyor.setGate(State.OPEN);
-        conveyor.setConveyorPower(-FEED_OUTTAKE_POWER.get());
+        if(outtake)
+            conveyor.setConveyorPower(-FEED_OUTTAKE_POWER.get());
         timer.reset();
         timer.start();
     }
 
     @Override
     public void execute() {
-        if(timer.get() < OUTTAKE_TIME) return;
+        if(outtake && timer.get() < OUTTAKE_TIME) return;
 
         if (smartFeed && isShooting.get()) {
             if (isShooterReady.get() && isTurretReady.get()) {
