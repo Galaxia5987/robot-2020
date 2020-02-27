@@ -50,7 +50,7 @@ public class TempLeds {
 
         }
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            m_ledBuffer.setHSV(i, hue, 255, 30 + (int)(60*(Math.sin(Math.toRadians(m_rainbowFirstPixelHue))+1)/2));
+            m_ledBuffer.setHSV(i, hue, 255, 45 + (int)(60*(Math.sin(Math.toRadians(m_rainbowFirstPixelHue))+1)/2));
         }
 
         m_led.setData(m_ledBuffer);
@@ -101,25 +101,25 @@ public class TempLeds {
 
             if(climb_leds_timer.get() != 0){ //climbing code
                 if(climb_leds_timer.get()>=3)
-                    m_ledBuffer.setHSV(i, 60*m_rainbowFirstPixelHue, 255, 255); //TODO: the hue is rainbows, find something cool or leave it
+                    m_ledBuffer.setHSV(i, 2*m_rainbowFirstPixelHue, 255, 255); //TODO: the hue is rainbows, find something cool or leave it
                 else {
-                    int climb_hue = (int) (100 - 45 * Math.floor(climb_leds_timer.get()));
+                    int climb_hue = (int) (100 - 45 * Math.floor(climb_leds_timer.get())) / 2;
                     m_ledBuffer.setHSV(i, climb_hue, 255, (int) (55 + 200 * (1 - climb_leds_timer.get() % 1))); //fade the color along with the timer
                 }
             }
             else if(a != -1) {
-                if(shift_leds_timer.get() != 0 && i%6 < 2) //6 and 2 are the amount of stripes and their width when shifting
+                if(shift_leds_timer.get() != 0 && (i + (int)(shift_leds_timer.get()*0))%6 < 2) //6 and 2 are the amount of stripes and their width when shifting
                 {
                     if(drivetrain.isShiftedHigh())
-                        m_ledBuffer.setHSV(i, 100, 255, 80); //the high color
+                        m_ledBuffer.setHSV(i, 50, 255, 80); //the high color
                     else
-                        m_ledBuffer.setHSV(i, 0, 255, 80); //the high color
+                        m_ledBuffer.setHSV(i, 0, 255, 80); //the low color
                 }
                 else
                     m_ledBuffer.setHSV(i, hue + a, 255, 128);
             }
             else {
-                if(shift_leds_timer.get() != 0 && i%6 < 2) //6 and 2 are the amount of stripes and their width when shifting
+                if(shift_leds_timer.get() != 0 && (i + (int)(shift_leds_timer.get()*22))%6 < 2) //6 and 2 are the amount of stripes and their width when shifting
                 {
                     if(drivetrain.isShiftedHigh())
                         m_ledBuffer.setHSV(i, 100, 255, 80); //the high color
