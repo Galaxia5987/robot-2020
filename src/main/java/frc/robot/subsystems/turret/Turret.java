@@ -112,7 +112,7 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        targetAngle = normalizeSetpoint(angle);
+        targetAngle = normalizeSetpoint(getNearestTurretPosition(angle));
         //Use motion magic if target angle is big enough, else use tracking PID.
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);
@@ -128,28 +128,10 @@ public class Turret extends SubsystemBase {
         motor.selectProfileSlot(slot, 0);
     }
 
-    /**
-     * change the angle to the desired angle,
-     * the value can be between -360 to 360 degrees.
-     *
-     * @param targetAngle the desired angle.
-     * @return return the target angle in degrees.
-     */
-    public double getNearestTurretPosition(double targetAngle, double currentPosition, double MINIMUM_POSITION, double MAXIMUM_POSITION) {
-        targetAngle = Utils.floorMod(targetAngle, 360);
-        double[] positions = {targetAngle - 360, targetAngle, targetAngle + 360}; // An array of all possible target positions
-        double targetPosition = currentPosition;
-        double shortestDistance = Double.MAX_VALUE;
-        for (double targetPos : positions) { // for each possible position
-            if (targetPos < MINIMUM_POSITION || targetPos > MAXIMUM_POSITION) // if the position is out of boundaries
-                continue;
-            if (Math.abs(targetPos - currentPosition) < shortestDistance) // if the calculated distance is less than the current shortest distance
-            {
-                shortestDistance = Math.abs(targetPos - currentPosition);
-                targetPosition = targetPos;
-            }
-        }
-        return targetPosition;
+    public double getNearestTurretPosition(double targetAngle) {
+        if(targetAngle < (ALLOWED_ANGLES.getMinimumDouble() - 5)) targetAngle = ALLOWED_ANGLES.getMaximumDouble();
+        else if(targetAngle > (ALLOWED_ANGLES.getMaximumDouble() + 5)) targetAngle = ALLOWED_ANGLES.getMinimumDouble();
+        return targetAngle;
     }
 
     /**
