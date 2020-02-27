@@ -261,7 +261,7 @@ class BConstants {
 
     public static class Turret {
         public static final double KD = 150;
-        public static final int ZERO_POSITION = 636;
+        public static final int ZERO_POSITION = 645;
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
     }
 
