@@ -13,6 +13,7 @@ import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.auto.FollowPath;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.commands.IntakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.PoseVisionTurret;
@@ -25,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static frc.robot.Constants.Autonomous.*;
+import static frc.robot.Constants.Conveyor.FUNNEL_INTAKE_POWER;
 
 public class TrenchPickup extends SequentialCommandGroup {
     private static final double INTAKE_WAIT = 1.2;
@@ -78,7 +80,8 @@ public class TrenchPickup extends SequentialCommandGroup {
         addCommands(new ParallelDeadlineGroup( // Drive back to shooting while speeding up
                 new FollowPath(drivetrain, toShooting),
                 new ShootWarmup(turret, shooter, drivetrain),
-                new PickupBalls(intake, conveyor)
+                new IntakeBalls(intake),
+                new InstantCommand(() -> conveyor.setFunnelPower(FUNNEL_INTAKE_POWER))
         ));
         addCommands(new InstantCommand(() -> VisionModule.setLEDs(true)));
         addCommands(new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret)));
