@@ -101,7 +101,7 @@ public class TempLeds {
 
             if(climb_leds_timer.get() != 0){ //climbing code
                 if(climb_leds_timer.get()>=3)
-                    m_ledBuffer.setHSV(i, 2*m_rainbowFirstPixelHue, 255, 255); //TODO: the hue is rainbows, find something cool or leave it
+                    m_ledBuffer.setHSV(i, 90 + 2*m_rainbowFirstPixelHue, 255, 255); //TODO: the hue is rainbows, find something cool or leave it
                 else {
                     int climb_hue = (int) (100 - 45 * Math.floor(climb_leds_timer.get())) / 2;
                     m_ledBuffer.setHSV(i, climb_hue, 255, (int) (55 + 200 * (1 - climb_leds_timer.get() % 1))); //fade the color along with the timer
