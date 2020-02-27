@@ -40,7 +40,7 @@ public class TrenchPickup extends SequentialCommandGroup {
 
     public Path toTrench = new Path(
             toTrenchConfig,
-            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.5), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.7), Rotation2d.fromDegrees(180))
     );
 
     private static final TrajectoryConfig pickupBallsConfig = new TrajectoryConfig(PICKUP_SPEED, MAX_ACCELERATION)
@@ -48,7 +48,7 @@ public class TrenchPickup extends SequentialCommandGroup {
 
     public Path pickupBalls = new Path(
             pickupBallsConfig,
-            new Pose2d(Units.feetToMeters(26.5), Units.feetToMeters(2.5), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(26.5), Units.feetToMeters(2.7), Rotation2d.fromDegrees(180))
     );
 
     private static final TrajectoryConfig toShootingConfig =
@@ -56,7 +56,7 @@ public class TrenchPickup extends SequentialCommandGroup {
 
     public Path toShooting = new Path(
             toShootingConfig,
-            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.5), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.7), Rotation2d.fromDegrees(180))
     );
 
     private final List<Path> toGenerate = new ArrayList<>(Collections.singletonList(toTrench));
