@@ -64,6 +64,8 @@ public class RobotContainer {
     public static final Turret turret = new Turret();
     private final Command m_autoCommand = null;
 
+    public TempLeds leds = new TempLeds(turret, drivetrain, shooter);
+
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
@@ -111,10 +113,10 @@ public class RobotContainer {
         OI.lb.toggleWhenPressed(new TurretSwitching(turret, drivetrain));
         OI.rb.whileHeld(new FeedTurret(conveyor));
         for (int i = 1; i <= 11; i++) {
-            new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
+            new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH, leds));
         }
         for (int i = 1; i <= 11; i++) {
-            new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
+            new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW, leds));
         }
     }
 

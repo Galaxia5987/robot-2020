@@ -102,6 +102,7 @@ class BPorts{
     }
 
     public static class Drivetrain {
+        public static final boolean IS_SHIFTER_REVERSED = true;
     }
 
     public static class ColorWheel {
