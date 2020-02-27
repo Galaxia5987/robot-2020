@@ -91,7 +91,7 @@ public class Constants {
         public static final double PULSE_INTERVAL = 0.1;
         public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.5);
         public static final double CONVEYOR_FEED_POWER = 0.7;
-        public static final double FUNNEL_INTAKE_POWER = 0.3;
+        public static final double FUNNEL_INTAKE_POWER = 0.25;
         public static final double CONVEYOR_INTAKE_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
         public static final double FUNNEL_OUTTAKE_POWER = 0.6;
