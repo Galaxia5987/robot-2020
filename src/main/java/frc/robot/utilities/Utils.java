@@ -167,12 +167,27 @@ public class Utils {
         return robotPose.getTranslation().getDistance(RED_OUTER_POWER_PORT_LOCATION.getTranslation());
     }
 
+    /**
+     * calculates the corrected turret angle </>
+     *
+     * @param velocity the robot velocity
+     * @param angle the current turret angle
+     * @return the corrected angle to the target
+     */
     public double angleCorrection(double velocity, double angle) {
         return angle + Math.asin((velocity / AVERAGE_HORIZONTAL_POWER_CELL_SPEED) * Math.sin(angle));
     }
 
-    public double rangeCorrection(double velocity, double turretAngle, double range) {
-        velocity = - velocity * Math.cos(turretAngle);
+    /**
+     * calculates the corrected range of the robot </>
+     *
+     * @param velocity the robot velocity
+     * @param angle the turret angle
+     * @param range the distance of the robot from the target
+     * @return the corrected range to the target
+     */
+    public double rangeCorrection(double velocity, double angle, double range) {
+        velocity = - velocity * Math.cos(angle);
         double time = range / AVERAGE_HORIZONTAL_POWER_CELL_SPEED;
         return range + velocity * time;
     }
