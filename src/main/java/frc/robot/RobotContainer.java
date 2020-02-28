@@ -54,7 +54,7 @@ public class RobotContainer {
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public final VisionModule visionModule = new VisionModule();
     public final CustomDashboard customDashboard = new CustomDashboard();
-    public final Drivetrain drivetrain = new Drivetrain();
+    public static final Drivetrain drivetrain = new Drivetrain();
     public final ColorWheel colorWheel = new ColorWheel();
     public final Shooter shooter = new Shooter();
     public final Intake intake = new Intake();

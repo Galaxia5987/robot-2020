@@ -193,6 +193,14 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
+     *
+     * @return the velocity of the robot
+     */
+    public double getVelocity() {
+        return getLeftVelocity() - getRightVelocity();
+    }
+
+    /**
      * Indicates whether the shifter is on a high gear
      *
      * @return
