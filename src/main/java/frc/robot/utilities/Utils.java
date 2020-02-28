@@ -16,6 +16,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static frc.robot.Constants.AVERAGE_HORIZONTAL_POWER_CELL_SPEED;
 import static frc.robot.Constants.FieldGeometry.RED_OUTER_POWER_PORT_LOCATION;
 
 public class Utils {
@@ -164,6 +165,16 @@ public class Utils {
      */
     public static double localizationDistanceToPort(Pose2d robotPose) {
         return robotPose.getTranslation().getDistance(RED_OUTER_POWER_PORT_LOCATION.getTranslation());
+    }
+
+    public double angleCorrection(double velocity, double angle) {
+        return angle + Math.asin((velocity / AVERAGE_HORIZONTAL_POWER_CELL_SPEED) * Math.sin(angle));
+    }
+
+    public double rangeCorrection(double velocity, double turretAngle, double range) {
+        velocity = - velocity * Math.cos(turretAngle);
+        double time = range / AVERAGE_HORIZONTAL_POWER_CELL_SPEED;
+        return range + velocity * time;
     }
 
 }
