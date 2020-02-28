@@ -9,6 +9,7 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
+import frc.robot.utilities.Utils;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
@@ -18,6 +19,8 @@ import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Shooter.*;
 import static frc.robot.Ports.TALON_PID_SLOT;
+import static frc.robot.RobotContainer.turret;
+import static frc.robot.RobotContainer.drivetrain;
 
 public class Shooter extends SubsystemBase {
     private final TalonSRX shooterMaster = new TalonSRX(MASTER);
@@ -86,6 +89,7 @@ public class Shooter extends SubsystemBase {
      * @return the calculated velocity to get to the target in rps.
      */
     public double approximateVelocity(double distance) {
+        distance = Utils.rangeCorrection(drivetrain.getVelocity(), turret.getAngle(), distance);
         distance = MathUtil.clamp(distance, 1.4, 11); //The camera can't really see beyond these distances, which means they are most likely erroneous.
         return MathUtil.clamp( .0755*Math.pow(distance, 4) - 1.38254*Math.pow(distance, 3) + 8.6493*Math.pow(distance, 2) - 16.905*distance + 71.998
                 ,50,120); //Prevent the shooter from speeding up too much, and from not activating.
