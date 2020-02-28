@@ -197,7 +197,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the velocity of the robot
      */
     public double getVelocity() {
-        return getLeftVelocity() - getRightVelocity();
+        return (getLeftVelocity() + getRightVelocity()) / 2.0;
     }
 
     /**
