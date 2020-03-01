@@ -27,6 +27,7 @@ public class Shooter extends SubsystemBase {
     private final Servo adjustableHood = new Servo(0);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
+    private double targetAngle;
 
     public Shooter() {
         shooterMaster.configFactoryDefault();
@@ -118,13 +119,14 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setHoodAngle(double angle){
-        adjustableHood.setAngle(angle);
+        targetAngle = angle;
     }
 
     @Override
     public void periodic() {
         boolean isShooterReady = isShooterReady();
         SmartDashboard.putBoolean("shooterReady", isShooterReady);
+        adjustableHood.setAngle(targetAngle);
 
         FireLog.log("shooterVelocity", getSpeed());
         FireLog.log("shooterSetpoint", getTargetVelocity());
