@@ -3,6 +3,7 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
@@ -23,6 +24,7 @@ public class Shooter extends SubsystemBase {
     private final TalonSRX shooterMaster = new TalonSRX(MASTER);
     private final VictorSPX shooterSlave1 = new VictorSPX(SLAVE_1);
     private final VictorSPX shooterSlave2 = new VictorSPX(SLAVE_2);
+    private final Servo adjustableHood = new Servo(0);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
 
@@ -113,6 +115,10 @@ public class Shooter extends SubsystemBase {
 
     public double getMasterVoltage() {
         return shooterMaster.getMotorOutputVoltage();
+    }
+
+    public void setHoodAngle(double angle){
+        adjustableHood.setAngle(angle);
     }
 
     @Override
