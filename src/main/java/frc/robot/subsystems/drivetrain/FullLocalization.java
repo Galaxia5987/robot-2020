@@ -166,14 +166,21 @@ public class FullLocalization {
      */
     public Pose2d update(Rotation2d gyroAngle, double leftDistanceMeters,
                          double rightDistanceMeters, double acc, double time) {
+        boolean angleValid;
         double deltaLeftDistance = leftDistanceMeters - m_prevLeftDistance;
         double deltaRightDistance = rightDistanceMeters - m_prevRightDistance;
 
         m_prevLeftDistance = leftDistanceMeters;
         m_prevRightDistance = rightDistanceMeters;
 
-         var angle = new Rotation2d( gyroAngle.getRadians() +  m_gyroOffset.getRadians());
+        var angle = new Rotation2d(gyroAngle.getRadians() + m_gyroOffset.getRadians());
         double target_angle = turret.getAngle() + visionAngle.getDouble(0);
+        target_angle = Math.IEEEremainder(target_angle, 360);
+        if (abs(target_angle) > 170) {
+            angleValid = false;
+        } else {
+            angleValid = true;
+        }
         double target_range;
         if (VisionModule.getRobotDistance() == null)
             target_range = 0;
@@ -193,7 +200,7 @@ public class FullLocalization {
         observation.setEncoderValid(EncoderValid(gyroAngle, deltaLeftDistance, deltaRightDistance));
 
         boolean isVisionValid = VisionValid();
-        observation.setTargetValid(isVisionValid);
+        observation.setTargetValid(angleValid, isVisionValid);
         SmartDashboard.putBoolean("valid", visionValid.getBoolean(false));
         SmartDashboard.putBoolean("vision-valid-local", isVisionValid);
         SmartDashboard.putNumber("vision-angle-local", visionAngle.getDouble(0));
@@ -248,13 +255,13 @@ public class FullLocalization {
         {
             return false;
         }
-
+        if (VisionModule.getRobotDistance() == null) return false;
         if (VisionModule.getRobotDistance() < 0.1)
         {
             return false;
         }
 
-        if ( Math.abs(visionAngle.getDouble(180))  > 10 ) // Ignore when large tracking errors
+        if ( Math.abs(visionAngle.getDouble(180))  > 2 ) // Ignore when large tracking errors
         {
             return false;
         }
@@ -262,6 +269,7 @@ public class FullLocalization {
         if  (Math.abs(VisionModule.getRobotDistance() - observation.GetExpectedRange()) > 1 ) {
             return false;
         }
+
         return true;
     }
 

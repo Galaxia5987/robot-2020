@@ -20,6 +20,7 @@ public class OdometryInertialObservation  extends ObservationModel {
     private double m_TargetAngle;
     private Pose2d m_TargetPose;
     private boolean m_targetValid;
+    private boolean m_angleValid;
 
     private double m_ExpectedRangeSqr;
 
@@ -27,7 +28,10 @@ public class OdometryInertialObservation  extends ObservationModel {
         m_encoderValid = valid;
     }
 
-    public void setTargetValid(boolean valid) { m_targetValid = valid;}
+    public void setTargetValid(boolean angle_valid, boolean valid) {
+        m_targetValid = valid;
+        m_angleValid = angle_valid;
+    }
 
     // Constructor must receive the geometry of the robot
     public OdometryInertialObservation(double Rr, double Rl)
@@ -150,7 +154,10 @@ public class OdometryInertialObservation  extends ObservationModel {
         {
             // TODO: tune vision and turret errors
             cov[3][3] = 1 ; // 10 cm range error for 5 m range (5+0.1)^2 = 25 + 2*0.5 + 0.01; => std = 1 => cov = 1
-            cov[4][4] = 1e6 ; // about 0.5 degrees 1e-4
+            if (m_angleValid)
+                cov[4][4] = 1e-4 ; // about 0.5 degrees 1e-4
+            else
+                cov[4][4] = 1e6;
         }
         else
         {
