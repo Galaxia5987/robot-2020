@@ -40,6 +40,7 @@ import static frc.robot.Ports.Drivetrain.RIGHT_MASTER_INVERTED;
 import static frc.robot.Ports.Drivetrain.RIGHT_SLAVE_INVERTED;
 import static frc.robot.Ports.Drivetrain.*;
 import static frc.robot.RobotContainer.navx;
+import static frc.robot.utilities.Utils.flipCoordSystem;
 
 public class Drivetrain extends SubsystemBase {
     private final TalonFX leftMaster = new TalonFX(LEFT_MASTER);
@@ -323,13 +324,5 @@ public class Drivetrain extends SubsystemBase {
         LOW
     }
 
-    /**
-     *  Flips coordinate definition from Falcon (0,0) bottom left to Galaxia (0,0) top left and the reverse
-     * @param pose
-     * @return
-     */
-    public Pose2d flipCoordSystem(Pose2d pose )
-    {
-        return new Pose2d(pose.getTranslation().getX(),FIELD_WIDTH -  pose.getTranslation().getY(), new Rotation2d(- pose.getRotation().getRadians()) );
-    }
+
 }

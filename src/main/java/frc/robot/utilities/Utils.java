@@ -16,6 +16,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static frc.robot.Constants.FieldGeometry.FIELD_WIDTH;
 import static frc.robot.Constants.FieldGeometry.RED_OUTER_POWER_PORT_LOCATION;
 
 public class Utils {
@@ -97,7 +98,15 @@ public class Utils {
         if (angle < 0) angle += 360;
         return angle;
     }
-
+    /**
+     *  Flips coordinate definition from Falcon (0,0) bottom left to Galaxia (0,0) top left and the reverse
+     * @param pose
+     * @return
+     */
+    public static Pose2d flipCoordSystem(Pose2d pose )
+    {
+        return new Pose2d(pose.getTranslation().getX(),FIELD_WIDTH -  pose.getTranslation().getY(), new Rotation2d(- pose.getRotation().getRadians()) );
+    }
     /**
      * Replaces fields between constants classes.
      *
