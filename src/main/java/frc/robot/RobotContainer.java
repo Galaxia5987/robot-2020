@@ -110,7 +110,7 @@ public class RobotContainer {
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
-        OI.start.toggleWhenPressed(new PositionControl(colorWheel));
+        OI.start.toggleWhenPressed(new ResetLocalization(drivetrain));
         OI.ls.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(0.7),
                 new ResetLocalization(drivetrain)
