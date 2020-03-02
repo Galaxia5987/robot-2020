@@ -67,6 +67,9 @@ public class FullLocalization {
     private NetworkTableEntry theta = localizationTable.getEntry("theta");
     private NetworkTableEntry angularVelocity = localizationTable.getEntry("angular-velocity");
     private NetworkTableEntry accelerationBias = localizationTable.getEntry("acceleration-bias");
+    private NetworkTableEntry angleBias = localizationTable.getEntry("angle-bias");
+    private NetworkTableEntry xCov = localizationTable.getEntry("x-std");
+    private NetworkTableEntry yCov = localizationTable.getEntry("y-std");
     private NetworkTableEntry encoderLeft = localizationTable.getEntry("left-encoder");
     private NetworkTableEntry encoderRight = localizationTable.getEntry("right-encoder");
 
@@ -195,6 +198,7 @@ public class FullLocalization {
         SmartDashboard.putBoolean("vision-valid-local", isVisionValid);
         SmartDashboard.putNumber("vision-angle-local", visionAngle.getDouble(0));
         SmartDashboard.putNumber("vision-range-local", target_range);
+        SmartDashboard.putNumber("vision-angle-local", target_angle);
 
         m_previousAngle = gyroAngle;
 
@@ -216,6 +220,10 @@ public class FullLocalization {
         theta.setDouble(filter.model.state_estimate.data[3][0]);
         angularVelocity.setDouble(filter.model.state_estimate.data[4][0]);
         accelerationBias.setDouble(filter.model.state_estimate.data[5][0]);
+        angleBias.setDouble(filter.model.state_estimate.data[6][0]);
+        xCov.setDouble(Math.sqrt(filter.model.estimate_covariance.data[0][0]));
+        yCov.setDouble(Math.sqrt(filter.model.estimate_covariance.data[1][1]));
+
 
         m_prev_time = time;
         return m_poseMeters;
