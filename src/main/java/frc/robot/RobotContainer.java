@@ -20,6 +20,7 @@ import frc.robot.autonomous.ResetOnly;
 import frc.robot.autonomous.ShootAndDriveForward;
 import frc.robot.autonomous.ShootAndDriveToPickup;
 import frc.robot.autonomous.TrenchPickup;
+import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.commands.PIDClimbAndBalance;
@@ -51,6 +52,7 @@ import org.techfire225.webapp.Webserver;
 import static frc.robot.Constants.Drivetrain.GRAVITY_ACCELERATION;
 import static frc.robot.Constants.Drivetrain.GYRO_INVERTED;
 import static frc.robot.Constants.EFFECTIVE_TURN_WIDTH;
+import static frc.robot.subsystems.drivetrain.Drivetrain.localization;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -66,7 +68,7 @@ public class RobotContainer {
     private final CustomDashboard customDashboard = new CustomDashboard();
     public static final Drivetrain drivetrain = new Drivetrain();
     private final ColorWheel colorWheel = new ColorWheel();
-    private final Shooter shooter = new Shooter();
+    public final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
     private final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();

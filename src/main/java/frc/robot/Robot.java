@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -211,7 +212,7 @@ public class Robot extends TimedRobot {
         }
         m_robotContainer.drivetrain.setBrake(false);
     }
-  }
+
 
     /**
      * This function is called periodically during operator control.

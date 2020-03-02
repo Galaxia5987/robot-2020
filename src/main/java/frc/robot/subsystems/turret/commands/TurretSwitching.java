@@ -14,7 +14,7 @@ public class TurretSwitching extends CommandBase {
     private final Timer timer = new Timer();
     private static final double VISION_TIMEOUT = 0.3;
 
-    public TurretSwitching(Turret turret, FullLocalization localization, Drivetrain drivetrain) {
+    public TurretSwitching(Turret turret, Drivetrain drivetrain) {
         this.turret = turret;
         this.localizationTurret = new LocalizationTurret(turret, drivetrain);
         this.visionTurret = new VisionTurret(turret);
