@@ -311,7 +311,7 @@ public class Drivetrain extends SubsystemBase {
         Pose2d falcon_pose = getPose();
         FalconDashboard.INSTANCE.setRobotX(Units.metersToFeet(falcon_pose.getTranslation().getX()));
         FalconDashboard.INSTANCE.setRobotY(Units.metersToFeet(falcon_pose.getTranslation().getY()));
-        FalconDashboard.INSTANCE.setRobotHeading(Math.toRadians(falcon_pose.getRotation().getRadians()));
+        FalconDashboard.INSTANCE.setRobotHeading(falcon_pose.getRotation().getRadians());
     }
 
     /**
