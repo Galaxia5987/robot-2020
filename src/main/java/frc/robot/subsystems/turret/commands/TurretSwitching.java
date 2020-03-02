@@ -3,6 +3,7 @@ package frc.robot.subsystems.turret.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.FullLocalization;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.utilities.VisionModule;
 
@@ -14,7 +15,6 @@ public class TurretSwitching extends CommandBase {
     private static final double VISION_TIMEOUT = 0.3;
 
     public TurretSwitching(Turret turret, Drivetrain drivetrain) {
-        addRequirements(turret);
         this.turret = turret;
         this.localizationTurret = new LocalizationTurret(turret, drivetrain);
         this.visionTurret = new VisionTurret(turret);

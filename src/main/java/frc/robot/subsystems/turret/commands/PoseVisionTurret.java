@@ -1,11 +1,13 @@
 package frc.robot.subsystems.turret.commands;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
+import static frc.robot.RobotContainer.navx;
 
 public class PoseVisionTurret extends CommandBase {
     private final Turret turret;
@@ -25,6 +27,7 @@ public class PoseVisionTurret extends CommandBase {
     public void execute() {
         Pose2d robotPose = drivetrain.getPose();
         turret.setAngle(Utils.calculateTurretAngle(robotPose, true));
+        drivetrain.setPose(robotPose);
     }
 
     @Override
