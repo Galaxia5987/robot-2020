@@ -65,7 +65,7 @@ public class Climber extends SubsystemBase {
         talonConfigs.setReverseLimitSwitchSource(LimitSwitchSource.Deactivated);
         talonConfigs.setReverseLimitSwitchNormal(LimitSwitchNormal.Disabled);
 
-        talonConfigs.setNeutralMode(NeutralMode.Coast);
+        talonConfigs.setNeutralMode(NeutralMode.Brake);
         talonConfigs.setFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
 
         talonConfigs.setPeakCurrentLimit(0);
