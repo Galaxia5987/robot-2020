@@ -97,6 +97,7 @@ public class Robot extends TimedRobot {
         // Set the data
         m_led.setData(m_ledBuffer);
         m_led.start();
+        compressor.stop();
     }
 
     public void startCameraCapture() {
