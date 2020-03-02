@@ -7,16 +7,19 @@
 
 package frc.robot;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.Utils;
+import frc.robot.utilities.VisionModule;
+
+import static frc.robot.RobotContainer.navx;
+import static frc.robot.RobotContainer.turret;
 
 
 /**
@@ -32,12 +35,14 @@ public class Robot extends TimedRobot {
     public static boolean shootingManualMode = false;
     public static Compressor compressor = new Compressor();
     public static PowerDistributionPanel pdp = new PowerDistributionPanel();
-    private Command m_autonomousCommand;
-  
     public static Timer robotTimer = new Timer();
-
+    private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
 
+    private AddressableLED m_led;
+    private AddressableLEDBuffer m_ledBuffer;
+    // Store what the last hue of the first pixel is
+    private int m_rainbowFirstPixelHue;
 
     /**
      * @return Robot in debug mode
@@ -52,21 +57,46 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        if(!Robot.isRobotA) {
+        if (!Robot.isRobotA) {
             Utils.swapConstants(Constants.class, BConstants.class);
             Utils.swapConstants(Ports.class, BPorts.class);
         }
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        TrajectoryLoader.loadTrajectories();
         robotTimer.reset();
         robotTimer.start();
+
+        TrajectoryLoader.loadTrajectories();
+
         m_robotContainer = new RobotContainer();
+        CustomDashboard.setAutonomousModes(m_robotContainer.getAutonomousModes());
+
 //        compressor.stop();
+
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);
 
+        SmartDashboard.putData(CommandScheduler.getInstance());
+        SmartDashboard.putData(pdp);
+        SmartDashboard.putData(navx);
+
+        //Disable live window for more loop time
+        LiveWindow.setEnabled(false);
+        LiveWindow.disableAllTelemetry();
+
         startCameraCapture();
+        // Must be a PWM header, not MXP or DIO
+        m_led = new AddressableLED(0);
+
+        // Reuse buffer
+        // Default to a length of 60, start empty output
+        // Length is expensive to set, so only set it once, then just update data
+        m_ledBuffer = new AddressableLEDBuffer(22);
+        m_led.setLength(m_ledBuffer.getLength());
+
+        // Set the data
+        m_led.setData(m_ledBuffer);
+        m_led.start();
     }
 
     public void startCameraCapture() {
@@ -91,15 +121,59 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+
+        rainbow();
+        m_led.setData(m_ledBuffer);
         NetworkTableInstance.getDefault().flush();
     }
 
+    private void rainbow() {
+        // For every pixel
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            // Calculate the hue - hue is easier for rainbows because the color
+            // shape is a circle so only one value needs to precess
+            int hue;
+            int a;
+            hue = (m_rainbowFirstPixelHue + (i * 60 / m_ledBuffer.getLength())) % 30;
+
+            if (m_robotContainer.shooter.isShooterReady() && m_robotContainer.shooter.getSpeed() > 5) {
+                a = 100;
+            } else if (m_robotContainer.turret.isTurretReady() && VisionModule.leds.getBoolean(true)) {
+                a = 20;
+            } else if (VisionModule.leds.getBoolean(true)){
+                a = 50;
+            }
+            else{
+                a=-1;
+            }
+
+
+            if(DriverStation.getInstance().isAutonomous())
+            {
+                a=0;
+                hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
+            }
+            if(a == -1 || DriverStation.getInstance().isDisabled())
+                m_ledBuffer.setHSV(i, 0,0,0);
+            else
+                m_ledBuffer.setHSV(i, hue + a, 255, 128);
+
+        }
+        // Increase by to make the rainbow "move"
+        m_rainbowFirstPixelHue += 3;
+        // Check bounds
+        if(DriverStation.getInstance().isAutonomous())
+            m_rainbowFirstPixelHue %= 180;
+        else
+            m_rainbowFirstPixelHue %= 30;
+    }
 
     /**
      * This function is called once each time the robot enters Disabled mode.
      */
     @Override
     public void disabledInit() {
+        VisionModule.setLEDs(false);
     }
 
     @Override
@@ -111,7 +185,12 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
+        m_robotContainer.drivetrain.setBrake(true);
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        // schedule the autonomous command (example)
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.schedule();
+        }
     }
 
   /**
@@ -121,14 +200,16 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
   }
 
-  @Override
-  public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    @Override
+    public void teleopInit() {
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
+        }
+        m_robotContainer.drivetrain.setBrake(false);
     }
   }
 

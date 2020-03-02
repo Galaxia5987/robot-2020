@@ -5,12 +5,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VictorConfiguration;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
+import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Shooter.*;
 import static frc.robot.Constants.TALON_TIMEOUT;
@@ -84,7 +86,9 @@ public class Shooter extends SubsystemBase {
      * @return the calculated velocity to get to the target in rps.
      */
     public double approximateVelocity(double distance) {
-        return 0.0126*Math.pow(distance, 6) - 0.4254*Math.pow(distance, 5) + 5.8314*Math.pow(distance, 4) - 41.255*Math.pow(distance, 3) + 158.28*Math.pow(distance, 2) - 307.09*distance + 296.16;
+        distance = MathUtil.clamp(distance, 1.4, 11); //The camera can't really see beyond these distances, which means they are most likely erroneous.
+        return MathUtil.clamp( .0755*Math.pow(distance, 4) - 1.38254*Math.pow(distance, 3) + 8.6493*Math.pow(distance, 2) - 16.905*distance + 71.998
+                ,50,120); //Prevent the shooter from speeding up too much, and from not activating.
 }
 
     public double getTargetVelocity(){
@@ -113,13 +117,20 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("shooterReady", isShooterReady());
-        if(getSpeed() < VELOCITY_DAMPENING_LIMIT.get())
-            shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP.get());
+        boolean isShooterReady = isShooterReady();
+        SmartDashboard.putBoolean("shooterReady", isShooterReady);
+
+        FireLog.log("shooterVelocity", getSpeed());
+        FireLog.log("shooterSetpoint", getTargetVelocity());
+
+        if(getSpeed() < VELOCITY_DAMPENING_LIMIT)
+            shooterMaster.configClosedloopRamp(VELOCITY_DAMP_RAMP);
         else
             shooterMaster.configClosedloopRamp(0);
-        CustomDashboard.setSpeedValid(isShooterReady());
-        Double hoodDistance = VisionModule.getHoodDistance();
-        CustomDashboard.setDistanceValid(hoodDistance != null && ALLOWED_SHOOTING_RANGE.containsDouble(hoodDistance));
+
+        CustomDashboard.setSpeedValid(isShooterReady);
+
+        FireLog.log("shooterSetpoint", targetVelocity);
+        FireLog.log("shooterSpeed", getSpeed());
     }
 }

@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.autonomous.Path;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.FullLocalization;
 import frc.robot.utilities.Utils;
@@ -32,7 +33,8 @@ import static frc.robot.subsystems.drivetrain.Drivetrain.localization;
  */
 public class FollowPath extends CommandBase {
     private final Timer timer = new Timer();
-    private final Trajectory trajectory;
+    private boolean resetDrivetrain = false;
+    private Path path;
     private DifferentialDriveWheelSpeeds prevSpeeds;
     private double prevTime;
 
@@ -42,15 +44,34 @@ public class FollowPath extends CommandBase {
     private static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH);
 
     private final Drivetrain drivetrain;
+    private Trajectory trajectory;
 
-    public FollowPath(Drivetrain drivetrain, Trajectory trajectory) {
+    public FollowPath(Drivetrain drivetrain, Trajectory trajectory, boolean resetDrivetrain) {
         addRequirements(drivetrain);
         this.trajectory = trajectory;
+        this.drivetrain = drivetrain;
+        this.resetDrivetrain = resetDrivetrain;
+    }
+
+    public FollowPath(Drivetrain drivetrain, Path path) {
+        addRequirements(drivetrain);
+        this.path = path;
         this.drivetrain = drivetrain;
     }
 
     @Override
     public void initialize() {
+        if(trajectory == null) {
+            if (!path.hasTrajectory()) {
+                path.generate(drivetrain.getPose());
+            }
+
+            this.trajectory = path.getTrajectory();
+        }
+
+        if(resetDrivetrain)
+            drivetrain.setPose(trajectory.getInitialPose());
+
         FalconDashboard.INSTANCE.setFollowingPath(true);
         prevTime = 0;
         var initialState = trajectory.sample(0);
@@ -76,7 +97,6 @@ public class FollowPath extends CommandBase {
                 follower.calculate(localization.getPose(), state)
         );
 
-
         var leftSpeedSetpoint = targetWheelSpeeds.leftMetersPerSecond;
         var rightSpeedSetpoint = targetWheelSpeeds.rightMetersPerSecond;
 
@@ -97,8 +117,8 @@ public class FollowPath extends CommandBase {
         FireLog.log("autoLeftVelocity", drivetrain.getLeftVelocity());
 
         FalconDashboard.INSTANCE.setPathHeading(state.poseMeters.getRotation().getRadians());
-        FalconDashboard.INSTANCE.setPathX(Units.feetToMeters(state.poseMeters.getTranslation().getX()));
-        FalconDashboard.INSTANCE.setPathY(Units.feetToMeters(state.poseMeters.getTranslation().getY()));
+        FalconDashboard.INSTANCE.setPathX(Units.metersToFeet(state.poseMeters.getTranslation().getX()));
+        FalconDashboard.INSTANCE.setPathY(Units.metersToFeet(state.poseMeters.getTranslation().getY()));
 
         prevTime = curTime;
         prevSpeeds = targetWheelSpeeds;

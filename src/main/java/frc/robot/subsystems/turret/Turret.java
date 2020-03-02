@@ -8,11 +8,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
-import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.Utils;
-import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.techfire225.webapp.FireLog;
 
@@ -42,8 +40,9 @@ public class Turret extends SubsystemBase {
     public Turret() {
         motor.configFactoryDefault();
 
-        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 1, TALON_TIMEOUT); // Todo: check if this experimental idea works.
+        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 1, TALON_TIMEOUT);
         motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TALON_TIMEOUT);
+        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 2, TALON_TIMEOUT);
         resetEncoder();
 
         motor.setInverted(IS_MOTOR_INVERTED);
@@ -62,6 +61,7 @@ public class Turret extends SubsystemBase {
 
         motor.configMotionAcceleration(unitModel.toTicks100ms(MOTION_MAGIC_ACCELERATION));
         motor.configMotionCruiseVelocity(unitModel.toTicks100ms(MOTION_MAGIC_CRUISE_VELOCITY));
+
         motor.configPeakCurrentLimit(PEAK_CURRENT);
         motor.configContinuousCurrentLimit(MAX_CURRENT);
         motor.configPeakCurrentDuration(PEAK_DURATION);
@@ -177,13 +177,17 @@ public class Turret extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        correctBacklash();
-        SmartDashboard.putNumber("talonTurretSetpoint", unitModel.toUnits(motor.getClosedLoopTarget()));
+        if(BACKLASH_ANGLE != 0)
+            correctBacklash();
+        double currentAngle = getAngle();
         SmartDashboard.putNumber("turretSetpoint", targetAngle);
-        SmartDashboard.putNumber("turretCurrent", getAngle());
+        SmartDashboard.putNumber("turretCurrent", currentAngle);
         SmartDashboard.putNumber("turretOutput", motor.getMotorOutputVoltage());
+        CustomDashboard.setTurretReady(isTurretReady());
+        CustomDashboard.setTurretAngle(currentAngle);
+
         FireLog.log("turretSetpoint", targetAngle);
-        FireLog.log("turretCurrent", getAngle());
+        FireLog.log("turretCurrent", currentAngle);
     }
 
     /**
@@ -213,10 +217,10 @@ public class Turret extends SubsystemBase {
      */
     public void resetEncoder() {
         double currentPosition = Math.IEEEremainder(
-                        Math.floorMod(motor.getSelectedSensorPosition(1), 4096) -
-                                ((ZERO_POSITION + unitModel.toTicks((180 + UNREACHABLE_ANGLE) % 360)) % 4096),
-                        4096
-                ) + unitModel.toTicks(180 + UNREACHABLE_ANGLE) % 4096;
+                        Math.floorMod(motor.getSelectedSensorPosition(1), TICKS_PER_ROTATION) -
+                                ((ZERO_POSITION + unitModel.toTicks((180 + UNREACHABLE_ANGLE) % 360)) % TICKS_PER_ROTATION),
+                TICKS_PER_ROTATION
+                ) + unitModel.toTicks(180 + UNREACHABLE_ANGLE) % TICKS_PER_ROTATION;
         motor.setSelectedSensorPosition((int) currentPosition);
     }
 

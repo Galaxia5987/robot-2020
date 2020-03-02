@@ -23,7 +23,6 @@ import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.TalonConfiguration;
 import frc.robot.valuetuner.WebConstantPIDTalon;
-import org.techfire225.webapp.FireLog;
 
 import static frc.robot.Constants.Climber.CLIMB_PIDF;
 import static frc.robot.Constants.Climber.CLIMB_RELEASE_PIDF;
@@ -53,7 +52,13 @@ public class Climber extends SubsystemBase {
 
         leftMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
         rightMotor.configClosedloopRamp(Constants.Climber.RAMP_RATE);
-      
+
+        rightMotor.configForwardSoftLimitEnable(true);
+        leftMotor.configForwardSoftLimitEnable(true);
+
+        rightMotor.configForwardSoftLimitThreshold(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
+        leftMotor.configForwardSoftLimitThreshold(unitModel.toTicks(Constants.Climber.MAX_HEIGHT));
+
         talonConfigs.setPidSet(CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3]);
         talonConfigs.setForwardLimitSwitchSource(LimitSwitchSource.Deactivated);
         talonConfigs.setForwardLimitSwitchNormal(LimitSwitchNormal.Disabled);
@@ -86,8 +91,10 @@ public class Climber extends SubsystemBase {
         rightMotor.config_kD(1, CLIMB_RELEASE_PIDF[2]);
         rightMotor.config_kF(1, CLIMB_RELEASE_PIDF[3]);
 
-        new WebConstantPIDTalon("climbLeft", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], leftMotor);
-        new WebConstantPIDTalon("climbRight", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], rightMotor);
+        new WebConstantPIDTalon("climbLeftDown", CLIMB_PIDF[0],  CLIMB_PIDF[1],  CLIMB_PIDF[2],  CLIMB_PIDF[3], leftMotor, 0);
+        new WebConstantPIDTalon("climbRightDown", CLIMB_PIDF[0],  CLIMB_PIDF[1],  CLIMB_PIDF[2],  CLIMB_PIDF[3], rightMotor, 0);
+        new WebConstantPIDTalon("climbLeftUp", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], leftMotor, 1);
+        new WebConstantPIDTalon("climbRightUp", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], rightMotor, 1);
 
         if (Robot.isRobotA)
             stopperA = new DoubleSolenoid(Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
@@ -137,17 +144,6 @@ public class Climber extends SubsystemBase {
         return unitModel.toUnits(leftMotor.getSelectedSensorPosition());
     }
 
-    /**
-     * Move the left side of the climber to a given height.
-     *
-     * @param height the height setpoint of the left elevator in meters
-     */
-    public void setLeftHeight(double height) {
-        if (safeToClimb()) {
-            leftMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
-        }
-    }
-
     public void setLeftPower(double power) {
         leftMotor.set(ControlMode.PercentOutput, power);
     }
@@ -170,10 +166,42 @@ public class Climber extends SubsystemBase {
      */
     public void setRightHeight(double height) {
         if (safeToClimb()) {
-            rightMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, Constants.Climber.ARBITRARY_FEEDFORWARD);
+            rightMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)));
         }
     }
 
+    /**
+     * Move the left side of the climber to a given height.
+     *
+     * @param height the height setpoint of the left elevator in meters
+     */
+    public void setLeftHeight(double height) {
+        if (safeToClimb()) {
+            leftMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)));
+        }
+    }
+
+    /**
+     * Move the right side of the climber to a given height.
+     *
+     * @param height the height setpoint of the right elevator in meters
+     */
+    public void setRightHeight(double height, double arbitraryFeedForward) {
+        if (safeToClimb()) {
+            rightMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, arbitraryFeedForward);
+        }
+    }
+
+    /**
+     * Move the right side of the climber to a given height.
+     *
+     * @param height the height setpoint of the right elevator in meters
+     */
+    public void setLeftHeight(double height, double arbitraryFeedForward) {
+        if (safeToClimb()) {
+            leftMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, arbitraryFeedForward);
+        }
+    }
     /**
      * All cases where we want to prevent the drivers from climbing should return true here. whether it's by game time.
      * It won't allow climbing before the endgame
@@ -181,7 +209,7 @@ public class Climber extends SubsystemBase {
      * @return whether the robot should not climb
      */
     private boolean safeToClimb() {
-        return Robot.debug || DriverStation.getInstance().getMatchTime() > 120;
+        return Robot.debug || DriverStation.getInstance().getMatchTime() <= 30;
     }
 
     public void changePIDFSlot(int slot) {
@@ -207,16 +235,20 @@ public class Climber extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("climbLeftHeight", getLeftHeight());
-        SmartDashboard.putNumber("climbRightHeight", getRightHeight());
+        double leftHeight = getLeftHeight();
+        double rightHeight = getRightHeight();
 
-        if (getRightHeight() >= Constants.Climber.MAX_HEIGHT) {
-            setRightHeight(Constants.Climber.MAX_HEIGHT);
-        }
+        SmartDashboard.putNumber("climbLeftHeight", leftHeight);
+        SmartDashboard.putNumber("climbRightHeight", rightHeight);
 
-        if (getLeftHeight() >= Constants.Climber.MAX_HEIGHT) {
-            setLeftHeight(Constants.Climber.MAX_HEIGHT);
-        }
         CustomDashboard.setClimb(isStopperEngaged());
+
+        CustomDashboard.setClimbLeftHeight(leftHeight);
+        CustomDashboard.setClimbRightHeight(rightHeight);
+    }
+
+    public void resetEncoders(){
+        rightMotor.setSelectedSensorPosition(0);
+        leftMotor.setSelectedSensorPosition(0);
     }
 }

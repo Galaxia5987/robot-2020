@@ -80,16 +80,16 @@ public class Ports {
         public static final boolean RIGHT_MOTOR_INVERTED = CONST(true);
         public static final boolean LEFT_ENCODER_INVERTED = CONST(true);
         public static final boolean RIGHT_ENCODER_INVERTED = CONST(true);
-        public static final boolean IS_STOPPER_REVERSED = CONST(false);
+        public static final boolean IS_STOPPER_REVERSED = CONST(true);
     }
 }
 
 class BPorts{
     public static class Shooter {
-        public static final boolean IS_MASTER_INVERTED = true;
-        public static final boolean IS_SLAVE_1_INVERTED = false;
+        public static final boolean IS_MASTER_INVERTED = false;
+        public static final boolean IS_SLAVE_1_INVERTED = true;
         public static final boolean IS_SLAVE_2_INVERTED = true;
-        public static final boolean IS_ENCODER_INVERTED = false;
+        public static final boolean IS_ENCODER_INVERTED = true;
     }
 
 
@@ -109,7 +109,6 @@ class BPorts{
 
     public static class Conveyor {
         public static final boolean FUNNEL_INVERTED = false;
-        public static final boolean MOTOR_INVERTED = true;
         public static final boolean IS_GATE_REVERSED = true;
         public static final int SHOOTER_PROXIMITY = 3;
 

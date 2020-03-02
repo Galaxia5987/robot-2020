@@ -12,7 +12,7 @@ import static frc.robot.Constants.ColorWheel.*;
  */
 public class PositionControl extends CommandBase {
     private char targetColorChar;
-    private int currentColor;
+    private Integer currentColor;
     private Timer endTimer = new Timer(); // Used to make sure we don't overshoot over the wanted color.
     private ColorWheel colorWheel;
 
@@ -41,17 +41,22 @@ public class PositionControl extends CommandBase {
 
     @Override
     public void execute() {
+        colorWheel.updateSensor();
         currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
+        if (currentColor == null){
+            this.cancel();
+            return;
+        }
         int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(targetColorChar)) - TILES_BEFORE_SENSOR, 4);
         switch (distanceFromTarget){
             case(2):
-                colorWheel.setPower(kP.get());
+                colorWheel.setPower(kP);
                 break;
             case(1):
-                colorWheel.setPower(kI.get());
+                colorWheel.setPower(kI);
                 break;
             case(3):
-                colorWheel.setPower(-kI.get());
+                colorWheel.setPower(-kI);
                 break;
             default:
                 colorWheel.setPower(0);

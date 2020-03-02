@@ -38,8 +38,6 @@ public class ShootAtVelocity extends CommandBase {
         }else { setpoint = targetVelocity.get();
         }
         shooter.setSpeed(setpoint);
-        FireLog.log("shooterSpeed", shooter.getSpeed());
-        FireLog.log("shooterSetpoint", setpoint);
         SmartDashboard.putNumber("shooterVoltage", shooter.getMasterVoltage());
     }
 

@@ -8,6 +8,7 @@
 package frc.robot.subsystems.climb.commands;
 
 import com.stormbots.MiniPID;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -19,7 +20,7 @@ import frc.robot.subsystems.climb.Climber;
 public class PIDClimbAndBalance extends CommandBase {
     private final Climber climber;
     private MiniPID deltaPID = new MiniPID(Constants.Climber.DELTA_PID[0], Constants.Climber.DELTA_PID[1], Constants.Climber.DELTA_PID[2]);
-    private double setpointHeightFromGround;
+    private double setpointHeight;
     private double setpointAngle;
     private double delta = 0;
     private double currentAngleError;
@@ -33,7 +34,7 @@ public class PIDClimbAndBalance extends CommandBase {
      */
     public PIDClimbAndBalance(Climber climber) {
         this.climber = climber;
-        this.setpointHeightFromGround = (climber.getLeftHeight() + climber.getRightHeight()) / 2;
+        this.setpointHeight = Constants.Climber.HEIGHT_TARGET;
         this.setpointAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(climber);
@@ -44,22 +45,22 @@ public class PIDClimbAndBalance extends CommandBase {
      *
      * @param climber The subsystem used by this command.
      */
-    public PIDClimbAndBalance(Climber climber, double setpointHeightFromGround) {
+    public PIDClimbAndBalance(Climber climber, double setpointHeight) {
         this.climber = climber;
-        this.setpointHeightFromGround = setpointHeightFromGround;
+        this.setpointHeight = setpointHeight;
         this.setpointAngle = 0;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(climber);
     }
 
     /**
-     * @param subsystem                the subsystem
-     * @param setpointHeightFromGround the desired height for the mechanism
-     * @param setpointAngle            the desired angle
+     * @param subsystem      the subsystem
+     * @param setpointHeight the desired height for the mechanism
+     * @param setpointAngle  the desired angle
      */
-    public PIDClimbAndBalance(Climber subsystem, double setpointHeightFromGround, double setpointAngle) {
+    public PIDClimbAndBalance(Climber subsystem, double setpointHeight, double setpointAngle) {
         this.climber = subsystem;
-        this.setpointHeightFromGround = setpointHeightFromGround;
+        this.setpointHeight = setpointHeight;
         this.setpointAngle = setpointAngle;
         addRequirements(subsystem);
     }
@@ -69,27 +70,30 @@ public class PIDClimbAndBalance extends CommandBase {
     public void initialize() {
         climber.releaseStopper();
         climber.changePIDFSlot(0);
+        delta = 0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         //Update the target height of each side
-        leftSetpointHeight = setpointHeightFromGround;
-        rightSetpointHeight = setpointHeightFromGround;
+        leftSetpointHeight = setpointHeight;
+        rightSetpointHeight = setpointHeight;
 
         //Calculate the error angle and the current height
-        currentAngleError = setpointAngle - RobotContainer.navx.getRoll();
+        currentAngleError = setpointAngle + RobotContainer.navx.getRoll();
 
-        delta += deltaPID.getOutput((RobotContainer.navx.getRoll() - setpointAngle), 0);
+        delta += deltaPID.getOutput(currentAngleError, 0);
         delta = climber.normalizeDelta(delta);
+        if (Math.abs(delta) <= Constants.Climber.MIN_DELTA) delta = 0;
 
         leftSetpointHeight += delta * 0.5;
         rightSetpointHeight -= delta * 0.5;
 
+
         if (!climber.isStopperEngaged()) {
-            climber.setLeftHeight(leftSetpointHeight);
-            climber.setRightHeight(rightSetpointHeight);
+            climber.setLeftHeight(leftSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD);
+            climber.setRightHeight(rightSetpointHeight, Constants.Climber.ARBITRARY_FEEDFORWARD);
         } else {
             climber.releaseStopper();
         }
@@ -99,6 +103,9 @@ public class PIDClimbAndBalance extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         climber.engageStopper();
+        climber.setLeftHeight(climber.getLeftHeight());
+        climber.setRightHeight(climber.getRightHeight());
+
     }
 
 
@@ -109,10 +116,7 @@ public class PIDClimbAndBalance extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        boolean isLeftOnSetpoint = Math.abs(leftSetpointHeight - climber.getLeftHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
-        boolean isRightOnSetpoint = Math.abs(rightSetpointHeight - climber.getRightHeight()) < Constants.Climber.ALLOWED_HEIGHT_TOLERANCE;
-        boolean isAngleOnSetpoint = Math.abs(currentAngleError) < Constants.Climber.ALLOWED_ANGLE_TOLERANCE;
-        return isLeftOnSetpoint && isRightOnSetpoint && isAngleOnSetpoint;
+        return false;
     }
 
     /**

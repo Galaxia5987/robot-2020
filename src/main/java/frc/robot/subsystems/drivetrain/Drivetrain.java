@@ -62,7 +62,6 @@ public class Drivetrain extends SubsystemBase {
     private Timer localizationTimer = new Timer();
     private boolean isShifting = false;
 
-
     public Drivetrain() {
         FalconConfiguration motorConfigurations = new FalconConfiguration();
 
@@ -193,6 +192,14 @@ public class Drivetrain extends SubsystemBase {
      */
     public double getRightVelocity() {
         return getCurrentUnitModel().toVelocity(rightMaster.getSelectedSensorVelocity());
+    }
+
+    public void setBrake(boolean brake) {
+        NeutralMode neutralMode = brake ? NeutralMode.Brake : NeutralMode.Coast;
+        leftMaster.setNeutralMode(neutralMode);
+        leftSlave.setNeutralMode(neutralMode);
+        rightMaster.setNeutralMode(neutralMode);
+        rightMaster.setNeutralMode(neutralMode);
     }
 
     /**

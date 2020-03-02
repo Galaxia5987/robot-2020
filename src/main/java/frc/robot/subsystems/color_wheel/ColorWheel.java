@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Ports;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.color_wheel.commands.ManualControl;
+
+import javax.annotation.Nullable;
 
 public class ColorWheel extends SubsystemBase {
 
@@ -29,7 +29,7 @@ public class ColorWheel extends SubsystemBase {
     public final I2C.Port i2cPort = I2C.Port.kOnboard;
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
-    private String colorString = "";
+    private String colorString = " ";
     private final ColorMatch colorMatcher = new ColorMatch();
     private final Color BlueTarget = ColorMatch.makeColor(Constants.ColorWheel.BLUE_RGB[0], Constants.ColorWheel.BLUE_RGB[1], Constants.ColorWheel.BLUE_RGB[2]);
     private final Color GreenTarget = ColorMatch.makeColor(Constants.ColorWheel.GREEN_RGB[0], Constants.ColorWheel.GREEN_RGB[1], Constants.ColorWheel.GREEN_RGB[2]);
@@ -55,8 +55,9 @@ public class ColorWheel extends SubsystemBase {
         return colorString;
     }
 
-    public int indexOfColor(String color) {
-
+    @Nullable
+    public Integer indexOfColor(String color) {
+        if(color.isEmpty()) return null;
         switch (color.charAt(0)) {
             case ('Y'):
                 return 0;
@@ -67,7 +68,7 @@ public class ColorWheel extends SubsystemBase {
             case ('B'):
                 return 3;
             default:
-                throw new IllegalArgumentException(String.format("Color %s does not have an index", color));
+                return null;
 
         }
     }
@@ -91,20 +92,17 @@ public class ColorWheel extends SubsystemBase {
         return colorInString;
     }
 
-
     public void setPower(double percent) {
         motor.set(ControlMode.PercentOutput, percent);
     }
 
-    @Override
-    public void periodic() {
-        match = colorMatcher.matchClosestColor(colorSensor.getColor());
+    /**
+     * Updates the color string to the sensor value.
+     * As it turns out, this method is really inefficient, and SHOULDN'T BE CALLED UNLESS NECESSARY!
+     */
+    public void updateSensor(){
         Color detectedColor = colorSensor.getColor();
+        match = colorMatcher.matchClosestColor(detectedColor);
         colorString = colorToString();
-        SmartDashboard.putNumber("Red", detectedColor.red);
-        SmartDashboard.putNumber("Green", detectedColor.green);
-        SmartDashboard.putNumber("Blue", detectedColor.blue);
-        SmartDashboard.putNumber("Confidence", match.confidence);
-        SmartDashboard.putString("Detected Color", colorString);
     }
 }

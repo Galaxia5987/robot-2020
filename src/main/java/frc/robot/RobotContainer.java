@@ -16,9 +16,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commandgroups.OuttakeBalls;
+import frc.robot.autonomous.ResetOnly;
+import frc.robot.autonomous.ShootAndDriveForward;
+import frc.robot.autonomous.ShootAndDriveToPickup;
+import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.commands.PIDClimbAndBalance;
+import frc.robot.subsystems.climb.commands.ReleaseRods;
+import frc.robot.subsystems.climb.commands.ResetClimber;
 import frc.robot.subsystems.color_wheel.ColorWheel;
 import frc.robot.subsystems.color_wheel.commands.ManualControl;
 import frc.robot.subsystems.color_wheel.commands.PositionControl;
@@ -29,12 +35,13 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.FullLocalization;
 import frc.robot.subsystems.drivetrain.commands.GearShift;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
+import frc.robot.subsystems.drivetrain.commands.ResetLocalization;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
+import frc.robot.subsystems.turret.commands.TurretSwitching;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.ValueTuner;
@@ -97,20 +104,28 @@ public class RobotContainer {
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.toggleWhenPressed(new SpeedUp(shooter));
+        OI.b.toggleWhenPressed(new SpeedUp(shooter, drivetrain));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rb.whenPressed(new RotationControl(colorWheel));
-        OI.lb.whenPressed(new PositionControl(colorWheel));
+        OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
+        OI.start.toggleWhenPressed(new PositionControl(colorWheel));
+        OI.ls.whenHeld(new SequentialCommandGroup(
+                new WaitCommand(0.7),
+                new ResetLocalization(drivetrain)
+        ));
         OI.back_start.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(2),
                 new RunCommand(() -> Robot.shootingManualMode = true)
         )); //If both buttons are held without being released the manualMode will be enabled.
-        OI.start.whenPressed(() -> Robot.shootingManualMode = false); //Pressing start disables the manual mode for shooting.
-        for (int i = 1; i < 10; i++) {
+        OI.povu.whenPressed(new ReleaseRods(climber));
+        OI.povd.toggleWhenPressed(new PIDClimbAndBalance(climber));
+        OI.povr.toggleWhenPressed(new ResetClimber(climber));
+        OI.lb.toggleWhenPressed(new TurretSwitching(turret, drivetrain));
+        OI.rb.whileHeld(new FeedTurret(conveyor));
+        for (int i = 1; i <= 11; i++) {
             new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
         }
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i <= 11; i++) {
             new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
         }
     }
@@ -134,12 +149,27 @@ public class RobotContainer {
         }
     }
 
+    public String[] getAutonomousModes() {
+        return new String[]{"trenchPickup", "shootAndDriveToPickup", "shootAndDriveForward", "resetOnly"};
+    }
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
+        String autoMode = CustomDashboard.getSelectedMode();
+        switch (autoMode) {
+            case "trenchPickup":
+                return new TrenchPickup(shooter, conveyor, turret, drivetrain, intake);
+            case "shootAndDriveToPickup":
+                return new ShootAndDriveToPickup(turret, shooter, drivetrain, conveyor);
+            case "shootAndDriveForward":
+                return new ShootAndDriveForward(turret, shooter, drivetrain, conveyor);
+            case "resetOnly":
+                return new ResetOnly(drivetrain, turret);
+        }
         return null;
     }
 

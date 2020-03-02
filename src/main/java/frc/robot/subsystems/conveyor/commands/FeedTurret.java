@@ -1,15 +1,16 @@
 package frc.robot.subsystems.conveyor.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.utilities.State;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
+import frc.robot.valuetuner.WebConstant;
 
 import java.util.function.Supplier;
 
 import static frc.robot.Constants.Conveyor.*;
-import static frc.robot.Constants.Shooter.VELOCITY_TOLERANCE;
 
 /**
  * Open the mechanical stopper and feed Power Cells into the shooter.
@@ -20,6 +21,7 @@ public class FeedTurret extends CommandBase {
     private Supplier<Boolean> isTurretReady;
     private Supplier<Boolean> isShooting;
     private boolean smartFeed = false; //In cases where we want to feed at a constant rate. TODO: Deprecate this once we are confident with constant velocity checking.
+    private Timer timer = new Timer();
 
     public FeedTurret(Conveyor conveyor) {
         this(conveyor, () -> true, () -> true, () -> true);
@@ -38,10 +40,16 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void initialize() {
+        conveyor.setGate(State.OPEN);
+        conveyor.setConveyorPower(-FEED_OUTTAKE_POWER.get());
+        timer.reset();
+        timer.start();
     }
 
     @Override
     public void execute() {
+        if(timer.get() < OUTTAKE_TIME) return;
+
         if (smartFeed && isShooting.get()) {
             if (isShooterReady.get() && isTurretReady.get()) {
                 conveyor.feed();
@@ -51,20 +59,20 @@ public class FeedTurret extends CommandBase {
                 conveyor.setFunnelPower(0);
             }
         }
-        else {
-            conveyor.setConveyorPower(CONVEYOR_MOTOR_OPEN_FEED_POWER.get());
-            conveyor.setFunnelPower(FUNNEL_MOTOR_FEED_POWER.get());
+        else if(!smartFeed) {
+            conveyor.setGate(State.OPEN);
+            conveyor.setConveyorPower(CONVEYOR_FEED_POWER);
+            conveyor.setFunnelPower(FUNNEL_INTAKE_POWER);
         }
     }
 
     @Override
     public boolean isFinished() {
-        return conveyor.getBallsCount() <= 0;
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
         conveyor.stopAll();
-        conveyor.setGate(State.CLOSE);
     }
 }
