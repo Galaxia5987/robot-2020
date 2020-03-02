@@ -92,8 +92,8 @@ public class OdometryInertialProcess extends ProcessModel {
         cov[1][1] = 0;  // Assume the position is not changing by itself - use a very small covariance
         cov[2][2] = 1e-4;  // Allow change in velocity can  - change by measurements
         cov[3][3] = 1e-9;  // assume phi is not changing
-        cov[4][4] = 1e1;  // Allow change in omega
-        cov[5][5] = 1e-1;  // Allow change in bias
+        cov[4][4] = 1e-2;  // Allow change in omega
+        cov[5][5] = 1e1;  // Allow change in bias
         cov[6][6] = 1e-6;  // Allow change in bias
 
     }
