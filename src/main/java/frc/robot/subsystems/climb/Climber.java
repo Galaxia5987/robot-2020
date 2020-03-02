@@ -20,6 +20,7 @@ import frc.robot.Ports;
 import frc.robot.Robot;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
+import frc.robot.subsystems.climb.commands.JoystickRelease;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.TalonConfiguration;
 import frc.robot.valuetuner.WebConstantPIDTalon;
@@ -35,6 +36,7 @@ public class Climber extends SubsystemBase {
     private final UnitModel unitModel = new UnitModel(Constants.Climber.TICKS_PER_METER);
     private DoubleSolenoid stopperA = null;
     private Solenoid stopperB = null;
+    private boolean addDefault = false;
 
     /**
      * Creates a new climb Subsystem.
@@ -91,10 +93,10 @@ public class Climber extends SubsystemBase {
         rightMotor.config_kD(1, CLIMB_RELEASE_PIDF[2]);
         rightMotor.config_kF(1, CLIMB_RELEASE_PIDF[3]);
 
-        new WebConstantPIDTalon("climbLeftDown", CLIMB_PIDF[0],  CLIMB_PIDF[1],  CLIMB_PIDF[2],  CLIMB_PIDF[3], leftMotor, 0);
-        new WebConstantPIDTalon("climbRightDown", CLIMB_PIDF[0],  CLIMB_PIDF[1],  CLIMB_PIDF[2],  CLIMB_PIDF[3], rightMotor, 0);
-        new WebConstantPIDTalon("climbLeftUp", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], leftMotor, 1);
-        new WebConstantPIDTalon("climbRightUp", CLIMB_RELEASE_PIDF[0],  CLIMB_RELEASE_PIDF[1],  CLIMB_RELEASE_PIDF[2],  CLIMB_RELEASE_PIDF[3], rightMotor, 1);
+        new WebConstantPIDTalon("climbLeftDown", CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3], leftMotor, 0);
+        new WebConstantPIDTalon("climbRightDown", CLIMB_PIDF[0], CLIMB_PIDF[1], CLIMB_PIDF[2], CLIMB_PIDF[3], rightMotor, 0);
+        new WebConstantPIDTalon("climbLeftUp", CLIMB_RELEASE_PIDF[0], CLIMB_RELEASE_PIDF[1], CLIMB_RELEASE_PIDF[2], CLIMB_RELEASE_PIDF[3], leftMotor, 1);
+        new WebConstantPIDTalon("climbRightUp", CLIMB_RELEASE_PIDF[0], CLIMB_RELEASE_PIDF[1], CLIMB_RELEASE_PIDF[2], CLIMB_RELEASE_PIDF[3], rightMotor, 1);
 
         if (Robot.isRobotA)
             stopperA = new DoubleSolenoid(Ports.Climber.STOPPER_FORWARD, Ports.Climber.STOPPER_REVERSE);
@@ -202,6 +204,7 @@ public class Climber extends SubsystemBase {
             leftMotor.set(ControlMode.Position, unitModel.toTicks(normalizeSetpoint(height)), DemandType.ArbitraryFeedForward, arbitraryFeedForward);
         }
     }
+
     /**
      * All cases where we want to prevent the drivers from climbing should return true here. whether it's by game time.
      * It won't allow climbing before the endgame
@@ -245,9 +248,18 @@ public class Climber extends SubsystemBase {
 
         CustomDashboard.setClimbLeftHeight(leftHeight);
         CustomDashboard.setClimbRightHeight(rightHeight);
+
+        if (DriverStation.getInstance().getMatchTime() == 30) {
+            addDefault = true;
+        }
+
+        if (addDefault) {
+            this.setDefaultCommand(new JoystickRelease(this));
+            addDefault = false;
+        }
     }
 
-    public void resetEncoders(){
+    public void resetEncoders() {
         rightMotor.setSelectedSensorPosition(0);
         leftMotor.setSelectedSensorPosition(0);
     }
