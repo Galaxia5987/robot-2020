@@ -13,6 +13,7 @@ import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.drivetrain.EKF.KalmanFilter;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialObservation;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialProcess;
+import frc.robot.utilities.VisionModule;
 import org.ghrobotics.lib.debug.FalconDashboard;
 
 /*----------------------------------------------------------------------------*/
@@ -26,6 +27,7 @@ import static frc.robot.Constants.FieldGeometry.RED_OUTER_POWER_PORT_LOCATION;
 import static frc.robot.RobotContainer.drivetrain;
 import static frc.robot.RobotContainer.turret;
 import static frc.robot.RobotContainer.navx;
+import static frc.robot.utilities.Utils.flipCoordSystem;
 import static java.lang.Math.abs;
 
 /**
@@ -68,9 +70,8 @@ public class FullLocalization {
     private NetworkTableEntry encoderLeft = localizationTable.getEntry("left-encoder");
     private NetworkTableEntry encoderRight = localizationTable.getEntry("right-encoder");
 
-    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("turret");
+    private NetworkTable visionTable = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("ps3");
     private NetworkTableEntry visionAngle = visionTable.getEntry("targetYaw");
-    private NetworkTableEntry visionDistance = visionTable.getEntry("distance");
     private NetworkTableEntry visionValid = visionTable.getEntry("isValid");
 
 
@@ -170,9 +171,13 @@ public class FullLocalization {
 
          var angle = new Rotation2d( gyroAngle.getRadians() +  m_gyroOffset.getRadians());
         double target_angle = turret.getAngle() + visionAngle.getDouble(0);
-        double target_range = visionDistance.getDouble(1);
+        double target_range;
+        if (VisionModule.getRobotDistance() == null)
+            target_range = 0;
+        else
+            target_range = VisionModule.getRobotDistance();
 
-        final Pose2d target_POS = UtilityFunctions.getPortLocation(false);
+        final Pose2d target_POS = flipCoordSystem(UtilityFunctions.getPortLocation(false));
 
         double dt = Math.max(0.02,time - m_prev_time);
         // Observation object holds the new measurements
@@ -184,7 +189,12 @@ public class FullLocalization {
         // Check if encoders are valid or slipping:
         observation.setEncoderValid(EncoderValid(gyroAngle, deltaLeftDistance, deltaRightDistance));
 
-        observation.setTargetValid(VisionValid());
+        boolean isVisionValid = VisionValid();
+        observation.setTargetValid(isVisionValid);
+        SmartDashboard.putBoolean("valid", visionValid.getBoolean(false));
+        SmartDashboard.putBoolean("vision-valid-local", isVisionValid);
+        SmartDashboard.putNumber("vision-angle-local", visionAngle.getDouble(0));
+        SmartDashboard.putNumber("vision-range-local", target_range);
 
         m_previousAngle = gyroAngle;
 
@@ -231,13 +241,17 @@ public class FullLocalization {
             return false;
         }
 
-        if (visionDistance.getDouble(0) < 0.1 )
+        if (VisionModule.getRobotDistance() < 0.1)
         {
             return false;
         }
 
         if ( Math.abs(visionAngle.getDouble(180))  > 10 ) // Ignore when large tracking errors
         {
+            return false;
+        }
+
+        if  (Math.abs(VisionModule.getRobotDistance() - observation.GetExpectedRange()) > 1 ) {
             return false;
         }
         return true;
