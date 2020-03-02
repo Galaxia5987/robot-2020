@@ -99,7 +99,7 @@ public class Drivetrain extends SubsystemBase {
 
         navx.reset();
  //       Pose2d INITIAL_POSE = new Pose2d(UtilityFunctions.getAlliancePort(false).getTranslation().getX() - 10, UtilityFunctions.getAlliancePort(false).getTranslation().getY(), new Rotation2d());
-        Pose2d INITIAL_POSE = new Pose2d(15.98 - 3.2, 8.23 - 2.42, new Rotation2d());
+        Pose2d INITIAL_POSE = new Pose2d(15.98 - 3.2, 8.23 - 2.42, new Rotation2d(Math.PI));
         localization.resetPosition(INITIAL_POSE, new Rotation2d(Math.toRadians(navx.getAngle())), Robot.robotTimer.get());
         odometry.resetPosition(INITIAL_POSE, Rotation2d.fromDegrees(getHeading()));
     }
