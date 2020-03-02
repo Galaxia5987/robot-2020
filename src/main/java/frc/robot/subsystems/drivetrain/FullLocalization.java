@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.drivetrain.EKF.KalmanFilter;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialObservation;
 import frc.robot.subsystems.drivetrain.KalmanLocalization.OdometryInertialProcess;
@@ -21,13 +22,11 @@ import org.ghrobotics.lib.debug.FalconDashboard;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-import static frc.robot.Constants.Drivetrain.GYRO_INVERTED;
-import static frc.robot.Constants.FieldGeometry.OUTER_POWER_PORT_LOCATION;
+import static frc.robot.Constants.FieldGeometry.RED_OUTER_POWER_PORT_LOCATION;
 import static frc.robot.RobotContainer.drivetrain;
 import static frc.robot.RobotContainer.turret;
 import static frc.robot.RobotContainer.navx;
 import static java.lang.Math.abs;
-import static java.lang.Math.min;
 
 /**
  * Class for localization using differntial drive odometry and inertial sensors. Odometry allows you to track the
@@ -173,7 +172,7 @@ public class FullLocalization {
         double target_angle = turret.getAngle() + visionAngle.getDouble(0);
         double target_range = visionDistance.getDouble(1);
 
-        final Pose2d target_POS = OUTER_POWER_PORT_LOCATION;
+        final Pose2d target_POS = UtilityFunctions.getPortLocation(false);
 
         double dt = Math.max(0.02,time - m_prev_time);
         // Observation object holds the new measurements
@@ -185,7 +184,7 @@ public class FullLocalization {
         // Check if encoders are valid or slipping:
         observation.setEncoderValid(EncoderValid(gyroAngle, deltaLeftDistance, deltaRightDistance));
 
-        observation.setTargetValid(visionValid.getBoolean(false));
+        observation.setTargetValid(VisionValid());
 
         m_previousAngle = gyroAngle;
 
@@ -224,6 +223,25 @@ public class FullLocalization {
         resetPosition(pose, rotation, Robot.robotTimer.get());
     }
 
+    public boolean VisionValid()
+    {
+
+        if  (!visionValid.getBoolean(false))
+        {
+            return false;
+        }
+
+        if (visionDistance.getDouble(0) < 0.1 )
+        {
+            return false;
+        }
+
+        if ( Math.abs(visionAngle.getDouble(180))  > 10 ) // Ignore when large tracking errors
+        {
+            return false;
+        }
+        return true;
+    }
 
     // Detect encoder slipping condition by comparing gyro and encoder readings.
     public boolean EncoderValid(Rotation2d gyroAngle, double deltaLeftDistance,
