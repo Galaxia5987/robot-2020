@@ -87,8 +87,13 @@ public class LEDUtilities {
             if(loop_hue){
                 Color lastColor = colors[Math.floorMod(b - 1, colors.length)].right;
                 Color nextColor = colors[Math.floorMod(b, colors.length)].right;
-                int dist = Math.floorMod(colors[Math.floorMod(b, colors.length)].left - colors[Math.floorMod(b - 1, colors.length)].left, strip_length);
-                colorsBuffer.setLED(i, blend(lastColor, nextColor, dist, Math.floorMod(i + 1 - colors[Math.floorMod(b - 1, colors.length)].left, strip_length)));
+                colorsBuffer.setLED(i,
+                        blend(
+                                lastColor,
+                                nextColor,
+                                Math.floorMod(colors[Math.floorMod(b, colors.length)].left - colors[Math.floorMod(b - 1, colors.length)].left, strip_length),
+                                Math.floorMod(i + 1 - colors[Math.floorMod(b - 1, colors.length)].left , strip_length))
+                );
             }
             else {
                 Color lastColor = colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].right;

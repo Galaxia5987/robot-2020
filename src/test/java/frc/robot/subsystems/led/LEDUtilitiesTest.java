@@ -8,7 +8,7 @@ public class LEDUtilitiesTest {
 
     @Test
     public void blendRatios(){
-        LEDUtilities.printBuffer(LEDUtilities.blendColors(22, false,
+        LEDUtilities.printBuffer(LEDUtilities.blendColors(22, true,
                 new ImmutablePair<>(3, Color.kYellow),
                 new ImmutablePair<>(10, Color.kRed),
                 new ImmutablePair<>(17, Color.kBlue)
