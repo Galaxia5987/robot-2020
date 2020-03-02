@@ -19,7 +19,7 @@ public class OdometryInertialProcess extends ProcessModel {
 
     @Override
     public int stateDimension() {
-        return 6;
+        return 7;
     }
 
     @Override
@@ -30,6 +30,7 @@ public class OdometryInertialProcess extends ProcessModel {
         x[3][0] = 0;
         x[4][0] = 0;
         x[5][0] = 0;
+        x[6][0] = 0;
 
 
     }
@@ -43,6 +44,7 @@ public class OdometryInertialProcess extends ProcessModel {
         cov[3][3] = 8e-3; //  5 deg sqrd in rad for phi
         cov[4][4] = 1e-5; //  assume not moving : 0.2 deg/s for omega
         cov[5][5] = 1e0; //  assume 1 m/s^2
+        cov[6][6] = 100; //  assume 10 rad
     }
 
     @Override
@@ -53,6 +55,7 @@ public class OdometryInertialProcess extends ProcessModel {
         double phi = x[3][0];
         double omega = x[4][0];
         double acc_bias = x[5][0];
+        double angle_bias = x[6][0];
 
         // The main system dynamics:
         f[0][0] = v * cos(phi); // 2 D motion
@@ -60,6 +63,8 @@ public class OdometryInertialProcess extends ProcessModel {
         f[2][0] = m_acc-acc_bias;  // Acceleration enters here
         f[3][0] = omega;        // phi derivative is omega
         f[4][0] = 0;            // Assume constant omega
+        f[5][0] = 0;            // Assume constant bias
+        f[6][0] = 0;            // Assume constant bias
     }
 
     @Override
@@ -70,6 +75,7 @@ public class OdometryInertialProcess extends ProcessModel {
         double phi = x[3][0];
         double omega = x[4][0];
         double acc_bias = x[5][0];
+        double angle_bias = x[6][0];
 
         // Derivative of state equation
         j[0][2] = cos(phi);
@@ -86,8 +92,10 @@ public class OdometryInertialProcess extends ProcessModel {
         cov[1][1] = 0;  // Assume the position is not changing by itself - use a very small covariance
         cov[2][2] = 1e-4;  // Allow change in velocity can  - change by measurements
         cov[3][3] = 1e-9;  // assume phi is not changing
-        cov[4][4] = 1e-2;  // Allow change in omega
-        cov[4][4] = 1e1;  // Allow change in bias
+        cov[4][4] = 1e1;  // Allow change in omega
+        cov[5][5] = 1e-1;  // Allow change in bias
+        cov[6][6] = 1e-6;  // Allow change in bias
+
     }
 
 }
