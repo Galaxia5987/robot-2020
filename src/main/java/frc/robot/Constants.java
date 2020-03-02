@@ -81,8 +81,8 @@ public class Constants {
 
     public static class FieldGeometry {
         public static final double FIELD_WIDTH = 8.2296 ;
-        public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
-        public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+        public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(16.15, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
+        public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(16.15 + 0.78, 2.42, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
         public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
         public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
         public static final double OUTER_PORT_TO_LINE = 2.28; //TODO: Tune for real world
@@ -272,7 +272,7 @@ class BConstants {
 
     public static class Turret {
         public static final double KD = 150;
-        public static final int ZERO_POSITION = 777;
+        public static final int ZERO_POSITION = 644;
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
     }
 
