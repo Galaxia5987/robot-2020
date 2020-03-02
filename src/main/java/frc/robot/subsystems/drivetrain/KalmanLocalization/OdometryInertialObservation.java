@@ -21,6 +21,8 @@ public class OdometryInertialObservation  extends ObservationModel {
     private Pose2d m_TargetPose;
     private boolean m_targetValid;
 
+    private double m_ExpectedRangeSqr;
+
     public void setEncoderValid(boolean valid){
         m_encoderValid = valid;
     }
@@ -94,8 +96,13 @@ public class OdometryInertialObservation  extends ObservationModel {
         h[3][0] = dx*dx + dy*dy;
         h[4][0] = Math.IEEEremainder( Math.atan2(dy,dx) - phi,2*Math.PI);
 
+        m_ExpectedRangeSqr = h[3][0];
     }
 
+    public double GetExpectedRange()
+    {
+        return Math.sqrt(m_ExpectedRangeSqr);
+    }
     @Override
     public void observationModelJacobian(double[][] x, double[][] j) {
         double X = x[0][0];
@@ -143,7 +150,7 @@ public class OdometryInertialObservation  extends ObservationModel {
         {
             // TODO: tune vision and turret errors
             cov[3][3] = 1 ; // 10 cm range error for 5 m range (5+0.1)^2 = 25 + 2*0.5 + 0.01; => std = 1 => cov = 1
-            cov[4][4] = 1e-4 ; // about 0.5 degrees
+            cov[4][4] = 1e6 ; // about 0.5 degrees 1e-4
         }
         else
         {
