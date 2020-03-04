@@ -174,7 +174,7 @@ public class Constants {
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
-        public static final double VELOCITY_TOLERANCE = 1; // [RPS] the acceptable velocity threshold error of the shooter
+        public static final double VELOCITY_TOLERANCE = 3; // [RPS] the acceptable velocity threshold error of the shooter
         public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
         public static final double VELOCITY_DAMP_RAMP =  1; // Damp ramp for that clamp on the accelerant
         public static final double VELOCITY_DAMPENING_LIMIT = 35; // Instead of trying to reach the target velocity, reach the current velocity + a constant.
@@ -261,7 +261,7 @@ class BConstants {
 
     public static class Turret {
         public static final double KD = 150;
-        public static final int ZERO_POSITION = 636;
+        public static final int ZERO_POSITION = 645;
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
     }
 
