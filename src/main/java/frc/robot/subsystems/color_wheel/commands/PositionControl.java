@@ -21,13 +21,15 @@ public class PositionControl extends CommandBase {
         addRequirements(colorWheel);
         this.colorWheel = colorWheel;
     }
-    
+
     private char getColor() {
         String gameData = DriverStation.getInstance().getGameSpecificMessage();
-        if (gameData.length() > 0) {
-            gameData = gameData.toUpperCase();
-            if ("RGBY".contains(gameData))
-                return gameData.charAt(0);
+        if (gameData != null) {
+            if (gameData.length() > 0) {
+                gameData = gameData.toUpperCase();
+                if ("RGBY".contains(gameData))
+                    return gameData.charAt(0);
+            }
         }
         this.cancel();
         return ' ';
@@ -43,19 +45,19 @@ public class PositionControl extends CommandBase {
     public void execute() {
         colorWheel.updateSensor();
         currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
-        if (currentColor == null){
+        if (currentColor == null) {
             this.cancel();
             return;
         }
         int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(targetColorChar)) - TILES_BEFORE_SENSOR, 4);
-        switch (distanceFromTarget){
-            case(2):
+        switch (distanceFromTarget) {
+            case (2):
                 colorWheel.setPower(kP);
                 break;
-            case(1):
+            case (1):
                 colorWheel.setPower(kI);
                 break;
-            case(3):
+            case (3):
                 colorWheel.setPower(-kI);
                 break;
             default:
