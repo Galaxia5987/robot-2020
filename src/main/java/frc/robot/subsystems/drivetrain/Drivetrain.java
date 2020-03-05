@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
@@ -74,6 +75,10 @@ public class Drivetrain extends SubsystemBase {
         leftMaster.setInverted(LEFT_MASTER_INVERTED);
         leftSlave.setInverted(LEFT_SLAVE_INVERTED);
 
+        leftMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP.get());
+        leftSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP.get());
+        rightMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP.get());
+        rightSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP.get());
         motorConfigurations.setNeutralMode(NeutralMode.Coast);
         motorConfigurations.setEnableVoltageCompensation(true);
         motorConfigurations.configureVoltageCompensationSaturation(12);

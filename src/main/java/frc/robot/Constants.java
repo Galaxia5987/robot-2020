@@ -37,7 +37,7 @@ public class Constants {
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
-
+        public static final WebConstant OPEN_LOOP_RAMP = new WebConstant("drive_open_loop", 0.65);
         public static final double JOYSTICK_MIN_THRESHOLD = 0.04;
     }
 
