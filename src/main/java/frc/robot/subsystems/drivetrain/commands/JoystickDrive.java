@@ -22,7 +22,7 @@ public class JoystickDrive extends CommandBase {
             leftPower = OI.getLeftStickForward();
         if (Math.abs(OI.getRightStickForward()) > JOYSTICK_MIN_THRESHOLD)
             rightPower = OI.getRightStickForward();
-        drivetrain.setPower(bellCurveSpeed(leftPower), bellCurveSpeed(rightPower));
+        drivetrain.setPower(quadraticCurveSpeed(leftPower), quadraticCurveSpeed(rightPower));
     }
 
     public double curveSpeed(double x) {
