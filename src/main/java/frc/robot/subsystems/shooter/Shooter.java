@@ -89,14 +89,25 @@ public class Shooter extends SubsystemBase {
      * @return the calculated velocity to get to the target in rps.
      */
     public double approximateVelocity(double distance) {
-        SmartDashboard.putNumber("raw distance", distance);
         double raw_distance = distance;
+        FireLog.log("raw distance", raw_distance);
         distance = Utils.rangeCorrection(drivetrain.getVelocity(), Math.toRadians(turret.getAngle()), distance);
-        SmartDashboard.putNumber("distance correction", distance - raw_distance);
+        FireLog.log("distance correction", distance - raw_distance);
+        FireLog.log("new distance",distance);
         distance = MathUtil.clamp(distance, 1.4, 11); //The camera can't really see beyond these distances, which means they are most likely erroneous.
         return MathUtil.clamp( .0755*Math.pow(distance, 4) - 1.38254*Math.pow(distance, 3) + 8.6493*Math.pow(distance, 2) - 16.905*distance + 71.998
                 ,50,120); //Prevent the shooter from speeding up too much, and from not activating.
-}
+    }
+
+    /**
+     * @param distance the distance away from the target.
+     * @return the calculated velocity to get to the target in rps.
+     */
+    public double rawApproximateVelocity(double distance) {
+        distance = MathUtil.clamp(distance, 1.4, 11); //The camera can't really see beyond these distances, which means they are most likely erroneous.
+        return MathUtil.clamp( .0755*Math.pow(distance, 4) - 1.38254*Math.pow(distance, 3) + 8.6493*Math.pow(distance, 2) - 16.905*distance + 71.998
+                ,50,120); //Prevent the shooter from speeding up too much, and from not activating.
+    }
 
     public double getTargetVelocity(){
         return targetVelocity;

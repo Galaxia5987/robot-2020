@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -187,8 +188,11 @@ public class Utils {
      * @return the corrected range to the target
      */
     public static double rangeCorrection(double velocity, double angle, double range) {
-        double corrVelocity = - velocity * Math.cos(angle);
+        double corrVelocity = -velocity * Math.cos(angle);
+        SmartDashboard.putNumber("velocity cor", velocity);
+        SmartDashboard.putNumber("angle cor", angle);
         double time = range / AVERAGE_HORIZONTAL_POWER_CELL_SPEED;
+        SmartDashboard.putNumber("time cor", time);
         return range + corrVelocity * time;
     }
 

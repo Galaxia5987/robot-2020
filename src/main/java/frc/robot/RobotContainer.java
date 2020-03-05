@@ -35,6 +35,7 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
+import frc.robot.subsystems.shooter.commands.SpeedUpPrediction;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurretSwitching;
@@ -93,7 +94,7 @@ public class RobotContainer {
         OI.b.toggleWhenPressed(new SpeedUp(shooter, drivetrain));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
+        OI.rs.toggleWhenPressed(new SpeedUpPrediction(shooter, drivetrain));
         OI.start.toggleWhenPressed(new PositionControl(colorWheel));
         OI.ls.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(0.7),

@@ -15,7 +15,7 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
     public static double BACK_BUMPER_TO_CENTER = 0.47; //TODO: Tune for real world
-    public static double AVERAGE_HORIZONTAL_POWER_CELL_SPEED = 6; // [m / s]
+public static double AVERAGE_HORIZONTAL_POWER_CELL_SPEED = 6; // [m / s]
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
@@ -88,7 +88,7 @@ public class Constants {
 
         public static final WebConstant FEED_OUTTAKE_POWER = new WebConstant("feedOuttakePower", 0.6);
         public static final double PULSE_INTERVAL = 0.1;
-        public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.5);
+        public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.7);
         public static final double CONVEYOR_FEED_POWER = 0.7;
         public static final double FUNNEL_INTAKE_POWER = 0.3;
         public static final double CONVEYOR_INTAKE_POWER = 0.7;
