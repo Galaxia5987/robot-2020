@@ -15,8 +15,8 @@ import frc.robot.utilities.VisionModule;
 import frc.robot.valuetuner.WebConstantPIDTalon;
 import org.techfire225.webapp.FireLog;
 
+import static frc.robot.Constants.*;
 import static frc.robot.Constants.Shooter.*;
-import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Ports.Shooter.*;
 import static frc.robot.Ports.TALON_PID_SLOT;
 import static frc.robot.RobotContainer.turret;
@@ -69,7 +69,7 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
-     * @return the speed of the shooter in rpm.
+     * @return the speed of the shooter in rps.
      */
     public double getSpeed() {
         return rpsUnitModel.toVelocity(shooterMaster.getSelectedSensorVelocity());
@@ -151,4 +151,9 @@ public class Shooter extends SubsystemBase {
         FireLog.log("shooterSetpoint", targetVelocity);
         FireLog.log("shooterSpeed", getSpeed());
     }
+
+    public double getAverageBallSpeed() {
+        return Math.max((AVERAGE_HORIZONTAL_POWER_CELL_SPEED / REFERENCE_WHEEL_VELOCITY) * getSpeed(), 1);
+    }
+
 }
