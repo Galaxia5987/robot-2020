@@ -176,7 +176,7 @@ public class FullLocalization {
         var angle = new Rotation2d(gyroAngle.getRadians() + m_gyroOffset.getRadians());
         double target_angle = turret.getAngle() + visionAngle.getDouble(0);
         target_angle = Math.IEEEremainder(target_angle, 360);
-        if (abs(target_angle) > 170) {
+        if (abs(target_angle) > 90) {
             angleValid = false;
         } else {
             angleValid = true;
@@ -269,6 +269,9 @@ public class FullLocalization {
         if  (Math.abs(VisionModule.getRobotDistance() - observation.GetExpectedRange()) > 1 ) {
             return false;
         }
+
+        if (navx.isMoving())
+            return false;
 
         return true;
     }
