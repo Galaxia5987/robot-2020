@@ -10,6 +10,7 @@ import frc.robot.commandgroups.AutoShoot;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.commandgroups.ShootWarmup;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.auto.FollowPath;
 import frc.robot.subsystems.intake.Intake;
@@ -31,7 +32,7 @@ import static frc.robot.Constants.Conveyor.FUNNEL_INTAKE_POWER;
 
 public class TrenchPickup extends SequentialCommandGroup {
     private static final double INTAKE_WAIT = 1.2;
-    private static final double SHOOT_TIME = 4;
+    private static final double SHOOT_TIME = 3;
     private static final double PICKUP_SPEED = 1;
 
     private static final TrajectoryConfig toTrenchConfig =
@@ -80,8 +81,8 @@ public class TrenchPickup extends SequentialCommandGroup {
         ));
         addCommands(new ParallelCommandGroup( // Drive back to shooting while speeding up
                 new FollowPath(drivetrain, toShooting),
-                new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret)),
-                new IntakeBalls(intake)
+                new ShootWarmup(turret, shooter, drivetrain, true),
+                new FeedTurret(conveyor)
         ));
 
     }
