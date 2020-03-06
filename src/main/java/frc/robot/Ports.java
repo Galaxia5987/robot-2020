@@ -37,6 +37,7 @@ public class Ports {
         public static final boolean IS_SLAVE_1_INVERTED = CONST(true);
         public static final boolean IS_SLAVE_2_INVERTED = CONST(true);
         public static final boolean IS_ENCODER_INVERTED = CONST(true);
+        public static final int SERVO = 4;
     }
 
     public static class Turret {

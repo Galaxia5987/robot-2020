@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase {
     private final TalonSRX shooterMaster = new TalonSRX(MASTER);
     private final VictorSPX shooterSlave1 = new VictorSPX(SLAVE_1);
     private final VictorSPX shooterSlave2 = new VictorSPX(SLAVE_2);
-    private final Servo adjustableHood = new Servo(0);
+    private final Servo adjustableHood = new Servo(SERVO);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
     private hoodAngles currentHoodAngle;
