@@ -15,7 +15,8 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
     public static double BACK_BUMPER_TO_CENTER = 0.47; //TODO: Tune for real world
-public static double AVERAGE_HORIZONTAL_POWER_CELL_SPEED = 5.7; // [m / s]
+    public static double AVERAGE_HORIZONTAL_POWER_CELL_SPEED = 5.7; // [m / s]
+    public static final double REFERENCE_WHEEL_VELOCITY = 80;
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
