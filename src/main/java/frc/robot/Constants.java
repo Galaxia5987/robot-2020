@@ -109,7 +109,6 @@ public class Constants {
         public static final int STARTING_AMOUNT = 3;
 
         public static final double GATE_OPEN_TIME = 0.5; // [sec] The amount of time from the opening of the gate until it is considered open
-
     }
 
     public static class Turret {
@@ -170,6 +169,15 @@ public class Constants {
         public static final double KD = CONST(1.5);
         public static final double KF = CONST(0.014);
 
+        public static DoubleRange ALLOWED_SHOOTING_RANGE = new DoubleRange(1, 10);
+
+        public static final int MAX_CURRENT = 35; //[A]
+        public static final double SHOOTING_TIME = 3.5; // [s]
+        public static final double VELOCITY_TOLERANCE = 3; // [RPS] the acceptable velocity threshold error of the shooter
+        public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
+        public static final double VELOCITY_DAMP_RAMP =  1; // Damp ramp for that clamp on the accelerant
+        public static final double VELOCITY_DAMPENING_LIMIT = 35; // Instead of trying to reach the target velocity, reach the current velocity + a constant.
+
         public static final DoubleRange SHORT_RANGE = new DoubleRange(0, 2);
         public static final DoubleRange MEDIUM_RANGE = new DoubleRange(2, 5);
         public static final DoubleRange LONG_RANGE = new DoubleRange(5, 16);
@@ -191,15 +199,9 @@ public class Constants {
             }
         }
 
+        public static final double HOOD_INIT_ANGLE = 0; // The initial angle of the hood mechanism.
+        public static final double SERVO_PER_HOOD_ANGLE = 0; // The amount of degrees the servo needs to move for the hood to turn 1 degree.
 
-        public static DoubleRange ALLOWED_SHOOTING_RANGE = new DoubleRange(1, 10);
-
-        public static final int MAX_CURRENT = 35; //[A]
-        public static final double SHOOTING_TIME = 3.5; // [s]
-        public static final double VELOCITY_TOLERANCE = 3; // [RPS] the acceptable velocity threshold error of the shooter
-        public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
-        public static final double VELOCITY_DAMP_RAMP =  1; // Damp ramp for that clamp on the accelerant
-        public static final double VELOCITY_DAMPENING_LIMIT = 35; // Instead of trying to reach the target velocity, reach the current velocity + a constant.
     }
 
     public static class ColorWheel {

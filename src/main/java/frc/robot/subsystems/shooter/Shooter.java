@@ -120,14 +120,21 @@ public class Shooter extends SubsystemBase {
 
     public void setHoodAngle(double distance){
         if (SHORT_RANGE.containsDouble(distance))
-            adjustableHood.setAngle(hoodAngles.SHORT_RANGE.getAngle());
+            adjustableHood.setAngle(hoodToServoAngle(hoodAngles.SHORT_RANGE.getAngle()));
         else if(LONG_RANGE.containsDouble(distance))
-            adjustableHood.setAngle(hoodAngles.LONG_RANGE.getAngle());
+            adjustableHood.setAngle(hoodToServoAngle(hoodAngles.LONG_RANGE.getAngle()));
         else
-            adjustableHood.setAngle(hoodAngles.MEDIUM_RANGE.getAngle());
+            adjustableHood.setAngle(hoodToServoAngle(hoodAngles.MEDIUM_RANGE.getAngle()));
 
     }
 
+    private double hoodToServoAngle(double hoodAngle){
+        return  SERVO_PER_HOOD_ANGLE * (hoodAngle - HOOD_INIT_ANGLE);
+    }
+
+    private double servoToHoodAngle(double servoAngle){
+        return (servoAngle / SERVO_PER_HOOD_ANGLE) + HOOD_INIT_ANGLE;
+    }
     @Override
     public void periodic() {
         boolean isShooterReady = isShooterReady();
