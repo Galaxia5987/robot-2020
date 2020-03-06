@@ -168,6 +168,28 @@ public class Constants {
         public static final double KD = CONST(1.5);
         public static final double KF = CONST(0.014);
 
+        public static final DoubleRange SHORT_RANGE = new DoubleRange(0, 2);
+        public static final DoubleRange MEDIUM_RANGE = new DoubleRange(2, 5);
+        public static final DoubleRange LONG_RANGE = new DoubleRange(5, 16);
+
+        public enum hoodAngles{
+
+            SHORT_RANGE(0),
+            MEDIUM_RANGE(0),
+            LONG_RANGE(0)
+            ;
+
+            private final double rangeAngle;
+            hoodAngles(double angle) {
+                this.rangeAngle = angle;
+            }
+
+            public double getAngle(){
+                return this.rangeAngle;
+            }
+        }
+
+
         public static DoubleRange ALLOWED_SHOOTING_RANGE = new DoubleRange(1, 10);
 
         public static final int MAX_CURRENT = 35; //[A]
