@@ -135,6 +135,10 @@ public class Shooter extends SubsystemBase {
     private double servoToHoodAngle(double servoAngle){
         return (servoAngle / SERVO_PER_HOOD_ANGLE) + HOOD_INIT_ANGLE;
     }
+
+    public double getHoodAngle(){
+        return servoToHoodAngle(adjustableHood.getAngle());
+    }
     @Override
     public void periodic() {
         boolean isShooterReady = isShooterReady();
