@@ -279,6 +279,12 @@ public class Drivetrain extends SubsystemBase {
 
         FireLog.log("driveRightVelocity", Math.abs(getRightVelocity()));
         FireLog.log("driveLeftVelocity", Math.abs(getLeftVelocity()));
+
+        leftMaster.configOpenloopRamp(OPEN_LOOP_RAMP.get());
+        leftSlave.configOpenloopRamp(OPEN_LOOP_RAMP.get());
+        rightMaster.configOpenloopRamp(OPEN_LOOP_RAMP.get());
+        rightSlave.configOpenloopRamp(OPEN_LOOP_RAMP.get());
+
     }
 
     /**
