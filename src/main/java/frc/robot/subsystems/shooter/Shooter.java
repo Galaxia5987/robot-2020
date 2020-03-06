@@ -119,13 +119,22 @@ public class Shooter extends SubsystemBase {
         return shooterMaster.getMotorOutputVoltage();
     }
 
-    public void setHoodAngle(double distance){
+    /**
+     * Sets the angle of the hood, from the horizontal axis
+     * (it is important to note, higher hood angles are used in shorter ranges)
+     * @param angle angle in degrees of the hood
+     */
+    public void setHoodAngle(double angle){
+        adjustableHood.set(angle);
+    }
+
+    public void setHoodAngleByDistance(double distance){
         if(!currentHoodAngle.getRange().containsDouble(distance)){
             if(hoodAngles.SHORT_RANGE.getRange().containsDouble(distance)) currentHoodAngle = hoodAngles.SHORT_RANGE;
             if(hoodAngles.MEDIUM_RANGE.getRange().containsDouble(distance)) currentHoodAngle = hoodAngles.MEDIUM_RANGE;
             if(hoodAngles.LONG_RANGE.getRange().containsDouble(distance)) currentHoodAngle = hoodAngles.LONG_RANGE;
         }
-        adjustableHood.set(hoodToServoAngle(currentHoodAngle.getAngle()));
+        setHoodAngle(currentHoodAngle.getAngle());
     }
 
     private double hoodToServoAngle(double hoodAngle){

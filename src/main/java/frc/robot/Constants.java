@@ -184,9 +184,9 @@ public class Constants {
          */
         public enum hoodAngles{
 
-            SHORT_RANGE(0, new DoubleRange(0, 2.5)),
-            MEDIUM_RANGE(0, new DoubleRange(2, 5)),
-            LONG_RANGE(0, new DoubleRange(4.5, 10))
+            SHORT_RANGE(65, new DoubleRange(0, 2.5)),
+            MEDIUM_RANGE(36, new DoubleRange(2, 5)),
+            LONG_RANGE(25, new DoubleRange(4.5, 10))
             ;
 
             private final double rangeAngle;
@@ -205,8 +205,8 @@ public class Constants {
             }
         }
 
-        public static final double HOOD_INIT_ANGLE = 0; // The initial angle of the hood mechanism.
-        public static final double SERVO_PER_HOOD_ANGLE = 0; // The amount of degrees the servo needs to move for the hood to turn 1 degree.
+        public static final double HOOD_INIT_ANGLE = 65; // The initial angle of the hood mechanism.
+        public static final double SERVO_PER_HOOD_ANGLE = -3.875; // The amount of degrees the servo needs to move for the hood to turn 1 degree.
 
     }
 
