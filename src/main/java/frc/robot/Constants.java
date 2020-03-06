@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
-    public static double BACK_BUMPER_TO_CENTER = 0.47; //TODO: Tune for real world
+    public static double BACK_BUMPER_TO_CENTER = 0.4895;
     public static double AVERAGE_HORIZONTAL_POWER_CELL_SPEED = 5.7; // [m / s]
     public static final double REFERENCE_WHEEL_VELOCITY = 80;
 
@@ -71,7 +71,7 @@ public class Constants {
     public static class FieldGeometry {
         public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d());
         public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d());
-        public static final double OUTER_PORT_TO_LINE = 2.28; //TODO: Tune for real world
+        public static final double OUTER_PORT_TO_LINE = 3.04;
 //        public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
 //        public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
 
@@ -81,6 +81,8 @@ public class Constants {
     public static final class Intake {
         public static final double INTAKE_POWER = 0.65;
         public static final double OUTTAKE_POWER = 0.2;
+        public static final WebConstant PROPORTIONAL_INTAKE_VALUE = new WebConstant("intakeProportional", 0.165);
+        public static final WebConstant INTAKE_CONSTANT_VALUE = new WebConstant("intakeConstant", 0.4);
     }
 
     public static class Conveyor {
@@ -91,7 +93,7 @@ public class Constants {
         public static final double PULSE_INTERVAL = 0.1;
         public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.7);
         public static final double CONVEYOR_FEED_POWER = 0.7;
-        public static final double FUNNEL_INTAKE_POWER = 0.3;
+        public static final double FUNNEL_INTAKE_POWER = 0.25;
         public static final double CONVEYOR_INTAKE_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
         public static final double FUNNEL_OUTTAKE_POWER = 0.6;
@@ -146,7 +148,7 @@ public class Constants {
         public static final double DIRECT_VISION_KI = 0.001;
         public static final double DIRECT_VISION_KD = 0;
 
-        public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
+        public static final double TURRET_JOYSTICK_SPEED = 15; //Coefficient of the joystick value per degree.
 
         public static final int MAX_CURRENT = 30; // [A]
         public static final int PEAK_CURRENT = 0;
@@ -174,7 +176,7 @@ public class Constants {
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
-        public static final double VELOCITY_TOLERANCE = 1; // [RPS] the acceptable velocity threshold error of the shooter
+        public static final double VELOCITY_TOLERANCE = 3; // [RPS] the acceptable velocity threshold error of the shooter
         public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
         public static final double VELOCITY_DAMP_RAMP =  1; // Damp ramp for that clamp on the accelerant
         public static final double VELOCITY_DAMPENING_LIMIT = 35; // Instead of trying to reach the target velocity, reach the current velocity + a constant.
@@ -214,7 +216,7 @@ public class Constants {
         public static final double[] DELTA_PID = {0.0004, 0, 0}; // Proportional, Integral, Derivative
 
         public static final double MAX_HEIGHT = 0.75; // The allowed maximum height of the subsystem.
-        public static final double HEIGHT_TARGET = 0.1;
+        public static final double HEIGHT_TARGET = 0.05;
 
         public static final double MIN_DELTA = 0.001;
 
@@ -222,7 +224,7 @@ public class Constants {
 
         public static final double RAMP_RATE = 0;
 
-        public static final double CLIMB_HEIGHT = 0.5;
+        public static final double CLIMB_HEIGHT = 0.65;
         public static final double SIMPLE_CLIMB_HEIGHT = 0.4;
 
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0.05; // The allowed tolerance between the current height to the desired height.
@@ -261,7 +263,7 @@ class BConstants {
 
     public static class Turret {
         public static final double KD = 150;
-        public static final int ZERO_POSITION = 777;
+        public static final int ZERO_POSITION = 645;
         public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
     }
 

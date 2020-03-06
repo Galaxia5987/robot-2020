@@ -201,6 +201,10 @@ public class Conveyor extends SubsystemBase {
         this.ballsCount = ballsCount;
     }
 
+    public void resetBallCount() {
+        setBallsCount(STARTING_AMOUNT);
+    }
+
     /**
      * @return whether a power cell is beneath the stopper.
      */

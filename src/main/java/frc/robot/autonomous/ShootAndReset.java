@@ -20,7 +20,7 @@ public class ShootAndReset extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                         new ParallelDeadlineGroup(
                                 new WaitCommand(shootTime),
-                                new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))
+                                new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret), false)
                         )
                 ),
                 new SequentialCommandGroup(

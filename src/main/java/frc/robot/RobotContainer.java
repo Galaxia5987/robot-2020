@@ -17,6 +17,7 @@ import frc.robot.autonomous.ShootAndDriveForward;
 import frc.robot.autonomous.ShootAndDriveToPickup;
 import frc.robot.autonomous.TrenchPickup;
 import frc.robot.commandgroups.PickupBalls;
+import frc.robot.commandgroups.ProportionalPickup;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.commands.PIDClimbAndBalance;
 import frc.robot.subsystems.climb.commands.ReleaseRods;
@@ -64,6 +65,8 @@ public class RobotContainer {
     public static final Turret turret = new Turret();
     private final Command m_autoCommand = null;
 
+    public TempLeds leds = new TempLeds(turret, drivetrain, shooter);
+
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
@@ -93,6 +96,7 @@ public class RobotContainer {
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
         OI.b.toggleWhenPressed(new SpeedUp(shooter, drivetrain));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
+        OI.rt.whileHeld(new ProportionalPickup(intake, conveyor, drivetrain));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rs.toggleWhenPressed(new SpeedUpPrediction(shooter, drivetrain));
         OI.start.toggleWhenPressed(new PositionControl(colorWheel));
@@ -110,10 +114,10 @@ public class RobotContainer {
         OI.lb.toggleWhenPressed(new TurretSwitching(turret, drivetrain));
         OI.rb.whileHeld(new FeedTurret(conveyor));
         for (int i = 1; i <= 11; i++) {
-            new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH));
+            new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH, leds));
         }
         for (int i = 1; i <= 11; i++) {
-            new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW));
+            new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW, leds));
         }
     }
 
