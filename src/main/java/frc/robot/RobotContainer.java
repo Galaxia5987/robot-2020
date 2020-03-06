@@ -91,33 +91,9 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
-        OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.toggleWhenPressed(new SpeedUp(shooter, drivetrain));
-        OI.y.whileHeld(new PickupBalls(intake, conveyor));
-        OI.rt.whileHeld(new ProportionalPickup(intake, conveyor, drivetrain));
-        OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
-        OI.start.toggleWhenPressed(new PositionControl(colorWheel));
-        OI.ls.whenHeld(new SequentialCommandGroup(
-                new WaitCommand(0.7),
-                new ResetLocalization(drivetrain)
-        ));
-        OI.back_start.whenHeld(new SequentialCommandGroup(
-                new WaitCommand(2),
-                new RunCommand(() -> Robot.shootingManualMode = true)
-        )); //If both buttons are held without being released the manualMode will be enabled.
-        OI.povu.whenPressed(new ReleaseRods(climber));
-        OI.povd.toggleWhenPressed(new PIDClimbAndBalance(climber));
-        OI.povr.toggleWhenPressed(new ResetClimber(climber));
-        OI.lb.toggleWhenPressed(new TurretSwitching(turret, drivetrain));
-        OI.rb.whileHeld(new FeedTurret(conveyor));
-        for (int i = 1; i <= 11; i++) {
-            new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH, leds));
-        }
-        for (int i = 1; i <= 11; i++) {
-            new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW, leds));
-        }
+        OI.a.whenPressed(new RunCommand(() -> shooter.setHoodAngle(65)));
+        OI.b.whenPressed(new RunCommand(() -> shooter.setHoodAngle(40)));
+        OI.x.whenPressed(new RunCommand(() -> shooter.setHoodAngle(26)));
     }
 
     /**
