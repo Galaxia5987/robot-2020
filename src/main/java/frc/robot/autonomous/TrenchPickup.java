@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static frc.robot.Constants.Autonomous.*;
+import static frc.robot.Constants.Conveyor.CONVEYOR_FEED_POWER;
 import static frc.robot.Constants.Conveyor.FUNNEL_INTAKE_POWER;
 
 public class TrenchPickup extends SequentialCommandGroup {
@@ -77,13 +78,11 @@ public class TrenchPickup extends SequentialCommandGroup {
                         new PickupBalls(intake, conveyor)
                 )
         ));
-        addCommands(new ParallelDeadlineGroup( // Drive back to shooting while speeding up
+        addCommands(new ParallelCommandGroup( // Drive back to shooting while speeding up
                 new FollowPath(drivetrain, toShooting),
-                new ShootWarmup(turret, shooter, drivetrain),
-                new IntakeBalls(intake),
-                new InstantCommand(() -> conveyor.setFunnelPower(FUNNEL_INTAKE_POWER))
+                new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret)),
+                new IntakeBalls(intake)
         ));
-        addCommands(new InstantCommand(() -> VisionModule.setLEDs(true)));
-        addCommands(new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret)));
+
     }
 }
