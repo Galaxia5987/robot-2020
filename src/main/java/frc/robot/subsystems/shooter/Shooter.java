@@ -153,7 +153,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public double getAverageBallSpeed() {
-        return Math.max((AVERAGE_HORIZONTAL_POWER_CELL_SPEED / REFERENCE_WHEEL_VELOCITY) * getSpeed(), 1);
+        return Math.max((AVERAGE_HORIZONTAL_POWER_CELL_SPEED / REFERENCE_WHEEL_VELOCITY) * getSpeed(), 4);
     }
 
 }
