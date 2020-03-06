@@ -11,6 +11,7 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
+import static frc.robot.RobotContainer.shooter;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -176,7 +177,7 @@ public class Utils {
      * @return the corrected angle to the target
      */
     public static double angleCorrection(double velocity, double angle) {
-        return angle + Math.asin((velocity / AVERAGE_HORIZONTAL_POWER_CELL_SPEED) * Math.sin(angle));
+        return angle + Math.asin((velocity / shooter.getAverageBallSpeed()) * Math.sin(angle));
     }
 
     /**
@@ -191,7 +192,7 @@ public class Utils {
         double corrVelocity = -velocity * Math.cos(angle);
         SmartDashboard.putNumber("velocity cor", velocity);
         SmartDashboard.putNumber("angle cor", angle);
-        double time = range / AVERAGE_HORIZONTAL_POWER_CELL_SPEED;
+        double time = range / shooter.getAverageBallSpeed();
         SmartDashboard.putNumber("time cor", time);
         return range + corrVelocity * time;
     }

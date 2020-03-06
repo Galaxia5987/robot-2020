@@ -57,7 +57,7 @@ public class RobotContainer {
     public final CustomDashboard customDashboard = new CustomDashboard();
     public static final Drivetrain drivetrain = new Drivetrain();
     public final ColorWheel colorWheel = new ColorWheel();
-    public final Shooter shooter = new Shooter();
+    public static final Shooter shooter = new Shooter();
     public final Intake intake = new Intake();
     public final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
