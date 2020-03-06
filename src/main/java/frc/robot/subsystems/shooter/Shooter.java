@@ -126,7 +126,6 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         boolean isShooterReady = isShooterReady();
         SmartDashboard.putBoolean("shooterReady", isShooterReady);
-        adjustableHood.setAngle(targetAngle);
 
         FireLog.log("shooterVelocity", getSpeed());
         FireLog.log("shooterSetpoint", getTargetVelocity());
