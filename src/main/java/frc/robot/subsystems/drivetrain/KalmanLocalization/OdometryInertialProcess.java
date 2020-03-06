@@ -39,7 +39,7 @@ public class OdometryInertialProcess extends ProcessModel {
     public void initialStateCovariance(double[][] cov) {
         // Sets initial variance for state variables.
         cov[0][0] = 0.01; // 10 cm accuracy for X
-        cov[1][1] = 0.01; // 10 cm accuracy for Y
+        cov[1][1] = 0.1; // 10 cm accuracy for Y
         cov[2][2] = 0.0001;  // 0.01 m/s accuracy for X
         cov[3][3] = 8e-3; //  5 deg sqrd in rad for phi
         cov[4][4] = 1e-5; //  assume not moving : 0.2 deg/s for omega
@@ -88,8 +88,8 @@ public class OdometryInertialProcess extends ProcessModel {
 
     @Override
     public void processNoiseCovariance(double[][] cov) {
-        cov[0][0] = 1e-5;  // Assume the position is not changing by itself - use a very small covariance
-        cov[1][1] = 1e-5;  // Assume the position is not changing by itself - use a very small covariance
+        cov[0][0] = 5e-4;  // Assume the position is not changing by itself - use a very small covariance
+        cov[1][1] = 5e-4;  // Assume the position is not changing by itself - use a very small covariance
         cov[2][2] = 1e-4;  // Allow change in velocity can  - change by measurements
         cov[3][3] = 1e-9;  // assume phi is not changing
         cov[4][4] = 1e-2;  // Allow change in omega
