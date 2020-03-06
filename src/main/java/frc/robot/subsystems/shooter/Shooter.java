@@ -28,6 +28,7 @@ public class Shooter extends SubsystemBase {
     private final Servo adjustableHood = new Servo(0);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
+    private hoodAngles currentHoodAngle;
 
     public Shooter() {
         shooterMaster.configFactoryDefault();
@@ -119,13 +120,12 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setHoodAngle(double distance){
-        if (SHORT_RANGE.containsDouble(distance))
-            adjustableHood.setAngle(hoodToServoAngle(hoodAngles.SHORT_RANGE.getAngle()));
-        else if(LONG_RANGE.containsDouble(distance))
-            adjustableHood.setAngle(hoodToServoAngle(hoodAngles.LONG_RANGE.getAngle()));
-        else
-            adjustableHood.setAngle(hoodToServoAngle(hoodAngles.MEDIUM_RANGE.getAngle()));
-
+        if(!currentHoodAngle.getRange().containsDouble(distance)){
+            if(hoodAngles.SHORT_RANGE.getRange().containsDouble(distance)) currentHoodAngle = hoodAngles.SHORT_RANGE;
+            if(hoodAngles.MEDIUM_RANGE.getRange().containsDouble(distance)) currentHoodAngle = hoodAngles.MEDIUM_RANGE;
+            if(hoodAngles.LONG_RANGE.getRange().containsDouble(distance)) currentHoodAngle = hoodAngles.LONG_RANGE;
+        }
+        adjustableHood.set(hoodToServoAngle(currentHoodAngle.getAngle()));
     }
 
     private double hoodToServoAngle(double hoodAngle){

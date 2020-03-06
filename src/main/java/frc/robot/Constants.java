@@ -178,24 +178,30 @@ public class Constants {
         public static final double VELOCITY_DAMP_RAMP =  1; // Damp ramp for that clamp on the accelerant
         public static final double VELOCITY_DAMPENING_LIMIT = 35; // Instead of trying to reach the target velocity, reach the current velocity + a constant.
 
-        public static final DoubleRange SHORT_RANGE = new DoubleRange(0, 2);
-        public static final DoubleRange MEDIUM_RANGE = new DoubleRange(2, 5);
-        public static final DoubleRange LONG_RANGE = new DoubleRange(5, 16);
-
+        /**
+         * This enum holds the different angles of the hood, as well as their respective ranges.
+         * The different angles overlap. this is to prevent the hood angle from changing rapidly.
+         */
         public enum hoodAngles{
 
-            SHORT_RANGE(0),
-            MEDIUM_RANGE(0),
-            LONG_RANGE(0)
+            SHORT_RANGE(0, new DoubleRange(0, 2.5)),
+            MEDIUM_RANGE(0, new DoubleRange(2, 5)),
+            LONG_RANGE(0, new DoubleRange(4.5, 10))
             ;
 
             private final double rangeAngle;
-            hoodAngles(double angle) {
+            private final DoubleRange distance_range;
+            hoodAngles(double angle, DoubleRange distance_range) {
                 this.rangeAngle = angle;
+                this.distance_range = distance_range;
             }
 
             public double getAngle(){
                 return this.rangeAngle;
+            }
+
+            public DoubleRange getRange(){
+                return this.distance_range;
             }
         }
 
