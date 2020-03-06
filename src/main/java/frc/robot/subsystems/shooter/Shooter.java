@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.Constants;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
@@ -27,7 +28,6 @@ public class Shooter extends SubsystemBase {
     private final Servo adjustableHood = new Servo(0);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
-    private double targetAngle;
 
     public Shooter() {
         shooterMaster.configFactoryDefault();
@@ -118,8 +118,14 @@ public class Shooter extends SubsystemBase {
         return shooterMaster.getMotorOutputVoltage();
     }
 
-    public void setHoodAngle(double angle){
-        targetAngle = angle;
+    public void setHoodAngle(double distance){
+        if (SHORT_RANGE.containsDouble(distance))
+            adjustableHood.setAngle(hoodAngles.SHORT_RANGE.getAngle());
+        else if(LONG_RANGE.containsDouble(distance))
+            adjustableHood.setAngle(hoodAngles.LONG_RANGE.getAngle());
+        else
+            adjustableHood.setAngle(hoodAngles.MEDIUM_RANGE.getAngle());
+
     }
 
     @Override
@@ -140,4 +146,6 @@ public class Shooter extends SubsystemBase {
         FireLog.log("shooterSetpoint", targetVelocity);
         FireLog.log("shooterSpeed", getSpeed());
     }
+
+
 }
