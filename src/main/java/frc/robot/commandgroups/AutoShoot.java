@@ -9,6 +9,7 @@ import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
+import frc.robot.subsystems.shooter.commands.SpeedUpPrediction;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.TurretSwitching;
 import frc.robot.subsystems.turret.commands.VisionTurret;
@@ -31,7 +32,7 @@ public class AutoShoot extends ParallelDeadlineGroup {
         addCommands(
                 // turn the turret to the setpoint angle
                 // ready the flywheel to shoot the balls to the target distance for the desired amount of time
-                new SpeedUp(shooter, true, drivetrain),
+                new SpeedUpPrediction(shooter, true, drivetrain),
                 turretCommand
         );
     }
