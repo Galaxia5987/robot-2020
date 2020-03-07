@@ -91,9 +91,10 @@ public class RobotContainer {
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whenPressed(new RunCommand(() -> shooter.setHoodAngle(65)));
-        OI.b.whenPressed(new RunCommand(() -> shooter.setHoodAngle(40)));
-        OI.x.whenPressed(new RunCommand(() -> shooter.setHoodAngle(26)));
+        OI.a.whenPressed(new InstantCommand(() -> shooter.setHoodAngle(115)));
+        OI.b.whenPressed(new InstantCommand(() -> shooter.setHoodAngle(0)));
+        OI.x.whenPressed(new InstantCommand(() -> shooter.setHoodAngle(110)));
+        OI.y.whenPressed(new InstantCommand(() -> shooter.setHoodAngle(120)));
     }
 
     /**
