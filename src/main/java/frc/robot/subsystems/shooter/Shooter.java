@@ -146,6 +146,10 @@ public class Shooter extends SubsystemBase {
         return ((servoAngle - SERVO_AT_INIT_ANGLE) / SERVO_PER_HOOD_ANGLE) + HOOD_INIT_ANGLE;
     }
 
+    /**
+     * Note: there is no way to get the real angle of the servo, only the angle the servo was set by the PWM.
+     * @return The angle of the hood the servo has been set to reach
+     */
     public double getHoodAngle(){
         return servoToHoodAngle(adjustableHood.getAngle());
     }
