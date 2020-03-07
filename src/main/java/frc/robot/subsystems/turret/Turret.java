@@ -112,7 +112,7 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        targetAngle = normalizeSetpoint(angle);
+        targetAngle = getNearestTurretPosition(angle, getAngle(), ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
         //Use motion magic if target angle is big enough, else use tracking PID.
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);
