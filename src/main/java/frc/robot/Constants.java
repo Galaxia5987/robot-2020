@@ -205,8 +205,10 @@ public class Constants {
             }
         }
 
-        public static final double HOOD_INIT_ANGLE = 65; // The initial angle of the hood mechanism.
-        public static final double SERVO_PER_HOOD_ANGLE = -3.875; // The amount of degrees the servo needs to move for the hood to turn 1 degree.
+        // Constants for converting servo to hood angle
+        public static final double SERVO_AT_INIT_ANGLE = 10; // The angle of the server at the mechanisms initial angle.
+        public static final double HOOD_INIT_ANGLE = 25; // The initial angle of the hood mechanism.
+        public static final double SERVO_PER_HOOD_ANGLE = 4.25; // The amount of degrees the servo needs to move for the hood to turn 1 degree.
 
     }
 

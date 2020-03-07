@@ -125,7 +125,8 @@ public class Shooter extends SubsystemBase {
      * @param angle angle in degrees of the hood
      */
     public void setHoodAngle(double angle){
-        adjustableHood.setAngle(180 - angle);
+        angle = MathUtil.clamp(angle, 25, 65); //The mechanism can't have an angle beyond these values.
+        adjustableHood.set(hoodToServoAngle(angle));
     }
 
     public void setHoodAngleByDistance(double distance){
@@ -138,13 +139,17 @@ public class Shooter extends SubsystemBase {
     }
 
     private double hoodToServoAngle(double hoodAngle){
-        return  SERVO_PER_HOOD_ANGLE * (hoodAngle - HOOD_INIT_ANGLE);
+        return  SERVO_PER_HOOD_ANGLE * (hoodAngle - HOOD_INIT_ANGLE) + SERVO_AT_INIT_ANGLE;
     }
 
     private double servoToHoodAngle(double servoAngle){
-        return (servoAngle / SERVO_PER_HOOD_ANGLE) + HOOD_INIT_ANGLE;
+        return ((servoAngle - SERVO_AT_INIT_ANGLE) / SERVO_PER_HOOD_ANGLE) + HOOD_INIT_ANGLE;
     }
 
+    /**
+     * Note: there is no way to get the real angle of the servo, only the angle the servo was set by the PWM.
+     * @return The angle of the hood the servo has been set to reach
+     */
     public double getHoodAngle(){
         return servoToHoodAngle(adjustableHood.getAngle());
     }
