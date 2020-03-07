@@ -125,7 +125,7 @@ public class Shooter extends SubsystemBase {
      * @param angle angle in degrees of the hood
      */
     public void setHoodAngle(double angle){
-        adjustableHood.setAngle(angle);
+        adjustableHood.setAngle(180 - angle);
     }
 
     public void setHoodAngleByDistance(double distance){
