@@ -31,6 +31,7 @@ public class RotationControl extends CommandBase {
         clockwiseSpins = 0;
         counterClockwiseIndex = 0;
         counterClockwiseSpins = 0;
+        colorWheel.updateSensor();
         updateColorIndex();
         if (sensorColorIndex == null){
             this.cancel();
