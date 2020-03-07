@@ -125,6 +125,7 @@ public class Shooter extends SubsystemBase {
      * @param angle angle in degrees of the hood
      */
     public void setHoodAngle(double angle){
+        angle = MathUtil.clamp(angle, 25, 65); //The mechanism can't have an angle beyond these values.
         adjustableHood.set(hoodToServoAngle(angle));
     }
 
@@ -138,11 +139,11 @@ public class Shooter extends SubsystemBase {
     }
 
     private double hoodToServoAngle(double hoodAngle){
-        return  SERVO_PER_HOOD_ANGLE * (hoodAngle - HOOD_INIT_ANGLE);
+        return  SERVO_PER_HOOD_ANGLE * (hoodAngle - HOOD_INIT_ANGLE) + SERVO_AT_INIT_ANGLE;
     }
 
     private double servoToHoodAngle(double servoAngle){
-        return (servoAngle / SERVO_PER_HOOD_ANGLE) + HOOD_INIT_ANGLE;
+        return ((servoAngle - SERVO_AT_INIT_ANGLE) / SERVO_PER_HOOD_ANGLE) + HOOD_INIT_ANGLE;
     }
 
     public double getHoodAngle(){
