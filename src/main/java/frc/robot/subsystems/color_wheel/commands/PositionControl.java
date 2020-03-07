@@ -45,11 +45,12 @@ public class PositionControl extends CommandBase {
     public void execute() {
         colorWheel.updateSensor();
         currentColor = colorWheel.indexOfColor(colorWheel.getColorString());
-        if (currentColor == null) {
+        Integer targetIndex = colorWheel.indexOfColor(Character.toString(targetColorChar));
+        if (currentColor == null || targetIndex == null) {
             this.cancel();
             return;
         }
-        int distanceFromTarget = Math.floorMod(currentColor - colorWheel.indexOfColor(Character.toString(targetColorChar)) - TILES_BEFORE_SENSOR, 4);
+        int distanceFromTarget = Math.floorMod(currentColor - targetIndex - TILES_BEFORE_SENSOR, 4);
         switch (distanceFromTarget) {
             case (2):
                 colorWheel.setPower(kP);
