@@ -1,6 +1,6 @@
 package frc.robot.subsystems.led;
 
-public class HSB {
+public class HSV {
    
     public static double[] rgb2hsv(double r, double g, double b)
     {

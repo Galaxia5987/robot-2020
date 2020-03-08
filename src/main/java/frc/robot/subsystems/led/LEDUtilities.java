@@ -164,8 +164,8 @@ public class LEDUtilities {
     }
 
     public static Color HSVblend(Color colorA, Color colorB, int dist, int current){
-        double[] colorAHSV = HSB.rgb2hsv(colorA.red, colorA.green,colorA.blue);
-        double[] colorBHSV = HSB.rgb2hsv(colorB.red, colorB.green,colorB.blue);
+        double[] colorAHSV = HSV.rgb2hsv(colorA.red, colorA.green,colorA.blue);
+        double[] colorBHSV = HSV.rgb2hsv(colorB.red, colorB.green,colorB.blue);
 
         double p = current / ((double)dist - 1);
         int h;
@@ -179,7 +179,7 @@ public class LEDUtilities {
         }
         double s = colorAHSV[1] * (1 - p) + colorBHSV[1] * p;
         double v = colorAHSV[2] * (1 - p) + colorBHSV[2] * p;
-        double[] rgb = HSB.hsv2rgb(h, s, v);
+        double[] rgb = HSV.hsv2rgb(h, s, v);
         return new Color(rgb[0], rgb[1], rgb[2]);
     }
 
