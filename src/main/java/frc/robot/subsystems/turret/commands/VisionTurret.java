@@ -5,6 +5,7 @@ import frc.robot.subsystems.turret.Turret;
 import frc.robot.utilities.VisionModule;
 
 import static frc.robot.Constants.Turret.ANGLE_THRESHOLD;
+import static frc.robot.Constants.Turret.VISION_ANGLE_THRESHOLD;
 
 public class VisionTurret extends CommandBase {
     private final Turret turret;
@@ -33,7 +34,7 @@ public class VisionTurret extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return end && Math.abs(VisionModule.getVisionAngle()) < ANGLE_THRESHOLD;
+        return end && Math.abs(VisionModule.getVisionAngle()) < VISION_ANGLE_THRESHOLD;
     }
 
     @Override
