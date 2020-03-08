@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
+
 public class LEDUtilities {
 
     /**
@@ -105,6 +106,34 @@ public class LEDUtilities {
         return colorsBuffer;
     }
 
+    public static AddressableLEDBuffer hsvBlendColors(int strip_length, boolean loop_hue, ImmutablePair<Integer, Color>... colors){
+        AddressableLEDBuffer colorsBuffer = new AddressableLEDBuffer(strip_length);
+        int b = 0;
+        for(int i = 0; i < strip_length; i++){
+            if(b >= colors.length) b = colors.length-1;
+            if(i >= colors[b].left)
+                b+=1;
+            if(loop_hue){
+                Color lastColor = colors[Math.floorMod(b - 1, colors.length)].right;
+                Color nextColor = colors[Math.floorMod(b, colors.length)].right;
+                colorsBuffer.setLED(i,
+                        HSVblend(
+                                lastColor,
+                                nextColor,
+                                Math.floorMod(colors[Math.floorMod(b, colors.length)].left - colors[Math.floorMod(b - 1, colors.length)].left, strip_length),
+                                Math.floorMod(i + 1 - colors[Math.floorMod(b - 1, colors.length)].left , strip_length))
+                );
+            }
+            else {
+                Color lastColor = colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].right;
+                Color nextColor = colors[MathUtil.clamp(b, 0, colors.length - 1)].right;
+                int dist = colors[MathUtil.clamp(b, 0, colors.length - 1)].left - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left;
+                colorsBuffer.setLED(i, HSVblend(lastColor, nextColor, dist, i + 1 - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left));
+            }
+        }
+        return colorsBuffer;
+    }
+
     public static AddressableLEDBuffer dimStrip(AddressableLEDBuffer strip, double dimPercent){
         AddressableLEDBuffer newStrip = new AddressableLEDBuffer(strip.getLength());
         for(int i = 0; i < strip.getLength(); i++){
@@ -113,7 +142,7 @@ public class LEDUtilities {
                     strip.getLED(i).green * dimPercent,
                     strip.getLED(i).blue * dimPercent)
             );
-    }
+        }
         return newStrip;
     }
 
@@ -134,16 +163,33 @@ public class LEDUtilities {
 
     }
 
+    public static Color HSVblend(Color colorA, Color colorB, int dist, int current){
+        double[] colorAHSV = HSB.rgb2hsv(255*colorA.red, 255*colorA.green,255*colorA.blue);
+        double[] colorBHSV = HSB.rgb2hsv(255*colorB.red, 255*colorB.green,255*colorB.blue);
+
+        double p = current / ((double)dist - 1);
+        int h;
+        if(Math.abs(colorAHSV[0] - colorBHSV[0]) <= 180 )
+            h = (int)((colorAHSV[0] * (1 - p) + colorBHSV[0] * p));
+        else {
+            if(colorAHSV[0] < colorBHSV[0])
+                h = Math.floorMod((int)((colorAHSV[0] * (1 - p) + (colorBHSV[0]-360) * p)), 360);
+            else
+                h = Math.floorMod((int)(((colorAHSV[0]-360) * (1 - p) + colorBHSV[0] * p)), 360);
+        }
+        double s = colorAHSV[1] * (1 - p) + colorBHSV[1] * p;
+        double v = colorAHSV[2] * (1 - p) + colorBHSV[2] * p;
+        double[] rgb = HSB.hsv2rgb(h, s, v);
+        return new Color(rgb[0], rgb[1], rgb[2]);
+    }
 
     public static String colorToString(Color color) {
-        return String.format("(%s, %s, %s),", color.red, color.green, color.blue);
+        return String.format("%s, %s, %s", color.red, color.green, color.blue);
     }
 
     public static void printBuffer(AddressableLEDBuffer buffer){
-        System.out.print("[[");
         for(int i = 0; i < buffer.getLength(); i++)
             System.out.println(colorToString(buffer.getLED(i)));
-        System.out.print("]]");
     }
 
 }
