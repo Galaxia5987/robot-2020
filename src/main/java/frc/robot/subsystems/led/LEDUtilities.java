@@ -105,6 +105,18 @@ public class LEDUtilities {
         return colorsBuffer;
     }
 
+    public static AddressableLEDBuffer dimStrip(AddressableLEDBuffer strip, double dimPercent){
+        AddressableLEDBuffer newStrip = new AddressableLEDBuffer(strip.getLength());
+        for(int i = 0; i < strip.getLength(); i++){
+            newStrip.setLED(i, new Color(
+                    strip.getLED(i).red * dimPercent,
+                    strip.getLED(i).green * dimPercent,
+                    strip.getLED(i).blue * dimPercent)
+            );
+    }
+        return newStrip;
+    }
+
     private static Color blend(Color colorA, Color colorB, int dist, int current){
         double p = current / ((double)dist - 1);
         double r = colorA.red * (1 - p) + colorB.red * p;
