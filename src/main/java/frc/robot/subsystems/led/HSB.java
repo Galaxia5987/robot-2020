@@ -6,12 +6,8 @@ public class HSB {
     {
         double h, s ,v;
         double min, max, delta;
-         r /= 255.;
-         g /= 255.;
-         b /= 255.;
         min = Math.min(Math.min(r, g), b);
         max = Math.max(Math.max(r, g), b);
-
         v = max;                                // v
         delta = max - min;
         if (delta < 0.00001)
