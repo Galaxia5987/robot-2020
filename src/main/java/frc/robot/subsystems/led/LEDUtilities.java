@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
+import java.util.Arrays;
+
 
 public class LEDUtilities {
 
@@ -106,6 +108,7 @@ public class LEDUtilities {
         return colorsBuffer;
     }
 
+    @Deprecated
     public static AddressableLEDBuffer hsvBlendColors(int strip_length, boolean loop_hue, ImmutablePair<Integer, Color>... colors){
         AddressableLEDBuffer colorsBuffer = new AddressableLEDBuffer(strip_length);
         int b = 0;
@@ -190,6 +193,12 @@ public class LEDUtilities {
     public static void printBuffer(AddressableLEDBuffer buffer){
         for(int i = 0; i < buffer.getLength(); i++)
             System.out.println(colorToString(buffer.getLED(i)));
+    }
+
+    public static void printHSV(AddressableLEDBuffer buffer){
+        for(int i = 0; i < buffer.getLength(); i++){
+            System.out.println(Arrays.toString(HSV.rgb2hsv(buffer.getLED(i).red, buffer.getLED(i).green, buffer.getLED(i).blue)));
+        }
     }
 
 }
