@@ -20,12 +20,15 @@ public class LoadConveyor extends CommandBase {
     @Override
     public void initialize() {
         conveyor.setGate(State.CLOSE);
-        conveyor.setConveyorPower(CONVEYOR_INTAKE_POWER);
         conveyor.setFunnelPower(FUNNEL_INTAKE_POWER);
     }
 
     @Override
     public void execute() {
+        if (conveyor.intakeSensedBall())
+            conveyor.setConveyorPower(CONVEYOR_INTAKE_POWER);
+        else
+            conveyor.setConveyorPower(0);
     }
 
     @Override
