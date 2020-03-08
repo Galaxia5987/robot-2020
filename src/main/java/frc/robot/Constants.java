@@ -266,7 +266,7 @@ class BConstants {
     }
 
     public static class Conveyor {
-        public static final double CONVEYOR_FEED_POWER = 0.6;
+        public static final double CONVEYOR_FEED_POWER = 0.75;
     }
 
     public static class Shooter {
