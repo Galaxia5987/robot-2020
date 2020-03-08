@@ -117,6 +117,14 @@ public class LEDUtilities {
         return newStrip;
     }
 
+    public static AddressableLEDBuffer rotateStrip(AddressableLEDBuffer strip, int pixels_right){
+        AddressableLEDBuffer newStrip = new AddressableLEDBuffer(strip.getLength());
+        for(int i = 0; i < strip.getLength(); i++){
+            newStrip.setLED(i, strip.getLED(Math.floorMod(i - pixels_right, strip.getLength())));
+        }
+        return newStrip;
+    }
+
     private static Color blend(Color colorA, Color colorB, int dist, int current){
         double p = current / ((double)dist - 1);
         double r = colorA.red * (1 - p) + colorB.red * p;
