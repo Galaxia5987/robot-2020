@@ -75,10 +75,10 @@ public class Drivetrain extends SubsystemBase {
         leftMaster.setInverted(LEFT_MASTER_INVERTED);
         leftSlave.setInverted(LEFT_SLAVE_INVERTED);
 
-        leftMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP.get());
-        leftSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP.get());
-        rightMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP.get());
-        rightSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP.get());
+        leftMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
+        leftSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
+        rightMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
+        rightSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
         motorConfigurations.setNeutralMode(NeutralMode.Coast);
         motorConfigurations.setEnableVoltageCompensation(true);
         motorConfigurations.configureVoltageCompensationSaturation(12);
@@ -279,12 +279,6 @@ public class Drivetrain extends SubsystemBase {
 
         FireLog.log("driveRightVelocity", Math.abs(getRightVelocity()));
         FireLog.log("driveLeftVelocity", Math.abs(getLeftVelocity()));
-
-        leftMaster.configOpenloopRamp(OPEN_LOOP_RAMP.get());
-        leftSlave.configOpenloopRamp(OPEN_LOOP_RAMP.get());
-        rightMaster.configOpenloopRamp(OPEN_LOOP_RAMP.get());
-        rightSlave.configOpenloopRamp(OPEN_LOOP_RAMP.get());
-
     }
 
     /**
