@@ -126,7 +126,7 @@ public class Shooter extends SubsystemBase {
      */
     public void setHoodAngle(double angle){
         angle = MathUtil.clamp(angle, 25, 65); //The mechanism can't have an angle beyond these values.
-        adjustableHood.set(hoodToServoAngle(angle));
+        adjustableHood.setAngle(hoodToServoAngle(angle));
     }
 
     public void setHoodAngleByDistance(double distance){
