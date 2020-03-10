@@ -77,7 +77,8 @@ public class Constants {
     }
 
     public static final class Intake {
-        public static final double INTAKE_POWER = 0.65;
+        public static final double INTAKE_POWER = 0.44;
+        public static final double FEED_POWER = INTAKE_POWER + 0.1;
         public static final double OUTTAKE_POWER = 0.2;
         public static final WebConstant PROPORTIONAL_INTAKE_VALUE = new WebConstant("intakeProportional", 0.165);
         public static final WebConstant INTAKE_CONSTANT_VALUE = new WebConstant("intakeConstant", 0.4);
@@ -85,7 +86,6 @@ public class Constants {
 
     public static class Conveyor {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
-
 
         public static final WebConstant FEED_OUTTAKE_POWER = new WebConstant("feedOuttakePower", 0.6);
         public static final double PULSE_INTERVAL = 0.1;
