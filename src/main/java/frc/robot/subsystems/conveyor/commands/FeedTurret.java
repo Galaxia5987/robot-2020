@@ -37,7 +37,7 @@ public class FeedTurret extends CommandBase {
     }
 
     public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting, boolean outtake) {
-        this(conveyor, null, isShooterReady, isTurretReady, isShooting, true);
+        this(conveyor, null, isShooterReady, isTurretReady, isShooting, outtake);
     }
 
     public FeedTurret(Conveyor conveyor, Intake intake, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting) {
