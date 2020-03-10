@@ -25,13 +25,18 @@ public class enemyTrenchPickup extends SequentialCommandGroup {
     private static final TrajectoryConfig toShootingConfig =
             new TrajectoryConfig(2, 1.5).setReversed(true);
     private static final TrajectoryConfig toRandevouzConfig =
-            new TrajectoryConfig(2, 1).setReversed(false);
+            new TrajectoryConfig(1, 1).setReversed(false);
     private static final double SHOOT_TIME = 5;
     private static final double LOAD_TIME = 1;
-    public Path toTrench = new Path(toTrenchConfig, new Pose2d(Units.feetToMeters(33.59), Units.feetToMeters(24.5), Rotation2d.fromDegrees(180)));
+    public Path toTrench = new Path(toTrenchConfig,
+            new Pose2d(Units.feetToMeters(35.563), Units.feetToMeters(24.126), Rotation2d.fromDegrees(180)),
+            new Pose2d(Units.feetToMeters(32.999), Units.feetToMeters(24.65), Rotation2d.fromDegrees(159))
+    );
     public Path toShooting = new Path(toShootingConfig, new Pose2d(Units.feetToMeters(43.268), Units.feetToMeters(11.374), Rotation2d.fromDegrees(150)));
-    public Path toRandevouz = new Path(toRandevouzConfig, new Pose2d(Units.feetToMeters(36.311), Units.feetToMeters(12.778), Rotation2d.fromDegrees(-170)),
-            new Pose2d(Units.feetToMeters(33.22), Units.feetToMeters(14.179), Rotation2d.fromDegrees(110)));
+    public Path toRendezvous = new Path(toRandevouzConfig,
+            new Pose2d(Units.feetToMeters(36.475), Units.feetToMeters(12.263), Rotation2d.fromDegrees(166)),
+            new Pose2d(Units.feetToMeters(34.138), Units.feetToMeters(15.162), Rotation2d.fromDegrees(114))
+    );
 
 
     public enemyTrenchPickup(Turret turret, Shooter shooter, Drivetrain drivetrain, Conveyor conveyor, Intake intake) {
@@ -43,9 +48,9 @@ public class enemyTrenchPickup extends SequentialCommandGroup {
                 new ParallelDeadlineGroup(new WaitCommand(LOAD_TIME), new PickupBalls(intake, conveyor)),
                 new ShootWarmup(turret, shooter, drivetrain, false)));
 
-        addCommands(new ParallelDeadlineGroup(new WaitCommand(SHOOT_TIME), new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))));
-        addCommands(new ParallelDeadlineGroup(new FollowPath(drivetrain, toRandevouz), new PickupBalls(intake, conveyor), new ShootWarmup(turret, shooter, drivetrain)));
-        addCommands(new AutoShoot(turret, shooter, conveyor, drivetrain,new VisionTurret(turret)));
+        addCommands(new ParallelDeadlineGroup(new WaitCommand(SHOOT_TIME), new AutoShoot(turret, shooter, conveyor, intake, drivetrain, new VisionTurret(turret))));
+        addCommands(new ParallelDeadlineGroup(new FollowPath(drivetrain, toRendezvous), new PickupBalls(intake, conveyor), new ShootWarmup(turret, shooter, drivetrain)));
+        addCommands(new AutoShoot(turret, shooter, conveyor, intake, drivetrain,new VisionTurret(turret)));
 
     }
 }
