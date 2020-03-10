@@ -6,9 +6,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpiutil.math.MathUtil;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
 import static frc.robot.RobotContainer.shooter;
@@ -18,7 +16,6 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static frc.robot.Constants.AVERAGE_HORIZONTAL_POWER_CELL_SPEED;
 import static frc.robot.Constants.FieldGeometry.RED_OUTER_POWER_PORT_LOCATION;
 
 public class Utils {
@@ -175,7 +172,7 @@ public class Utils {
      * @return the corrected angle to the target
      */
     public static double angleCorrection(double velocity, double angle) {
-        return angle + Math.asin((velocity / shooter.getAverageBallSpeed()) * Math.sin(angle));
+        return angle + Math.asin((velocity / shooter.getEstimatedBallSpeed()) * Math.sin(angle));
     }
 
     /**
@@ -188,7 +185,7 @@ public class Utils {
      */
     public static double rangeCorrection(double velocity, double angle, double range) {
         double corrVelocity = -velocity * Math.cos(angle);
-        double time = range / shooter.getAverageBallSpeed();
+        double time = range / shooter.getEstimatedBallSpeed();
         return range + corrVelocity * time;
     }
 

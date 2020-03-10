@@ -149,7 +149,7 @@ public class Shooter extends SubsystemBase {
         FireLog.log("shooterSpeed", getSpeed());
     }
 
-    public double getAverageBallSpeed() {
+    public double getEstimatedBallSpeed() {
         return Math.max((AVERAGE_HORIZONTAL_POWER_CELL_SPEED / REFERENCE_WHEEL_VELOCITY) * getSpeed(), 4);
     }
 
