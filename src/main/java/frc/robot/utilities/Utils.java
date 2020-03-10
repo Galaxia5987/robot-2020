@@ -188,10 +188,7 @@ public class Utils {
      */
     public static double rangeCorrection(double velocity, double angle, double range) {
         double corrVelocity = -velocity * Math.cos(angle);
-        SmartDashboard.putNumber("velocity cor", velocity);
-        SmartDashboard.putNumber("angle cor", angle);
         double time = range / shooter.getAverageBallSpeed();
-        SmartDashboard.putNumber("time cor", time);
         return range + corrVelocity * time;
     }
 
