@@ -48,9 +48,9 @@ public class enemyTrenchPickup extends SequentialCommandGroup {
                 new ParallelDeadlineGroup(new WaitCommand(LOAD_TIME), new PickupBalls(intake, conveyor)),
                 new ShootWarmup(turret, shooter, drivetrain, false)));
 
-        addCommands(new ParallelDeadlineGroup(new WaitCommand(SHOOT_TIME), new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))));
-        addCommands(new ParallelDeadlineGroup(new FollowPath(drivetrain, toRandevouz), new PickupBalls(intake, conveyor), new ShootWarmup(turret, shooter, drivetrain)));
-        addCommands(new AutoShoot(turret, shooter, conveyor, drivetrain,new VisionTurret(turret)));
+        addCommands(new ParallelDeadlineGroup(new WaitCommand(SHOOT_TIME), new AutoShoot(turret, shooter, conveyor, intake, drivetrain, new VisionTurret(turret))));
+        addCommands(new ParallelDeadlineGroup(new FollowPath(drivetrain, toRendezvous), new PickupBalls(intake, conveyor), new ShootWarmup(turret, shooter, drivetrain)));
+        addCommands(new AutoShoot(turret, shooter, conveyor, intake, drivetrain,new VisionTurret(turret)));
 
     }
 }
