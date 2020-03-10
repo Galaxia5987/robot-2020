@@ -153,7 +153,8 @@ public class Constants {
         public static final int PEAK_DURATION = 100;
 
 
-        public static final double ANGLE_THRESHOLD = 0.5;
+        public static final double ANGLE_THRESHOLD = 1;
+        public static final double VISION_ANGLE_THRESHOLD = 0.5;
 
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
         public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
