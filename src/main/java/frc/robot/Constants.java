@@ -37,7 +37,7 @@ public class Constants {
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
-
+        public static final double OPEN_LOOP_RAMP = 0.65;
         public static final double JOYSTICK_MIN_THRESHOLD = 0.04;
     }
 
@@ -100,8 +100,8 @@ public class Constants {
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
-        public static final double INTAKE_PROXIMITY_MAX_VALUE = 200; //The minimum value for which the sensor would see a ball
-        public static final double INTAKE_PROXIMITY_MIN_VALUE = 150; //The minimum voltage which the sensor would see in between two balls
+        public static final double INTAKE_PROXIMITY_MAX_VALUE = 130; //The minimum value for which the sensor would see a ball
+        public static final double INTAKE_PROXIMITY_MIN_VALUE = 60; //The minimum voltage which the sensor would see in between two balls
         public static final double SHOOTER_PROXIMITY_MAX_VALUE = 2000;
         public static final double SHOOTER_PROXIMITY_MIN_VALUE = 800;
 
@@ -266,7 +266,7 @@ class BConstants {
     }
 
     public static class Conveyor {
-        public static final double CONVEYOR_FEED_POWER = 0.6;
+        public static final double CONVEYOR_FEED_POWER = 0.75;
     }
 
     public static class Shooter {
