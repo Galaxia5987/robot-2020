@@ -114,11 +114,9 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
-        targetAngle = Math.toDegrees(Utils.angleCorrection(drivetrain.getVelocity(), Math.toRadians(angle)));
-        FireLog.log("corrected angle", targetAngle);
-        targetAngle = normalizeSetpoint(targetAngle);
-        SmartDashboard.putNumber("corrected angle", targetAngle);
-        FireLog.log("normalized corrected angle", targetAngle);
+        angle = Math.toDegrees(Utils.angleCorrection(drivetrain.getVelocity(), Math.toRadians(angle)));
+        targetAngle = getNearestTurretPosition(angle, getAngle(), ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
+
         //Use motion magic if target angle is big enough, else use tracking PID.
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);

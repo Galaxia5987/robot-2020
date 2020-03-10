@@ -12,10 +12,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autonomous.ResetOnly;
-import frc.robot.autonomous.ShootAndDriveForward;
-import frc.robot.autonomous.ShootAndDriveToPickup;
-import frc.robot.autonomous.TrenchPickup;
+import frc.robot.autonomous.*;
 import frc.robot.commandgroups.PickupBalls;
 import frc.robot.commandgroups.ProportionalPickup;
 import frc.robot.subsystems.climb.Climber;
@@ -140,7 +137,7 @@ public class RobotContainer {
     }
 
     public String[] getAutonomousModes() {
-        return new String[]{"trenchPickup", "shootAndDriveToPickup", "shootAndDriveForward", "resetOnly"};
+        return new String[]{"trenchPickup", "shootAndDriveToPickup", "shootAndDriveForward", "resetOnly", "enemyTrench" };
     }
 
     /**
@@ -159,6 +156,8 @@ public class RobotContainer {
                 return new ShootAndDriveForward(turret, shooter, drivetrain, conveyor);
             case "resetOnly":
                 return new ResetOnly(drivetrain, turret);
+            case "enemyTrench":
+                return new enemyTrenchPickup(turret, shooter ,drivetrain, conveyor, intake);
         }
         return null;
     }

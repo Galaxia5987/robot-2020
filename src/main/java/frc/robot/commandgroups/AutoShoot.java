@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.shooter.commands.SpeedUpPrediction;
@@ -21,12 +22,20 @@ public class AutoShoot extends ParallelDeadlineGroup {
     private static double SHOOTER_WAIT = 0.5;
 
     public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor, Drivetrain drivetrain, CommandBase turretCommand) {
-        this(turret, shooter, conveyor, drivetrain, turretCommand, true);
+        this(turret, shooter, conveyor, null, drivetrain, turretCommand, true);
+    }
+
+    public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor, Intake intake, Drivetrain drivetrain, CommandBase turretCommand) {
+        this(turret, shooter, conveyor, intake, drivetrain, turretCommand, true);
     }
 
     public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor, Drivetrain drivetrain, CommandBase turretCommand, boolean outtake) {
+        this(turret, shooter, conveyor, null, drivetrain, turretCommand, true);
+    }
+
+    public AutoShoot(Turret turret, Shooter shooter, Conveyor conveyor, Intake intake, Drivetrain drivetrain, CommandBase turretCommand, boolean outtake) {
         super(new SequentialCommandGroup(
-                new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting, outtake),
+                new FeedTurret(conveyor, intake, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting, outtake),
                 new WaitCommand(SHOOTER_WAIT)
         ));
         addCommands(
