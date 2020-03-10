@@ -59,13 +59,13 @@ public class ColorWheel extends SubsystemBase {
     public Integer indexOfColor(String color) {
         if(color.isEmpty()) return null;
         switch (color.charAt(0)) {
-            case ('Y'):
+            case 'Y':
                 return 0;
-            case ('R'):
+            case 'R':
                 return 1;
-            case ('G'):
+            case 'G':
                 return 2;
-            case ('B'):
+            case 'B':
                 return 3;
             default:
                 return null;
