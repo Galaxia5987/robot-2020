@@ -37,7 +37,7 @@ public class Constants {
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
-
+        public static final double OPEN_LOOP_RAMP = 0.65;
         public static final double JOYSTICK_MIN_THRESHOLD = 0.04;
     }
 
