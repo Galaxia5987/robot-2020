@@ -37,7 +37,7 @@ public class Constants {
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
-
+        public static final double OPEN_LOOP_RAMP = 0.65;
         public static final double JOYSTICK_MIN_THRESHOLD = 0.04;
     }
 
@@ -77,7 +77,8 @@ public class Constants {
     }
 
     public static final class Intake {
-        public static final double INTAKE_POWER = 0.65;
+        public static final double INTAKE_POWER = 0.44;
+        public static final double FEED_POWER = INTAKE_POWER + 0.1;
         public static final double OUTTAKE_POWER = 0.2;
         public static final WebConstant PROPORTIONAL_INTAKE_VALUE = new WebConstant("intakeProportional", 0.165);
         public static final WebConstant INTAKE_CONSTANT_VALUE = new WebConstant("intakeConstant", 0.4);
@@ -85,7 +86,6 @@ public class Constants {
 
     public static class Conveyor {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
-
 
         public static final WebConstant FEED_OUTTAKE_POWER = new WebConstant("feedOuttakePower", 0.6);
         public static final double PULSE_INTERVAL = 0.1;
@@ -100,8 +100,8 @@ public class Constants {
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
-        public static final double INTAKE_PROXIMITY_MAX_VALUE = 200; //The minimum value for which the sensor would see a ball
-        public static final double INTAKE_PROXIMITY_MIN_VALUE = 150; //The minimum voltage which the sensor would see in between two balls
+        public static final double INTAKE_PROXIMITY_MAX_VALUE = 130; //The minimum value for which the sensor would see a ball
+        public static final double INTAKE_PROXIMITY_MIN_VALUE = 60; //The minimum voltage which the sensor would see in between two balls
         public static final double SHOOTER_PROXIMITY_MAX_VALUE = 2000;
         public static final double SHOOTER_PROXIMITY_MIN_VALUE = 800;
 

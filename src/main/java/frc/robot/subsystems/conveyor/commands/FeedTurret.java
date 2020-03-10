@@ -2,7 +2,9 @@ package frc.robot.subsystems.conveyor.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.utilities.State;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.turret.Turret;
@@ -18,6 +20,7 @@ import static frc.robot.Constants.Conveyor.*;
 public class FeedTurret extends CommandBase {
     private final boolean outtake;
     private Conveyor conveyor;
+    private Intake intake;
     private Supplier<Boolean> isShooterReady;
     private Supplier<Boolean> isTurretReady;
     private Supplier<Boolean> isShooting;
@@ -30,12 +33,23 @@ public class FeedTurret extends CommandBase {
     }
 
     public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting) {
-        this(conveyor, isShooterReady, isTurretReady, isShooting, true);
+        this(conveyor, null, isShooterReady, isTurretReady, isShooting, true);
     }
 
     public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting, boolean outtake) {
+        this(conveyor, null, isShooterReady, isTurretReady, isShooting, true);
+    }
+
+    public FeedTurret(Conveyor conveyor, Intake intake, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting) {
+        this(conveyor, intake, isShooterReady, isTurretReady, isShooting, true);
+    }
+
+    public FeedTurret(Conveyor conveyor, Intake intake, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting, boolean outtake) {
         addRequirements(conveyor);
+        if(intake == null)
+            addRequirements(intake);
         this.conveyor = conveyor;
+        this.intake = intake;
         this.isShooterReady = isShooterReady;
         this.isTurretReady = isTurretReady;
         this.isShooting = isShooting;
@@ -59,6 +73,8 @@ public class FeedTurret extends CommandBase {
         if (smartFeed && isShooting.get()) {
             if (isShooterReady.get() && isTurretReady.get()) {
                 conveyor.feed();
+                if(intake != null)
+                    intake.powerWheels(Constants.Intake.FEED_POWER);
             }
             else {
                 conveyor.setConveyorPower(0);
@@ -69,6 +85,9 @@ public class FeedTurret extends CommandBase {
             conveyor.setGate(State.OPEN);
             conveyor.setConveyorPower(CONVEYOR_FEED_POWER);
             conveyor.setFunnelPower(FUNNEL_INTAKE_POWER);
+            if(intake != null)
+                intake.powerWheels(Constants.Intake.FEED_POWER);
+
         }
     }
 
