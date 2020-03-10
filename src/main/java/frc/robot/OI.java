@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.utilities.ButtonCombination;
+import frc.robot.utilities.TriggerButton;
+import spark.TemplateViewRouteImpl;
 
 /**
  * This class holds the static methods of the buttons, in cases where commands want to read the controller values.
@@ -35,6 +37,7 @@ public class OI {
     public final static Button povl = new POVButton(xbox, 270);
     public final static Button povu = new POVButton(xbox, 0);
 
+    public final static TriggerButton rt = new TriggerButton(xbox, GenericHID.Hand.kRight, 0.3);
 
     public static double getXboxLX() {
         return xbox.getRawAxis(XboxController.Axis.kLeftX.value);

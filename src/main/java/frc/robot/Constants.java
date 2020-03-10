@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.ObjectUtils.CONST;
  */
 public class Constants {
     public static final int TALON_TIMEOUT = 10;
-    public static double BACK_BUMPER_TO_CENTER = 0.42; //TODO: Tune for real world
+    public static double BACK_BUMPER_TO_CENTER = 0.4895;
 
     public static class Drivetrain {
         //Remember! High gear == High speed!
@@ -37,8 +37,8 @@ public class Constants {
         public static final double GRAVITY_ACCELERATION = 9.80665;
 
         public static final double JOYSTICK_END_THRESHOLD = 0;
-
-        public static final double JOYSTICK_MIN_THRESHOLD = 0.08;
+        public static final double OPEN_LOOP_RAMP = 0.65;
+        public static final double JOYSTICK_MIN_THRESHOLD = 0.04;
     }
 
     public static class Autonomous {
@@ -70,7 +70,7 @@ public class Constants {
     public static class FieldGeometry {
         public static final Pose2d RED_OUTER_POWER_PORT_LOCATION = new Pose2d(15.98, 2.42, new Rotation2d());
         public static final Pose2d RED_INNER_POWER_PORT_LOCATION = new Pose2d(15.98 + 0.78, 2.42, new Rotation2d());
-        public static final double OUTER_PORT_TO_LINE = 1.92; //TODO: Tune for real world
+        public static final double OUTER_PORT_TO_LINE = 3.04;
 //        public static final Pose2d BLUE_OUTER_POWER_PORT_LOCATION = new Pose2d(0, 5.79, new Rotation2d()); // The opponent location is (x: 0, y: 2.4).
 //        public static final Pose2d BLUE_INNER_POWER_PORT_LOCATION = new Pose2d(-0.78, 5.79, new Rotation2d()); // The opponent location is (x: -0.78, y: 2.4).
 
@@ -78,19 +78,21 @@ public class Constants {
     }
 
     public static final class Intake {
-        public static final double INTAKE_POWER = 0.65;
+        public static final double INTAKE_POWER = 0.44;
+        public static final double FEED_POWER = INTAKE_POWER + 0.1;
         public static final double OUTTAKE_POWER = 0.2;
+        public static final WebConstant PROPORTIONAL_INTAKE_VALUE = new WebConstant("intakeProportional", 0.165);
+        public static final WebConstant INTAKE_CONSTANT_VALUE = new WebConstant("intakeConstant", 0.4);
     }
 
     public static class Conveyor {
         public static final double TICK_PER_METERS = 0.0382 * 4096;
 
-
         public static final WebConstant FEED_OUTTAKE_POWER = new WebConstant("feedOuttakePower", 0.6);
         public static final double PULSE_INTERVAL = 0.1;
         public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.5);
-        public static final double CONVEYOR_FEED_POWER = 0.6;
-        public static final double FUNNEL_INTAKE_POWER = 0.3;
+        public static final double CONVEYOR_FEED_POWER = 0.7;
+        public static final double FUNNEL_INTAKE_POWER = 0.25;
         public static final double CONVEYOR_INTAKE_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
         public static final double FUNNEL_OUTTAKE_POWER = 0.6;
@@ -99,8 +101,8 @@ public class Constants {
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
-        public static final double INTAKE_PROXIMITY_MAX_VALUE = 200; //The minimum value for which the sensor would see a ball
-        public static final double INTAKE_PROXIMITY_MIN_VALUE = 150; //The minimum voltage which the sensor would see in between two balls
+        public static final double INTAKE_PROXIMITY_MAX_VALUE = 130; //The minimum value for which the sensor would see a ball
+        public static final double INTAKE_PROXIMITY_MIN_VALUE = 60; //The minimum voltage which the sensor would see in between two balls
         public static final double SHOOTER_PROXIMITY_MAX_VALUE = 2000;
         public static final double SHOOTER_PROXIMITY_MIN_VALUE = 800;
 
@@ -117,8 +119,8 @@ public class Constants {
         public static final int TICKS_PER_ROTATION = CONST(4096);
         public static final double TICKS_PER_DEGREE = CONST(TICKS_PER_ROTATION / 360.0);
 
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
-        public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(41, 83);
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-42, 264);
+        public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(38, 86);
 
         public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
         public static final int ZERO_POSITION = CONST(902); //Encoder absolute position when the turret is facing forward. This might change occasionally.
@@ -145,7 +147,7 @@ public class Constants {
         public static final double DIRECT_VISION_KI = 0.001;
         public static final double DIRECT_VISION_KD = 0;
 
-        public static final double TURRET_JOYSTICK_SPEED = 10; //Coefficient of the joystick value per degree.
+        public static final double TURRET_JOYSTICK_SPEED = 15; //Coefficient of the joystick value per degree.
 
         public static final int MAX_CURRENT = 30; // [A]
         public static final int PEAK_CURRENT = 0;
@@ -153,6 +155,7 @@ public class Constants {
 
 
         public static final double ANGLE_THRESHOLD = 1;
+        public static final double VISION_ANGLE_THRESHOLD = 0.5;
 
         public static final int BACKLASH_ANGLE = 0; // The angle in which the motor moves without the mechanical system moving when switching direction
         public static final int VELOCITY_MINIMUM = 0; // Minimum velocity to indicate actual movement of the system instead of just small error
@@ -173,7 +176,7 @@ public class Constants {
 
         public static final int MAX_CURRENT = 35; //[A]
         public static final double SHOOTING_TIME = 3.5; // [s]
-        public static final double VELOCITY_TOLERANCE = 2; // [RPS] the acceptable velocity threshold error of the shooter
+        public static final double VELOCITY_TOLERANCE = 3; // [RPS] the acceptable velocity threshold error of the shooter
         public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
         public static final double VELOCITY_DAMP_RAMP =  1; // Damp ramp for that clamp on the accelerant
         public static final double VELOCITY_DAMPENING_LIMIT = 35; // Instead of trying to reach the target velocity, reach the current velocity + a constant.
@@ -214,14 +217,14 @@ public class Constants {
         public static final double[] DELTA_PID = {0.0004, 0, 0}; // Proportional, Integral, Derivative
 
         public static final double MAX_HEIGHT = 0.75; // The allowed maximum height of the subsystem.
-        public static final double HEIGHT_TARGET = 0.1;
+        public static final double HEIGHT_TARGET = 0.05;
 
         public static final double MIN_DELTA = 0.001;
 
 
         public static final double RAMP_RATE = 0;
 
-        public static final double CLIMB_HEIGHT = 0.5;
+        public static final double CLIMB_HEIGHT = 0.65;
         public static final double SIMPLE_CLIMB_HEIGHT = 0.4;
 
         public static final double ALLOWED_HEIGHT_TOLERANCE = 0.05; // The allowed tolerance between the current height to the desired height.
@@ -253,16 +256,13 @@ class AConstants {
     }
 
     public static class Turret {
-        public static double KD = 180;
-        public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
-        public static final int ZERO_POSITION = 1600;
-        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-47, 270);
+        public static final double KD = 150;
+        public static final int ZERO_POSITION = 645;
+        public static final DoubleRange ALLOWED_ANGLES = new DoubleRange(-41, 227);
     }
 
     public static class Conveyor {
-        public static double kP = 0.3;
-        public static double kI = 0.3;
-
+        public static final double CONVEYOR_FEED_POWER = 0.75;
     }
 
     public static class Shooter {
