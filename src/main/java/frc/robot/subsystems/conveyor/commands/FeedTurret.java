@@ -49,7 +49,8 @@ public class FeedTurret extends CommandBase {
         if(intake != null)
             addRequirements(intake);
         this.conveyor = conveyor;
-        this.intake = intake;
+        if (intake != null)
+            this.intake = intake;
         this.isShooterReady = isShooterReady;
         this.isTurretReady = isTurretReady;
         this.isShooting = isShooting;
