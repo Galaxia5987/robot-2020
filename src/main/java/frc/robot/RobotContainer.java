@@ -109,10 +109,10 @@ public class RobotContainer {
         OI.povr.toggleWhenPressed(new ResetClimber(climber));
         OI.lb.toggleWhenPressed(new TurretSwitching(turret, drivetrain));
         OI.rb.whileHeld(new FeedTurret(conveyor));
-        for (int i = 1; i <= 11; i++) {
+        for (int i = 1; i <= 12; i++) {
             new JoystickButton(OI.leftStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.HIGH, leds));
         }
-        for (int i = 1; i <= 11; i++) {
+        for (int i = 1; i <= 12; i++) {
             new JoystickButton(OI.rightStick, i).whenPressed(new GearShift(drivetrain, Drivetrain.shiftModes.LOW, leds));
         }
     }
