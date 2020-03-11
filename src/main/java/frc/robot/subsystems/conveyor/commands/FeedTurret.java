@@ -37,7 +37,7 @@ public class FeedTurret extends CommandBase {
     }
 
     public FeedTurret(Conveyor conveyor, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting, boolean outtake) {
-        this(conveyor, null, isShooterReady, isTurretReady, isShooting, true);
+        this(conveyor, null, isShooterReady, isTurretReady, isShooting, outtake);
     }
 
     public FeedTurret(Conveyor conveyor, Intake intake, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting) {
@@ -46,10 +46,10 @@ public class FeedTurret extends CommandBase {
 
     public FeedTurret(Conveyor conveyor, Intake intake, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting, boolean outtake) {
         addRequirements(conveyor);
-        if(intake == null)
+        if(intake != null)
             addRequirements(intake);
         this.conveyor = conveyor;
-        this.intake = intake;
+        this.intake = intake; //if the intake parameter was null, it wont be used in the periodic
         this.isShooterReady = isShooterReady;
         this.isTurretReady = isTurretReady;
         this.isShooting = isShooting;
@@ -99,5 +99,7 @@ public class FeedTurret extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         conveyor.stopAll();
+        if(intake != null)
+            intake.powerWheels(0);
     }
 }
