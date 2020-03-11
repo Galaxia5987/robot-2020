@@ -54,14 +54,14 @@ public class TrenchPickup extends SequentialCommandGroup {
     );
 
     public Path randezvouzPickup = new Path(randezvouzConfig
-            , new Pose2d(Units.feetToMeters(33.082), Units.feetToMeters(8.627), Rotation2d.fromDegrees(110)));
+            , new Pose2d(Units.feetToMeters(33.03), Units.feetToMeters(8.627), Rotation2d.fromDegrees(110)));
 
     private static final TrajectoryConfig toShootingConfig =
             new TrajectoryConfig(3.5, 2.5).setReversed(true);
 
     public Path toShooting = new Path(
             toShootingConfig,
-            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(5.5), Rotation2d.fromDegrees(-170))
+            new Pose2d(Units.feetToMeters(36.182), Units.feetToMeters(4.705), Rotation2d.fromDegrees(166))
     );
 
     private final List<Path> toGenerate = new ArrayList<>(Collections.singletonList(toTrench));
@@ -82,17 +82,13 @@ public class TrenchPickup extends SequentialCommandGroup {
                         new PickupBalls(intake, conveyor)
                 )
         ));
-        addCommands(new ParallelDeadlineGroup( // Drive back to shooting while speeding up
-                new FollowPath(drivetrain, toShooting),
-                new ShootWarmup(turret, shooter, drivetrain),
-                new IntakeBalls(intake),
-                new InstantCommand(() -> conveyor.setFunnelPower(FUNNEL_INTAKE_POWER))
-        ));
+        addCommands(new FollowPath(drivetrain, toShooting));
+        addCommands(new ParallelDeadlineGroup(new FollowPath(drivetrain, randezvouzPickup),
+                new SequentialCommandGroup(new WaitCommand(INTAKE_WAIT),
+                        new PickupBalls(intake, conveyor))),
+                new ShootWarmup(turret, shooter, drivetrain));
         addCommands(new InstantCommand(() -> VisionModule.setLEDs(true)));
         addCommands(new ParallelDeadlineGroup(new WaitCommand(TRENCH_SHOOT),
                 new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))));
-        addCommands(new ParallelDeadlineGroup(new FollowPath(drivetrain, randezvouzPickup),
-                new SequentialCommandGroup(new WaitCommand(INTAKE_WAIT),
-                        new PickupBalls(intake, conveyor))));
     }
 }
