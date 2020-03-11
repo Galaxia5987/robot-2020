@@ -30,7 +30,7 @@ public class TrenchPickup extends SequentialCommandGroup {
     private static final double INTAKE_WAIT = 1.2;
     private static final double SHOOT_TIME = 4;
     private static final double TRENCH_SHOOT = 3;
-    private static final double PICKUP_SPEED = 1;
+    private static final double PICKUP_SPEED = 2.0;
 
     private static final TrajectoryConfig toTrenchConfig =
             new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION)
@@ -54,14 +54,14 @@ public class TrenchPickup extends SequentialCommandGroup {
     );
 
     public Path randezvouzPickup = new Path(randezvouzConfig
-            , new Pose2d(Units.feetToMeters(33.439), Units.feetToMeters(9.009), Rotation2d.fromDegrees(110)));
+            , new Pose2d(Units.feetToMeters(33.082), Units.feetToMeters(8.627), Rotation2d.fromDegrees(110)));
 
     private static final TrajectoryConfig toShootingConfig =
             new TrajectoryConfig(3.5, 2.5).setReversed(true);
 
     public Path toShooting = new Path(
             toShootingConfig,
-            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.7), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(5.5), Rotation2d.fromDegrees(-170))
     );
 
     private final List<Path> toGenerate = new ArrayList<>(Collections.singletonList(toTrench));

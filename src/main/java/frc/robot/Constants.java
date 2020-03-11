@@ -55,7 +55,7 @@ public class Constants {
         public static final double kZeta = 0.7;
 
         public static final double MAX_SPEED = 3; // [m/s]
-        public static final double MAX_ACCELERATION = 2; // [m / s / s]
+        public static final double MAX_ACCELERATION = 2.8; // [m / s / s]
         public static final double MAX_CENTRIPETAL_ACCELERATION = 1.2; // [m / s / s]
     }
 
