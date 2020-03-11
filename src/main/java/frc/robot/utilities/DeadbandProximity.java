@@ -60,7 +60,7 @@ public class DeadbandProximity {
     }
 
     public int getValue(){
-        return value.get();
+        return Math.abs(value.get());
     }
     /**
      * Return whether the proximity senses an object.

@@ -20,13 +20,13 @@ public class Ports {
 
     public static final class Intake {
         public static final int MOTOR = 20;
-        public static final boolean MOTOR_INVERTED = CONST(true);
+        public static final boolean MOTOR_INVERTED = CONST(false);
         public static final boolean IS_FORWARD_OPEN = CONST(true); //if kForward of the solenoid opens the intake or reverse.
         public static final int FOLD_SOLENOID_REVERSE = 7;
         public static final int FOLD_SOLENOID_FORWARD = 6;
         public static final int SOLENOID = 2;
         public static final boolean IS_SOLENOID_REVERSED = CONST(false);
-        public static final boolean IS_PROXIMITY_REVERSED = true;
+        public static final boolean IS_PROXIMITY_REVERSED = false;
     }
 
     public static class Shooter {
@@ -109,7 +109,7 @@ class BPorts{
     }
 
     public static class Conveyor {
-        public static final boolean FUNNEL_INVERTED = false;
+        public static final boolean FUNNEL_INVERTED = true;
         public static final boolean IS_GATE_REVERSED = false;
         public static final int SHOOTER_PROXIMITY = 3;
 
