@@ -37,7 +37,7 @@ public class JoystickDrive extends CommandBase {
     }
 
     public double quadraticCurveSpeed(double x){
-        double b = 4, a = -1.1, c = 4.9, d = 2.3;
-        return (b * Math.pow(x, 3) + a * Math.pow(x, 5) + c * x + d * Math.pow(x, 9)) / (a + b + c + d);
+        double b = 4, c = -1.1, a = 4.9, d = 2.3;
+        return a * x + (b * Math.pow(x, 3) + c * Math.pow(x, 5) + d * Math.pow(x, 9)) / (a + b + c + d);
     }
 }
