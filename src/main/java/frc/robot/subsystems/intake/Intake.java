@@ -85,7 +85,7 @@ public class Intake extends SubsystemBase {
      * @return Proximity voltage reading in native units.
      */
     public int getSensorValue(){
-        return motor.getSelectedSensorPosition();
+        return Math.abs(motor.getSelectedSensorPosition());
     }
 
     /**
