@@ -30,31 +30,31 @@ public class TrenchPickup extends SequentialCommandGroup {
     private static final double INTAKE_WAIT = 1.2;
     private static final double SHOOT_TIME = 4;
     private static final double TRENCH_SHOOT = 3;
-    private static final double PICKUP_SPEED = 2.0;
+    private static final double PICKUP_SPEED = 2.5;
 
     private static final TrajectoryConfig toTrenchConfig =
-            new TrajectoryConfig(MAX_SPEED, MAX_ACCELERATION)
+            new TrajectoryConfig(3.5, MAX_ACCELERATION)
                     .addConstraint(new CentripetalAccelerationConstraint(MAX_CENTRIPETAL_ACCELERATION))
                     .setEndVelocity(PICKUP_SPEED);
 
     public Path toTrench = new Path(
             toTrenchConfig,
-            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.3), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(35.201), Units.feetToMeters(2.55), Rotation2d.fromDegrees(180))
     );
 
     private static final TrajectoryConfig pickupBallsConfig = new TrajectoryConfig(PICKUP_SPEED, MAX_ACCELERATION)
             .setStartVelocity(PICKUP_SPEED);
 
-    private static final TrajectoryConfig randezvouzConfig = new TrajectoryConfig(1, 1)
+    private static final TrajectoryConfig randezvouzConfig = new TrajectoryConfig(1.4, 1)
             .setStartVelocity(0);
 
     public Path pickupBalls = new Path(
             pickupBallsConfig,
-            new Pose2d(Units.feetToMeters(26.5), Units.feetToMeters(2.3), Rotation2d.fromDegrees(180))
+            new Pose2d(Units.feetToMeters(26.5), Units.feetToMeters(2.4), Rotation2d.fromDegrees(180))
     );
 
     public Path randezvouzPickup = new Path(randezvouzConfig
-            , new Pose2d(Units.feetToMeters(33.03), Units.feetToMeters(8.627), Rotation2d.fromDegrees(110)));
+            , new Pose2d(Units.feetToMeters(32.9), Units.feetToMeters(8.127), Rotation2d.fromDegrees(110)));
 
     private static final TrajectoryConfig toShootingConfig =
             new TrajectoryConfig(3.5, 2.5).setReversed(true);
@@ -63,7 +63,10 @@ public class TrenchPickup extends SequentialCommandGroup {
             toShootingConfig,
             new Pose2d(Units.feetToMeters(36.182), Units.feetToMeters(4.705), Rotation2d.fromDegrees(166))
     );
+    private static final TrajectoryConfig toShooting2Config = new TrajectoryConfig(2.5, 2.5).setReversed(true).setEndVelocity(0);
 
+    public Path toShooting2 = new Path(toShooting2Config,
+            new Pose2d(Units.feetToMeters(37), Units.feetToMeters(7.278), Rotation2d.fromDegrees(180)));
     private final List<Path> toGenerate = new ArrayList<>(Collections.singletonList(toTrench));
 
     public TrenchPickup(Shooter shooter, Conveyor conveyor, Turret turret, Drivetrain drivetrain, Intake intake) {
@@ -83,12 +86,13 @@ public class TrenchPickup extends SequentialCommandGroup {
                 )
         ));
         addCommands(new FollowPath(drivetrain, toShooting));
-        addCommands(new ParallelDeadlineGroup(new FollowPath(drivetrain, randezvouzPickup),
+        addCommands(new ParallelDeadlineGroup(new FollowPath(drivetrain, randezvouzPickup).withTimeout(3),
                 new SequentialCommandGroup(new WaitCommand(INTAKE_WAIT),
-                        new PickupBalls(intake, conveyor))),
-                new ShootWarmup(turret, shooter, drivetrain));
+                        new PickupBalls(intake, conveyor))));
+        addCommands(new ParallelRaceGroup(new FollowPath(drivetrain, toShooting2),
+                new ShootWarmup(turret, shooter, drivetrain)));
         addCommands(new InstantCommand(() -> VisionModule.setLEDs(true)));
-        addCommands(new ParallelDeadlineGroup(new WaitCommand(TRENCH_SHOOT),
+        addCommands(new ParallelDeadlineGroup(new WaitCommand(10),
                 new AutoShoot(turret, shooter, conveyor, drivetrain, new VisionTurret(turret))));
     }
 }
