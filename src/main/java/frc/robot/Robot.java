@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
         m_robotContainer = new RobotContainer();
         CustomDashboard.setAutonomousModes(m_robotContainer.getAutonomousModes());
 
-//        compressor.stop();
+        compressor.start();
 
         SmartDashboard.putBoolean("Robot A", isRobotA);
         SmartDashboard.putBoolean("Debug", debug);

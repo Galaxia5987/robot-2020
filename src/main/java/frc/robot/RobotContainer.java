@@ -33,6 +33,7 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
+import frc.robot.subsystems.shooter.commands.SpeedUpPrediction;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
 import frc.robot.subsystems.turret.commands.TurretSwitching;
@@ -52,9 +53,9 @@ public class RobotContainer {
     public static AHRS navx = new AHRS(SPI.Port.kMXP);
     public final VisionModule visionModule = new VisionModule();
     public final CustomDashboard customDashboard = new CustomDashboard();
-    public final Drivetrain drivetrain = new Drivetrain();
+    public static final Drivetrain drivetrain = new Drivetrain();
     public final ColorWheel colorWheel = new ColorWheel();
-    public final Shooter shooter = new Shooter();
+    public static final Shooter shooter = new Shooter();
     public final Intake intake = new Intake();
     public final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
@@ -94,7 +95,7 @@ public class RobotContainer {
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.rt.whileHeld(new ProportionalPickup(intake, conveyor, drivetrain));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
+        OI.rs.toggleWhenPressed(new SpeedUpPrediction(shooter, drivetrain));
         OI.start.toggleWhenPressed(new PositionControl(colorWheel));
         OI.ls.whenHeld(new SequentialCommandGroup(
                 new WaitCommand(0.7),

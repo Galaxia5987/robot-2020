@@ -9,8 +9,9 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.utilities.Utils;
 import frc.robot.utilities.VisionModule;
+import org.techfire225.webapp.FireLog;
 
-public class SpeedUp extends CommandBase {
+public class SpeedUpPrediction extends CommandBase {
     private Shooter shooter;
     private Drivetrain drivetrain;
     private NetworkTable velocityTable = NetworkTableInstance.getDefault().getTable("velocityTable");
@@ -19,17 +20,17 @@ public class SpeedUp extends CommandBase {
     private boolean isVisionActive = false;
     private boolean end = true;
 
-    public SpeedUp(Shooter shooter, double distance) {
+    public SpeedUpPrediction(Shooter shooter, double distance) {
         addRequirements(shooter);
         this.distance = distance;
         this.shooter = shooter;
     }
 
-    public SpeedUp(Shooter shooter, Drivetrain drivetrain) {
+    public SpeedUpPrediction(Shooter shooter, Drivetrain drivetrain) {
         this(shooter, true, drivetrain);
     }
 
-    public SpeedUp(Shooter shooter, boolean end, Drivetrain drivetrain) {
+    public SpeedUpPrediction(Shooter shooter, boolean end, Drivetrain drivetrain) {
         addRequirements(shooter);
         isVisionActive = true;
         this.shooter = shooter;
@@ -52,7 +53,9 @@ public class SpeedUp extends CommandBase {
             else
                 distance = Utils.localizationDistanceToPort(drivetrain.getPose());
         }
-        shooter.setSpeed(shooter.rawApproximateVelocity(distance));
+        shooter.setSpeed(shooter.approximateVelocity(distance));
+        FireLog.log("aproximateVelocity", shooter.approximateVelocity(distance));
+        FireLog.log("RawaproximateVelocity", shooter.rawApproximateVelocity(distance));
         SmartDashboard.putNumber("wallDistance", distance);
 
         velocityEntry.setDouble(shooter.getSpeed());

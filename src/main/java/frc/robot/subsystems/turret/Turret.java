@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
 import frc.robot.utilities.Utils;
@@ -17,6 +18,7 @@ import org.techfire225.webapp.FireLog;
 import static frc.robot.Constants.TALON_TIMEOUT;
 import static frc.robot.Constants.Turret.*;
 import static frc.robot.Ports.Turret.*;
+import static frc.robot.RobotContainer.drivetrain;
 
 /**
  * @author Adam & Barel
@@ -112,7 +114,9 @@ public class Turret extends SubsystemBase {
      * @param angle setpoint angle.
      */
     public void setAngle(double angle) {
+        angle = Math.toDegrees(Utils.angleCorrection(drivetrain.getVelocity(), Math.toRadians(angle)));
         targetAngle = getNearestTurretPosition(angle, getAngle(), ALLOWED_ANGLES.getMinimumDouble(), ALLOWED_ANGLES.getMaximumDouble());
+
         //Use motion magic if target angle is big enough, else use tracking PID.
         if (Math.abs(targetAngle - getAngle()) < CONTROL_MODE_THRESHOLD) {
             setPidSlot(POSITION_PID_SLOT);

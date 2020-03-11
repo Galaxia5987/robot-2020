@@ -7,9 +7,9 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpiutil.math.MathUtil;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.UtilityFunctions;
+import static frc.robot.RobotContainer.shooter;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -93,9 +93,7 @@ public class Utils {
         Pose2d targetLocation = UtilityFunctions.getPortLocation(innerPort);
         double deltaY = targetLocation.getTranslation().getY() - currentPosition.getTranslation().getY();
         double deltaX = targetLocation.getTranslation().getX() - currentPosition.getTranslation().getX();
-        double angle = Math.toDegrees(currentPosition.getRotation().getRadians() - Math.atan2(deltaY, deltaX));
-        if (angle < 0) angle += 360;
-        return angle;
+        return Math.toDegrees(currentPosition.getRotation().getRadians() - Math.atan2(deltaY, deltaX));
     }
 
     /**
@@ -164,6 +162,31 @@ public class Utils {
      */
     public static double localizationDistanceToPort(Pose2d robotPose) {
         return robotPose.getTranslation().getDistance(RED_OUTER_POWER_PORT_LOCATION.getTranslation());
+    }
+
+    /**
+     * calculates the corrected turret angle </>
+     *
+     * @param velocity the robot velocity
+     * @param angle the current turret angle
+     * @return the corrected angle to the target
+     */
+    public static double angleCorrection(double velocity, double angle) {
+        return angle + Math.asin((velocity / shooter.getEstimatedBallSpeed()) * Math.sin(angle));
+    }
+
+    /**
+     * calculates the corrected range of the robot </>
+     *
+     * @param velocity the robot velocity
+     * @param angle the turret angle
+     * @param range the distance of the robot from the target
+     * @return the corrected range to the target
+     */
+    public static double rangeCorrection(double velocity, double angle, double range) {
+        double corrVelocity = -velocity * Math.cos(angle);
+        double time = range / shooter.getEstimatedBallSpeed();
+        return range + corrVelocity * time;
     }
 
 }
