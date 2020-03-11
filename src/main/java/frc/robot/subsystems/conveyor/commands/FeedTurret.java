@@ -49,8 +49,7 @@ public class FeedTurret extends CommandBase {
         if(intake != null)
             addRequirements(intake);
         this.conveyor = conveyor;
-        if (intake != null)
-            this.intake = intake;
+        this.intake = intake; //if the intake parameter was null, it wont be used in the periodic
         this.isShooterReady = isShooterReady;
         this.isTurretReady = isTurretReady;
         this.isShooting = isShooting;
@@ -100,5 +99,7 @@ public class FeedTurret extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         conveyor.stopAll();
+        if(intake != null)
+            intake.powerWheels(0);
     }
 }
