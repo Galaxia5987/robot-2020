@@ -109,7 +109,6 @@ public class Constants {
         public static final int STARTING_AMOUNT = 3;
 
         public static final double GATE_OPEN_TIME = 0.5; // [sec] The amount of time from the opening of the gate until it is considered open
-
     }
 
     public static class Turret {
@@ -179,6 +178,39 @@ public class Constants {
         public final static double MINIMAL_VELOCITY = 2;// [RPS] minimal velocity where the shooter knows it's actually moving
         public static final double VELOCITY_DAMP_RAMP =  1; // Damp ramp for that clamp on the accelerant
         public static final double VELOCITY_DAMPENING_LIMIT = 35; // Instead of trying to reach the target velocity, reach the current velocity + a constant.
+
+        /**
+         * This enum holds the different angles of the hood, as well as their respective ranges.
+         * The different angles overlap. this is to prevent the hood angle from changing rapidly.
+         */
+        public enum hoodAngles{
+
+            SHORT_RANGE(65, new DoubleRange(0, 2.5)),
+            MEDIUM_RANGE(36, new DoubleRange(2, 5)),
+            LONG_RANGE(25, new DoubleRange(4.5, 10))
+            ;
+
+            private final double rangeAngle;
+            private final DoubleRange distance_range;
+            hoodAngles(double angle, DoubleRange distance_range) {
+                this.rangeAngle = angle;
+                this.distance_range = distance_range;
+            }
+
+            public double getAngle(){
+                return this.rangeAngle;
+            }
+
+            public DoubleRange getRange(){
+                return this.distance_range;
+            }
+        }
+
+        // Constants for converting servo to hood angle
+        public static final double SERVO_AT_INIT_ANGLE = 10; // The angle of the server at the mechanisms initial angle.
+        public static final double HOOD_INIT_ANGLE = 25; // The initial angle of the hood mechanism.
+        public static final double SERVO_PER_HOOD_ANGLE = 4.25; // The amount of degrees the servo needs to move for the hood to turn 1 degree.
+
     }
 
     public static class ColorWheel {

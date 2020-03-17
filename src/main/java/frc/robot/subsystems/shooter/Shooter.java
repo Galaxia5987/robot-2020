@@ -3,9 +3,11 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.Constants;
 import frc.robot.UtilityFunctions;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.CustomDashboard;
@@ -23,8 +25,10 @@ public class Shooter extends SubsystemBase {
     private final TalonSRX shooterMaster = new TalonSRX(MASTER);
     private final VictorSPX shooterSlave1 = new VictorSPX(SLAVE_1);
     private final VictorSPX shooterSlave2 = new VictorSPX(SLAVE_2);
+    private final Servo adjustableHood = new Servo(SERVO);
     private final UnitModel rpsUnitModel = new UnitModel(TICKS_PER_ROTATION);//TODO: correct all velocity usages to use the not yet commited velocity unit model convertion
     private double targetVelocity; // Allows commands to know what the target velocity of the talon is.
+    private hoodAngles currentHoodAngle;
 
     public Shooter() {
         shooterMaster.configFactoryDefault();
@@ -115,6 +119,40 @@ public class Shooter extends SubsystemBase {
         return shooterMaster.getMotorOutputVoltage();
     }
 
+    /**
+     * Sets the angle of the hood, from the horizontal axis
+     * (it is important to note, higher hood angles are used in shorter ranges)
+     * @param angle angle in degrees of the hood
+     */
+    public void setHoodAngle(double angle){
+        angle = MathUtil.clamp(angle, 25, 65); //The mechanism can't have an angle beyond these values.
+        adjustableHood.setAngle(hoodToServoAngle(angle));
+    }
+
+    public void setHoodAngleByDistance(double distance){
+        if(!currentHoodAngle.getRange().containsDouble(distance)){
+            if(hoodAngles.SHORT_RANGE.getRange().containsDouble(distance)) currentHoodAngle = hoodAngles.SHORT_RANGE;
+            if(hoodAngles.MEDIUM_RANGE.getRange().containsDouble(distance)) currentHoodAngle = hoodAngles.MEDIUM_RANGE;
+            if(hoodAngles.LONG_RANGE.getRange().containsDouble(distance)) currentHoodAngle = hoodAngles.LONG_RANGE;
+        }
+        setHoodAngle(currentHoodAngle.getAngle());
+    }
+
+    private double hoodToServoAngle(double hoodAngle){
+        return  SERVO_PER_HOOD_ANGLE * (hoodAngle - HOOD_INIT_ANGLE) + SERVO_AT_INIT_ANGLE;
+    }
+
+    private double servoToHoodAngle(double servoAngle){
+        return ((servoAngle - SERVO_AT_INIT_ANGLE) / SERVO_PER_HOOD_ANGLE) + HOOD_INIT_ANGLE;
+    }
+
+    /**
+     * Note: there is no way to get the real angle of the servo, only the angle the servo was set by the PWM.
+     * @return The angle of the hood the servo has been set to reach
+     */
+    public double getHoodAngle(){
+        return servoToHoodAngle(adjustableHood.getAngle());
+    }
     @Override
     public void periodic() {
         boolean isShooterReady = isShooterReady();
@@ -133,4 +171,6 @@ public class Shooter extends SubsystemBase {
         FireLog.log("shooterSetpoint", targetVelocity);
         FireLog.log("shooterSpeed", getSpeed());
     }
+
+
 }

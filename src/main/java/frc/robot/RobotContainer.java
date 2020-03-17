@@ -32,6 +32,8 @@ import frc.robot.subsystems.drivetrain.commands.ResetLocalization;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.commands.ShootAtAngle;
+import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
@@ -90,23 +92,15 @@ public class RobotContainer {
     private void configureButtonBindings() {
         OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
-        OI.b.toggleWhenPressed(new SpeedUp(shooter, drivetrain));
+        OI.b.toggleWhenPressed(new ShootAtVelocity(shooter));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
         OI.rt.whileHeld(new ProportionalPickup(intake, conveyor, drivetrain));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
-        OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
-        OI.start.toggleWhenPressed(new PositionControl(colorWheel));
-        OI.ls.whenHeld(new SequentialCommandGroup(
-                new WaitCommand(0.7),
-                new ResetLocalization(drivetrain)
-        ));
-        OI.back_start.whenHeld(new SequentialCommandGroup(
-                new WaitCommand(2),
-                new RunCommand(() -> Robot.shootingManualMode = true)
-        )); //If both buttons are held without being released the manualMode will be enabled.
-        OI.povu.whenPressed(new ReleaseRods(climber));
-        OI.povd.toggleWhenPressed(new PIDClimbAndBalance(climber));
-        OI.povr.toggleWhenPressed(new ResetClimber(climber));
+        OI.povu.whenPressed(new InstantCommand(() -> shooter.setHoodAngle(10)));
+        OI.povr.whenPressed(new ShootAtAngle(shooter));
+        OI.povd.whenPressed(new InstantCommand(() -> shooter.setHoodAngle(120)));
+        OI.povl.whenPressed(new InstantCommand(() -> shooter.setHoodAngle(165)));
+        OI.rs.whenPressed(new ResetLocalization(drivetrain));
         OI.lb.toggleWhenPressed(new TurretSwitching(turret, drivetrain));
         OI.rb.whileHeld(new FeedTurret(conveyor));
         for (int i = 1; i <= 11; i++) {
