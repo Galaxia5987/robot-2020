@@ -119,6 +119,7 @@ public class LEDUtilities {
             if(loop_hue){
                 Color lastColor = colors[Math.floorMod(b - 1, colors.length)].right;
                 Color nextColor = colors[Math.floorMod(b, colors.length)].right;
+                int current = Math.floorMod(i + 1 - colors[Math.floorMod(b - 1, colors.length)].left , strip_length);
                 colorsBuffer.setLED(i,
                         HSVblend(
                                 lastColor,
