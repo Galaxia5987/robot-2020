@@ -12,7 +12,7 @@ class Save
     {
         try{
             // Create file
-            FileWriter fstream = new FileWriter("src\\main\\java\\frc\\robot\\subsystems\\led\\present_leds\\" + "out.txt");
+            FileWriter fstream = new FileWriter("src\\main\\java\\frc\\robot\\subsystems\\led\\present_leds\\" + "strip.txt");
             BufferedWriter out = new BufferedWriter(fstream);
             AddressableLEDBuffer buffer = LEDUtilities.hsvBlendColors(22, false,
                     new ImmutablePair<>(3, edu.wpi.first.wpilibj.util.Color.kYellow),
@@ -37,7 +37,7 @@ class SaveGif
     {
         try{
             // Create file
-            FileWriter fstream = new FileWriter("src\\main\\java\\frc\\robot\\subsystems\\led\\present_leds\\" + "outgif.txt");
+            FileWriter fstream = new FileWriter("src\\main\\java\\frc\\robot\\subsystems\\led\\present_leds\\" + "animation.txt");
             BufferedWriter out = new BufferedWriter(fstream);
             AddressableLEDBuffer[] buffer = new AddressableLEDBuffer[]{LEDUtilities.colorLengths(22,
                     new ImmutablePair<>(5, edu.wpi.first.wpilibj.util.Color.kRed),
