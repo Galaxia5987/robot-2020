@@ -1,5 +1,9 @@
 package frc.robot.subsystems.led;
 
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.utilities.Utils;
+
 public class HSV {
    
     public static double[] rgb2hsv(double r, double g, double b)
@@ -19,7 +23,7 @@ public class HSV {
         if( max > 0.0 ) { // NOTE: if Max is == 0, this divide would cause a crash
             s = (delta / max);                  // s
         } else {
-            // if max is 0, then r = g = b = 0              
+            // if max is 0, then r = g = b = 0
             // s = 0, h is undefined
             s = 0.0;
             h = Double.NaN;                            // its now undefined
@@ -98,5 +102,14 @@ public class HSV {
                 break;
         }
         return new double[]{r, g, b};
+    }
+
+    public static Color hsv2Color(double h, double s, double v){
+        double[] rgb = hsv2rgb(h,s,v);
+        return new Color(rgb[0], rgb[1], rgb[2]);
+    }
+
+    public static double[] Color2hsv(Color color){
+        return rgb2hsv(color.red, color.green, color.blue);
     }
 }
