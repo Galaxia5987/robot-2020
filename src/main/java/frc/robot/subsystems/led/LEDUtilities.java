@@ -94,21 +94,20 @@ public class LEDUtilities {
                         blend(
                                 lastColor,
                                 nextColor,
-                                Math.floorMod(colors[Math.floorMod(b, colors.length)].left - colors[Math.floorMod(b - 1, colors.length)].left, strip_length),
-                                Math.floorMod(i + 1 - colors[Math.floorMod(b - 1, colors.length)].left , strip_length))
+                                Math.floorMod(colors[Math.floorMod(b, colors.length)].left - colors[Math.floorMod(b - 1, colors.length)].left + 1, strip_length),
+                                Math.floorMod(i - colors[Math.floorMod(b - 1, colors.length)].left , strip_length))
                 );
             }
             else {
                 Color lastColor = colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].right;
                 Color nextColor = colors[MathUtil.clamp(b, 0, colors.length - 1)].right;
-                int dist = colors[MathUtil.clamp(b, 0, colors.length - 1)].left - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left;
-                colorsBuffer.setLED(i, blend(lastColor, nextColor, dist, i + 1 - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left));
+                int dist = colors[MathUtil.clamp(b, 0, colors.length - 1)].left - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left + 1;
+                colorsBuffer.setLED(i, blend(lastColor, nextColor, dist, i - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left));
             }
         }
         return colorsBuffer;
     }
 
-    @Deprecated
     public static AddressableLEDBuffer hsvBlendColors(int strip_length, boolean loop_hue, ImmutablePair<Integer, Color>... colors){
         AddressableLEDBuffer colorsBuffer = new AddressableLEDBuffer(strip_length);
         int b = 0;
