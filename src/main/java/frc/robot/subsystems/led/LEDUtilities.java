@@ -124,15 +124,20 @@ public class LEDUtilities {
                         HSVblend(
                                 lastColor,
                                 nextColor,
-                                Math.floorMod(colors[Math.floorMod(b, colors.length)].left - colors[Math.floorMod(b - 1, colors.length)].left, strip_length),
-                                Math.floorMod(i + 1 - colors[Math.floorMod(b - 1, colors.length)].left , strip_length))
+                                Math.floorMod(colors[Math.floorMod(b, colors.length)].left - colors[Math.floorMod(b - 1, colors.length)].left + 1, strip_length),
+                                Math.floorMod(i - colors[Math.floorMod(b - 1, colors.length)].left , strip_length))
                 );
             }
             else {
                 Color lastColor = colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].right;
                 Color nextColor = colors[MathUtil.clamp(b, 0, colors.length - 1)].right;
-                int dist = colors[MathUtil.clamp(b, 0, colors.length - 1)].left - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left;
-                colorsBuffer.setLED(i, HSVblend(lastColor, nextColor, dist, i + 1 - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left));
+                int dist = colors[MathUtil.clamp(b, 0, colors.length - 1)].left - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left + 1;
+                colorsBuffer.setLED(i, HSVblend(
+                        lastColor,
+                        nextColor,
+                        dist,
+                        i - colors[MathUtil.clamp(b - 1, 0, colors.length - 1)].left)
+                );
             }
         }
         return colorsBuffer;
@@ -171,7 +176,12 @@ public class LEDUtilities {
         double[] colorAHSV = HSV.rgb2hsv(colorA.red, colorA.green,colorA.blue);
         double[] colorBHSV = HSV.rgb2hsv(colorB.red, colorB.green,colorB.blue);
 
-        double p = current / ((double)dist - 1);
+        System.out.println(current + "/" + dist);
+        double p;
+        if(dist != 1)
+            p = current / ((double)dist - 1);
+        else
+            p = 1;
         int h;
         if(Math.abs(colorAHSV[0] - colorBHSV[0]) <= 180 )
             h = (int)((colorAHSV[0] * (1 - p) + colorBHSV[0] * p));
