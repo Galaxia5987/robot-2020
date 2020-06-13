@@ -11,6 +11,32 @@ import java.util.Arrays;
 public class LEDUtilities {
 
     /**
+     * Shifts a buffer by a certain offset
+     * @param buffer buffer pointer
+     * @param offset pixels to offset right: 101100 >2> 001011
+     */
+    public static void shift(AddressableLEDBuffer buffer, int offset){
+        AddressableLEDBuffer temp = new AddressableLEDBuffer(buffer.getLength());
+        for(int i = 0; i < buffer.getLength(); i ++) {
+            temp.setLED((i + offset) % buffer.getLength(), buffer.getLED((i + offset) % buffer.getLength()));
+            buffer.setLED((i + offset) % buffer.getLength(), i>=offset ? temp.getLED(i) : buffer.getLED(i));
+        }
+    }
+
+    /**
+     * Returns a copy of the original buffer, shifted right by an offset.
+     * @param buffer original buffer
+     * @param offset pixels to offset right: 101100 >2> 001011
+     * @return
+     */
+    public static AddressableLEDBuffer getShifted(AddressableLEDBuffer buffer, int offset){
+        AddressableLEDBuffer temp = new AddressableLEDBuffer(buffer.getLength());
+        for(int i = 0; i < buffer.getLength(); i ++) {
+            temp.setLED((i + offset) % buffer.getLength(), buffer.getLED(i));
+        }
+        return temp;
+    }
+    /**
      * Sets the colors of the strip with mapping between lengths to each color.
      *
      * For example, the map [1: blue, 4: red, 2: green] will set the first cell to blue, the subsequent 4 cells to red
