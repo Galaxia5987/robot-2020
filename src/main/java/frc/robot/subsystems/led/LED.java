@@ -27,11 +27,12 @@ import static frc.robot.Ports.LED.STRIP_LENGTH;
 public class LED extends SubsystemBase {
 
     private final AddressableLED strip;
-
+    private int length;
     /**
      * Creates a new LED subsystem.
      */
     public LED(int strip_length) {
+        length = strip_length;
         strip = new AddressableLED(STRIP);
         strip.setLength(strip_length); //Expensive call, don't call more than once.
         start();
@@ -41,6 +42,7 @@ public class LED extends SubsystemBase {
         strip.setData(colorsBuffer);
     }
 
+    @Deprecated
     public void setAnimation(int frameSpeed, boolean loopAtEnd, AddressableLEDBuffer... frames){
     }
 
@@ -54,5 +56,9 @@ public class LED extends SubsystemBase {
 
     public void stop(){
         strip.stop();
+    }
+
+    public int getLength(){
+        return length;
     }
 }
