@@ -41,7 +41,7 @@ public class LEDUtilities {
      *
      * For example, the map [1: blue, 4: red, 2: green] will set the first cell to blue, the subsequent 4 cells to red
      * and the subsequent 2 to green.
-     * Missing cells will stay in the color they were before, and excessive cells will be ignored.
+     * Missing cells will copy over the last color, and excessive cells will be ignored.
      *
      * @param colors list of pairs that maps between length to each color
      */

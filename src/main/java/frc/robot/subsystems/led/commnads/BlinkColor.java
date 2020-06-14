@@ -46,7 +46,7 @@ public class BlinkColor extends CommandBase {
         this.onperiod = onPeriod;
         this.offperiod = offPeriod;
         blinksDone = 0;
-        currentColor = Color.kBlack;
+        currentColor = Color.kBlack; //The execute should turn to color in the first test
         timer = new Timer();
         addRequirements(led);
     }
@@ -65,7 +65,7 @@ public class BlinkColor extends CommandBase {
         if (timer.hasPeriodPassed((currentColor == color ? onperiod : offperiod))) {
             // Switch between showing the color or turning the LED strip off, to make a blink effect.
             currentColor = currentColor == color ? Color.kBlack : color;
-            if(currentColor == color)
+            if(currentColor != color)
                 blinksDone++;
             led.set(LEDUtilities.singleColor(led.getLength(), currentColor));
         }
@@ -74,5 +74,10 @@ public class BlinkColor extends CommandBase {
     @Override
     public boolean isFinished() {
         return blinksDone >= blinks;
+    }
+
+    @Override
+    public boolean runsWhenDisabled(){
+        return true;
     }
 }

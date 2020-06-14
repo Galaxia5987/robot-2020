@@ -43,6 +43,7 @@ public class GenericTimerLED extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public boolean runsWhenDisabled(){
+        return true;
     }
 }
