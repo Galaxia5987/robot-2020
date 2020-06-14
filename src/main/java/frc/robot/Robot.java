@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.led.presets.RobotABoot;
+import frc.robot.subsystems.led.presets.RobotBBoot;
 import frc.robot.utilities.TrajectoryLoader;
 import frc.robot.utilities.Utils;
 import frc.robot.valuetuner.WebConstant;
@@ -73,6 +75,10 @@ public class Robot extends TimedRobot {
         LiveWindow.disableAllTelemetry();
 
         startCameraCapture();
+        if(isRobotA) //Robot boot animation
+            new RobotABoot(RobotContainer.led).schedule();
+        else
+            new RobotBBoot(RobotContainer.led).schedule();
     }
 
     public void startCameraCapture() {
