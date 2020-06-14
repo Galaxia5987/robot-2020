@@ -61,7 +61,7 @@ public class RobotContainer {
     private final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
     public static final Turret turret = new Turret();
-    private static final LED led = new LED(STRIP_LENGTH);
+    public static final LED led = new LED(STRIP_LENGTH);
     private final Command m_autoCommand = null;
 
     /**
@@ -84,7 +84,7 @@ public class RobotContainer {
         colorWheel.setDefaultCommand(new ManualControl(colorWheel));
         turret.setDefaultCommand(new JoystickTurret(turret));
         drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
-        led.setDefaultCommand(new DimmingColor(led, DEFAULT_COLOR));
+        led.setDefaultCommand(new DimmingColor(led, DEFAULT_COLOR, 5, 99999));
     }
     /**
      * Configures all of the button usages on the robot.
