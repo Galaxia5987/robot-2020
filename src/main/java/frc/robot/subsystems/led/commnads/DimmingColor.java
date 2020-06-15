@@ -15,17 +15,15 @@ public class DimmingColor extends GenericTimerLED {
     private final double frequency; //ms
     private final double value_diff; //The amount the value changes. by default, it dims from the colors value to 0.
     private double[] colorHSV;
-    public DimmingColor(LED led, Color color, double frequency, double timeout, double value_range) {
-        super(led);
-        this.timeout = timeout;
+    public DimmingColor(LED led, Color color, double frequency, double timeout, double value_range, boolean clearOnEnd) {
+        super(led, 0, timeout, clearOnEnd);
         this.frequency = frequency;
-        this.delay = 20;
         colorHSV = HSV.Color2hsv(color);
         this.value_diff = value_range;
     }
 
-    public DimmingColor(LED led, Color color, double frequency, double timeout){
-        this(led, color, frequency, timeout, HSV.Color2hsv(color)[2]);
+    public DimmingColor(LED led, Color color, double frequency, double timeout, boolean clearOnEnd){
+        this(led, color, frequency, timeout, HSV.Color2hsv(color)[2], clearOnEnd);
     }
 
     @Override

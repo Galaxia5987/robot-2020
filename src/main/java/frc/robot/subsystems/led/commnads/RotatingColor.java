@@ -9,11 +9,9 @@ import frc.robot.subsystems.led.LEDUtilities;
 public class RotatingColor extends GenericTimerLED {
     private double frequency;
     private AddressableLEDBuffer strip;
-    public RotatingColor(LED led, AddressableLEDBuffer strip, double frequency, double timeout) {
-        super(led);
-        this.timeout = timeout;
+    public RotatingColor(LED led, AddressableLEDBuffer strip, double frequency, double timeout, boolean clearOnEnd) {
+        super(led, 0, timeout, clearOnEnd);
         this.frequency = frequency;
-        this.delay = 20;
         this.strip = strip;
     }
 

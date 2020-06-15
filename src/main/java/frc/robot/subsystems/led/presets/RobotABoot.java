@@ -15,7 +15,8 @@ public class RobotABoot extends SequentialCommandGroup {
                         LEDUtilities.colorLengths(led.getLength(), new ImmutablePair(5, Color.kLime), new ImmutablePair(1,Color.kBlack)
                         ),
                         0.33,
-                        1
+                        1,
+                        true
                 ),
                 new BlinkColor(led, Color.kLime, 3, 0.2, 0.2)
         );

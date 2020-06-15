@@ -8,31 +8,41 @@ import frc.robot.subsystems.led.LED;
 import frc.robot.subsystems.led.LEDUtilities;
 
 
-public class GenericTimerLED extends CommandBase {
+public abstract class GenericTimerLED extends CommandBase{
     protected final LED led;
     private final Timer timer = new Timer();
-    private double lastTick=0;
-    protected double timeout = 100;
-    protected double delay = 50;
-    public GenericTimerLED(LED led){
+    protected final double timeout;
+    protected final double delay;
+    protected final boolean clearOnEnd;
+    /**
+     * Handles the writing of the buffer onto the LED subsystem. all that needs to be done is to override the 'tick(time)' method
+     * @param led LED subsystem
+     * @param delay delay between writes in milliseconds.
+     * @param timeout time to end writing in milliseconds.
+     */
+    public GenericTimerLED(LED led, double delay, double timeout, boolean clearOnEnd){
         this.led = led;
+        this.delay = delay;
+        this.timeout = timeout;
+        this.clearOnEnd = clearOnEnd;
+        addRequirements(led);
     }
 
-    protected AddressableLEDBuffer tick(double time){
-        return LEDUtilities.singleColor(22, Color.kBlack);
+    public GenericTimerLED(LED led, double delay, double timeout){
+        this(led, delay,timeout, false);
     }
+
+    protected abstract AddressableLEDBuffer tick(double time);
 
     @Override
     public void initialize(){
-        lastTick = 0;
         timer.reset();
         timer.start();
     }
 
     @Override
     public void execute() {
-        if(timer.get() >= lastTick+delay){
-            lastTick = timer.get();
+        if(delay == 0 || timer.hasPeriodPassed(delay)){
             led.set(tick(timer.get()));
         }
     }
@@ -40,6 +50,14 @@ public class GenericTimerLED extends CommandBase {
     @Override
     public boolean isFinished() {
         return timer.hasElapsed(timeout);
+    }
+
+    @Override
+    public void end(boolean interrupted){
+        if(clearOnEnd)
+             led.set(LEDUtilities.singleColor(led.getLength(), Color.kBlack));
+//           led.stop();  //TODO: check if its faster to stop and start the buffer
+
     }
 
     @Override

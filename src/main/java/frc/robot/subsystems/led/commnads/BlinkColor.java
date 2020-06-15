@@ -9,7 +9,7 @@ import frc.robot.subsystems.led.LEDUtilities;
 
 import static frc.robot.Constants.LED.BLINK_PAUSE;
 import static frc.robot.Constants.LED.TOTAL_BLINKS;
-
+//TODO: extend GenericTimerLED
 public class BlinkColor extends CommandBase {
     private final LED led;
     private final Color color;

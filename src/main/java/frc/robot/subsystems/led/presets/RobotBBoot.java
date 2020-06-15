@@ -9,7 +9,7 @@ import frc.robot.subsystems.led.commnads.DimmingColor;
 public class RobotBBoot extends SequentialCommandGroup {
     public RobotBBoot(LED led){
         super(
-                new DimmingColor(led, Color.kAqua, 3, 1.5),
+                new DimmingColor(led, Color.kAqua, 3, 1.5, false),
                 new BlinkColor(led, Color.kAqua, 3, 0.25, 0.4)
         );
     }

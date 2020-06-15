@@ -16,10 +16,10 @@ import static frc.robot.Constants.LED.DEFAULT_COLOR;
 public class IdleRobot extends ConditionalCommand {
     public IdleRobot(LED led){
         super(
-                new DimmingColor(led, HSV.hsv2Color(122, 255, 75), 5, 99999), //TODO: replace hsv2Color with BLUE
+                new DimmingColor(led, HSV.hsv2Color(122, 255, 75), 5, 99999, 30 ,false), //TODO: replace hsv2Color with BLUE
                 new ConditionalCommand(
-                        new DimmingColor(led, HSV.hsv2Color(0, 255, 75), 1, 99999, 30), //TODO: replace hsv2Color with RED
-                        new DimmingColor(led, DEFAULT_COLOR, 1, 99999),
+                        new DimmingColor(led, HSV.hsv2Color(0, 255, 75), 1, 99999, 30, false), //TODO: replace hsv2Color with RED
+                        new DimmingColor(led, DEFAULT_COLOR, 1, 99999, 30, false),
                         () -> DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)
                 ),
                 () -> DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)
