@@ -18,9 +18,11 @@ public class LEDUtilities {
     public static AddressableLEDBuffer getSymmetric(AddressableLEDBuffer buffer, boolean firstHalf){
         AddressableLEDBuffer newBuffer = new AddressableLEDBuffer(buffer.getLength());
         int m = firstHalf ? -1 : 1;
-
+        int length = buffer.getLength();
         for (int i = 0; i < newBuffer.getLength(); i ++){
-            newBuffer.setLED(i, buffer.getLED( (int)Math.round((buffer.getLength()-1 + m * Math.abs(2 * i - buffer.getLength()-1))/2.) ));
+            int index = (int)Math.round((buffer.getLength()-1 + m * Math.abs(2 * i - buffer.getLength()+1))/2.);
+            newBuffer.setLED(i, buffer.getLED(
+                    (int)Math.round((buffer.getLength()-1 + m * Math.abs(2 * i - buffer.getLength()+1))/2.) ));
         }
         return newBuffer;
     }
