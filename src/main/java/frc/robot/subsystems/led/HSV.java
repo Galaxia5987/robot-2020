@@ -42,7 +42,7 @@ public class HSV {
         if( h < 0.0 )
             h += 360.0;
 
-        return new double[]{h,s,v};
+        return new double[]{h/2,s,v}; //Original code is 0-360, whilst wpilib works with 0-180
     }
 
 
@@ -51,7 +51,7 @@ public class HSV {
         double      hh, p, q, t, ff;
         long        i;
         double r, g, b;
-
+        h *= 2; //Original code is 0-360, whilst wpilib works with 0-180
         if(s <= 0.0) {       // < is bogus, just shuts up warnings
             r = v;
             g = v;
