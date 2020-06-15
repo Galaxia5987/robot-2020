@@ -223,13 +223,13 @@ public class LEDUtilities {
         else
             p = 1;
         int h;
-        if(Math.abs(colorAHSV[0] - colorBHSV[0]) <= 180 )
+        if(Math.abs(colorAHSV[0] - colorBHSV[0]) <= 90 )
             h = (int)((colorAHSV[0] * (1 - p) + colorBHSV[0] * p));
         else {
             if(colorAHSV[0] < colorBHSV[0])
-                h = Math.floorMod((int)((colorAHSV[0] * (1 - p) + (colorBHSV[0]-360) * p)), 360);
+                h = Math.floorMod((int)((colorAHSV[0] * (1 - p) + (colorBHSV[0]-180) * p)), 180);
             else
-                h = Math.floorMod((int)(((colorAHSV[0]-360) * (1 - p) + colorBHSV[0] * p)), 360);
+                h = Math.floorMod((int)(((colorAHSV[0]-180) * (1 - p) + colorBHSV[0] * p)), 180);
         }
         double s = colorAHSV[1] * (1 - p) + colorBHSV[1] * p;
         double v = colorAHSV[2] * (1 - p) + colorBHSV[2] * p;
