@@ -158,13 +158,20 @@ public class LEDUtilities {
         return colorsBuffer;
     }
 
-    public static AddressableLEDBuffer dimStrip(AddressableLEDBuffer strip, double dimPercent){
-        AddressableLEDBuffer newStrip = new AddressableLEDBuffer(strip.getLength());
-        for(int i = 0; i < strip.getLength(); i++){
-            newStrip.setLED(i, new Color(
-                    strip.getLED(i).red * dimPercent,
-                    strip.getLED(i).green * dimPercent,
-                    strip.getLED(i).blue * dimPercent)
+    //TODO: maybe bring back old dimStrip
+    public static AddressableLEDBuffer dimStrip(AddressableLEDBuffer strip, double dimCoefficient){
+        return changeHSV(strip, 0, 1, dimCoefficient);
+    }
+
+    public static AddressableLEDBuffer changeHSV(AddressableLEDBuffer buffer, double addHue, double multiplySaturation, double multiplyValue){
+        AddressableLEDBuffer newStrip = new AddressableLEDBuffer(buffer.getLength());
+        for(int i = 0; i < buffer.getLength(); i++){
+            double[] hsvLED = HSV.Color2hsv(buffer.getLED(i));
+            newStrip.setLED(i, HSV.hsv2Color(
+                    hsvLED[0] + addHue,
+                    hsvLED[1] * multiplySaturation,
+                    hsvLED[2] * multiplyValue
+            )
             );
         }
         return newStrip;
