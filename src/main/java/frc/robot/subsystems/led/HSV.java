@@ -5,7 +5,8 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.utilities.Utils;
 
 public class HSV {
-   
+   //TODO: make rgb2hsv return int
+    //TODO: prevent negative values and values out of range
     public static double[] rgb2hsv(double r, double g, double b)
     {
         double h, s ,v;

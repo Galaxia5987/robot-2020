@@ -28,6 +28,6 @@ public class DimmingColor extends GenericTimerLED {
 
     @Override
     protected AddressableLEDBuffer tick(double time){
-        return LEDUtilities.singleColor(led.getLength(),HSV.hsv2Color(colorHSV[0],colorHSV[1],(colorHSV[2] - value_diff) + value_diff * (2-Math.cos(2*Math.PI*time/frequency))));
+        return LEDUtilities.singleColor(led.getLength(),HSV.hsv2Color(colorHSV[0],colorHSV[1],Math.min(0, (colorHSV[2] - value_diff) + value_diff * (2-Math.cos(2*Math.PI*time/frequency)) )));
     }
 }

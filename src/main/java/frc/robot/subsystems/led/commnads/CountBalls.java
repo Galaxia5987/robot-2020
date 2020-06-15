@@ -8,7 +8,7 @@ import frc.robot.subsystems.led.LED;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.function.Supplier;
-
+@Deprecated
 public class CountBalls extends CommandBase {
     private final LED led;
     private final Timer timer;
