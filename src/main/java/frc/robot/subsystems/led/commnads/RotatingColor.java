@@ -17,7 +17,7 @@ public class RotatingColor extends GenericTimerLED {
 
     @Override
     protected AddressableLEDBuffer tick(double time){
-        return LEDUtilities.getShifted(strip, (int) (22* time / frequency));
+        return LEDUtilities.rotateStrip(strip, (int) (22* time / frequency));
         //return LEDUtilities.getShifted(strip, (int) (22* (2-Math.cos(2*Math.PI*time/frequency))));
     }
 }

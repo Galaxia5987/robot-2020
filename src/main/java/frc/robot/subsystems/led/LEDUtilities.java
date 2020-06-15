@@ -11,33 +11,6 @@ import java.util.Arrays;
 public class LEDUtilities {
 
     /**
-     * Shifts a buffer by a certain offset
-     * @param buffer buffer pointer
-     * @param offset pixels to offset right: 101100 >2> 001011
-     */
-    public static void shift(AddressableLEDBuffer buffer, int offset){
-        AddressableLEDBuffer temp = new AddressableLEDBuffer(buffer.getLength());
-        for(int i = 0; i < buffer.getLength(); i ++) {
-            temp.setLED((i + offset) % buffer.getLength(), buffer.getLED((i + offset) % buffer.getLength()));
-            buffer.setLED((i + offset) % buffer.getLength(), i>=offset ? temp.getLED(i) : buffer.getLED(i));
-        }
-    }
-
-    /**
-     * Returns a copy of the original buffer, shifted right by an offset.
-     * @param buffer original buffer
-     * @param offset pixels to offset right: 101100 >2> 001011
-     * @return
-     */
-    public static AddressableLEDBuffer getShifted(AddressableLEDBuffer buffer, int offset){
-        AddressableLEDBuffer temp = new AddressableLEDBuffer(buffer.getLength());
-        for(int i = 0; i < buffer.getLength(); i ++) {
-            temp.setLED((i + offset) % buffer.getLength(), buffer.getLED(i));
-        }
-        return temp;
-    }
-
-    /**
      * Returns a mirror of a buffer along the center of it.
      * @param firstHalf true if the first half should copy over, false if the second half is copied.
      * @return
