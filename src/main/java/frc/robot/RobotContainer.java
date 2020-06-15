@@ -84,7 +84,7 @@ public class RobotContainer {
         colorWheel.setDefaultCommand(new ManualControl(colorWheel));
         turret.setDefaultCommand(new JoystickTurret(turret));
         drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
-        led.setDefaultCommand(new DimmingColor(led, DEFAULT_COLOR, 5, 99999));
+        led.setDefaultCommand(new DimmingColor(led, DEFAULT_COLOR, 5, 99999,false));
     }
     /**
      * Configures all of the button usages on the robot.

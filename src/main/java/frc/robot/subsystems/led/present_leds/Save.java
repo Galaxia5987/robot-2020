@@ -23,9 +23,6 @@ class Save
                     new ImmutablePair<>(11, Color.kCyan),
                     new ImmutablePair<>(17, HSV.hsv2Color(360*17/22., 1, 1))
             );
-            LEDUtilities.printBuffer(LEDUtilities.getShifted(LEDUtilities.colorLengths(22,
-                    new ImmutablePair<>(1, Color.kRed),
-                    new ImmutablePair<>(21, Color.kBlack)), 2));
             for (int i = 0; i < buffer.getLength(); i++){
                 System.out.println(i + ", " + HSV.rgb2hsv(buffer.getLED(i).red, buffer.getLED(i).green, buffer.getLED(i).blue)[0]);
                 out.write(LEDUtilities.colorToString(buffer.getLED(i)));
