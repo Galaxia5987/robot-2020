@@ -50,6 +50,9 @@ public class Constants {
         // Blinking settings
         public static final int TOTAL_BLINKS = 5;
         public static final double BLINK_PAUSE = 0.125; // TODO: Tune blink values.
+
+        public static final double FIRST_LED_ANGLE = Math.IEEEremainder(-120, 360); //must be smaller than last angle
+        public static final double LAST_LED_ANGLE = Math.IEEEremainder(130, 360);
     }
 
     public static class Autonomous {
