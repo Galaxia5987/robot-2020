@@ -36,6 +36,21 @@ public class LEDUtilities {
         }
         return temp;
     }
+
+    /**
+     * Returns a mirror of a buffer along the center of it.
+     * @param firstHalf true if the first half should copy over, false if the second half is copied.
+     * @return
+     */
+    public static AddressableLEDBuffer getSymmetric(AddressableLEDBuffer buffer, boolean firstHalf){
+        AddressableLEDBuffer newBuffer = new AddressableLEDBuffer(buffer.getLength());
+        int m = firstHalf ? -1 : 1;
+
+        for (int i = 0; i < newBuffer.getLength(); i ++){
+            newBuffer.setLED(i, buffer.getLED( (int)Math.round((buffer.getLength()-1 + m * Math.abs(2 * i - buffer.getLength()-1))/2.) ));
+        }
+        return newBuffer;
+    }
     /**
      * Sets the colors of the strip with mapping between lengths to each color.
      *
@@ -197,7 +212,7 @@ public class LEDUtilities {
 
     }
 
-    public static Color HSVblend(Color colorA, Color colorB, int dist, int current){
+    private static Color HSVblend(Color colorA, Color colorB, int dist, int current){
         double[] colorAHSV = HSV.rgb2hsv(colorA.red, colorA.green,colorA.blue);
         double[] colorBHSV = HSV.rgb2hsv(colorB.red, colorB.green,colorB.blue);
 
