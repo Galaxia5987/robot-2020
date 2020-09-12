@@ -77,7 +77,7 @@ public class Constants {
     }
 
     public static final class Intake {
-        public static final double INTAKE_POWER = 0.44;
+        public static final double INTAKE_POWER = 0.6;
         public static final double FEED_POWER = INTAKE_POWER + 0.1;
         public static final double OUTTAKE_POWER = 0.2;
         public static final WebConstant PROPORTIONAL_INTAKE_VALUE = new WebConstant("intakeProportional", 0.165);
@@ -91,7 +91,7 @@ public class Constants {
         public static final double PULSE_INTERVAL = 0.1;
         public static final double CONVEYOR_SMART_FEED_POWER = CONST(0.5);
         public static final double CONVEYOR_FEED_POWER = 0.7;
-        public static final double FUNNEL_INTAKE_POWER = 0.25;
+        public static final double FUNNEL_INTAKE_POWER = -0.5;
         public static final double CONVEYOR_INTAKE_POWER = 0.7;
         public static final double CONVEYOR_OUTTAKE_POWER = 0.5;
         public static final double FUNNEL_OUTTAKE_POWER = 0.6;
@@ -100,13 +100,13 @@ public class Constants {
         public static final double CONVEYOR_MOTOR_RETURN_POWER = 0;
         public static final double FEED_TIMEOUT = 5;
 
-        public static final double INTAKE_PROXIMITY_MAX_VALUE = 130; //The minimum value for which the sensor would see a ball
-        public static final double INTAKE_PROXIMITY_MIN_VALUE = 60; //The minimum voltage which the sensor would see in between two balls
+        public static final double INTAKE_PROXIMITY_MAX_VALUE = 1000; //The minimum value for which the sensor would see a ball
+        public static final double INTAKE_PROXIMITY_MIN_VALUE = 130; //The minimum voltage which the sensor would see in between two balls
         public static final double SHOOTER_PROXIMITY_MAX_VALUE = 2000;
         public static final double SHOOTER_PROXIMITY_MIN_VALUE = 800;
 
         public static final int MAX_BALLS_AMOUNT = 5;
-        public static final int STARTING_AMOUNT = 3;
+        public static final int STARTING_AMOUNT = 0; // TODO: change back to 3
 
         public static final double GATE_OPEN_TIME = 0.5; // [sec] The amount of time from the opening of the gate until it is considered open
 

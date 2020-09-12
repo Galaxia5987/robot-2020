@@ -25,6 +25,7 @@ import frc.robot.subsystems.color_wheel.commands.PositionControl;
 import frc.robot.subsystems.color_wheel.commands.RotationControl;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.commands.FeedTurret;
+import frc.robot.subsystems.conveyor.commands.LoadConveyor;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.commands.GearShift;
 import frc.robot.subsystems.drivetrain.commands.JoystickDrive;
@@ -32,6 +33,7 @@ import frc.robot.subsystems.drivetrain.commands.ResetLocalization;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.commandgroups.OuttakeBalls;
 import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.commands.ShootAtVelocity;
 import frc.robot.subsystems.shooter.commands.SpeedUp;
 import frc.robot.subsystems.turret.Turret;
 import frc.robot.subsystems.turret.commands.JoystickTurret;
@@ -55,7 +57,7 @@ public class RobotContainer {
     public final Drivetrain drivetrain = new Drivetrain();
     public final ColorWheel colorWheel = new ColorWheel();
     public final Shooter shooter = new Shooter();
-    public final Intake intake = new Intake();
+    public static final Intake intake = new Intake();
     public final Conveyor conveyor = new Conveyor(intake);
     public static final Climber climber = new Climber();
     public static final Turret turret = new Turret();
@@ -70,7 +72,7 @@ public class RobotContainer {
         navx.reset();
         configureDefaultCommands();
         configureButtonBindings();
-        if (Robot.debug) {
+        if (true) {
             startValueTuner();
             startFireLog();
         }
@@ -83,16 +85,17 @@ public class RobotContainer {
         colorWheel.setDefaultCommand(new ManualControl(colorWheel));
         turret.setDefaultCommand(new JoystickTurret(turret));
         drivetrain.setDefaultCommand(new JoystickDrive(drivetrain));
-    }
+
+            }
     /**
      * Configures all of the button usages on the robot.
      */
     private void configureButtonBindings() {
-        OI.a.whileHeld(new FeedTurret(conveyor, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting));
+        OI.a.whileHeld(new FeedTurret(conveyor, intake, shooter::isShooterReady, turret::isTurretReady, shooter::isShooting, false));
         OI.x.whileHeld(new OuttakeBalls(conveyor, intake));
         OI.b.toggleWhenPressed(new SpeedUp(shooter, drivetrain));
         OI.y.whileHeld(new PickupBalls(intake, conveyor));
-        OI.rt.whileHeld(new ProportionalPickup(intake, conveyor, drivetrain));
+        OI.rt.whileHeld(new LoadConveyor(conveyor));
         OI.back.whenPressed(new InstantCommand(CommandScheduler.getInstance()::cancelAll));
         OI.rs.toggleWhenPressed(new RotationControl(colorWheel));
         OI.start.toggleWhenPressed(new PositionControl(colorWheel));

@@ -9,7 +9,7 @@ import static frc.robot.Constants.Turret.*;
 public class JoystickTurret extends CommandBase {
     private Turret turret;
     private Supplier<Double> joystickInput = OI::getXboxLX;
-    public static final double JOYSTICK_DEADBAND = 0.08;
+    public static final double JOYSTICK_DEADBAND = 0.1;
 
     public JoystickTurret(Turret turret) {
         this.turret = turret;

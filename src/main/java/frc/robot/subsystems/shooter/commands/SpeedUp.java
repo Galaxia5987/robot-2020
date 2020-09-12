@@ -52,6 +52,7 @@ public class SpeedUp extends CommandBase {
             else
                 distance = Utils.localizationDistanceToPort(drivetrain.getPose());
         }
+        System.out.println("dist" + distance);
         shooter.setSpeed(shooter.approximateVelocity(distance));
         SmartDashboard.putNumber("aproximateVelocity", shooter.approximateVelocity(distance));
         SmartDashboard.putNumber("wallDistance", distance);

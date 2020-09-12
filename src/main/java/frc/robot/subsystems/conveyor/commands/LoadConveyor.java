@@ -1,16 +1,19 @@
 package frc.robot.subsystems.conveyor.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.utilities.State;
 
 import static frc.robot.Constants.Conveyor.*;
+import static frc.robot.RobotContainer.intake;
 
 /**
  * Turn the conveyor and close the gate
  */
 public class LoadConveyor extends CommandBase {
     private Conveyor conveyor;
+
 
     public LoadConveyor(Conveyor conveyor) {
         this.conveyor = conveyor;
@@ -19,6 +22,7 @@ public class LoadConveyor extends CommandBase {
 
     @Override
     public void initialize() {
+        intake.powerWheels(Constants.Intake.INTAKE_POWER);
         conveyor.setGate(State.CLOSE);
         conveyor.setFunnelPower(FUNNEL_INTAKE_POWER);
     }
@@ -38,6 +42,7 @@ public class LoadConveyor extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        conveyor.stop();
+        intake.powerWheels(0);
+        conveyor.stopAll();
     }
 }

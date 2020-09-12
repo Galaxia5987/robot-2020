@@ -32,7 +32,7 @@ public class Intake extends SubsystemBase {
 
     public Intake() {
         motor.configFactoryDefault();
-        motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
+        //motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.Analog, 0, TALON_TIMEOUT);
         motor.setInverted(MOTOR_INVERTED);
         motor.setSensorPhase(IS_PROXIMITY_REVERSED);
 
@@ -78,15 +78,15 @@ public class Intake extends SubsystemBase {
         setPosition(!isOpen());
     }
 
-    /**
-     * Returns the reading from the potentiometer through the talon. Note, this value is an integer,
-     * and ranges from 0-1023, similarly to how Arduino devices read voltage.
-     *
-     * @return Proximity voltage reading in native units.
-     */
-    public int getSensorValue(){
-        return motor.getSelectedSensorPosition();
-    }
+//    /**
+//     * Returns the reading from the potentiometer through the talon. Note, this value is an integer,
+//     * and ranges from 0-1023, similarly to how Arduino devices read voltage.
+//     *
+//     * @return Proximity voltage reading in native units.
+//     */
+//    public int getSensorValue(){
+//        return motor.getSelectedSensorPosition();
+//    }
 
     /**
      * OPEN is in the state where the intake is functional

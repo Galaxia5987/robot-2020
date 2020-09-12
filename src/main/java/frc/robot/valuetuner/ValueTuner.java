@@ -8,8 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 /**
  * The value tuner is a simple interface that allows you to change constants during run time.
@@ -37,6 +36,9 @@ public class ValueTuner {
      * Starts the value tuner web server.
      */
     public void start() {
+
+        init();
+//        spark.Spark.ipAddress("10.59.87.2:5802");
         // Main route serving the tuner.vm template.
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();

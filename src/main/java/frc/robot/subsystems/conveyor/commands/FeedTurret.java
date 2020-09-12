@@ -46,8 +46,7 @@ public class FeedTurret extends CommandBase {
 
     public FeedTurret(Conveyor conveyor, Intake intake, Supplier<Boolean> isShooterReady, Supplier<Boolean> isTurretReady, Supplier<Boolean> isShooting, boolean outtake) {
         addRequirements(conveyor);
-        if(intake == null)
-            addRequirements(intake);
+
         this.conveyor = conveyor;
         this.intake = intake;
         this.isShooterReady = isShooterReady;
@@ -60,7 +59,7 @@ public class FeedTurret extends CommandBase {
     @Override
     public void initialize() {
         conveyor.setGate(State.OPEN);
-        if(outtake)
+        if (outtake)
             conveyor.setConveyorPower(-FEED_OUTTAKE_POWER.get());
         timer.reset();
         timer.start();
@@ -68,24 +67,26 @@ public class FeedTurret extends CommandBase {
 
     @Override
     public void execute() {
-        if(outtake && timer.get() < OUTTAKE_TIME) return;
+        if (outtake && timer.get() < OUTTAKE_TIME) return;
 
         if (smartFeed && isShooting.get()) {
             if (isShooterReady.get() && isTurretReady.get()) {
                 conveyor.feed();
-                if(intake != null)
+                if (intake != null)
                     intake.powerWheels(Constants.Intake.FEED_POWER);
-            }
-            else {
+            } else {
                 conveyor.setConveyorPower(0);
                 conveyor.setFunnelPower(0);
             }
-        }
-        else if(!smartFeed) {
-            conveyor.setGate(State.OPEN);
+        } else if (!smartFeed) {
+            if (isShooting.get())
+                conveyor.setGate(State.OPEN);
+            else
+                conveyor.setGate(State.CLOSE);
+
             conveyor.setConveyorPower(CONVEYOR_FEED_POWER);
             conveyor.setFunnelPower(FUNNEL_INTAKE_POWER);
-            if(intake != null)
+            if (intake != null)
                 intake.powerWheels(Constants.Intake.FEED_POWER);
 
         }
@@ -99,5 +100,6 @@ public class FeedTurret extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         conveyor.stopAll();
+        intake.powerWheels(0);
     }
 }

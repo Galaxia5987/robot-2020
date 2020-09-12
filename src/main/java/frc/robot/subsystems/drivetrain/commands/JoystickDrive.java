@@ -15,6 +15,11 @@ public class JoystickDrive extends CommandBase {
     }
 
     @Override
+    public void initialize() {
+        drivetrain.setPower(0, 0);
+    }
+
+    @Override
     public void execute() {
         double rightPower = 0;
         double leftPower = 0;
@@ -22,7 +27,8 @@ public class JoystickDrive extends CommandBase {
             leftPower = OI.getLeftStickForward();
         if (Math.abs(OI.getRightStickForward()) > JOYSTICK_MIN_THRESHOLD)
             rightPower = OI.getRightStickForward();
-        drivetrain.setPower(quadraticCurveSpeed(leftPower), quadraticCurveSpeed(rightPower));
+        System.out.println(leftPower);
+        drivetrain.setPower(quadraticCurveSpeed(leftPower), quadraticCurveSpeed(rightPower)); // TODO: change back to positive values
     }
 
     public double curveSpeed(double x) {
@@ -40,4 +46,5 @@ public class JoystickDrive extends CommandBase {
         double b = 4, a = -1.1, c = 4.9, d = 2.3;
         return (b * Math.pow(x, 3) + a * Math.pow(x, 5) + c * x + d * Math.pow(x, 9)) / (a + b + c + d);
     }
+
 }

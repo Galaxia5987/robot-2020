@@ -26,7 +26,7 @@ public final class Main {
    * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
-    if(Robot.debug) {
+    if(true) {
       port(5802);
     }
     RobotBase.startRobot(Robot::new);

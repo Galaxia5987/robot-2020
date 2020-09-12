@@ -1,6 +1,7 @@
 package frc.robot.subsystems.conveyor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -34,14 +35,14 @@ public class Conveyor extends SubsystemBase {
     private TalonSRX motor = new TalonSRX(MOTOR);
     private VictorSPX funnel = new VictorSPX(FUNNEL);
     private DeadbandProximity shooterProximity = new DeadbandProximity(new AnalogInput(SHOOTER_PROXIMITY)::getValue, SHOOTER_PROXIMITY_MIN_VALUE, SHOOTER_PROXIMITY_MAX_VALUE);
-    private DeadbandProximity intakeProximity;
+    private DeadbandProximity intakeProximity = new DeadbandProximity(new AnalogInput(INTAKE_PROXIMITY)::getValue, INTAKE_PROXIMITY_MIN_VALUE, INTAKE_PROXIMITY_MAX_VALUE);
     private DoubleSolenoid gateA = null; //mechanical stop
     private Solenoid gateB = null; //mechanical stop
     private int ballsCount = STARTING_AMOUNT;
     private Timer gateTimer = new Timer();
 
     public Conveyor(Intake intake) {
-        intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VALUE, INTAKE_PROXIMITY_MAX_VALUE);
+//        intakeProximity = new DeadbandProximity(intake::getSensorValue, INTAKE_PROXIMITY_MIN_VALUE, INTAKE_PROXIMITY_MAX_VALUE);
 
         motor.configFactoryDefault();
         funnel.configFactoryDefault();
@@ -60,6 +61,8 @@ public class Conveyor extends SubsystemBase {
 
         funnel.enableVoltageCompensation(true);
         funnel.configVoltageCompSaturation(12.0);
+
+        motor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 
         if (Robot.isRobotA)
             gateA = new DoubleSolenoid(FORWARD_GATE, REVERSE_GATE);
@@ -91,6 +94,8 @@ public class Conveyor extends SubsystemBase {
         CustomDashboard.setBallCount(getBallsCount());
 
         SmartDashboard.putNumber("shooter proximity", shooterProximity.getValue());
+        SmartDashboard.putNumber("intake proximity", intakeProximity.getValue());
+        SmartDashboard.putNumber("number of balls", getBallsCount());
     }
 
     private void updateSensors() {
