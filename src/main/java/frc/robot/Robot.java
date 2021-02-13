@@ -52,9 +52,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        if (!Robot.isRobotA) {
-            Utils.swapConstants(Constants.class, BConstants.class);
-            Utils.swapConstants(Ports.class, BPorts.class);
+        if (Robot.isRobotA) {
+            Utils.swapConstants(Constants.class, AConstants.class);
+            Utils.swapConstants(Ports.class, APorts.class);
         }
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.

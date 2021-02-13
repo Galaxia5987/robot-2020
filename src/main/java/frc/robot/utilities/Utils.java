@@ -125,11 +125,11 @@ public class Utils {
         }
     }
 
-    public static void swapConstants(Class<?> original, Class<?> B) {
-        Utils.replaceFields(original, B); // Replace outer constants
+    public static void swapConstants(Class<?> original, Class<?> A) {
+        Utils.replaceFields(original, A); // Replace outer constants
         for (Class aClass : original.getDeclaredClasses()) { // Loop constants classes
-            // Find the class in B Constants
-            Optional<Class<?>> bClass = Arrays.stream(B.getDeclaredClasses()).filter(c -> c.getSimpleName().equals(aClass.getSimpleName())).findAny();
+            // Find the class in A Constants
+            Optional<Class<?>> bClass = Arrays.stream(A.getDeclaredClasses()).filter(c -> c.getSimpleName().equals(aClass.getSimpleName())).findAny();
             if (bClass.isEmpty()) continue; // Class isn't present
             Utils.replaceFields(aClass, bClass.get());
         }

@@ -25,9 +25,9 @@ public class Constants {
         public static final double HIGH_TICKS_PER_METER = 2048. * (2000 / 216.) / (WHEEL_DIAMETER * Math.PI); // TICKS * RATIO / CIRCUMFERENCE
 
         // PID gains set for the velocity drive of the wheels.
-        public static final double KP = CONST(0);
+        public static final double KP = CONST(0.1);
         public static final double KI = CONST(0);
-        public static final double KD = CONST(0);
+        public static final double KD = CONST(0.1);
         public static final double KF = CONST(0);
 
         //Shifter enabled constants
@@ -44,12 +44,13 @@ public class Constants {
     public static class Autonomous {
         // Drivetrain characterization constants
 
-        public static final double leftkS = CONST(0.367);
-        public static final double leftkV = CONST(1.6);
-        public static final double leftkA = CONST(0.0527);
-        public static final double rightkS = CONST(0.361);
-        public static final double rightkV = CONST(1.59);
-        public static final double rightkA = CONST(0.0667);
+        public static final double leftkS = CONST(0.229);
+        public static final double leftkV = CONST(2.12);
+        public static final double leftkA = CONST(0.364);
+        public static final double rightkS = CONST( 0.234);
+        public static final double rightkV = CONST( 2.11);
+        public static final double rightkA = CONST(0.38);
+
         // Ramsete controller constants
         public static final double kBeta = 2;
         public static final double kZeta = 0.7;
@@ -122,14 +123,14 @@ public class Constants {
         public static final DoubleRange DEAD_ZONE_ANGLES = new DoubleRange(38, 86);
 
         public static final double UNREACHABLE_ANGLE = 300; //This is an angle which the turret can't mechanically pass. If the turret passes this angle from either direction before startup, the turret will malfunction.
-        public static final int ZERO_POSITION = CONST(1600); //Encoder absolute position when the turret is facing forward. This might change occasionally.
+        public static final int ZERO_POSITION = CONST(902); //Encoder absolute position when the turret is facing forward. This might change occasionally.
 
         public static final int POSITION_PID_SLOT = 0;
         public static final int MOTION_MAGIC_PID_SLOT = 2;
 
         public static double KP = CONST(3.5);
         public static double KI = CONST(0.01);
-        public static double KD = CONST(180);
+        public static double KD = CONST(150);
         public static double KF = CONST(0);
 
         public static double ALLOWABLE_ERROR = 0.3;
@@ -211,6 +212,7 @@ public class Constants {
 
         public static final double[] CLIMB_PIDF = {0.2, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
         public static final double[] CLIMB_RELEASE_PIDF = {0.12, 0, 0, 0}; // Proportional, Integral, Derivative, Feedforward
+        public static final double ARBITRARY_FEEDFORWARD = -0.35;
 
         public static final double[] DELTA_PID = {0.0004, 0, 0}; // Proportional, Integral, Derivative
 
@@ -219,7 +221,6 @@ public class Constants {
 
         public static final double MIN_DELTA = 0.001;
 
-        public static final double ARBITRARY_FEEDFORWARD = -0.35;
 
         public static final double RAMP_RATE = 0;
 
@@ -235,8 +236,8 @@ public class Constants {
 }
 
 
-//Anything in this class will replace the original constants when boolean is true
-class BConstants {
+//These are the constants for the practice robot, which is not used for competitions.
+class AConstants {
     //General constants to be replaced
 
     public static final class Intake {
@@ -244,20 +245,14 @@ class BConstants {
     }
 
     public static class Drivetrain {
-        public static final double KP = 0.1;
-        public static final double KI = 0;
-        public static final double KD = 0.1;
-        public static final double KF = 0;
+
+        public static final double KP = CONST(0.4);
+        public static final double KI = CONST(0.0001);
+        public static final double KD = CONST(0.3);
+        public static final double KF = CONST(0);
     }
 
     public static class Autonomous {
-        // Drivetrain characterization constants
-        public static final double leftkS = 0.229;
-        public static final double leftkV = 2.12;
-        public static final double leftkA = 0.364;
-        public static final double rightkS = 0.234;
-        public static final double rightkV = 2.11;
-        public static final double rightkA = 0.38;
     }
 
     public static class Turret {
@@ -271,6 +266,8 @@ class BConstants {
     }
 
     public static class Shooter {
+        public static final double ALLOWED_HEIGHT_TOLERANCE = 0.05; // The allowed tolerance between the current height to the desired height.
+        public static final double ALLOWED_ANGLE_TOLERANCE = 0.5;
     }
 
 }
